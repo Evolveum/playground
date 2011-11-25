@@ -9,9 +9,9 @@ public class Ccc {
 
 	public Ccc() {
 		list.add("Janko");
-		list.add("Hraško");
-		list.add("Jožko");
-		list.add("Mrkvièka");
+		list.add("Hrasko");
+		list.add("Josko");
+		list.add("Mrkvicka");
 		html = "<table width='300px' border='2'>" + createRowsAndCols(4, 3) + "</table>";
 	}
 
