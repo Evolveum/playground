@@ -1,3 +1,5 @@
+package javaSource;
+
 public class Aaa {
 	public Object getObjectB() {
 		Bbb objectB = new Bbb();
