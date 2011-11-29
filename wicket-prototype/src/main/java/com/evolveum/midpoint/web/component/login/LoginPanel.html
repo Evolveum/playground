@@ -19,21 +19,11 @@
   ~ Portions Copyrighted 2011 [name of copyright owner]
   -->
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
-<wicket:extend>
-    vilkooo
-    <hr/>
-    <form wicket:id="form">
-        <hr/>
-        <div wicket:id="autoForm"/>
-        <hr/>
-        <!-- submit: <input wicket:id="submit" type="submit" />
-    reset: <input wicket:id="reset" type="reset" />-->
-    </form>
-    <hr/>
-    <div>service label:</div>
-    <div wicket:id="serviceLabel" />
-</wicket:extend>
+<wicket:panel>
+    <span>Logged in as: <em wicket:id="username">Viliam Repan</em> </span> <span class="delimiter">|</span>
+    <a wicket:id="logoutLink" /> <span
+        class="delimiter">|</span> <span class="last">Help</span>
+</wicket:panel>
 </html>
