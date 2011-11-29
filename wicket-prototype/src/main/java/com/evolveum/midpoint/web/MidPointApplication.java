@@ -22,6 +22,7 @@
 package com.evolveum.midpoint.web;
 
 import com.evolveum.midpoint.spring.SomeService;
+import com.evolveum.midpoint.web.admin.home.PageHome;
 import com.evolveum.midpoint.web.admin.user.PageUser;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,11 @@ public class MidPointApplication extends WebApplication {
 
         getMarkupSettings().setStripWicketTags(true);
         getResourceSettings().setThrowExceptionOnMissingResource(false);
+
+        //pretty url
+//        mountPage("/", PageHome.class);
+//        mountPage("/user", PageUser.class);
+//        mountPage("/test", PageTest.class);
     }
 
     public SomeService getService() {
