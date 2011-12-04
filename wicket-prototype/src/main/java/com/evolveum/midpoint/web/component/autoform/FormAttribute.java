@@ -22,6 +22,8 @@
 package com.evolveum.midpoint.web.component.autoform;
 
 import org.apache.commons.lang.Validate;
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -83,5 +85,10 @@ public class FormAttribute<T extends Serializable> implements Serializable {
         }
 
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 }

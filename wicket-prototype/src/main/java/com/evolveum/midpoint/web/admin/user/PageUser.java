@@ -34,9 +34,12 @@ import com.evolveum.midpoint.web.component.autoform.*;
 import com.evolveum.midpoint.web.component.util.LoadableModel;
 import com.evolveum.midpoint.xml.ns._public.common.common_1.ResourceType;
 import org.apache.commons.lang.StringUtils;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
@@ -47,7 +50,7 @@ import java.util.*;
 public class PageUser extends PageAdmin {
 
     public PageUser() {
-        IModel<FormObject> model = new LoadableModel<FormObject>(false) {
+        final IModel<FormObject> model = new LoadableModel<FormObject>(false) {
 
             @Override
             protected FormObject load() {
@@ -80,10 +83,17 @@ public class PageUser extends PageAdmin {
             @Override
             protected Object load() {
                 MidPointApplication application = getMidpointApplication();
-                System.out.println(">>>>>>>> '" + application.getService().getValue() + "'");
                 return application.getService().getValue();
             }
         }));
+
+        form.add(new AjaxLink<String>("submit", new Model<String>("Submit")) {
+
+            @Override
+            public void onClick(AjaxRequestTarget ajaxRequestTarget) {
+                System.out.println(model.getObject());
+            }
+        });
     }
 
     private FormObject createObject(ResourceType resource) throws Exception {

@@ -40,10 +40,11 @@ import java.io.Serializable;
 
 public class PasswordPanel extends Panel {
 
-    private Validation validation;
+    private Validation validation = new Validation("[a-z]{1}", "[A-Z{1}]", "[0-9]{1}");     //todo fix default validation
 
     public PasswordPanel(String id, IModel model, Validation validation) {
         super(id);
+        this.validation = validation;
 
         PasswordTextField password = new PasswordTextField("input", model);
         password.setOutputMarkupId(true);
@@ -78,6 +79,12 @@ public class PasswordPanel extends Panel {
         builder.append(iconId);
         builder.append("', '");
         builder.append(labelId);
+        builder.append("', '");
+        builder.append(validation.getBad());
+        builder.append("', '");
+        builder.append(validation.getMedium());
+        builder.append("', '");
+        builder.append(validation.getGood());
         builder.append("');");
 
         return builder.toString();

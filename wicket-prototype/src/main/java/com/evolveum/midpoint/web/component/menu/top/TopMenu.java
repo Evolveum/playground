@@ -22,11 +22,10 @@
 package com.evolveum.midpoint.web.component.menu.top;
 
 import org.apache.wicket.Page;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.list.Loop;
 import org.apache.wicket.markup.html.list.LoopItem;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -52,13 +51,13 @@ public class TopMenu extends Panel {
             @Override
             protected void populateItem(LoopItem loopItem) {
                 final TopMenuItem item = TopMenu.this.items.get(loopItem.getIndex());
-                AjaxLink<String> link = new AjaxLink<String>("link", new Model<String>(item.getLabel())) {
-
-                    @Override
-                    public void onClick(AjaxRequestTarget target) {
-                        setResponsePage(item.getPage());
-                    }
-                };
+                BookmarkablePageLink<String> link = new BookmarkablePageLink<String>("link", item.getPage()); // {
+//
+//                    @Override
+//                    public void onClick(AjaxRequestTarget target) {
+//                        setResponsePage(item.getPage());
+//                    }
+//                };
                 link.add(new Label("label", new StringResourceModel(item.getLabel(), TopMenu.this, null)));
                 link.add(new Label("description", new StringResourceModel(item.getDescription(), TopMenu.this, null)));
 

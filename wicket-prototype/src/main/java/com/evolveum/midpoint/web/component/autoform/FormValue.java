@@ -21,6 +21,10 @@
 
 package com.evolveum.midpoint.web.component.autoform;
 
+import org.apache.commons.lang.Validate;
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 import java.io.Serializable;
 
 /**
@@ -40,6 +44,8 @@ public class FormValue<T extends Serializable> implements Serializable {
     }
 
     public FormValue(T value, FormValueStatus status) {
+        Validate.notNull(status, "Status must not be null.");
+
         this.value = value;
         this.status = status;
     }
@@ -57,6 +63,12 @@ public class FormValue<T extends Serializable> implements Serializable {
     }
 
     public void setStatus(FormValueStatus status) {
+        Validate.notNull(status, "Status must not be null.");
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 }

@@ -23,8 +23,18 @@
  * Author: lazyman
  */
 
-function updatePasswordValidator(passwordId, iconId, labelId) {
-//    alert(passwordId + "\n" + iconId + "\n" + labelId);
-    alert((jQuery("#" + iconId)).className);
+/**
+ * This method provides password field refresh in browser without ajax. Refresh updates icon
+ * and label which shows password 'quality' to user.
+ *
+ * @param passwordId password field ID attribute
+ * @param iconId icon span ID attribute
+ * @param labelId label span ID attribute
+ * @param regexpBad regular expression for "bad" quality passwords
+ * @param regexpMedium regular expression for "medium" quality passwords
+ * @param regexpGood regular expression for "good" quality passwords
+ */
+function updatePasswordValidator(passwordId, iconId, labelId, regexpBad, regexpMedium, regexpGood) {
+    //todo implement this method
     jQuery("#" + iconId).toggleClass("icon-bad");
 }

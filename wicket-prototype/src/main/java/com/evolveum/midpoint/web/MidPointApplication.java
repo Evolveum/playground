@@ -24,7 +24,6 @@ package com.evolveum.midpoint.web;
 import com.evolveum.midpoint.spring.SomeService;
 import com.evolveum.midpoint.web.admin.home.PageHome;
 import com.evolveum.midpoint.web.admin.user.PageUser;
-import com.evolveum.midpoint.web.pretty.HybridPageParametersEncoder;
 import com.evolveum.midpoint.web.pretty.MidPointPageParametersEncoder;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.mapper.MountedMapper;
@@ -59,10 +58,10 @@ public class MidPointApplication extends WebApplication {
         getResourceSettings().setThrowExceptionOnMissingResource(false);
 
         //pretty url
-//        HybridPageParametersEncoder encoder = new HybridPageParametersEncoder();
-//        mount(new MountedMapper("/", PageHome.class, encoder));
-//        mount(new MountedMapper("/user", PageUser.class, encoder));
-//        mount(new MountedMapper("/test", PageTest.class, encoder));
+        MidPointPageParametersEncoder encoder = new MidPointPageParametersEncoder();
+        mount(new MountedMapper("/home", PageHome.class, encoder));
+        mount(new MountedMapper("/user", PageUser.class, encoder));
+        mount(new MountedMapper("/test", PageTest.class, encoder));
     }
 
     public SomeService getService() {

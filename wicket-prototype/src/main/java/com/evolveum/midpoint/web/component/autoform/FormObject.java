@@ -21,6 +21,9 @@
 
 package com.evolveum.midpoint.web.component.autoform;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,5 +48,35 @@ public class FormObject implements Serializable {
             attributes = new ArrayList<FormAttribute>();
         }
         return attributes;
+    }
+
+    public List<Change> getChanges() {
+        List<Change> changes = new ArrayList<Change>();
+
+        return changes;
+    }
+
+    /**
+     * This method remove all changes from {@link FormObject}. That means all changed attributes will
+     * be marked as unchanged.
+     */
+    public void cleanChanges() {
+        for (FormAttribute<?> attribute : getAttributes()) {
+            for (FormValue<?> value : attribute.getValues()) {
+                switch (value.getStatus()) {
+                    case ADDED:
+                    case DELETED:
+                    case CHANGED:
+                        value.setStatus(FormValueStatus.NOT_CHANGED);
+                        break;
+                    default:
+                }
+            }
+        }
+    }
+
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 }

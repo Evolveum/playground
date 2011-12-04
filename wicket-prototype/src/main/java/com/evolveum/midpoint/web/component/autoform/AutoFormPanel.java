@@ -51,28 +51,25 @@ public class AutoFormPanel extends Panel {
     public AutoFormPanel(String id, IModel<FormObject> model) {
         super(id, model);
 
-        final ListView<FormAttribute> panel = new ListView<FormAttribute>("list",
+        ListView<FormAttribute> attributesPanel = new ListView<FormAttribute>("list",
                 new PropertyModel<List<FormAttribute>>(model, FormObject.F_ATTRIBUTES)) {
-
-            private static final long serialVersionUID = 2288187916579143616L;
 
             @Override
             protected void populateItem(ListItem<FormAttribute> item) {
                 AutoFormPanel.this.populateItem(item);
             }
         };
-        panel.setOutputMarkupId(true);
-        add(panel);
+        attributesPanel.setOutputMarkupId(true);
+        add(attributesPanel);
 
-        AjaxCheckBox showEmpty = new AjaxCheckBox("showEmpty", new PropertyModel<Boolean>(this, "showEmpty")) {
+        add(new AjaxCheckBox("showEmpty", new PropertyModel<Boolean>(this, "showEmpty")) {
 
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
                 target.add(AutoFormPanel.this);
             }
-        };
+        });
 
-        add(showEmpty);
         add(new FeedbackPanel("feedback"));
         setOutputMarkupId(true);
     }
@@ -86,13 +83,14 @@ public class AutoFormPanel extends Panel {
     }
 
     private void populateItem(ListItem<FormAttribute> item) {
-        FormAttribute attribute = item.getModel().getObject();
+        FormAttribute<FormValue> attribute = item.getModel().getObject();
         item.add(new Label("label", new PropertyModel<Object>(item.getModel(), "definition.displayName")));
-        item.add(populateValues(attribute, item.getModel()));
-        item.setVisible(showEmpty || (!attribute.getValues().isEmpty() && attribute.getValues().get(0) != null));
+        item.add(populateValues(item.getModel()));
+        item.setVisible(showEmpty || (!attribute.getValues().isEmpty()
+                && attribute.getValues().get(0).getStatus() != FormValueStatus.PLACEHOLDER));
     }
 
-    private Component populateValues(final FormAttribute attribute, final IModel<FormAttribute> model) {
+    private Component populateValues(final IModel<FormAttribute> model) {
         final WebMarkupContainer container = new WebMarkupContainer("container");
         container.setOutputMarkupId(true);
 
@@ -100,24 +98,18 @@ public class AutoFormPanel extends Panel {
 
             @Override
             protected void populateItem(final ListItem<FormValue> item) {
-                item.add(createValueField(attribute, model, item.getIndex()));
+                item.add(createValueField(model, item.getIndex()));
                 //add buttons
                 AjaxLink<String> addLink = new AjaxLink<String>("addButton") {
 
                     @Override
                     public void onClick(AjaxRequestTarget target) {
-                        System.out.println("add");
-                        attribute.getValues().add(null);
-
-                        target.add(container);
+                        addValuePerformed(target, container, model);
                     }
 
                     @Override
                     public boolean isVisible() {
-                        FormAttribute<FormValue<? extends Serializable>> attribute = model.getObject();
-
-                        return super.isVisible() && attribute.canAddValue() &&
-                                ((attribute.getValuesSize() == 1) || (attribute.getValuesSize() == item.getIndex() + 1));
+                        return isAddValueLinkVisible(model, item.getIndex());
                     }
                 };
                 item.add(addLink);
@@ -125,20 +117,18 @@ public class AutoFormPanel extends Panel {
 
                     @Override
                     public void onClick(AjaxRequestTarget target) {
-                        System.out.println("remove");
-                        attribute.getValues().remove(item.getIndex());
-
-                        target.add(container);
+                        removeValuePerformed(target, container, model, item.getIndex());
                     }
 
                     @Override
                     public boolean isVisible() {
-                        FormAttribute<FormValue<? extends Serializable>> attribute = model.getObject();
-
-                        return super.isVisible() && attribute.canRemoveValue();
+                        return isRemoveValueLinkVisible(model, item.getIndex());
                     }
                 };
                 item.add(removeLink);
+
+                boolean visible = !FormValueStatus.DELETED.equals(item.getModelObject().getStatus());
+                item.setVisible(visible);
             }
         };
         container.add(ulList);
@@ -146,7 +136,38 @@ public class AutoFormPanel extends Panel {
         return container;
     }
 
-    private Component createValueField(FormAttribute attribute, IModel<FormAttribute> model, int index) {
+    public boolean isAddValueLinkVisible(IModel<FormAttribute> model, int index) {
+        FormAttribute<FormValue<? extends Serializable>> attribute = model.getObject();
+
+        return super.isVisible() && attribute.canAddValue() &&
+                ((attribute.getValuesSize() == 1) || (attribute.getValuesSize() == index + 1));
+    }
+
+    public boolean isRemoveValueLinkVisible(IModel<FormAttribute> model, int index) {
+        FormAttribute<FormValue<? extends Serializable>> attribute = model.getObject();
+
+        return super.isVisible() && attribute.canRemoveValue();
+    }
+
+    private void addValuePerformed(AjaxRequestTarget target, WebMarkupContainer container,
+                                   IModel<FormAttribute> model) {
+        model.getObject().getValues().add(new FormValue(null, FormValueStatus.ADDED));
+
+        target.add(container);
+    }
+
+    private void removeValuePerformed(AjaxRequestTarget target, WebMarkupContainer container,
+                                      IModel<FormAttribute> model, int index) {
+        FormAttribute<?> attribute = model.getObject();
+        FormValue<?> value = attribute.getValues().get(index);
+        value.setStatus(FormValueStatus.DELETED);
+
+        target.add(container);
+    }
+
+    private Component createValueField(IModel<FormAttribute> model, int index) {
+        FormAttribute attribute = model.getObject();
+
         if (attribute.getDefinition().getAvailableValues() != null) {
             return new ComboPanel(COMPONENT_ID, new PropertyModel<String>(model, "values[" + index + "]"),
                     new PropertyModel<List<String>>(model, "definition.availableValues"));

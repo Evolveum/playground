@@ -25,20 +25,26 @@ import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.mapper.parameter.IPageParametersEncoder;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.request.mapper.parameter.PageParameters.NamedPair;
 
 import java.util.Iterator;
+
 
 /**
  * @author lazyman
  */
 public class MidPointPageParametersEncoder implements IPageParametersEncoder {
-
+    /**
+     * Encodes a URL in the form:
+     * <p/>
+     * /mountpoint/paramName1/paramValue1/paramName2/paramValue2
+     * <p/>
+     * (i.e. a URL using the pre wicket 1.5 Hybrid URL strategy)
+     */
     @Override
     public Url encodePageParameters(PageParameters pageParameters) {
         Url url = new Url();
 
-        for (NamedPair pair : pageParameters.getAllNamed()) {
+        for (PageParameters.NamedPair pair : pageParameters.getAllNamed()) {
             url.getSegments().add(pair.getKey());
             url.getSegments().add(pair.getValue());
         }
@@ -46,11 +52,17 @@ public class MidPointPageParametersEncoder implements IPageParametersEncoder {
         return url;
     }
 
+    /**
+     * Decodes a URL in the form:
+     * <p/>
+     * /mountpoint/paramName1/paramValue1/paramName2/paramValue2
+     * <p/>
+     * (i.e. a URL using the pre wicket 1.5 Hybrid URL strategy)
+     */
     @Override
     public PageParameters decodePageParameters(Request request) {
         PageParameters parameters = new PageParameters();
 
-        int i = 0;
         for (Iterator<String> segment = request.getUrl().getSegments().iterator(); segment.hasNext(); ) {
             String key = segment.next();
             String value = segment.next();
@@ -60,4 +72,5 @@ public class MidPointPageParametersEncoder implements IPageParametersEncoder {
 
         return parameters.isEmpty() ? null : parameters;
     }
+
 }
