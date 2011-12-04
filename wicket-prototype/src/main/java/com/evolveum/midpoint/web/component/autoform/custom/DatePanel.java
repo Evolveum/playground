@@ -21,25 +21,23 @@
 
 package com.evolveum.midpoint.web.component.autoform.custom;
 
-import org.apache.wicket.ajax.AjaxEventBehavior;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.datetime.markup.html.form.DateTextField;
+import org.apache.wicket.extensions.yui.calendar.DatePicker;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
-public class TextPanel<T> extends Panel {
+import java.util.Date;
 
-    public TextPanel(String id, IModel<T> model) {
+/**
+ * @author lazyman
+ */
+public class DatePanel extends Panel {
+
+    public DatePanel(String id, IModel<Date> model) {
         super(id);
 
-        TextField<T> text = new TextField<T>("input", model);
-        text.add(new AjaxEventBehavior("onFocus") {
-
-            @Override
-            protected void onEvent(AjaxRequestTarget target) {
-                //todo implementovat co sa ma stat po zmene focusu
-            }
-        });
-        add(text);
+        DateTextField date = DateTextField.forDatePattern("input", model, "dd/MMM/YYY");
+        date.add(new DatePicker());
+        add(date);
     }
 }

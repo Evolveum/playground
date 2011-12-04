@@ -28,11 +28,11 @@ import com.evolveum.midpoint.schema.processor.ResourceObjectAttributeDefinition;
 import com.evolveum.midpoint.schema.processor.ResourceObjectDefinition;
 import com.evolveum.midpoint.schema.processor.Schema;
 import com.evolveum.midpoint.schema.util.JAXBUtil;
-import com.evolveum.midpoint.xml.ns._public.common.common_1.ResourceType;
 import com.evolveum.midpoint.web.MidPointApplication;
 import com.evolveum.midpoint.web.admin.PageAdmin;
 import com.evolveum.midpoint.web.component.autoform.*;
 import com.evolveum.midpoint.web.component.util.LoadableModel;
+import com.evolveum.midpoint.xml.ns._public.common.common_1.ResourceType;
 import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -65,6 +65,7 @@ public class PageUser extends PageAdmin {
                 if (object == null) {
                     object = new FormObject(new ArrayList<FormAttribute>(), "Unknown");
                 }
+
                 return object;
             }
         };
@@ -79,7 +80,7 @@ public class PageUser extends PageAdmin {
             @Override
             protected Object load() {
                 MidPointApplication application = getMidpointApplication();
-                System.out.println(">>>>>>>> '"+application.getService().getValue()+"'");
+                System.out.println(">>>>>>>> '" + application.getService().getValue() + "'");
                 return application.getService().getValue();
             }
         }));
@@ -109,7 +110,7 @@ public class PageUser extends PageAdmin {
                 continue;
             }
             FormAttributeDefinition attrDefinition = createFormAttributeDefinition((ResourceObjectAttributeDefinition) property);
-            List<Object> values = getV(property.getName()); //getAttributeValues(valueMap, property.getName());
+            List<FormValue> values = getV(property.getName()); //getAttributeValues(valueMap, property.getName());
             list.add(new FormAttribute(attrDefinition, values));
         }
 
@@ -120,7 +121,14 @@ public class PageUser extends PageAdmin {
         builder.setDisplayName("a display name");
         builder.setElementName(new QName("vilko", "repan"));
         builder.setType(AttributeType.STRING);
-        list.add(new FormAttribute(builder.build(), new ArrayList<Object>()));
+        list.add(new FormAttribute(builder.build()));
+
+        builder = new FormAttributeDefinitionBuilder();
+        builder.setDescription("some date stuff");
+        builder.setDisplayName("a display some date");
+        builder.setElementName(new QName("vilko", "date"));
+        builder.setType(AttributeType.DATE);
+        list.add(new FormAttribute(builder.build()));
         //todo end
 
         Collections.sort(list, new Comparator<FormAttribute>() {
@@ -133,19 +141,16 @@ public class PageUser extends PageAdmin {
         return new FormObject(list, getDisplayName(resource, definition));
     }
 
-    private List<Object> getV(QName name) {
+    private List<FormValue> getV(QName name) {
+        List<FormValue> list = new ArrayList<FormValue>();
         if (name.equals(new QName("http://midpoint.evolveum.com/xml/ns/public/resource/instance/10000000-0000-0000-0000-000000000003", "audio"))) {
-            List<Object> list = new ArrayList<Object>();
-            list.add("hodnota1");
-            return list;
+            list.add(new FormValue("hodnota1"));
         } else if (name.equals(new QName("http://midpoint.evolveum.com/xml/ns/public/resource/instance/10000000-0000-0000-0000-000000000003", "carLicense"))) {
-            List<Object> list = new ArrayList<Object>();
-            list.add("hodnota a");
-            list.add("hodnota b");
-            return list;
+            list.add(new FormValue("hodnota a"));
+            list.add(new FormValue("hodnota b"));
         }
 
-        return new ArrayList<Object>();
+        return list;
     }
 
     private String getDisplayName(ResourceType resource, ResourceObjectDefinition definition) {

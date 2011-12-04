@@ -22,14 +22,13 @@
 package com.evolveum.midpoint.web.component.autoform;
 
 import com.evolveum.midpoint.web.component.autoform.custom.ComboPanel;
+import com.evolveum.midpoint.web.component.autoform.custom.DatePanel;
 import com.evolveum.midpoint.web.component.autoform.custom.PasswordPanel;
 import com.evolveum.midpoint.web.component.autoform.custom.TextPanel;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
-import org.apache.wicket.datetime.markup.html.form.DateTextField;
-import org.apache.wicket.extensions.yui.calendar.DatePicker;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -39,6 +38,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -96,10 +96,10 @@ public class AutoFormPanel extends Panel {
         final WebMarkupContainer container = new WebMarkupContainer("container");
         container.setOutputMarkupId(true);
 
-        ListView<Object> ulList = new ListView<Object>("attributes", new PropertyModel<List<Object>>(model, "values")) {
+        ListView<FormValue> ulList = new ListView<FormValue>("attributes", new PropertyModel<List<FormValue>>(model, "values")) {
 
             @Override
-            protected void populateItem(final ListItem<Object> item) {
+            protected void populateItem(final ListItem<FormValue> item) {
                 item.add(createValueField(attribute, model, item.getIndex()));
                 //add buttons
                 AjaxLink<String> addLink = new AjaxLink<String>("addButton") {
@@ -111,6 +111,14 @@ public class AutoFormPanel extends Panel {
 
                         target.add(container);
                     }
+
+                    @Override
+                    public boolean isVisible() {
+                        FormAttribute<FormValue<? extends Serializable>> attribute = model.getObject();
+
+                        return super.isVisible() && attribute.canAddValue() &&
+                                ((attribute.getValuesSize() == 1) || (attribute.getValuesSize() == item.getIndex() + 1));
+                    }
                 };
                 item.add(addLink);
                 AjaxLink<String> removeLink = new AjaxLink<String>("removeButton") {
@@ -121,6 +129,13 @@ public class AutoFormPanel extends Panel {
                         attribute.getValues().remove(item.getIndex());
 
                         target.add(container);
+                    }
+
+                    @Override
+                    public boolean isVisible() {
+                        FormAttribute<FormValue<? extends Serializable>> attribute = model.getObject();
+
+                        return super.isVisible() && attribute.canRemoveValue();
                     }
                 };
                 item.add(removeLink);
@@ -137,19 +152,18 @@ public class AutoFormPanel extends Panel {
                     new PropertyModel<List<String>>(model, "definition.availableValues"));
         }
 
+        final String property = "values[" + index + "].value";
         Component component = null;
         switch (attribute.getDefinition().getType()) {
             case DATE:
-                DateTextField date = DateTextField.forDatePattern(COMPONENT_ID,
-                        new PropertyModel<Date>(model, "values[" + index + "]"), "dd/MMM/YYY");
-                date.add(new DatePicker());
-                component = date;
+                component = new DatePanel(COMPONENT_ID, new PropertyModel<Date>(model, property));
                 break;
             case PASSWORD:
-                component = new PasswordPanel(COMPONENT_ID, new PropertyModel<String>(model, "values[" + index + "]"));
+                component = new PasswordPanel(COMPONENT_ID, new PropertyModel<String>(model, property),
+                        new PasswordPanel.Validation("[a-z]{1}", "[0-1]{1}", "[A-Z]{1}"));
                 break;
             default:
-                component = new TextPanel<String>(COMPONENT_ID, new PropertyModel<String>(model, "values[" + index + "]"));
+                component = new TextPanel<String>(COMPONENT_ID, new PropertyModel<String>(model, property));
         }
 
         return component;
