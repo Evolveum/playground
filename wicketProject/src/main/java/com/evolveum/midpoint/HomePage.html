@@ -26,15 +26,44 @@
 	<label wicket:id="version"></label>
 	<div wicket:id="feedback"></div>
 	<form wicket:id="userForm">
-		Username: <input wicket:id="username" type="text" size="20" /> <input
+		Username: <input wicket:id="username" type="text" size="20" /><input
 			type="submit" value="Odosla">
 	</form>
 
 	<div wicket:id="wiAccordion">
 		<wicket:container wicket:id="accordionListView">
-			<h3><a href="#div"><wicket:container wicket:id="sectionNameLbl"></wicket:container></a></h3>
-					<<label wicket:id=sectionLblContent></label>
+			<h3>
+				<a href="#div"><wicket:container wicket:id="sectionNameLbl"></wicket:container></a>
+			</h3>
+			<div>asdnasd asdhjagsd</div>
 		</wicket:container>
 	</div>
+	<br />
+	<br />
+	<form>
+		<input type="text" wicket:id="autocomplete" />
+	</form>
+	<table>
+		<tr>
+			<td>
+				<p>Possible values :</p>
+				<ul>
+					<li>c++</li>
+					<li>java</li>
+					<li>php</li>
+					<li>coldfusion</li>
+					<li>javascript</li>
+					<li>asp</li>
+					<li>ruby</li>
+					<li>python</li>
+					<li>c</li>
+					<li>scala</li>
+					<li>groovy</li>
+					<li>haskell</li>
+					<li>perl</li>
+				</ul>
+			</td>
+		</tr>
+	</table>
 </body>
 </html>

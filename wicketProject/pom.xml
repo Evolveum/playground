@@ -101,16 +101,16 @@
 		<dependency>
 			<groupId>org.odlabs.wiquery</groupId>
 			<artifactId>wiquery-core</artifactId>
-			<version>${project.version}</version>
+			<version>1.5.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.odlabs.wiquery</groupId>
 			<artifactId>wiquery-jquery-ui</artifactId>
-			<version>${project.version}</version>
+			<version>1.5.0</version>
 		</dependency>
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.wiquery-plugins</groupId>
 			<artifactId>antila-grid</artifactId>
 			<version>1.1</version>
@@ -120,7 +120,7 @@
 			<groupId>com.wiquery-plugins</groupId>
 			<artifactId>other-plugins</artifactId>
 			<version>1.1</version>
-		</dependency>
+		</dependency> -->
 		
 	</dependencies>
 	<build>
@@ -218,9 +218,7 @@
 			<id>wiquery plugin repository</id>
 			<name>wiQuery plugin repository</name>
 			<url>http://wiquery-plugins.googlecode.com/svn/m2repo/</url>
-			<layout>default</layout>
 		</repository>
-
 
 		<repository>
 			<id>Apache Nexus</id>

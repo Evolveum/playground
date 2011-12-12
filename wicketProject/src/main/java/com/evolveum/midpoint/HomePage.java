@@ -21,8 +21,11 @@
 
 package com.evolveum.midpoint;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -30,26 +33,50 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.mozilla.javascript.tools.debugger.Dim.SourceInfo;
-import org.odlabs.wiquery.plugin.layout.Layout;
-import org.odlabs.wiquery.plugin.layout.Layout.PanePositionEnum;
+import org.odlabs.wiquery.core.options.ArrayItemOptions;
+import org.odlabs.wiquery.core.options.LiteralOption;
 import org.odlabs.wiquery.ui.accordion.Accordion;
+import org.odlabs.wiquery.ui.autocomplete.Autocomplete;
+import org.odlabs.wiquery.ui.autocomplete.AutocompleteAjaxComponent;
+import org.odlabs.wiquery.ui.autocomplete.AutocompleteComponent;
+import org.odlabs.wiquery.ui.autocomplete.AutocompleteSource;
 
 public class HomePage extends WebPage {
 	private static final long serialVersionUID = 1L;
 
+	private AutocompleteComponent<UserBean> autocompleteComponent;
+	private AutocompleteAjaxComponent<String> autocompleteAjaxComponent;
+
 	public HomePage() {
 		Accordion accordion = new Accordion("wiAccordion");
-		// A private method that returns a list of Strings getSections
 		List<String> carNamelList = getList();
 
 		add(new FeedbackPanel("feedback"));
 		add(new Label("version", "This is version of wicket: "
 				+ getApplication().getFrameworkSettings().getVersion()));
 
+		// Autocomplete
+		ArrayItemOptions<LiteralOption> array = new ArrayItemOptions<LiteralOption>();
+		array.add(new LiteralOption("c++"));
+		array.add(new LiteralOption("java"));
+		array.add(new LiteralOption("php"));
+		array.add(new LiteralOption("coldfusion"));
+		array.add(new LiteralOption("javascript"));
+		array.add(new LiteralOption("asp"));
+		array.add(new LiteralOption("ruby"));
+		array.add(new LiteralOption("python"));
+		array.add(new LiteralOption("c"));
+		array.add(new LiteralOption("scala"));
+		array.add(new LiteralOption("groovy"));
+		array.add(new LiteralOption("haskell"));
+		array.add(new LiteralOption("perl"));
+
+		final Autocomplete<String> autocomplete = new Autocomplete<String>("autocomplete");
+		autocomplete.setSource(new AutocompleteSource(array));
+		autocomplete.setRequired(true);
+		
 		final TextField<String> username = new TextField<String>("username", Model.of(""));
 		username.setRequired(true);
 
@@ -66,6 +93,7 @@ public class HomePage extends WebPage {
 			}
 		};
 
+		@SuppressWarnings("unchecked")
 		ListView accordionListView = new ListView("accordionListView", carNamelList) {
 			private static final long serialVersionUID = 1L;
 
@@ -74,63 +102,65 @@ public class HomePage extends WebPage {
 				String sectionName = (String) listItem.getModelObject();
 				listItem.setRenderBodyOnly(true);
 				listItem.add(new Label("sectionNameLbl", sectionName).setRenderBodyOnly(true));
-				listItem.add(new Label("sectionNameLbl", sectionName).setRenderBodyOnly(true));
 			}
 		};
-
-		Layout layout = new Layout("layout", true) {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public Panel getLayoutWestComponent(String wicketId) {
-				return new NavigationPanel(wicketId);
-			}
-
-			@Override
-			public Panel getLayoutNorthComponent(String wicketId) {
-				return new HeaderPanel(wicketId);
-			}
-
-			@Override
-			public IndicatorPanel getLayoutCenterComponent(final String wicketId) {
-				return new IndicatorPanel(wicketId, creaAyuda()) {
-					@Override
-					protected Component newContents(String id) {
-						return HomePage.this.getLayoutCenterComponent(id);
-					}
-				};
-			}
-		};
-
+		add(autocomplete);
 		add(form);
 		form.add(username);
 		accordion.add(accordionListView);
 		add(accordion);// Finally add it to the Page
-
-		add(layout);
-		layout.setResizable(PanePositionEnum.NORTH, false).setClosable(PanePositionEnum.NORTH, false)
-				.setSpacingOpen(PanePositionEnum.NORTH, 0).setMinSize(PanePositionEnum.NORTH, 80)
-				.setMaxSize(PanePositionEnum.NORTH, 82);
-
 	}
 
-	private List<SourceInfo> creaAyuda() {
-		List<SourceInfo> codeInfos = new ArrayList<SourceInfo>();
-		addThisSourceCode(codeInfos);
-		addSourceCode(codeInfos);
-		return codeInfos;
+	public class UserBean implements Serializable {
+		// Constants
+		/** Constant of serialization */
+		private static final long serialVersionUID = 5835935588925589134L;
+
+		// Properties
+		private String name;
+		private Integer age;
+
+		public UserBean(String name, Integer age) {
+			super();
+			this.name = name;
+			this.age = age;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (obj instanceof UserBean) {
+				return ((UserBean) obj).getName().equalsIgnoreCase(this.name);
+			}
+
+			return false;
+		}
+
+		public Integer getAge() {
+			return age;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setAge(Integer age) {
+			this.age = age;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			return this.name;
+		}
 	}
-
-	private void addThisSourceCode(List<SourceInfo> codeInfos) {
-		codeInfos.add(new SourceInfo(HomePage.class));
-		codeInfos.add(new SourceInfo(HomePage.class, FORMAT.HTML, "HomePage.html", "HomePage.html"));
-	}
-
-	protected void addSourceCode(List<SourceInfo> codeInfos) {
-
-	}
-
-	protected abstract Panel getLayoutCenterComponent(String wicketId);
 
 	public List<String> getList() {
 		List<String> list = new ArrayList<String>();
@@ -144,4 +174,7 @@ public class HomePage extends WebPage {
 		return list;
 	}
 
+	private static final List<String> languages = new ArrayList<String>(
+			Arrays.asList("asp", "c", "c++", "coldfusion", "groovy", "haskell", "java", "javascript", "perl",
+					"php", "python", "ruby", "scala"));
 }
