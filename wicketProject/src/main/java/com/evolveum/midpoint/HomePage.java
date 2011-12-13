@@ -26,13 +26,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.markup.repeater.data.DataView;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.odlabs.wiquery.core.options.ArrayItemOptions;
@@ -42,6 +47,7 @@ import org.odlabs.wiquery.ui.autocomplete.Autocomplete;
 import org.odlabs.wiquery.ui.autocomplete.AutocompleteAjaxComponent;
 import org.odlabs.wiquery.ui.autocomplete.AutocompleteComponent;
 import org.odlabs.wiquery.ui.autocomplete.AutocompleteSource;
+import org.apache.wicket.extensions.markup.html.repeater.data.sort.OrderByBorder;
 
 public class HomePage extends WebPage {
 	private static final long serialVersionUID = 1L;
@@ -52,6 +58,57 @@ public class HomePage extends WebPage {
 	public HomePage() {
 		Accordion accordion = new Accordion("wiAccordion");
 		List<String> carNamelList = getList();
+
+		SortableContactDataProvider dp = new SortableContactDataProvider();
+
+		final DataView<Contact> dataView = new DataView<Contact>("sorting", dp) {
+			private static final long serialVersionUID = 1L;
+
+			@SuppressWarnings("deprecation")
+			@Override
+			protected void populateItem(final Item<Contact> item) {
+				Contact contact = item.getModelObject();
+				item.add(new ActionPanel("actions", item.getModel()) {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void doAction(Object modelObject) {
+					}
+				});
+				item.add(new Label("contactid", String.valueOf(contact.getId())));
+				item.add(new Label("firstname", contact.getFirstName()));
+				item.add(new Label("lastname", contact.getLastName()));
+				item.add(new Label("homephone", contact.getHomePhone()));
+				item.add(new Label("cellphone", contact.getCellPhone()));
+
+				item.add(new AttributeModifier("class", true, new AbstractReadOnlyModel<String>() {
+					@Override
+					public String getObject() {
+						return (item.getIndex() % 2 == 1) ? "even" : "odd";
+					}
+				}));
+			}
+		};
+
+		dataView.setItemsPerPage(10);
+
+		add(new OrderByBorder("orderByFirstName", "firstName", dp) {
+			static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onSortChanged() {
+				dataView.setCurrentPage(0);
+			}
+		});
+
+		add(new OrderByBorder("orderByLastName", "lastName", dp) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onSortChanged() {
+				dataView.setCurrentPage(0);
+			}
+		});
 
 		add(new FeedbackPanel("feedback"));
 		add(new Label("version", "This is version of wicket: "
@@ -76,7 +133,7 @@ public class HomePage extends WebPage {
 		final Autocomplete<String> autocomplete = new Autocomplete<String>("autocomplete");
 		autocomplete.setSource(new AutocompleteSource(array));
 		autocomplete.setRequired(true);
-		
+
 		final TextField<String> username = new TextField<String>("username", Model.of(""));
 		username.setRequired(true);
 
@@ -109,6 +166,10 @@ public class HomePage extends WebPage {
 		form.add(username);
 		accordion.add(accordionListView);
 		add(accordion);// Finally add it to the Page
+		
+		add(dataView);
+        add(new PagingNavigator("navigator", dataView));
+		
 	}
 
 	public class UserBean implements Serializable {
@@ -177,4 +238,5 @@ public class HomePage extends WebPage {
 	private static final List<String> languages = new ArrayList<String>(
 			Arrays.asList("asp", "c", "c++", "coldfusion", "groovy", "haskell", "java", "javascript", "perl",
 					"php", "python", "ruby", "scala"));
+
 }
