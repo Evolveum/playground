@@ -1,6 +1,6 @@
 package com.evolveum.midpoint;
 
-import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.ThreadContext;
 
 
 /**
@@ -16,8 +16,13 @@ public class DatabaseLocator
      */
     public static ContactsDatabase getDatabase()
     {
-		RepeaterApplication app = (RepeaterApplication)RequestCycle.get().getApplication();
+		MidPointApplication app = (MidPointApplication)get().getApplication();
     	return app.getContactsDB();
     }
+    
+    public static ThreadContext get()
+	{
+		return ThreadContext.get(true);
+	}
 }
 

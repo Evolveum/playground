@@ -32,6 +32,7 @@ import com.evolveum.midpoint.pretty.MidPointPageParametersEncoder;
  */
 @Component("midpointApplication")
 public class MidPointApplication extends WebApplication {
+	private final ContactsDatabase contactsDB = new ContactsDatabase(50);
 
 	/**
 	 * @see org.apache.wicket.Application#getHomePage()
@@ -49,11 +50,16 @@ public class MidPointApplication extends WebApplication {
 		super.init();
 		getMarkupSettings().setStripWicketTags(true);
 		getResourceSettings().setThrowExceptionOnMissingResource(false);
+		getDebugSettings().setDevelopmentUtilitiesEnabled(true);
 
 		// pretty url
 		MidPointPageParametersEncoder encoder = new MidPointPageParametersEncoder();
 		mount(new MountedMapper("/home", HomePage.class, encoder));
 		mount(new MountedMapper("/result", ResultPage.class, encoder));
+	}
+	
+	public ContactsDatabase getContactsDB() {
+		return contactsDB;
 	}
 
 	public WiQuerySettings getWiQuerySettings() {

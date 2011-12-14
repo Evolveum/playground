@@ -24,7 +24,6 @@ public class RepeaterApplication extends WebApplication {
 	@Override
 	protected void init() {
 		getDebugSettings().setDevelopmentUtilitiesEnabled(true);
-		//getRequestCycleSettings().addResponseFilter(new ServerAndClientTimeFilter());
 	}
 
 	/**

@@ -11,7 +11,7 @@ public class SortableContactDataProvider extends SortableDataProvider<Contact> {
 	private static final long serialVersionUID = 1L;
 
 	public SortableContactDataProvider() {
-		setSort("firstName", SortOrder.NONE);
+		setSort("firstName", SortOrder.ASCENDING);
 	}
 
 	protected ContactsDatabase getContactsDB() {

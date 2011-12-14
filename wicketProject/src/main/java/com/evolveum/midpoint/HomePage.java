@@ -27,10 +27,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.extensions.markup.html.repeater.data.sort.OrderByBorder;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
@@ -39,6 +41,7 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.odlabs.wiquery.core.options.ArrayItemOptions;
 import org.odlabs.wiquery.core.options.LiteralOption;
@@ -47,7 +50,6 @@ import org.odlabs.wiquery.ui.autocomplete.Autocomplete;
 import org.odlabs.wiquery.ui.autocomplete.AutocompleteAjaxComponent;
 import org.odlabs.wiquery.ui.autocomplete.AutocompleteComponent;
 import org.odlabs.wiquery.ui.autocomplete.AutocompleteSource;
-import org.apache.wicket.extensions.markup.html.repeater.data.sort.OrderByBorder;
 
 public class HomePage extends WebPage {
 	private static final long serialVersionUID = 1L;
@@ -55,6 +57,7 @@ public class HomePage extends WebPage {
 	private AutocompleteComponent<UserBean> autocompleteComponent;
 	private AutocompleteAjaxComponent<String> autocompleteAjaxComponent;
 
+	@SuppressWarnings("serial")
 	public HomePage() {
 		Accordion accordion = new Accordion("wiAccordion");
 		List<String> carNamelList = getList();
@@ -63,18 +66,23 @@ public class HomePage extends WebPage {
 
 		final DataView<Contact> dataView = new DataView<Contact>("sorting", dp) {
 			private static final long serialVersionUID = 1L;
+			PageParameters pageParameters = new PageParameters();
 
 			@SuppressWarnings("deprecation")
 			@Override
 			protected void populateItem(final Item<Contact> item) {
-				Contact contact = item.getModelObject();
-				item.add(new ActionPanel("actions", item.getModel()) {
+				final Contact contact = item.getModelObject();
+				String name = contact.getFirstName() + " " + contact.getLastName();
+				item.add(new Link<Contact>("test", item.getModel()) {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void doAction(Object modelObject) {
+					public void onClick() {
+						pageParameters.add("model", contact);
+						setResponsePage(ResultPage.class, pageParameters);
 					}
-				});
+				}.add(new Label("linkTest", name)));
+
 				item.add(new Label("contactid", String.valueOf(contact.getId())));
 				item.add(new Label("firstname", contact.getFirstName()));
 				item.add(new Label("lastname", contact.getLastName()));
@@ -82,6 +90,7 @@ public class HomePage extends WebPage {
 				item.add(new Label("cellphone", contact.getCellPhone()));
 
 				item.add(new AttributeModifier("class", true, new AbstractReadOnlyModel<String>() {
+
 					@Override
 					public String getObject() {
 						return (item.getIndex() % 2 == 1) ? "even" : "odd";
@@ -97,7 +106,7 @@ public class HomePage extends WebPage {
 
 			@Override
 			protected void onSortChanged() {
-				dataView.setCurrentPage(0);
+				dataView.setCurrentPage(dataView.getCurrentPage());
 			}
 		});
 
@@ -106,9 +115,46 @@ public class HomePage extends WebPage {
 
 			@Override
 			protected void onSortChanged() {
-				dataView.setCurrentPage(0);
+				dataView.setCurrentPage(dataView.getCurrentPage());
 			}
 		});
+
+		final DataView<Contact> dataViewNormal = new DataView<Contact>("normal", dp) {
+			private static final long serialVersionUID = 1L;
+			PageParameters pageParameters = new PageParameters();
+
+			@SuppressWarnings("deprecation")
+			@Override
+			protected void populateItem(final Item<Contact> item) {
+				final Contact contact = item.getModelObject();
+
+				item.add(new Link<Contact>("testNormal", item.getModel()) {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void onClick() {
+						pageParameters.add("model", contact);
+						setResponsePage(ResultPage.class, pageParameters);
+					}
+				}.add(new Label("linkTestNormal", contact.getLastName() + " " + contact.getFirstName())));
+
+				item.add(new Label("contactidNormal", String.valueOf(contact.getId())));
+				item.add(new Label("firstnameNormal", contact.getFirstName()));
+				item.add(new Label("lastnameNormal", contact.getLastName()));
+				item.add(new Label("homephoneNormal", contact.getHomePhone()));
+				item.add(new Label("cellphoneNormal", contact.getCellPhone()));
+
+				item.add(new AttributeModifier("class", true, new AbstractReadOnlyModel<String>() {
+
+					@Override
+					public String getObject() {
+						return (item.getIndex() % 2 == 1) ? "even" : "odd";
+					}
+				}));
+			}
+		};
+
+		dataViewNormal.setItemsPerPage(10);
 
 		add(new FeedbackPanel("feedback"));
 		add(new Label("version", "This is version of wicket: "
@@ -166,10 +212,13 @@ public class HomePage extends WebPage {
 		form.add(username);
 		accordion.add(accordionListView);
 		add(accordion);// Finally add it to the Page
-		
+
 		add(dataView);
-        add(new PagingNavigator("navigator", dataView));
-		
+		add(new PagingNavigator("navigator", dataView));
+
+		add(dataViewNormal);
+		add(new PagingNavigator("normalNavigator", dataViewNormal));
+
 	}
 
 	public class UserBean implements Serializable {
