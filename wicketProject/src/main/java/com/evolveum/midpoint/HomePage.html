@@ -35,13 +35,15 @@
 			});
 
 			$(".tablesorter tbody tr").mouseover(function() {
-				//alert($(this).css("background-color"));
 				$(this).css("cursor", "pointer");
-				$(this).css("background", "#F5F5FA");
+				$(this).css("background", "#C1CBD4");
 			});
 			$(".tablesorter tbody tr").mouseout(function() {
-				//alert($(this).css("background-color"));
-				$(this).css("background", "#FFF");
+				if ($(this).attr("class") === "odd") {
+					$(this).css("background", "#F0F0F6");
+				} else {
+					$(this).css("background", "#FFF");
+				}
 			});
 		});
 	</script>
