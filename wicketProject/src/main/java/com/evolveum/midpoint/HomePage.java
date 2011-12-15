@@ -33,34 +33,24 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.odlabs.wiquery.core.options.ArrayItemOptions;
-import org.odlabs.wiquery.core.options.LiteralOption;
-import org.odlabs.wiquery.ui.accordion.Accordion;
-import org.odlabs.wiquery.ui.autocomplete.Autocomplete;
-import org.odlabs.wiquery.ui.autocomplete.AutocompleteAjaxComponent;
-import org.odlabs.wiquery.ui.autocomplete.AutocompleteComponent;
-import org.odlabs.wiquery.ui.autocomplete.AutocompleteSource;
 
 public class HomePage extends WebPage {
 	private static final long serialVersionUID = 1L;
 
-	private AutocompleteComponent<UserBean> autocompleteComponent;
-	private AutocompleteAjaxComponent<String> autocompleteAjaxComponent;
+	/*private AutocompleteComponent<UserBean> autocompleteComponent;
+	private AutocompleteAjaxComponent<String> autocompleteAjaxComponent;*/
 
 	@SuppressWarnings("serial")
 	public HomePage() {
-		Accordion accordion = new Accordion("wiAccordion");
-		List<String> carNamelList = getList();
+		//Accordion accordion = new Accordion("wiAccordion");
+		//List<String> carNamelList = getList();
 
 		SortableContactDataProvider dp = new SortableContactDataProvider();
 
@@ -160,7 +150,7 @@ public class HomePage extends WebPage {
 		add(new Label("version", "This is version of wicket: "
 				+ getApplication().getFrameworkSettings().getVersion()));
 
-		// Autocomplete
+		/*// Autocomplete
 		ArrayItemOptions<LiteralOption> array = new ArrayItemOptions<LiteralOption>();
 		array.add(new LiteralOption("c++"));
 		array.add(new LiteralOption("java"));
@@ -178,7 +168,7 @@ public class HomePage extends WebPage {
 
 		final Autocomplete<String> autocomplete = new Autocomplete<String>("autocomplete");
 		autocomplete.setSource(new AutocompleteSource(array));
-		autocomplete.setRequired(true);
+		autocomplete.setRequired(true);*/
 
 		final TextField<String> username = new TextField<String>("username", Model.of(""));
 		username.setRequired(true);
@@ -196,7 +186,7 @@ public class HomePage extends WebPage {
 			}
 		};
 
-		@SuppressWarnings("unchecked")
+		/*@SuppressWarnings("unchecked")
 		ListView accordionListView = new ListView("accordionListView", carNamelList) {
 			private static final long serialVersionUID = 1L;
 
@@ -206,13 +196,13 @@ public class HomePage extends WebPage {
 				listItem.setRenderBodyOnly(true);
 				listItem.add(new Label("sectionNameLbl", sectionName).setRenderBodyOnly(true));
 			}
-		};
-		add(autocomplete);
+		};*/
+		//add(autocomplete);
 		add(form);
 		form.add(username);
-		accordion.add(accordionListView);
+		/*accordion.add(accordionListView);
 		add(accordion);// Finally add it to the Page
-
+*/
 		add(dataView);
 		add(new PagingNavigator("navigator", dataView));
 
