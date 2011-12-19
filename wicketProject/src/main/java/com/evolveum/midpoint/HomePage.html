@@ -22,103 +22,42 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
         "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns:wicket="http://wicket.apache.org">
-<wicket:head>
-	<script type="text/javascript" src="js/jquery.js"></script>
-	<script type="text/javascript" src="js/jquery.tablesorter.js"></script>
-	<script type="text/javascript" src="js/jquery.tablesorter.pager.js"></script>
-	<link rel="stylesheet" href="css/style.css" type="text/css" id=""
-		media="print, projection, screen" />
-	<script type="text/javascript">
-		$(document).ready(function() {
-			/* 			$(".tablesorter").tablesorter({
-			 widthFixed : true
-			 }); */
-
-			$(".tablesorter tbody tr").mouseover(function() {
-				$(this).css("cursor", "pointer");
-				$(this).css("background", "#C1CBD4");
-				$(this).css("color", "white");
-			});
-			$(".tablesorter tbody tr").mouseout(function() {
-				if ($(this).attr("class") === "odd") {
-					$(this).css("background", "#F0F0F6");
-				} else {
-					$(this).css("background", "#FFF");
-				}
-				$(this).css("color", "#3D3D3D");
-			});
-		});
-	</script>
-</wicket:head>
+<head>
+<title wicket:id="title">title comes here</title>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/evolveum.js"></script>
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
 <body>
-	<label wicket:id="version"></label>
-	<div wicket:id="feedback"></div>
-	<form wicket:id="userForm">
-		Username: <input wicket:id="username" type="text" size="20" /><input
-			type="submit" value="Odosla">
-	</form>
+	<div id="top">
+		<div id="logo">Evolveum - MidPoint</div>
+		<div id="login">You are logged as: <span>midPoint Administrator</span> | Logout</div>
+	</div>
 
-	<!-- <div wicket:id="wiAccordion">
-		<wicket:container wicket:id="accordionListView">
-			<h3>
-				<a href="#div"><wicket:container wicket:id="sectionNameLbl"></wicket:container></a>
-			</h3>
-			<div>asdnasd asdhjagsd</div>
-		</wicket:container>
-	</div> -->
-	<br />
-	<br />
-	<!-- <input type="text" wicket:id="autocomplete" /> -->
-	<br />
-	<br />
-	<span wicket:id="navigator">[dataview navigator]</span>
-	<table cellspacing="0" class="tablesorter" border="0">
-		<thead>
-			<tr>
-				<th>Test</th>
-				<th>ID</th>
-				<th wicket:id="orderByFirstName">First Name</th>
-				<th wicket:id="orderByLastName">Last Name</th>
-				<th>Home Phone</th>
-				<th>Cell Phone</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr wicket:id="sorting">
-				<td><a wicket:id="test"><span wicket:id="linkTest">[test]</span></a></td>
-				<td><span wicket:id="contactid">[contactid]</span></td>
-				<td><span wicket:id="firstname">[firstname]</span></td>
-				<td><span wicket:id="lastname">[lastname]</span></td>
-				<td><span wicket:id="homephone">[homephone]</span></td>
-				<td><span wicket:id="cellphone">[cellphone]</span></td>
-			</tr>
-		</tbody>
+	<table id="middle" width="100%">
+		<tr>
+			<td id="left" class="borderedBlock">
+				<ul>
+					<li><a href="#" wicket:id="homeLink">Home</a></li>
+					<li><a href="#" wicket:id="usersLink">Users</a></li>
+					<!-- <ol>
+						<a wicket:id="rolesLink">Roles</a>
+					</ol>
+					<ol>
+						<a wicket:id="resourcesLink">Resources</a>
+					</ol>
+					<ol>
+						<a wicket:id="serverTasksLink">Server Tasks</a>
+					</ol>
+					<ol>
+						<a wicket:id="configurationLink">Configuration</a>
+					</ol> -->
+				</ul>
+			</td>
+			<td id="content" class="borderedBlockContent"><wicket:child /></td>
+		</tr>
 	</table>
-	<br />
-	<h2>With jQuery</h2>
-	<span wicket:id="normalNavigator">[dataview navigator]</span>
-	<table class="tablesorter" id="dataviewNormal" cellspacing="0">
-		<thead>
-			<tr>
-				<th>Test</th>
-				<th>ID</th>
-				<th>First Name</th>
-				<th>Last Name</th>
-				<th>Home Phone</th>
-				<th>Cell Phone</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr wicket:id="normal">
-				<td><a wicket:id="testNormal"><span
-						wicket:id="linkTestNormal">[test]</span></a></td>
-				<td><span wicket:id="contactidNormal">[contactid]</span></td>
-				<td><span wicket:id="firstnameNormal">[firstname]</span></td>
-				<td><span wicket:id="lastnameNormal">[lastname]</span></td>
-				<td><span wicket:id="homephoneNormal">[homephone]</span></td>
-				<td><span wicket:id="cellphoneNormal">[cellphone]</span></td>
-			</tr>
-		</tbody>
-	</table>
+	<div id="footer" class="borderedBlock">@ RoseIndia Technologies
+		Pvt. Ltd</div>
 </body>
 </html>

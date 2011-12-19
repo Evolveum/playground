@@ -1,4 +1,4 @@
-package com.evolveum.midpoint;
+package com.evolveum.midpoint.user;
 
 import org.apache.wicket.IClusterable;
 

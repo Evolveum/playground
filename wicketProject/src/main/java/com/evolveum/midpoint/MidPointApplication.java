@@ -26,6 +26,9 @@ import org.apache.wicket.request.mapper.MountedMapper;
 import org.odlabs.wiquery.core.WiQuerySettings;
 import org.springframework.stereotype.Component;
 import com.evolveum.midpoint.pretty.MidPointPageParametersEncoder;
+import com.evolveum.midpoint.user.ContactsDatabase;
+import com.evolveum.midpoint.user.ResultPage;
+import com.evolveum.midpoint.user.UserPage;
 
 /**
  * @author lazyman
@@ -57,6 +60,7 @@ public class MidPointApplication extends WebApplication {
 		MidPointPageParametersEncoder encoder = new MidPointPageParametersEncoder();
 		mount(new MountedMapper("/home", HomePage.class, encoder));
 		mount(new MountedMapper("/result", ResultPage.class, encoder));
+		mount(new MountedMapper("/users", UserPage.class, encoder));
 	}
 	
 	public ContactsDatabase getContactsDB() {

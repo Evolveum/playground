@@ -1,7 +1,9 @@
-package com.evolveum.midpoint;
+package com.evolveum.midpoint.user;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
+
+import com.evolveum.midpoint.HomePage;
 
 /**
  * application class for repeater examples application

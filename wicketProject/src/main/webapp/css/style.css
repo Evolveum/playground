@@ -1,12 +1,96 @@
-/* tables */
+a:hover {
+	text-decoration: none;
+	font-size: 14;
+}
+
+body {
+	min-width: 1024px;
+}
+
+.borderedBlock {
+	background: #DEDEDE;
+	color: blue;
+	font-weight: bold;
+	border: solid #E9601A;
+	border-width: thin;
+	padding: 10px;
+	margin: 2px;
+}
+
+.borderedBlockContent {
+	background: #DEDEDE;
+	color: blue;
+	font-weight: bold;
+	border: solid #E9601A;
+	border-width: thin;
+	padding: 20px 10px 20px 10px;
+	margin: 2px;
+}
+
+#top {
+	min-width: 1024px;
+	position: absolute;
+	background : black;
+	color: white;
+	font-weight: bold;
+	left: 0px;
+	top: 0px;
+	margin-bottom: 2px;
+	width: 100%;
+	height: 70px;
+	background: black
+}
+
+#logo {
+	position: absolute;
+	margin: 15px 0 0 15px;
+	font-size: 30px; 
+}
+
+#login {
+	position: absolute;
+	float: right;
+	right: 15px;
+	margin: 15px 0 0 15px;
+	font-size: 14px;
+	font-weight: normal; 
+}
+
+#login span{
+	font-weight: bold;
+	font-size: 20px; 
+}
+
+#middle {
+	margin-top: 65px;
+}
+
+#left {
+	padding: 10px;
+	vertical-align: top;
+	width: 180px;
+	height: 120px;
+}
+
+#content {
+	vertical-align: top;
+	width: auto;
+	height: 100%;
+}
+
+#footer {
+	text-align: center;
+}
+
 table.tablesorter {
 	font-family: arial;
 	background-color: #CDCDCD;
-	margin: 10px 0pt 15px;
+	margin: 10px 0 0 0;
 	font-size: 8pt;
 	width: 100%;
 	text-align: left;
 	color: #3D3D3D;
+	font-weight: normal;
 }
 
 table.tablesorter thead tr th,table.tablesorter tfoot tr th {

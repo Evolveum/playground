@@ -1,4 +1,4 @@
-package com.evolveum.midpoint;
+package com.evolveum.midpoint.user;
 
 import java.util.Iterator;
 
