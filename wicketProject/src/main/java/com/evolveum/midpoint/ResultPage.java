@@ -11,8 +11,6 @@ public class ResultPage extends WebPage {
 
 	public ResultPage(PageParameters parameters) {
 		String res = "";
-		ContactsDatabase cd = null;
-		MidPointApplication mid = new MidPointApplication();
 		
 		if (parameters.getNamedKeys().contains("msg")) {
 			StringValue svValue = parameters.get("msg");
@@ -20,12 +18,7 @@ public class ResultPage extends WebPage {
 		} else {
 			
 			StringValue svValue = parameters.get("user");
-			Long id = Long.valueOf(svValue.toOptionalString());
-			
-			@SuppressWarnings("null")
-			Contact contact = cd.get(id);
-			res = "User : ";
-			res += "First name: " + contact.getFirstName(); 
+			res = "User id: " + svValue.toOptionalString();
 		}
 		final Label result = new Label("msg", res);
 		add(result);
