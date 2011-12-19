@@ -10,17 +10,22 @@ public class ResultPage extends WebPage {
 	String username = null;
 
 	public ResultPage(PageParameters parameters) {
-		String username = null;
 		String res = "";
+		ContactsDatabase cd = null;
+		MidPointApplication mid = new MidPointApplication();
 		
 		if (parameters.getNamedKeys().contains("msg")) {
 			StringValue svValue = parameters.get("msg");
-			username = svValue.toOptionalString();
-			res = "Username : " + username;
-		} else if (parameters.getNamedKeys().contains("model")) {
-			StringValue svValue = parameters.get("model");
-			//username = svValue.toOptionalString();
-			res = "User : " + svValue.toOptionalString();
+			res = "Username : " + svValue.toOptionalString();
+		} else {
+			
+			StringValue svValue = parameters.get("user");
+			Long id = Long.valueOf(svValue.toOptionalString());
+			
+			@SuppressWarnings("null")
+			Contact contact = cd.get(id);
+			res = "User : ";
+			res += "First name: " + contact.getFirstName(); 
 		}
 		final Label result = new Label("msg", res);
 		add(result);

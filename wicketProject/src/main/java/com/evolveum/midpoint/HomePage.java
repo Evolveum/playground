@@ -53,25 +53,27 @@ public class HomePage extends WebPage {
 		//List<String> carNamelList = getList();
 
 		SortableContactDataProvider dp = new SortableContactDataProvider();
+		
 
 		final DataView<Contact> dataView = new DataView<Contact>("sorting", dp) {
 			private static final long serialVersionUID = 1L;
-			PageParameters pageParameters = new PageParameters();
+			PageParameters pageParameters;
 
 			@SuppressWarnings("deprecation")
 			@Override
 			protected void populateItem(final Item<Contact> item) {
-				final Contact contact = item.getModelObject();
-				String name = contact.getFirstName() + " " + contact.getLastName();
+				final Contact contact = item.getModelObject(); 
+				//item.add(new Link<Contact>("test", item.getModel()) {
 				item.add(new Link<Contact>("test", item.getModel()) {
 					private static final long serialVersionUID = 1L;
-
+					
 					@Override
 					public void onClick() {
-						pageParameters.add("model", contact);
+						pageParameters = new PageParameters();
+						pageParameters.add("user", String.valueOf(contact.getId()));
 						setResponsePage(ResultPage.class, pageParameters);
 					}
-				}.add(new Label("linkTest", name)));
+				}.add(new Label("linkTest", contact.getFirstName() + " " + contact.getLastName())));
 
 				item.add(new Label("contactid", String.valueOf(contact.getId())));
 				item.add(new Label("firstname", contact.getFirstName()));
@@ -126,7 +128,7 @@ public class HomePage extends WebPage {
 						pageParameters.add("model", contact);
 						setResponsePage(ResultPage.class, pageParameters);
 					}
-				}.add(new Label("linkTestNormal", contact.getLastName() + " " + contact.getFirstName())));
+				}.add(new Label("linkTestNormal", contact.getFirstName() + " " + contact.getLastName())));
 
 				item.add(new Label("contactidNormal", String.valueOf(contact.getId())));
 				item.add(new Label("firstnameNormal", contact.getFirstName()));

@@ -48,6 +48,7 @@ public class MidPointApplication extends WebApplication {
 	@Override
 	public void init() {
 		super.init();
+		
 		getMarkupSettings().setStripWicketTags(true);
 		getResourceSettings().setThrowExceptionOnMissingResource(false);
 		getDebugSettings().setDevelopmentUtilitiesEnabled(true);

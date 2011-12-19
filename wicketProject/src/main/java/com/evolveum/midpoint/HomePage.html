@@ -30,13 +30,14 @@
 		media="print, projection, screen" />
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$(".tablesorter").tablesorter({
-				widthFixed : true
-			});
+			/* 			$(".tablesorter").tablesorter({
+			 widthFixed : true
+			 }); */
 
 			$(".tablesorter tbody tr").mouseover(function() {
 				$(this).css("cursor", "pointer");
 				$(this).css("background", "#C1CBD4");
+				$(this).css("color", "white");
 			});
 			$(".tablesorter tbody tr").mouseout(function() {
 				if ($(this).attr("class") === "odd") {
@@ -44,6 +45,7 @@
 				} else {
 					$(this).css("background", "#FFF");
 				}
+				$(this).css("color", "#3D3D3D");
 			});
 		});
 	</script>
@@ -70,23 +72,27 @@
 	<br />
 	<br />
 	<span wicket:id="navigator">[dataview navigator]</span>
-	<table cellspacing="3" class="dataview" border="1">
-		<tr>
-			<th>Test</th>
-			<th>ID</th>
-			<th wicket:id="orderByFirstName">First Name</th>
-			<th wicket:id="orderByLastName">Last Name</th>
-			<th>Home Phone</th>
-			<th>Cell Phone</th>
-		</tr>
-		<tr wicket:id="sorting">
-			<td><a wicket:id="test"><span wicket:id="linkTest">[test]</span></a></td>
-			<td><span wicket:id="contactid">[contactid]</span></td>
-			<td><span wicket:id="firstname">[firstname]</span></td>
-			<td><span wicket:id="lastname">[lastname]</span></td>
-			<td><span wicket:id="homephone">[homephone]</span></td>
-			<td><span wicket:id="cellphone">[cellphone]</span></td>
-		</tr>
+	<table cellspacing="0" class="tablesorter" border="0">
+		<thead>
+			<tr>
+				<th>Test</th>
+				<th>ID</th>
+				<th wicket:id="orderByFirstName">First Name</th>
+				<th wicket:id="orderByLastName">Last Name</th>
+				<th>Home Phone</th>
+				<th>Cell Phone</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr wicket:id="sorting">
+				<td><a wicket:id="test"><span wicket:id="linkTest">[test]</span></a></td>
+				<td><span wicket:id="contactid">[contactid]</span></td>
+				<td><span wicket:id="firstname">[firstname]</span></td>
+				<td><span wicket:id="lastname">[lastname]</span></td>
+				<td><span wicket:id="homephone">[homephone]</span></td>
+				<td><span wicket:id="cellphone">[cellphone]</span></td>
+			</tr>
+		</tbody>
 	</table>
 	<br />
 	<h2>With jQuery</h2>
