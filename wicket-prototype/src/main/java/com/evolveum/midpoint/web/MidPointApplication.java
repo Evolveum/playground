@@ -47,6 +47,7 @@ public class MidPointApplication extends WebApplication {
         return PageUser.class;
     }
 
+
     /**
      * @see org.apache.wicket.Application#init()
      */

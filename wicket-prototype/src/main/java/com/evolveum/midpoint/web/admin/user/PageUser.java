@@ -31,15 +31,21 @@ import com.evolveum.midpoint.schema.util.JAXBUtil;
 import com.evolveum.midpoint.web.MidPointApplication;
 import com.evolveum.midpoint.web.admin.PageAdmin;
 import com.evolveum.midpoint.web.component.autoform.*;
+import com.evolveum.midpoint.web.component.locale.LocalePanel;
 import com.evolveum.midpoint.web.component.util.LoadableModel;
 import com.evolveum.midpoint.xml.ns._public.common.common_1.ResourceType;
 import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.extensions.ajax.markup.html.form.upload.UploadProgressBar;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.upload.FileUpload;
+import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.util.file.Files;
+import org.apache.wicket.util.lang.Bytes;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
@@ -50,6 +56,9 @@ import java.util.*;
 public class PageUser extends PageAdmin {
 
     public PageUser() {
+        LocalePanel locale = new LocalePanel("locale");
+        add(locale);
+
         final IModel<FormObject> model = new LoadableModel<FormObject>(false) {
 
             @Override
@@ -94,6 +103,13 @@ public class PageUser extends PageAdmin {
                 System.out.println(model.getObject());
             }
         });
+
+        //file upload
+        FileUploadForm progressUploadForm = new FileUploadForm("progressUpload");
+
+        progressUploadForm.add(new UploadProgressBar("progress", progressUploadForm,
+                progressUploadForm.fileUploadField));
+        add(progressUploadForm);
     }
 
     private FormObject createObject(ResourceType resource) throws Exception {
@@ -204,5 +220,62 @@ public class PageUser extends PageAdmin {
         // //TODO: where can I get this?????
 
         return builder.build();
+    }
+}
+
+class FileUploadForm extends Form<Void> {
+
+    FileUploadField fileUploadField;
+
+    /**
+     * Construct.
+     *
+     * @param name Component name
+     */
+    public FileUploadForm(String name) {
+        super(name);
+
+        // set this form to multipart mode (allways needed for uploads!)
+        setMultiPart(true);
+
+        // Add one file input field
+        add(fileUploadField = new FileUploadField("fileInput"));
+
+        // Set maximum size to 100K for demo purposes
+        setMaxSize(Bytes.kilobytes(100));
+    }
+
+    /**
+     * @see org.apache.wicket.markup.html.form.Form#onSubmit()
+     */
+    @Override
+    protected void onSubmit() {
+        final List<FileUpload> uploads = fileUploadField.getFileUploads();
+        if (uploads != null) {
+            for (FileUpload upload : uploads) {
+                // Create a new file
+                File newFile = new File("/home/lazyman", upload.getClientFileName());
+
+                // Check new file, delete if it already existed
+                checkFileExists(newFile);
+                try {
+                    // Save to new file
+                    newFile.createNewFile();
+                    upload.writeTo(newFile);
+                    System.out.println("File size: " + newFile.length());
+                } catch (Exception e) {
+                    throw new IllegalStateException("Unable to write file", e);
+                }
+            }
+        }
+    }
+
+    private void checkFileExists(File newFile) {
+        if (newFile.exists()) {
+            // Try to delete the file
+            if (!Files.remove(newFile)) {
+                throw new IllegalStateException("Unable to overwrite " + newFile.getAbsolutePath());
+            }
+        }
     }
 }

@@ -102,6 +102,9 @@ public class PageTest extends WebPage {
         TopMenu topMenu = new TopMenu("topMenu", list);
         add(topMenu);
 
+
+        /** page upload **/
+
     }
 
     public String getText() {
