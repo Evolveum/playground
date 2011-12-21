@@ -34,11 +34,6 @@ public class ContactsDatabase {
 	 * @return contact
 	 */
 	public Contact get(long id) {
-
-		System.out.println(id + "<<<<<<<<<<<<<<<<<<< " + map.size());
-		for (int i = 0; i < map.size(); i++) {
-			// System.out.println(map.get(i).getFirstName()+" "+map.get(i).getLastName()+"\n");
-		}
 		Contact c = map.get(id);
 		if (c == null) {
 			throw new RuntimeException("contact with id [" + id + "] not found in the database");

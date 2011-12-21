@@ -23,41 +23,36 @@
         "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns:wicket="http://wicket.apache.org">
 <head>
-<title wicket:id="title">title comes here</title>
+<title wicket:id="title"></title>
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/evolveum.js"></script>
-<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link type="text/css" rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 	<div id="top">
 		<div id="logo">Evolveum - MidPoint</div>
-		<div id="login">You are logged as: <span>midPoint Administrator</span> | Logout</div>
+		<div id="login">
+			You are logged as: <span>midPoint Administrator</span><br />Logout
+		</div>
+		<div id="navbar">
+			<table>
+				<tr>
+					<td><a wicket:id="navigateHome">Home</a></td>
+					<td><a wicket:id="navigateUsers">Users</a></td>
+					<td><a wicket:id="navigateResources">Resources</a></td>
+					<td><a wicket:id="navigateServers">Servers</a></td>
+				</tr>
+			</table>
+			<div wicket:id="multiLevelCssMenu"></div>
+		</div>
 	</div>
 
-	<table id="middle" width="100%">
+	<table id="middle" width="100%" style="border-collapse: collapse;">
 		<tr>
-			<td id="left" class="borderedBlock">
-				<ul>
-					<li><a href="#" wicket:id="homeLink">Home</a></li>
-					<li><a href="#" wicket:id="usersLink">Users</a></li>
-					<!-- <ol>
-						<a wicket:id="rolesLink">Roles</a>
-					</ol>
-					<ol>
-						<a wicket:id="resourcesLink">Resources</a>
-					</ol>
-					<ol>
-						<a wicket:id="serverTasksLink">Server Tasks</a>
-					</ol>
-					<ol>
-						<a wicket:id="configurationLink">Configuration</a>
-					</ol> -->
-				</ul>
-			</td>
 			<td id="content" class="borderedBlockContent"><wicket:child /></td>
 		</tr>
 	</table>
-	<div id="footer" class="borderedBlock">@ RoseIndia Technologies
-		Pvt. Ltd</div>
+	<div id="footer" class="borderedBlock">Evolveum copyright 2011.
+		Template created by serbak.</div>
 </body>
 </html>

@@ -21,6 +21,9 @@
 
 package com.evolveum.midpoint.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.OrderByBorder;
 import org.apache.wicket.markup.html.basic.Label;
@@ -34,6 +37,7 @@ import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import com.evolveum.midpoint.menu.common.MenuItem;
 
 import com.evolveum.midpoint.HomePage;
 
@@ -119,13 +123,63 @@ public class UserPage extends HomePage {
 				setResponsePage(ResultPage.class, pageParameters);
 			}
 		};
-
 		add(form);
 		form.add(username);
 		add(dataView);
 		add(new PagingNavigator("navigator", dataView));
 
+		setPrimaryMenuList(menu());
 		setPageTitle("Users");
+	}
+
+	private List<MenuItem> menu() {
+		MenuItem primaryMenu1 = new MenuItem("Configuration", HomePage.class);
+		MenuItem primaryMenu2 = new MenuItem("Debugging", HomePage.class);
+		MenuItem primaryMenu3 = new MenuItem("Import and Export", HomePage.class);
+
+		MenuItem menu11 = new MenuItem("Basic Configuration", UserPage.class);
+		MenuItem menu12 = new MenuItem("Encryption", UserPage.class);
+		MenuItem menu13 = new MenuItem("Logging Management", UserPage.class);
+
+		MenuItem menu21 = new MenuItem("View/Edit Object", HomePage.class);
+		MenuItem menu22 = new MenuItem("List Objects", HomePage.class);
+		MenuItem menu23 = new MenuItem("XPath Debug", HomePage.class);
+
+		MenuItem menu231 = new MenuItem("XPath Debug 1", HomePage.class);
+		MenuItem menu232 = new MenuItem("XPath Debug 2", HomePage.class);
+
+		MenuItem menu31 = new MenuItem("Import objects", UserPage.class);
+
+		// Create a List which contains the primary menu items in it.
+		List<MenuItem> primaryMenuList = new ArrayList<MenuItem>();
+		List<MenuItem> subMenuList1 = new ArrayList<MenuItem>();
+		List<MenuItem> subMenuList2 = new ArrayList<MenuItem>();
+		List<MenuItem> subMenuList3 = new ArrayList<MenuItem>();
+		List<MenuItem> subMenuList23 = new ArrayList<MenuItem>();
+
+		primaryMenuList.add(primaryMenu1);
+		primaryMenuList.add(primaryMenu2);
+		primaryMenuList.add(primaryMenu3);
+
+		subMenuList1.add(menu11);
+		subMenuList1.add(menu12);
+		subMenuList1.add(menu13);
+
+		subMenuList2.add(menu21);
+		subMenuList2.add(menu22);
+		subMenuList2.add(menu23);
+
+		subMenuList23.add(menu231);
+		subMenuList23.add(menu232);
+
+		subMenuList3.add(menu31);
+
+		primaryMenu1.setSubMenuItemList(subMenuList1);
+		primaryMenu2.setSubMenuItemList(subMenuList2);
+		primaryMenu3.setSubMenuItemList(subMenuList3);
+		menu23.setSubMenuItemList(subMenuList23);
+
+		return primaryMenuList;
 	}
 
 }

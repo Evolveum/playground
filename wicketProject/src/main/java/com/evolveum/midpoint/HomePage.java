@@ -21,21 +21,33 @@
 
 package com.evolveum.midpoint;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.PropertyModel;
 
+import com.evolveum.midpoint.menu.common.MenuItem;
+import com.evolveum.midpoint.menu.multiLevelCss.MultiLevelCssMenu;
 import com.evolveum.midpoint.user.UserPage;
 
 public class HomePage extends WebPage {
 	private String pageTitle = "MidPoint wicket template";
+	List<MenuItem> primaryMenuList = null;
 	private static final long serialVersionUID = 1L;
 
 	public HomePage() {
 		add(new Label("title", new PropertyModel<String>(this, "pageTitle")));
-		add(new BookmarkablePageLink<Void>("homeLink", HomePage.class));
-		add(new BookmarkablePageLink<Void>("usersLink", UserPage.class));
+		add(new BookmarkablePageLink<Void>("navigateHome", HomePage.class));
+		add(new BookmarkablePageLink<Void>("navigateUsers", UserPage.class));
+		add(new BookmarkablePageLink<Void>("navigateResources", HomePage.class));
+		add(new BookmarkablePageLink<Void>("navigateServers", HomePage.class));
+
+		if (primaryMenuList == null) {
+			add(new MultiLevelCssMenu("multiLevelCssMenu", ""));
+		}
 	}
 
 	public final String getPageTitle() {
@@ -44,6 +56,19 @@ public class HomePage extends WebPage {
 
 	public final void setPageTitle(String title) {
 		pageTitle = title + " - MidPoint wicket template";
+	}
+
+	public List<MenuItem> getPrimaryMenuList() {
+		return primaryMenuList;
+	}
+
+	public void setPrimaryMenuList(List<MenuItem> primaryMenuList) {
+		buildMenu(primaryMenuList);
+	}
+
+	private void buildMenu(List<MenuItem> primaryMenuList) {
+		this.primaryMenuList = primaryMenuList;
+		replace(new MultiLevelCssMenu("multiLevelCssMenu", primaryMenuList));
 	}
 
 }

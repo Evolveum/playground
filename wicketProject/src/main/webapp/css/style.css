@@ -8,61 +8,86 @@ body {
 }
 
 .borderedBlock {
-	background: #DEDEDE;
+	border: #DEDEDE;
 	color: blue;
-	font-weight: bold;
-	border: solid #E9601A;
 	border-width: thin;
 	padding: 10px;
-	margin: 2px;
 }
 
-.borderedBlockContent {
-	background: #DEDEDE;
+.borderedBlockContent { /* background: #DEDEDE; */
 	color: blue;
 	font-weight: bold;
-	border: solid #E9601A;
 	border-width: thin;
-	padding: 20px 10px 20px 10px;
-	margin: 2px;
+	padding: 10px 10px 20px 10px;
 }
 
 #top {
 	min-width: 1024px;
 	position: absolute;
-	background : black;
+	background: black;
 	color: white;
-	font-weight: bold;
 	left: 0px;
 	top: 0px;
-	margin-bottom: 2px;
 	width: 100%;
-	height: 70px;
+	height: 115px;
 	background: black
+}
+
+#navbar {
+	position: absolute;
+	width: 100%;
+	bottom: 0px;
+	background: #4F4F4F;
+	height: 50px;
+}
+
+#navbar table {
+	left: 10px;
+	position: inherit;
+	border-collapse: collapse;
+	padding: 0 10px 0 10px;
+}
+
+#navbar table a {
+	text-decoration: none;
+	color: white;
+}
+
+#navbar td {
+	font-size: 14px;
+	font-family: Helvetica;
+	padding: 0px 10px 0px 10px;
+	height: 25px;
+}
+
+#navbar td:HOVER {
+	background: #9B9B9B;
+	cursor: pointer;
 }
 
 #logo {
 	position: absolute;
-	margin: 15px 0 0 15px;
-	font-size: 30px; 
+	padding: 15px 0 0 15px;
+	font-size: 30px;
+	font-weight: bold;
 }
 
 #login {
 	position: absolute;
-	float: right;
+	text-align: right;
 	right: 15px;
-	margin: 15px 0 0 15px;
 	font-size: 14px;
-	font-weight: normal; 
+	font-weight: normal;
+	margin: 5px 0 0 0;
 }
 
-#login span{
+#login span {
 	font-weight: bold;
-	font-size: 20px; 
+	font-size: 20px;
 }
 
 #middle {
-	margin-top: 65px;
+	margin-top: 117px;
 }
 
 #left {
@@ -70,6 +95,7 @@ body {
 	vertical-align: top;
 	width: 180px;
 	height: 120px;
+	border-right: 3px double #C1CBD4;
 }
 
 #content {
@@ -79,10 +105,12 @@ body {
 }
 
 #footer {
+	margin-top: 10px;
 	text-align: center;
 }
 
 table.tablesorter {
+	border: 1px solid #C1CBD4;
 	font-family: arial;
 	background-color: #CDCDCD;
 	margin: 10px 0 0 0;
@@ -91,6 +119,7 @@ table.tablesorter {
 	text-align: left;
 	color: #3D3D3D;
 	font-weight: normal;
+	font-family: arial;
 }
 
 table.tablesorter thead tr th,table.tablesorter tfoot tr th {

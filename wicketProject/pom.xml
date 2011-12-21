@@ -110,10 +110,6 @@
 			<version>1.5.0</version>
 		</dependency>
 
-		<!-- <dependency> <groupId>com.wiquery-plugins</groupId> <artifactId>antila-grid</artifactId> 
-			<version>1.1</version> </dependency> <dependency> <groupId>com.wiquery-plugins</groupId> 
-			<artifactId>other-plugins</artifactId> <version>1.1</version> </dependency> -->
-
 	</dependencies>
 	<build>
 		<extensions>
@@ -211,6 +207,7 @@
 			<name>wiQuery plugin repository</name>
 			<url>http://wiquery-plugins.googlecode.com/svn/m2repo/</url>
 		</repository>
+
 
 		<repository>
 			<id>Apache Nexus</id>
