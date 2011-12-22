@@ -25,14 +25,6 @@
 
 <body>
 	<wicket:extend>
-		<label wicket:id="version"></label>
-		<div wicket:id="feedback"></div>
-		<form wicket:id="userForm">
-			Username: <input wicket:id="username" type="text" size="20" /><input
-				type="submit" value="Odosla">
-		</form>
-
-		<span wicket:id="navigator">[dataview navigator]</span>
 		<table cellspacing="0" class="tablesorter" border="0">
 			<thead>
 				<tr>
@@ -55,6 +47,9 @@
 				</tr>
 			</tbody>
 		</table>
-	</wicket:extend> 
+		<div id="pagerNavigator">
+			<span wicket:id="navigator">[dataview navigator]</span>
+		</div>
+	</wicket:extend>
 </body>
 </html>

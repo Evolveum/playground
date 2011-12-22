@@ -23,36 +23,48 @@
         "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns:wicket="http://wicket.apache.org">
 <head>
-<title wicket:id="title"></title>
+<title wicket:id="pageTitle"></title>
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/evolveum.js"></script>
 <link type="text/css" rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-	<div id="top">
-		<div id="logo">Evolveum - MidPoint</div>
-		<div id="login">
-			You are logged as: <span>midPoint Administrator</span><br />Logout
-		</div>
-		<div id="navbar">
-			<table>
-				<tr>
-					<td><a wicket:id="navigateHome">Home</a></td>
-					<td><a wicket:id="navigateUsers">Users</a></td>
-					<td><a wicket:id="navigateResources">Resources</a></td>
-					<td><a wicket:id="navigateServers">Servers</a></td>
-				</tr>
-			</table>
-			<div wicket:id="multiLevelCssMenu"></div>
-		</div>
-	</div>
-
-	<table id="middle" width="100%" style="border-collapse: collapse;">
+	<table style="border-collapse: collapse; width: 100%; position: absolute; left: 0px; top: 0px; border: none;">
 		<tr>
-			<td id="content" class="borderedBlockContent"><wicket:child /></td>
+			<td><div id="top">
+					<div id="logo">Evolveum - MidPoint</div>
+					<div id="login">
+						You are logged as: <span>midPoint Administrator</span><br />Logout
+					</div>
+					<div id="navbar">
+						<table>
+							<tr>
+								<td><a wicket:id="navigateHome">Home</a></td>
+								<td><a wicket:id="navigateUsers">Users</a></td>
+								<td><a wicket:id="navigateResources">Resources</a></td>
+								<td><a wicket:id="navigateServers">Servers</a></td>
+							</tr>
+						</table>
+						<div wicket:id="multiLevelCssMenu"></div>
+					</div>
+				</div></td>
+		</tr>
+		<tr>
+			<td><div id="middle">
+					<h1 wicket:id="title"></h1>
+					<div id="content">
+						<wicket:child />
+					</div>
+				</div></td>
+		</tr>
+		<tr>
+			<td><div id="footer">Evolveum copyright 2011. Template
+					created by serbak.</div></td>
 		</tr>
 	</table>
-	<div id="footer" class="borderedBlock">Evolveum copyright 2011.
-		Template created by serbak.</div>
+
+
+
+
 </body>
 </html>

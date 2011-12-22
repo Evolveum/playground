@@ -21,7 +21,6 @@
 
 package com.evolveum.midpoint;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.markup.html.WebPage;
@@ -35,11 +34,13 @@ import com.evolveum.midpoint.user.UserPage;
 
 public class HomePage extends WebPage {
 	private String pageTitle = "MidPoint wicket template";
+	private String title = "Home page";
 	List<MenuItem> primaryMenuList = null;
 	private static final long serialVersionUID = 1L;
 
 	public HomePage() {
-		add(new Label("title", new PropertyModel<String>(this, "pageTitle")));
+		add(new Label("pageTitle", new PropertyModel<String>(this, "pageTitle")));
+		add(new Label("title", new PropertyModel<String>(this, "title")));
 		add(new BookmarkablePageLink<Void>("navigateHome", HomePage.class));
 		add(new BookmarkablePageLink<Void>("navigateUsers", UserPage.class));
 		add(new BookmarkablePageLink<Void>("navigateResources", HomePage.class));
@@ -48,6 +49,14 @@ public class HomePage extends WebPage {
 		if (primaryMenuList == null) {
 			add(new MultiLevelCssMenu("multiLevelCssMenu", ""));
 		}
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public final String getPageTitle() {

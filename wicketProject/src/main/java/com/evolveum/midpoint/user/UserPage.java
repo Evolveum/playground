@@ -27,19 +27,15 @@ import java.util.List;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.OrderByBorder;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import com.evolveum.midpoint.menu.common.MenuItem;
 
 import com.evolveum.midpoint.HomePage;
+import com.evolveum.midpoint.menu.common.MenuItem;
 
 public class UserPage extends HomePage {
 	private static final long serialVersionUID = 1L;
@@ -104,32 +100,12 @@ public class UserPage extends HomePage {
 			}
 		});
 
-		add(new FeedbackPanel("feedback"));
-		add(new Label("version", "This is version of wicket: "
-				+ getApplication().getFrameworkSettings().getVersion()));
-
-		final TextField<String> username = new TextField<String>("username", Model.of(""));
-		username.setRequired(true);
-
-		Form<?> form = new Form<Void>("userForm") {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void onSubmit() {
-				final String usernameValue = username.getModelObject();
-
-				PageParameters pageParameters = new PageParameters();
-				pageParameters.add("msg", usernameValue);
-				setResponsePage(ResultPage.class, pageParameters);
-			}
-		};
-		add(form);
-		form.add(username);
 		add(dataView);
 		add(new PagingNavigator("navigator", dataView));
 
 		setPrimaryMenuList(menu());
 		setPageTitle("Users");
+		setTitle("Users");
 	}
 
 	private List<MenuItem> menu() {

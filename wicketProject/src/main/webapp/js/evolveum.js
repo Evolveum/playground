@@ -1,4 +1,9 @@
 $(document).ready(function() {
+	/*var windowWidth = $("#top").width();
+	alert(windowWidth);
+	$("#pagerNavigator").css("width", windowWidth - 10);
+	alert("aaaaa...."+$("#pagerNavigator").css("width"));*/
+
 	$(".tablesorter tbody tr").mouseover(function() {
 		$(this).css("cursor", "pointer");
 		$(this).css("background", "#C1CBD4");
