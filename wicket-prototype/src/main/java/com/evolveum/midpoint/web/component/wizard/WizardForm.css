@@ -24,6 +24,8 @@ ol li span.selected {
 }
 
 div.buttons {
+    padding-top: 5px;
+    border-top: 1px solid #000;
     margin-top: 10px;
     float: none;
 }
@@ -33,4 +35,8 @@ div.wizard {
     width: 800px;
     padding: 5px;
     border: 1px solid #aaa;
+}
+
+div.wizard h2 {
+    border-bottom: 1px solid #000;
 }

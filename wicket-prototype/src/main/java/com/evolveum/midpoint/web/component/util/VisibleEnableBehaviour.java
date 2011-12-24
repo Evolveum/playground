@@ -19,28 +19,30 @@
  * Portions Copyrighted 2011 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.web.component.wizard.resource;
+package com.evolveum.midpoint.web.component.util;
 
-import com.evolveum.midpoint.web.component.wizard.BaseWizardPanel;
-import com.evolveum.midpoint.web.component.wizard.Wizard;
-import org.apache.wicket.model.IModel;
+import org.apache.wicket.Component;
+import org.apache.wicket.behavior.Behavior;
 
 /**
  * @author lazyman
  */
-public class ConfigurationPanel extends BaseWizardPanel {
+public class VisibleEnableBehaviour extends Behavior {
 
-    public ConfigurationPanel(String id) {
-        super(id);
+    public boolean isVisible() {
+        return true;
+    }
+
+    public boolean isEnabled() {
+        return true;
     }
 
     @Override
-    public IModel<String> getTitle() {
-        return createStringResource("ConfigurationPanel.title", this);
-    }
+    public void onConfigure(Component component) {
+        component.setEnabled(isEnabled());
 
-    @Override
-    public void initLayout(IModel<Wizard> wizardModel) {
-
+        boolean visible = isVisible();
+        component.setVisible(visible);
+        component.setVisibilityAllowed(visible);
     }
 }

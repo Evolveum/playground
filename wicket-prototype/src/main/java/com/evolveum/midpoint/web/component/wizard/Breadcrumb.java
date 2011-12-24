@@ -24,10 +24,12 @@ package com.evolveum.midpoint.web.component.wizard;
 import org.apache.commons.lang.Validate;
 import org.apache.wicket.model.IModel;
 
+import java.io.Serializable;
+
 /**
  * @author lazyman
  */
-public class Breadcrumb<T extends WizardPanel> {
+public class Breadcrumb<T extends WizardPanel> implements Serializable {
 
     private Class<T> panelClass;
     private IModel<String> text;

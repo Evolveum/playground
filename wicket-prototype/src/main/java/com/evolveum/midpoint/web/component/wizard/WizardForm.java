@@ -23,6 +23,7 @@ package com.evolveum.midpoint.web.component.wizard;
 
 import com.evolveum.midpoint.web.component.button.AjaxLinkButton;
 import com.evolveum.midpoint.web.component.util.LoadableModel;
+import com.evolveum.midpoint.web.component.util.VisibleEnableBehaviour;
 import org.apache.commons.lang.Validate;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.AttributeAppender;
@@ -32,6 +33,7 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.resource.PackageResourceReference;
@@ -47,12 +49,18 @@ public abstract class WizardForm extends Panel {
     public static final String WIZARD_PANEL_ID = "wizardPanel";
     private List<WizardPanel> panels;
     private boolean showTitle = true;
+    private int index = 0;
 
     public WizardForm(String id) {
         super(id);
+        setOutputMarkupId(true);
+        setOutputMarkupPlaceholderTag(false);
 
         panels = initPanels();
         Validate.notNull(panels, "List with wizard panels must not be null.");
+        if (panels.isEmpty()) {
+            throw new IllegalArgumentException("List with wizard panels must not be null.");
+        }
 
         initComponents();
     }
@@ -78,7 +86,13 @@ public abstract class WizardForm extends Panel {
         //breadcrumbs
         initBreadcrumbs();
         //title
-        Label title = new Label("title", getSelectedPanel().getTitle());
+        Label title = new Label("title", new LoadableDetachableModel() {
+
+            @Override
+            protected Object load() {
+                return getSelectedPanel().getTitle().getObject();
+            }
+        });
         title.setVisible(showTitle);
         add(title);
         //content
@@ -130,6 +144,18 @@ public abstract class WizardForm extends Panel {
                 cancelPerformed(target);
             }
         };
+        button.add(new VisibleEnableBehaviour() {
+
+            @Override
+            public boolean isEnabled() {
+                return isCancelEnabled();
+            }
+
+            @Override
+            public boolean isVisible() {
+                return isCancelVisible();
+            }
+        });
         add(button);
         //previous
         button = new AjaxLinkButton("previousButton", createStringResource("button.previous")) {
@@ -139,6 +165,18 @@ public abstract class WizardForm extends Panel {
                 previousPerformed(target);
             }
         };
+        button.add(new VisibleEnableBehaviour() {
+
+            @Override
+            public boolean isEnabled() {
+                return isPreviousEnabled();
+            }
+
+            @Override
+            public boolean isVisible() {
+                return isPreviousVisible();
+            }
+        });
         add(button);
         //next
         button = new AjaxLinkButton("nextButton", createStringResource("button.next")) {
@@ -148,6 +186,18 @@ public abstract class WizardForm extends Panel {
                 nextPerformed(target);
             }
         };
+        button.add(new VisibleEnableBehaviour() {
+
+            @Override
+            public boolean isEnabled() {
+                return isNextEnabled();
+            }
+
+            @Override
+            public boolean isVisible() {
+                return isNextVisible();
+            }
+        });
         add(button);
         //finish
         button = new AjaxLinkButton("finishButton", createStringResource("button.finish")) {
@@ -157,26 +207,90 @@ public abstract class WizardForm extends Panel {
                 finishPerformed(target);
             }
         };
+        button.add(new VisibleEnableBehaviour() {
+
+            @Override
+            public boolean isEnabled() {
+                return isFinishEnabled();
+            }
+
+            @Override
+            public boolean isVisible() {
+                return isFinishVisible();
+            }
+        });
         add(button);
     }
 
     private WizardPanel getSelectedPanel() {
-        return panels.get(0);
+        return panels.get(index);
+    }
+
+    private boolean isCancelEnabled() {
+        return true;            //todo implement
+    }
+
+    private boolean isPreviousEnabled() {
+        return true;            //todo implement
+    }
+
+    private boolean isNextEnabled() {
+        return true;            //todo implement
+    }
+
+    private boolean isFinishEnabled() {
+        return true;            //todo implement
+    }
+
+    private boolean isCancelVisible() {
+        return true;            //todo implement
+    }
+
+    private boolean isPreviousVisible() {
+        if (index == 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isNextVisible() {
+        if (index + 1 >= panels.size()) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isFinishVisible() {
+        if (index + 1 >= panels.size()) {
+            return true;
+        }
+        return false;
+    }
+
+    private void updateContent(AjaxRequestTarget target) {
+        addOrReplace(getSelectedPanel());
+
+        target.add(this);
     }
 
     private void cancelPerformed(AjaxRequestTarget target) {
-
+        index = 0;
+        updateContent(target);
     }
 
     private void previousPerformed(AjaxRequestTarget target) {
-
+        index--;
+        updateContent(target);
     }
 
     private void nextPerformed(AjaxRequestTarget target) {
-
+        index++;
+        updateContent(target);
     }
 
     private void finishPerformed(AjaxRequestTarget target) {
-
+        index = 0;
+        updateContent(target);
     }
 }

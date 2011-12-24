@@ -41,6 +41,7 @@ public class ResourceWizard extends WizardForm {
         List<WizardPanel> panels = new ArrayList<WizardPanel>();
         panels.add(new NamePanel(WizardForm.WIZARD_PANEL_ID));
         panels.add(new ConfigurationPanel(WizardForm.WIZARD_PANEL_ID));
+        panels.add(new SchemaHandlingPanel(WizardForm.WIZARD_PANEL_ID));
 
 
         return panels;

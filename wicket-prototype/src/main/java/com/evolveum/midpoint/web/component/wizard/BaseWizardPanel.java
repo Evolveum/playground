@@ -21,8 +21,10 @@
 
 package com.evolveum.midpoint.web.component.wizard;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.StringResourceModel;
 
 /**
  * @author lazyman
@@ -72,5 +74,9 @@ public abstract class BaseWizardPanel extends WizardPanel {
 
     @Override
     public void performAfterFinish(AjaxRequestTarget target) {
+    }
+
+    protected StringResourceModel createStringResource(String resourceKey, Component component) {
+        return new StringResourceModel(resourceKey, component, null, null, null);
     }
 }

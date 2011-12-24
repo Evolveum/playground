@@ -24,7 +24,6 @@ package com.evolveum.midpoint.web.component.wizard.resource;
 import com.evolveum.midpoint.web.component.wizard.BaseWizardPanel;
 import com.evolveum.midpoint.web.component.wizard.Wizard;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.StringResourceModel;
 
 /**
  * @author lazyman
@@ -37,7 +36,7 @@ public class NamePanel extends BaseWizardPanel {
 
     @Override
     public IModel<String> getTitle() {
-        return new StringResourceModel("NamePanel.title", this, null, null, null);
+        return createStringResource("NamePanel.title", this);
     }
 
     @Override
