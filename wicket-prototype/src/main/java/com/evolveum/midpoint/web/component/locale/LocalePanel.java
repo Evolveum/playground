@@ -121,6 +121,7 @@ public class LocalePanel extends Panel {
     }
 
     private void changeLocale(AjaxRequestTarget target, Locale locale) {
+        getSession().setLocale(locale);
 
     }
 }

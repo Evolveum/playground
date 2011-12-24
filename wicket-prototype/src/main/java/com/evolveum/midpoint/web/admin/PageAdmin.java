@@ -36,7 +36,7 @@ public class PageAdmin extends PageBase {
     public List<TopMenuItem> getTopMenuItems() {
         List<TopMenuItem> items = new ArrayList<TopMenuItem>();
         items.add(new TopMenuItem("pageAdmin.home", "pageAdmin.home.description", PageHome.class));
-        items.add(new TopMenuItem("pageAdmin.workItems", "pageAdmin.workItems.description", PageHome.class));
+        items.add(new TopMenuItem("pageAdmin.workItems", "pageAdmin.workItems.description", PageWizard.class));
         items.add(new TopMenuItem("pageAdmin.accounts", "pageAdmin.accounts.description", PageUser.class));
         items.add(new TopMenuItem("pageAdmin.serverTasks", "pageAdmin.serverTasks.description", PageHome.class));
         items.add(new TopMenuItem("pageAdmin.roles", "pageAdmin.roles.description", PageHome.class));

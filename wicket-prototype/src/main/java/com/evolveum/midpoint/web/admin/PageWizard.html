@@ -23,35 +23,9 @@
         "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns:wicket="http://wicket.apache.org">
 <wicket:extend>
-    <div>
-        <wicket:message key="page.testLabel"/>
-    </div>
+    <h1>Resource wizard</h1>
     <hr/>
-    <div wicket:id="locale"/>
+    <div wicket:id="resourceWizard"/>
     <hr/>
-    vilkooo
-    <hr/>
-    <form wicket:id="form">
-        <hr/>
-        <div wicket:id="autoForm"/>
-        <hr/>
-        <a wicket:id="submit">Submit
-        </a>
-    </form>
-    <hr/>
-    <div>service label:</div>
-    <div wicket:id="serviceLabel"/>
-    <hr style="margin-bottom: 30px;"/>
-    <form wicket:id="progressUpload">
-        <fieldset>
-            <legend>Upload form with progress bar</legend>
-            <p>
-                <label>File</label>
-                <input wicket:id="fileInput" type="file"/>
-            </p>
-            <input type="submit" value="Upload!"/>
-            <span wicket:id="progress">[[upload progressbar]]</span>
-        </fieldset>
-    </form>
 </wicket:extend>
 </html>
