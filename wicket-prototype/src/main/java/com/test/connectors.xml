@@ -1,0 +1,770 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+  ~ Copyright (c) 2011 Evolveum
+  ~
+  ~ The contents of this file are subject to the terms
+  ~ of the Common Development and Distribution License
+  ~ (the License). You may not use this file except in
+  ~ compliance with the License.
+  ~
+  ~ You can obtain a copy of the License at
+  ~ http://www.opensource.org/licenses/cddl1 or
+  ~ CDDLv1.0.txt file in the source code distribution.
+  ~ See the License for the specific language governing
+  ~ permission and limitations under the License.
+  ~
+  ~ If applicable, add the following below the CDDL Header,
+  ~ with the fields enclosed by brackets [] replaced by
+  ~ your own identifying information:
+  ~
+  ~ Portions Copyrighted 2011 [name of copyright owner]
+  -->
+
+<objects xmlns="http://midpoint.evolveum.com/xml/ns/public/common/common-1.xsd" xmlns:r="http://midpoint.evolveum.com/xml/ns/public/resource/resource-schema-1.xsd" xmlns:cap="http://midpoint.evolveum.com/xml/ns/public/resource/capabilities-1.xsd" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:enc="http://www.w3.org/2001/04/xmlenc#">
+<object xsi:type="ConnectorType" oid="14e40d3d-1157-4645-a644-c50e7054f73d" xmlns:gen991="http://midpoint.evolveum.com/xml/ns/public/communication/workflow-1.xsd">
+    <name>ICF org.forgerock.openicf.csvfile.CSVFileConnector</name>
+    <framework>http://midpoint.evolveum.com/xml/ns/public/connector/icf-1</framework>
+    <connectorType>org.forgerock.openicf.csvfile.CSVFileConnector</connectorType>
+    <connectorVersion>1.1.0.0-e2</connectorVersion>
+    <connectorBundle>org.forgerock.openicf.connectors.file.csvfile</connectorBundle>
+    <namespace>http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/bundle/org.forgerock.openicf.connectors.file.csvfile/org.forgerock.openicf.csvfile.CSVFileConnector</namespace>
+    <schema>
+        <xsd:schema elementFormDefault="qualified" targetNamespace="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/bundle/org.forgerock.openicf.connectors.file.csvfile/org.forgerock.openicf.csvfile.CSVFileConnector" xmlns:icfc="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/connector-schema-1.xsd" xmlns:c="http://midpoint.evolveum.com/xml/ns/public/common/common-1.xsd" xmlns:tns="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/bundle/org.forgerock.openicf.connectors.file.csvfile/org.forgerock.openicf.csvfile.CSVFileConnector" xmlns:a="http://midpoint.evolveum.com/xml/ns/public/common/annotation-1.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gen99="http://midpoint.evolveum.com/xml/ns/public/communication/workflow-1.xsd">
+            <xsd:import namespace="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/connector-schema-1.xsd"/>
+            <xsd:import namespace="http://midpoint.evolveum.com/xml/ns/public/resource/resource-schema-1.xsd"/>
+            <xsd:import namespace="http://midpoint.evolveum.com/xml/ns/public/common/annotation-1.xsd"/>
+            <xsd:complexType name="ConfigurationType">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        <a:propertyContainer/>
+                    </xsd:appinfo>
+                </xsd:annotation>
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" ref="icfc:producerBufferSize"/>
+                    <xsd:element minOccurs="0" ref="icfc:connectorPoolConfiguration"/>
+                    <xsd:element minOccurs="0" ref="icfc:timeouts"/>
+                    <xsd:element name="configurationProperties" type="tns:ConfigurationPropertiesType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="configuration" type="tns:ConfigurationType"/>
+            <xsd:complexType name="ConfigurationPropertiesType">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        <a:propertyContainer/>
+                    </xsd:appinfo>
+                </xsd:annotation>
+                <xsd:sequence>
+                    <xsd:element name="uniqueAttribute" type="xsd:string">
+                        <xsd:annotation>
+                            <xsd:appinfo>
+                                <r:attributeDisplayName>Unique attribute name</r:attributeDisplayName>
+                                <r:help>Name of unique attribute in current CSV file.</r:help>
+                            </xsd:appinfo>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="usingMultivalue" type="xsd:boolean">
+                        <xsd:annotation>
+                            <xsd:appinfo>
+                                <r:attributeDisplayName>Parse multivalue attributes</r:attributeDisplayName>
+                                <r:help>Flag if connector does have to parse multivalue attributes with char defined in Multivalue delimiter</r:help>
+                            </xsd:appinfo>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="nameAttribute" type="xsd:string">
+                        <xsd:annotation>
+                            <xsd:appinfo>
+                                <r:attributeDisplayName>UI_FLAT_NAME_ATTRIBUTE</r:attributeDisplayName>
+                                <r:help>UI_FLAT_NAME_ATTRIBUTE_HELP</r:help>
+                            </xsd:appinfo>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="encoding" type="xsd:string">
+                        <xsd:annotation>
+                            <xsd:appinfo>
+                                <r:attributeDisplayName>Encoding</r:attributeDisplayName>
+                                <r:help>CSV file encoding.</r:help>
+                            </xsd:appinfo>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="multivalueDelimiter" type="xsd:string">
+                        <xsd:annotation>
+                            <xsd:appinfo>
+                                <r:attributeDisplayName>Multivalue delimiter</r:attributeDisplayName>
+                                <r:help>Delimiter for multivalue attributes in CSV record (escaped as regexp, if needed).</r:help>
+                            </xsd:appinfo>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="passwordAttribute" type="xsd:string">
+                        <xsd:annotation>
+                            <xsd:appinfo>
+                                <r:attributeDisplayName>User password attribute name</r:attributeDisplayName>
+                                <r:help>User password attribute name is not required. Its used only in authenticate operation.</r:help>
+                            </xsd:appinfo>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="valueQualifier" type="xsd:string">
+                        <xsd:annotation>
+                            <xsd:appinfo>
+                                <r:attributeDisplayName>Value qualifier</r:attributeDisplayName>
+                                <r:help>Attribute value qualifier in CSV record (escaped as regexp, if needed).</r:help>
+                            </xsd:appinfo>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="filePath" type="xsd:string">
+                        <xsd:annotation>
+                            <xsd:appinfo>
+                                <r:attributeDisplayName>File path</r:attributeDisplayName>
+                                <r:help>Path to CSV file with records.</r:help>
+                            </xsd:appinfo>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element minOccurs="0" name="fieldDelimiter" type="xsd:string">
+                        <xsd:annotation>
+                            <xsd:appinfo>
+                                <r:attributeDisplayName>Field delimiter</r:attributeDisplayName>
+                                <r:help>Delimiter character between fields in one CSV record (escaped as regexp, if needed).</r:help>
+                            </xsd:appinfo>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="configurationProperties" type="tns:ConfigurationPropertiesType"/>
+        </xsd:schema>
+    </schema>
+</object>
+
+    <object xsi:type="ConnectorType" oid="b01c3563-9136-46d7-8d84-66f2f66aeb50" xmlns:gen991="http://midpoint.evolveum.com/xml/ns/public/communication/workflow-1.xsd" xmlns="http://midpoint.evolveum.com/xml/ns/public/common/common-1.xsd" xmlns:r="http://midpoint.evolveum.com/xml/ns/public/resource/resource-schema-1.xsd" xmlns:cap="http://midpoint.evolveum.com/xml/ns/public/resource/capabilities-1.xsd" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:enc="http://www.w3.org/2001/04/xmlenc#">
+        <name>ICF org.identityconnectors.databasetable.DatabaseTableConnector</name>
+        <framework>http://midpoint.evolveum.com/xml/ns/public/connector/icf-1</framework>
+        <connectorType>org.identityconnectors.databasetable.DatabaseTableConnector</connectorType>
+        <connectorVersion>1.1.0.0-e1</connectorVersion>
+        <connectorBundle>org.forgerock.openicf.connectors.db.databasetable</connectorBundle>
+        <namespace>http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/bundle/org.forgerock.openicf.connectors.db.databasetable/org.identityconnectors.databasetable.DatabaseTableConnector</namespace>
+        <schema>
+            <xsd:schema elementFormDefault="qualified" targetNamespace="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/bundle/org.forgerock.openicf.connectors.db.databasetable/org.identityconnectors.databasetable.DatabaseTableConnector" xmlns:icfc="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/connector-schema-1.xsd" xmlns:c="http://midpoint.evolveum.com/xml/ns/public/common/common-1.xsd" xmlns:tns="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/bundle/org.forgerock.openicf.connectors.db.databasetable/org.identityconnectors.databasetable.DatabaseTableConnector" xmlns:a="http://midpoint.evolveum.com/xml/ns/public/common/annotation-1.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gen99="http://midpoint.evolveum.com/xml/ns/public/communication/workflow-1.xsd">
+                <xsd:import namespace="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/connector-schema-1.xsd"/>
+                <xsd:import namespace="http://midpoint.evolveum.com/xml/ns/public/common/common-1.xsd"/>
+                <xsd:import namespace="http://midpoint.evolveum.com/xml/ns/public/resource/resource-schema-1.xsd"/>
+                <xsd:import namespace="http://midpoint.evolveum.com/xml/ns/public/common/annotation-1.xsd"/>
+                <xsd:complexType name="ConfigurationPropertiesType">
+                    <xsd:annotation>
+                        <xsd:appinfo>
+                            <a:propertyContainer/>
+                        </xsd:appinfo>
+                    </xsd:annotation>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="0" name="database" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Database</r:attributeDisplayName>
+                                    <r:help>&lt;b&gt;Database&lt;/b&gt;&lt;br&gt;Enter the name of the database on the database server that contains the table.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="jdbcUrlTemplate" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>JDBC Connection URL</r:attributeDisplayName>
+                                    <r:help>&lt;b&gt;JDBC Connection URL&lt;/b&gt;&lt;br&gt;Specify the JDBC Driver Connection URL.&lt;br&gt; Oracle template is jdbc:oracle:thin:@[host]:[port(1521)]:[DB].&lt;br&gt;  MySQL template is jdbc:mysql://[host]:[port(3306)]/[db], for more info, read the JDBC driver documentation.&lt;br&gt;Could be empty if datasource is provided.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="jdbcDriver" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>JDBC Driver</r:attributeDisplayName>
+                                    <r:help>&lt;b&gt;JDBC Driver&lt;/b&gt;&lt;br&gt;Specify the JDBC Driver class name. Oracle is oracle.jdbc.driver.OracleDriver. MySQL is org.gjt.mm.mysql.Driver.&lt;br&gt;Could be empty if datasource is provided.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="rethrowAllSQLExceptions" type="xsd:boolean">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Rethrow all SQLExceptions</r:attributeDisplayName>
+                                    <r:help>If this is not checked, SQL statements which throw SQLExceptions with a 0 ErrorCode will be have the exception caught and suppressed. Check it to have exceptions with 0 ErrorCodes rethrown.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="enableEmptyString" type="xsd:boolean">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Enable writing empty string</r:attributeDisplayName>
+                                    <r:help>&lt;b&gt;Enable writing empty string&lt;/b&gt;&lt;br&gt;Select to enable support for writing an empty strings, instead of a NULL value, in character based columns defined as not-null in the table schema. This option does not influence the way strings are written for Oracle based tables. By default empty strings are written as a NULL value.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="datasource" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Datasource Path</r:attributeDisplayName>
+                                    <r:help>&lt;b&gt;JDBC Data Source Name/Path&lt;/b&gt;&lt;br&gt;Enter the JDBC Data Source Name/Path to connect to the Oracle server. If specified, connector will only try to connect using Datasource and ignore other resource parameters specified.&lt;br&gt;the example value is: &lt;CODE&gt;jdbc/SampleDataSourceName&lt;/CODE&gt;</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="password" type="c:ProtectedStringType">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>User Password</r:attributeDisplayName>
+                                    <r:help>&lt;b&gt;User Password&lt;/b&gt;&lt;br&gt;Enter a user account that has permission to access accounts table.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="port" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Port</r:attributeDisplayName>
+                                    <r:help>&lt;b&gt;TCP Port&lt;/b&gt;&lt;br&gt;Enter the port number the database server is listening on.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="changeLogColumn" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Change Log Column (Sync)</r:attributeDisplayName>
+                                    <r:help>=&lt;b&gt;Change Log Column&lt;/b&gt;&lt;br&gt;The change log column store the latest change time. Providing this value the Sync capabilities are activated.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="nativeTimestamps" type="xsd:boolean">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Native Timestamps </r:attributeDisplayName>
+                                    <r:help>&lt;b&gt;Native Timestamps&lt;/b&gt;&lt;br&gt;Select to retrieve Timestamp data type of the columns in java.sql.Timestamp format from the database table.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="keyColumn" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Key Column</r:attributeDisplayName>
+                                    <r:help>&lt;b&gt;Key Column&lt;/b&gt;&lt;br&gt;This mandatory column value will be used as the unique identifier for rows in the table.&lt;br&gt;</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="user" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>User</r:attributeDisplayName>
+                                    <r:help>&lt;b&gt;User&lt;/b&gt;&lt;br&gt;Enter the name of the mandatory Database user with permission to account table.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="table" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Table</r:attributeDisplayName>
+                                    <r:help>&lt;b&gt;Table&lt;/b&gt;&lt;br&gt;Enter the name of the table in the database that contains the accounts.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="jndiProperties" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Initial JNDI Properties</r:attributeDisplayName>
+                                    <r:help>&lt;b&gt;Initial JNDI Properties&lt;/b&gt;&lt;br&gt;Could be empty or enter the JDBC JNDI Initial context factory, context provider in a format: key = value.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="host" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Host</r:attributeDisplayName>
+                                    <r:help>&lt;b&gt;Host&lt;/b&gt;&lt;br&gt;Enter the name of the host where the database is running.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="validConnectionQuery" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Validate Connection Query</r:attributeDisplayName>
+                                    <r:help>&lt;b&gt;Validate Connection Query&lt;/b&gt;&lt;br&gt;There can be specified the check connection alive query. If empty, default implementation will test it using the switch on/off the autocommit. Some select 1 from dummy table could be more efficient.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="passwordColumn" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Password Column</r:attributeDisplayName>
+                                    <r:help>&lt;b&gt;Password Column&lt;/b&gt;&lt;br&gt;Enter the name of the column in the table that will hold the password values. If empty, no validation on resource and passwords are activated.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="quoting" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Name Quoting</r:attributeDisplayName>
+                                    <r:help>&lt;b&gt;Name Quoting&lt;/b&gt;&lt;br&gt;Select whether database column names for this resource should be quoted, and the quoting characters. By default, database column names are not quoted (None). For other selections (Single, Double, Back, or Brackets), column names will appear between single quotes, double quotes, back quotes, or brackets in the SQL generated to access the database.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="allNative" type="xsd:boolean">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>All native</r:attributeDisplayName>
+                                    <r:help>&lt;b&gt;All native&lt;/b&gt;&lt;br&gt;Select to retrieve all data type of the columns in a native format from the database table.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+                <xsd:element name="configurationProperties" type="tns:ConfigurationPropertiesType"/>
+                <xsd:complexType name="ConfigurationType">
+                    <xsd:annotation>
+                        <xsd:appinfo>
+                            <a:propertyContainer/>
+                        </xsd:appinfo>
+                    </xsd:annotation>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="0" ref="icfc:producerBufferSize"/>
+                        <xsd:element minOccurs="0" ref="icfc:connectorPoolConfiguration"/>
+                        <xsd:element minOccurs="0" ref="icfc:timeouts"/>
+                        <xsd:element name="configurationProperties" type="tns:ConfigurationPropertiesType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+                <xsd:element name="configuration" type="tns:ConfigurationType"/>
+            </xsd:schema>
+        </schema>
+    </object>
+
+    <object xsi:type="ConnectorType" oid="ee23c13b-9667-4b0f-b180-1fe282c8a39d" xmlns:gen991="http://midpoint.evolveum.com/xml/ns/public/communication/workflow-1.xsd" xmlns="http://midpoint.evolveum.com/xml/ns/public/common/common-1.xsd" xmlns:r="http://midpoint.evolveum.com/xml/ns/public/resource/resource-schema-1.xsd" xmlns:cap="http://midpoint.evolveum.com/xml/ns/public/resource/capabilities-1.xsd" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:enc="http://www.w3.org/2001/04/xmlenc#">
+        <name>ICF org.identityconnectors.ldap.LdapConnector</name>
+        <framework>http://midpoint.evolveum.com/xml/ns/public/connector/icf-1</framework>
+        <connectorType>org.identityconnectors.ldap.LdapConnector</connectorType>
+        <connectorVersion>1.1.0.0-e1-ldap</connectorVersion>
+        <connectorBundle>org.forgerock.openicf.connectors.ldap.ldap</connectorBundle>
+        <namespace>http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/bundle/org.forgerock.openicf.connectors.ldap.ldap/org.identityconnectors.ldap.LdapConnector</namespace>
+        <schema>
+            <xsd:schema elementFormDefault="qualified" targetNamespace="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/bundle/org.forgerock.openicf.connectors.ldap.ldap/org.identityconnectors.ldap.LdapConnector" xmlns:icfc="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/connector-schema-1.xsd" xmlns:c="http://midpoint.evolveum.com/xml/ns/public/common/common-1.xsd" xmlns:tns="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/bundle/org.forgerock.openicf.connectors.ldap.ldap/org.identityconnectors.ldap.LdapConnector" xmlns:a="http://midpoint.evolveum.com/xml/ns/public/common/annotation-1.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gen99="http://midpoint.evolveum.com/xml/ns/public/communication/workflow-1.xsd">
+                <xsd:import namespace="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/connector-schema-1.xsd"/>
+                <xsd:import namespace="http://midpoint.evolveum.com/xml/ns/public/common/common-1.xsd"/>
+                <xsd:import namespace="http://midpoint.evolveum.com/xml/ns/public/resource/resource-schema-1.xsd"/>
+                <xsd:import namespace="http://midpoint.evolveum.com/xml/ns/public/common/annotation-1.xsd"/>
+                <xsd:complexType name="ConfigurationPropertiesType">
+                    <xsd:annotation>
+                        <xsd:appinfo>
+                            <a:propertyContainer/>
+                        </xsd:appinfo>
+                    </xsd:annotation>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="0" name="maintainPosixGroupMembership" type="xsd:boolean">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Maintain POSIX Group Membership</r:attributeDisplayName>
+                                    <r:help>When enabled and a user is renamed or deleted, update any POSIX groups to which the user belongs to reflect the new name. Otherwise, the LDAP resource must maintain referential integrity with respect to group membership.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="synchronizePasswords" type="xsd:boolean">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Enable Password Synchronization</r:attributeDisplayName>
+                                    <r:help>If true, the connector will synchronize passwords. The Password Capture Plugin needs to be installed for password synchronization to work.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="accountOperationalAttributes" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Account Operational Attributes</r:attributeDisplayName>
+                                    <r:help>The LDAP operational attributes that will be propagated into the schema as normal attributes.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="maintainLdapGroupMembership" type="xsd:boolean">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Maintain LDAP Group Membership</r:attributeDisplayName>
+                                    <r:help>When enabled and a user is renamed or deleted, update any LDAP groups to which the user belongs to reflect the new name. Otherwise, the LDAP resource must maintain referential integrity with respect to group membership.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="port" type="xsd:integer">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>TCP Port</r:attributeDisplayName>
+                                    <r:help>TCP/IP port number used to communicate with the LDAP server.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="modifiersNamesToFilterOut" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Filter Out Changes By</r:attributeDisplayName>
+                                    <r:help>The names (DNs) of directory administrators to filter from the changes. Changes with the attribute "modifiersName" that match entries in this list will be filtered out. The standard value is the administrator name used by this adapter, to prevent loops. Entries should be of the format "cn=Directory Manager".</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="respectResourcePasswordPolicyChangeAfterReset" type="xsd:boolean">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Respect Resource Password Policy Change-After-Reset</r:attributeDisplayName>
+                                    <r:help>When this resource is specified in a Login Module (i.e., this resource is a pass-through authentication target) and the resource's password policy is configured for change-after-reset, a user whose resource account password has been administratively reset will be required to change that password after successfully authenticating.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="passwordHashAlgorithm" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Password Hash Algorithm</r:attributeDisplayName>
+                                    <r:help>Indicates the algorithm that the Identity system should use to hash the password. Currently supported values are SSHA, SHA, SMD5, and MD5. A blank value indicates that the system will not hash passwords. This will cause cleartext passwords to be stored in LDAP unless the LDAP server performs the hash (Netscape Directory Server and iPlanet Directory Server do).</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="failover" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Failover Servers</r:attributeDisplayName>
+                                    <r:help>List all servers that should be used for failover in case the preferred server fails. If the preferred server fails, JNDI will connect to the next available server in the list. List all servers in the form of "ldap://ldap.example.com:389/", which follows the standard LDAP v3 URLs described in RFC 2255. Only the host and port parts of the URL are relevant in this setting.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="attributesToSynchronize" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Attributes to Synchronize</r:attributeDisplayName>
+                                    <r:help>The names of the attributes to synchronize. This ignores updates from the change log if they do not update any of the named attributes. For example, if only "department" is listed, then only changes that affect "department" will be processed. All other updates are ignored. If blank (the default), then all changes are processed.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="accountObjectClasses" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Account Object Classes</r:attributeDisplayName>
+                                    <r:help>The object class or classes that will be used when creating new user objects in the LDAP tree. When entering more than one object class, each entry should be on its own line; do not use commas or semi-colons to separate multiple object classes. Some object classes may require that you specify all object classes in the class hierarchy.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="removeLogEntryObjectClassFromFilter" type="xsd:boolean">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Remove Log Entry Object Class from Filter</r:attributeDisplayName>
+                                    <r:help>If this property is set (the default), the filter used to fetch change log entries does not contain the "changeLogEntry" object class, expecting that there are no entries of other object types in the change log.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="changeLogBlockSize" type="xsd:integer">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Change Log Block Size</r:attributeDisplayName>
+                                    <r:help>The number of change log entries to fetch per query.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="host" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Host</r:attributeDisplayName>
+                                    <r:help>The name or IP address of the host where the LDAP server is running.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="passwordAttribute" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Password Attribute</r:attributeDisplayName>
+                                    <r:help>The name of the LDAP attribute which holds the password. When changing an user's password, the new password is set to this attribute.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="principal" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Principal</r:attributeDisplayName>
+                                    <r:help>The distinguished name with which to authenticate to the LDAP server.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="uidAttribute" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Uid Attribute</r:attributeDisplayName>
+                                    <r:help>The name of the LDAP attribute which is mapped to the Uid attribute.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="passwordDecryptionKey" type="c:ProtectedByteArrayType">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Password Decryption Key</r:attributeDisplayName>
+                                    <r:help>The key to decrypt passwords with when performing password synchronization.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element maxOccurs="unbounded" name="objectClassesToSynchronize" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Object Classes to Synchronize</r:attributeDisplayName>
+                                    <r:help>The object classes to synchronize. The change log is for all objects; this filters updates to just the listed object classes. You should not list the superclasses of an object class unless you intend to synchronize objects with any of the superclass values. For example, if only "inetOrgPerson" objects should be synchronized, but the superclasses of "inetOrgPerson" ("person", "organizationalperson" and "top") should be filtered out, then list only "inetOrgPerson" here. All objects in LDAP are subclassed from "top". For this reason, you should never list "top", otherwise no object would be filtered.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="vlvSortAttribute" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>VLV Sort Attribute</r:attributeDisplayName>
+                                    <r:help>Specify the sort attribute to use for VLV indexes on the resource.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="groupMemberAttribute" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Group Member Attribute</r:attributeDisplayName>
+                                    <r:help>The name of the group attribute that will be updated with the distinguished name of the user when the user is added to the group.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="ssl" type="xsd:boolean">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>SSL</r:attributeDisplayName>
+                                    <r:help>Select the check box to connect to the LDAP server using SSL.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="blockSize" type="xsd:integer">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Block Size</r:attributeDisplayName>
+                                    <r:help>The maximum number of accounts that can be in a block when retrieving accounts in blocks.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="readSchema" type="xsd:boolean">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Read Schema</r:attributeDisplayName>
+                                    <r:help>If true, the connector will read the schema from the server. If false, the connector will provide a default schema based on the object classes in the configuration. This property must be true in order to use extended object classes.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="passwordDecryptionInitializationVector" type="c:ProtectedByteArrayType">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Password Decryption Initialization Vector</r:attributeDisplayName>
+                                    <r:help>The initialization vector to decrypt passwords with when performing password synchronization.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="credentials" type="c:ProtectedStringType">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Password</r:attributeDisplayName>
+                                    <r:help>Password for the principal.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="accountSearchFilter" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>LDAP Filter for Retrieving Accounts</r:attributeDisplayName>
+                                    <r:help>An optional LDAP filter to control which accounts are returned from the LDAP resource. If no filter is specified, only accounts that include all specified object classes are returned.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="passwordAttributeToSynchronize" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Password Attribute to Synchronize</r:attributeDisplayName>
+                                    <r:help>The name of the password attribute to synchronize when performing password synchronization.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="useBlocks" type="xsd:boolean">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Use Blocks</r:attributeDisplayName>
+                                    <r:help>When performing operations on large numbers of accounts, the accounts are processed in blocks to reduce the amount of memory used by the operation. Select this option to process accounts in blocks.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="accountSynchronizationFilter" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>LDAP Filter for Accounts to Synchronize</r:attributeDisplayName>
+                                    <r:help>An optional LDAP filter for the objects to synchronize. Because the change log is for all objects, this filter updates only objects that match the specified filter. If you specify a filter, an object will be synchronized only if it matches the filter and includes a synchronized object class.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="accountUserNameAttributes" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Account User Name Attributes</r:attributeDisplayName>
+                                    <r:help>Attribute or attributes which holds the account's user name. They will be used when authenticating to find the LDAP entry for the user name to authenticate.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="filterWithOrInsteadOfAnd" type="xsd:boolean">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Filter with Or Instead of And</r:attributeDisplayName>
+                                    <r:help>Normally the the filter used to fetch change log entries is an and-based filter retrieving an interval of change entries. If this property is set, the filter will or together the required change numbers instead.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="usePagedResultControl" type="xsd:boolean">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Use Paged Result Control</r:attributeDisplayName>
+                                    <r:help>When enabled, the LDAP Paged Results control is preferred over the VLV control when retrieving accounts.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="baseContextsToSynchronize" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Base Contexts to Synchronize</r:attributeDisplayName>
+                                    <r:help>One or more starting points in the LDAP tree that will be used to determine if a change should be synchronized. The base contexts attribute will be used to synchronize a change if this property is not set.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="baseContexts" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Base Contexts</r:attributeDisplayName>
+                                    <r:help>One or more starting points in the LDAP tree that will be used when searching the tree. Searches are performed when discovering users from the LDAP server or when looking for the groups of which a user is a member.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="changeNumberAttribute" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Change Number Attribute</r:attributeDisplayName>
+                                    <r:help>The name of the change number attribute in the change log entry.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+                <xsd:element name="configurationProperties" type="tns:ConfigurationPropertiesType"/>
+                <xsd:complexType name="ConfigurationType">
+                    <xsd:annotation>
+                        <xsd:appinfo>
+                            <a:propertyContainer/>
+                        </xsd:appinfo>
+                    </xsd:annotation>
+                    <xsd:sequence>
+                        <xsd:element name="configurationProperties" type="tns:ConfigurationPropertiesType"/>
+                        <xsd:element minOccurs="0" ref="icfc:producerBufferSize"/>
+                        <xsd:element minOccurs="0" ref="icfc:connectorPoolConfiguration"/>
+                        <xsd:element minOccurs="0" ref="icfc:timeouts"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+                <xsd:element name="configuration" type="tns:ConfigurationType"/>
+            </xsd:schema>
+        </schema>
+    </object>
+
+
+    <object xsi:type="ConnectorType" oid="14e40d3d-1157-4645-a644-c50e7054f73d" xmlns:gen991="http://midpoint.evolveum.com/xml/ns/public/communication/workflow-1.xsd">
+        <name>ICF org.forgerock.openicf.csvfile.CSVFileConnector</name>
+        <framework>http://midpoint.evolveum.com/xml/ns/public/connector/icf-1</framework>
+        <connectorType>org.forgerock.openicf.csvfile.CSVFileConnector</connectorType>
+        <connectorVersion>25</connectorVersion>
+        <connectorBundle>org.forgerock.openicf.connectors.file.csvfile</connectorBundle>
+        <namespace>http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/bundle/org.forgerock.openicf.connectors.file.csvfile/org.forgerock.openicf.csvfile.CSVFileConnector</namespace>
+        <schema>
+            <xsd:schema elementFormDefault="qualified" targetNamespace="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/bundle/org.forgerock.openicf.connectors.file.csvfile/org.forgerock.openicf.csvfile.CSVFileConnector" xmlns:icfc="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/connector-schema-1.xsd" xmlns:c="http://midpoint.evolveum.com/xml/ns/public/common/common-1.xsd" xmlns:tns="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/bundle/org.forgerock.openicf.connectors.file.csvfile/org.forgerock.openicf.csvfile.CSVFileConnector" xmlns:a="http://midpoint.evolveum.com/xml/ns/public/common/annotation-1.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gen99="http://midpoint.evolveum.com/xml/ns/public/communication/workflow-1.xsd">
+                <xsd:import namespace="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/connector-schema-1.xsd"/>
+                <xsd:import namespace="http://midpoint.evolveum.com/xml/ns/public/resource/resource-schema-1.xsd"/>
+                <xsd:import namespace="http://midpoint.evolveum.com/xml/ns/public/common/annotation-1.xsd"/>
+                <xsd:complexType name="ConfigurationType">
+                    <xsd:annotation>
+                        <xsd:appinfo>
+                            <a:propertyContainer/>
+                        </xsd:appinfo>
+                    </xsd:annotation>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="0" ref="icfc:producerBufferSize"/>
+                        <xsd:element minOccurs="0" ref="icfc:connectorPoolConfiguration"/>
+                        <xsd:element minOccurs="0" ref="icfc:timeouts"/>
+                        <xsd:element name="configurationProperties" type="tns:ConfigurationPropertiesType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+                <xsd:element name="configuration" type="tns:ConfigurationType"/>
+                <xsd:complexType name="ConfigurationPropertiesType">
+                    <xsd:annotation>
+                        <xsd:appinfo>
+                            <a:propertyContainer/>
+                        </xsd:appinfo>
+                    </xsd:annotation>
+                    <xsd:sequence>
+                        <xsd:element name="uniqueAttribute" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Unique attribute name</r:attributeDisplayName>
+                                    <r:help>Name of unique attribute in current CSV file.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="usingMultivalue" type="xsd:boolean">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Parse multivalue attributes</r:attributeDisplayName>
+                                    <r:help>Flag if connector does have to parse multivalue attributes with char defined in Multivalue delimiter</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="nameAttribute" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>UI_FLAT_NAME_ATTRIBUTE</r:attributeDisplayName>
+                                    <r:help>UI_FLAT_NAME_ATTRIBUTE_HELP</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="encoding" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Encoding</r:attributeDisplayName>
+                                    <r:help>CSV file encoding.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="multivalueDelimiter" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Multivalue delimiter</r:attributeDisplayName>
+                                    <r:help>Delimiter for multivalue attributes in CSV record (escaped as regexp, if needed).</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="passwordAttribute" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>User password attribute name</r:attributeDisplayName>
+                                    <r:help>User password attribute name is not required. Its used only in authenticate operation.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="valueQualifier" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Value qualifier</r:attributeDisplayName>
+                                    <r:help>Attribute value qualifier in CSV record (escaped as regexp, if needed).</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="filePath" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>File path</r:attributeDisplayName>
+                                    <r:help>Path to CSV file with records.</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element minOccurs="0" name="fieldDelimiter" type="xsd:string">
+                            <xsd:annotation>
+                                <xsd:appinfo>
+                                    <r:attributeDisplayName>Field delimiter</r:attributeDisplayName>
+                                    <r:help>Delimiter character between fields in one CSV record (escaped as regexp, if needed).</r:help>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+                <xsd:element name="configurationProperties" type="tns:ConfigurationPropertiesType"/>
+            </xsd:schema>
+        </schema>
+    </object>
+</objects>

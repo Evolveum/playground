@@ -29,6 +29,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -38,21 +39,29 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.resource.PackageResourceReference;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author lazyman
  */
-public abstract class WizardForm extends Panel {
+public abstract class WizardForm<T extends Serializable> extends Panel {
 
     public static final String WIZARD_PANEL_ID = "wizardPanel";
+    private IModel<T> wizardModel;
     private List<WizardPanel> panels;
     private boolean showTitle = true;
     private int index = 0;
+    private Form form;
 
     public WizardForm(String id) {
+        this(id, null);
+    }
+
+    public WizardForm(String id, IModel<T> model) {
         super(id);
+        this.wizardModel = model;
         setOutputMarkupId(true);
         setOutputMarkupPlaceholderTag(false);
 
@@ -63,6 +72,10 @@ public abstract class WizardForm extends Panel {
         }
 
         initComponents();
+    }
+
+    public IModel<T> getWizardModel() {
+        return wizardModel;
     }
 
     @Override
@@ -83,8 +96,10 @@ public abstract class WizardForm extends Panel {
     public abstract List<WizardPanel> initPanels();
 
     private void initComponents() {
+        form = new Form("wizard");
+        add(form);
         //breadcrumbs
-        initBreadcrumbs();
+        initBreadcrumbs(form);
         //title
         Label title = new Label("title", new LoadableDetachableModel() {
 
@@ -94,14 +109,14 @@ public abstract class WizardForm extends Panel {
             }
         });
         title.setVisible(showTitle);
-        add(title);
+        form.add(title);
         //content
-        add(getSelectedPanel());
+        form.add(getSelectedPanel());
         //buttons
-        initButtons();
+        initButtons(form);
     }
 
-    private void initBreadcrumbs() {
+    private void initBreadcrumbs(Form form) {
         IModel<List<Breadcrumb>> crumbsModel = new LoadableModel<List<Breadcrumb>>() {
 
             @Override
@@ -129,14 +144,14 @@ public abstract class WizardForm extends Panel {
                 }
             }
         };
-        add(breadcrumbs);
+        form.add(breadcrumbs);
     }
 
     private StringResourceModel createStringResource(String resourceKey) {
         return new StringResourceModel(resourceKey, this, null, null, null);
     }
 
-    private void initButtons() {
+    private void initButtons(Form form) {
         //cancel
         AjaxLinkButton button = new AjaxLinkButton("cancelButton", createStringResource("button.cancel")) {
 
@@ -157,7 +172,7 @@ public abstract class WizardForm extends Panel {
                 return isCancelVisible();
             }
         });
-        add(button);
+        form.add(button);
         //previous
         button = new AjaxLinkButton("previousButton", createStringResource("button.previous")) {
 
@@ -178,7 +193,7 @@ public abstract class WizardForm extends Panel {
                 return isPreviousVisible();
             }
         });
-        add(button);
+        form.add(button);
         //next
         button = new AjaxLinkButton("nextButton", createStringResource("button.next")) {
 
@@ -199,7 +214,7 @@ public abstract class WizardForm extends Panel {
                 return isNextVisible();
             }
         });
-        add(button);
+        form.add(button);
         //finish
         button = new AjaxLinkButton("finishButton", createStringResource("button.finish")) {
 
@@ -220,7 +235,7 @@ public abstract class WizardForm extends Panel {
                 return isFinishVisible();
             }
         });
-        add(button);
+        form.add(button);
     }
 
     private WizardPanel getSelectedPanel() {
@@ -270,27 +285,35 @@ public abstract class WizardForm extends Panel {
     }
 
     private void updateContent(AjaxRequestTarget target) {
-        addOrReplace(getSelectedPanel());
+        form.addOrReplace(getSelectedPanel());
 
         target.add(this);
     }
 
     private void cancelPerformed(AjaxRequestTarget target) {
+        getSelectedPanel().performAfterCancel(target);
+
         index = 0;
         updateContent(target);
     }
 
     private void previousPerformed(AjaxRequestTarget target) {
+        getSelectedPanel().performAfterPrevious(target);
+
         index--;
         updateContent(target);
     }
 
     private void nextPerformed(AjaxRequestTarget target) {
+        getSelectedPanel().performAfterNext(target);
+
         index++;
         updateContent(target);
     }
 
     private void finishPerformed(AjaxRequestTarget target) {
+        getSelectedPanel().performAfterFinish(target);
+
         index = 0;
         updateContent(target);
     }

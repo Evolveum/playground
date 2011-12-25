@@ -21,14 +21,14 @@
 
 package com.evolveum.midpoint.web.component.wizard.resource;
 
-import com.evolveum.midpoint.web.component.wizard.BaseWizardPanel;
-import com.evolveum.midpoint.web.component.wizard.Wizard;
+import com.evolveum.midpoint.web.component.wizard.WizardPanel;
+import com.evolveum.midpoint.xml.ns._public.common.common_1.ResourceType;
 import org.apache.wicket.model.IModel;
 
 /**
  * @author lazyman
  */
-public class SchemaHandlingPanel extends BaseWizardPanel {
+public class SchemaHandlingPanel extends WizardPanel<ResourceType> {
 
     public SchemaHandlingPanel(String id) {
         super(id);
@@ -37,10 +37,5 @@ public class SchemaHandlingPanel extends BaseWizardPanel {
     @Override
     public IModel<String> getTitle() {
         return createStringResource("SchemaHandlingPanel.title", this);
-    }
-
-    @Override
-    public void initLayout(IModel<Wizard> wizardModel) {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 }

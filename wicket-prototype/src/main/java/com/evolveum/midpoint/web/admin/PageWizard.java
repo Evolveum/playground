@@ -21,7 +21,17 @@
 
 package com.evolveum.midpoint.web.admin;
 
+import com.evolveum.midpoint.schema.util.JAXBUtil;
+import com.evolveum.midpoint.web.component.button.AjaxLinkButton;
 import com.evolveum.midpoint.web.component.wizard.resource.ResourceWizard;
+import com.evolveum.midpoint.web.component.xml.ace.AceEditor;
+import com.evolveum.midpoint.xml.ns._public.common.common_1.ResourceType;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.html.form.TextArea;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 
 /**
  * @author lazyman
@@ -33,7 +43,41 @@ public class PageWizard extends PageAdmin {
     }
 
     private void initLayout() {
-        ResourceWizard wizard = new ResourceWizard("resourceWizard");
+        final IModel<ResourceType> resource = new AbstractReadOnlyModel<ResourceType>() {
+
+            ResourceType object = new ResourceType();
+
+            @Override
+            public ResourceType getObject() {
+                return object;
+            }
+        };
+
+        ResourceWizard wizard = new ResourceWizard("resourceWizard", resource);
         add(wizard);
+
+        IModel<String> model = new AbstractReadOnlyModel<String>() {
+
+            @Override
+            public String getObject() {
+                try {
+                    return JAXBUtil.marshalWrap(resource.getObject());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+                return null;
+            }
+        };
+        final TextArea<String> editor = new TextArea<String>("createdResource", model);
+        add(editor);
+
+        AjaxLinkButton refresh = new AjaxLinkButton("refresh", new Model<String>("Refresh")) {
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                target.add(editor);
+            }
+        };
+        add(refresh);
     }
 }

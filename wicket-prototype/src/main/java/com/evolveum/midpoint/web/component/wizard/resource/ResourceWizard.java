@@ -23,6 +23,8 @@ package com.evolveum.midpoint.web.component.wizard.resource;
 
 import com.evolveum.midpoint.web.component.wizard.WizardForm;
 import com.evolveum.midpoint.web.component.wizard.WizardPanel;
+import com.evolveum.midpoint.xml.ns._public.common.common_1.ResourceType;
+import org.apache.wicket.model.IModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,20 +32,22 @@ import java.util.List;
 /**
  * @author lazyman
  */
-public class ResourceWizard extends WizardForm {
+public class ResourceWizard extends WizardForm<ResourceType> {
 
-    public ResourceWizard(String id) {
-        super(id);
+    public ResourceWizard(String id, IModel<ResourceType> model) {
+        super(id, model);
     }
 
     @Override
     public List<WizardPanel> initPanels() {
         List<WizardPanel> panels = new ArrayList<WizardPanel>();
-        panels.add(new NamePanel(WizardForm.WIZARD_PANEL_ID));
+        panels.add(new NamePanel(WizardForm.WIZARD_PANEL_ID, getWizardModel()));
         panels.add(new ConfigurationPanel(WizardForm.WIZARD_PANEL_ID));
         panels.add(new SchemaHandlingPanel(WizardForm.WIZARD_PANEL_ID));
 
 
         return panels;
     }
+
+
 }

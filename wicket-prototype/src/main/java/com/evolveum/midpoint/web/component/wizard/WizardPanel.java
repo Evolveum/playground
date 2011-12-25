@@ -21,42 +21,69 @@
 
 package com.evolveum.midpoint.web.component.wizard;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.StringResourceModel;
+
+import java.io.Serializable;
 
 /**
  * @author lazyman
  */
-public abstract class WizardPanel extends Panel {
+public abstract class WizardPanel<T extends Serializable> extends Panel {
+
+    private IModel<T> wizardModel;
 
     public WizardPanel(String id) {
+        super(id, null);
+    }
+
+    public WizardPanel(String id, IModel<T> wizardModel) {
         super(id);
+        this.wizardModel = wizardModel;
     }
-
-    public WizardPanel(String id, IModel model) {
-        super(id, model);
-    }
-
-    public abstract IModel<String> getBreadcrumbsTitle();
 
     public abstract IModel<String> getTitle();
 
-    public abstract void initLayout(IModel<Wizard> wizardModel);
+    protected IModel<T> getWizardModel() {
+        return wizardModel;
+    }
 
-    public abstract boolean showNext();
+    public IModel<String> getBreadcrumbsTitle() {
+        return getTitle();
+    }
 
-    public abstract boolean showPrevious();
+    public boolean showNext() {
+        return false;
+    }
 
-    public abstract boolean showCancel();
+    public boolean showPrevious() {
+        return false;
+    }
 
-    public abstract boolean showFinish();
+    public boolean showCancel() {
+        return false;
+    }
 
-    public abstract void performAfterNext(AjaxRequestTarget target);
+    public boolean showFinish() {
+        return false;
+    }
 
-    public abstract void performAfterPrevious(AjaxRequestTarget target);
+    public void performAfterNext(AjaxRequestTarget target) {
+    }
 
-    public abstract void performAfterCancel(AjaxRequestTarget target);
+    public void performAfterPrevious(AjaxRequestTarget target) {
+    }
 
-    public abstract void performAfterFinish(AjaxRequestTarget target);
+    public void performAfterCancel(AjaxRequestTarget target) {
+    }
+
+    public void performAfterFinish(AjaxRequestTarget target) {
+    }
+
+    protected StringResourceModel createStringResource(String resourceKey, Component component) {
+        return new StringResourceModel(resourceKey, component, null, null, null);
+    }
 }

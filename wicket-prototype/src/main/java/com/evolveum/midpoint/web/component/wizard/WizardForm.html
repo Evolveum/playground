@@ -22,7 +22,7 @@
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
 <wicket:panel>
-    <div class="wizard">
+    <form class="wizard" wicket:id="wizard">
         <ol class="breadcrumbs">
             <li wicket:id="breadcrumbs"><span wicket:id="label"/></li>
         </ol>
@@ -35,6 +35,6 @@
             <a wicket:id="nextButton" style="float: right;"/>
             <a wicket:id="previousButton" style="float: right;"/>
         </div>
-    </div>
+    </form>
 </wicket:panel>
 </html>
