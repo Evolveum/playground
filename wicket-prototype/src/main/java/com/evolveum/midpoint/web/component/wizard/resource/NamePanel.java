@@ -49,7 +49,6 @@ public class NamePanel extends WizardPanel<ResourceType> {
 
     private DropDownChoice<ConnectorType> version;
     private ConnectorType connectorType;
-    private String name;
     private ConnectorType selectedConnector;
 
     public NamePanel(String id, IModel<ResourceType> wizardModel) {
@@ -78,22 +77,9 @@ public class NamePanel extends WizardPanel<ResourceType> {
         this.selectedConnector = selectedConnector;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public void initLayout() {
         RequiredTextField<String> name = new RequiredTextField<String>("resourceName",
-                new PropertyModel<String>(this, "name"));
-        name.add(new AjaxFormComponentUpdatingBehavior("onFocus") {
-            @Override
-            protected void onUpdate(AjaxRequestTarget target) {
-            }
-        });
+                new PropertyModel<String>(getWizardModel(), "name"));
         add(name);
 
         final List<ConnectorType> connectors = getConnectors();
@@ -227,7 +213,6 @@ public class NamePanel extends WizardPanel<ResourceType> {
 
         IModel<ResourceType> model = getWizardModel();
         ResourceType resource = model.getObject();
-        resource.setName(getName());
 
         ObjectReferenceType reference = new ObjectReferenceType();
         reference.setType(ConnectorType.ELEMENT_TYPE);

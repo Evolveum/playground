@@ -24,11 +24,9 @@ package com.evolveum.midpoint.web.admin;
 import com.evolveum.midpoint.schema.util.JAXBUtil;
 import com.evolveum.midpoint.web.component.button.AjaxLinkButton;
 import com.evolveum.midpoint.web.component.wizard.resource.ResourceWizard;
-import com.evolveum.midpoint.web.component.xml.ace.AceEditor;
 import com.evolveum.midpoint.xml.ns._public.common.common_1.ResourceType;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.TextArea;
-import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -70,6 +68,7 @@ public class PageWizard extends PageAdmin {
             }
         };
         final TextArea<String> editor = new TextArea<String>("createdResource", model);
+        editor.setOutputMarkupId(true);
         add(editor);
 
         AjaxLinkButton refresh = new AjaxLinkButton("refresh", new Model<String>("Refresh")) {

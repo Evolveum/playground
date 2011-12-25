@@ -22,6 +22,7 @@
 package com.evolveum.midpoint.web.component.wizard;
 
 import com.evolveum.midpoint.web.component.button.AjaxLinkButton;
+import com.evolveum.midpoint.web.component.button.AjaxSubmitLinkButton;
 import com.evolveum.midpoint.web.component.util.LoadableModel;
 import com.evolveum.midpoint.web.component.util.VisibleEnableBehaviour;
 import org.apache.commons.lang.Validate;
@@ -113,7 +114,10 @@ public abstract class WizardForm<T extends Serializable> extends Panel {
         //content
         form.add(getSelectedPanel());
         //buttons
-        initButtons(form);
+        form.add(createCancelButton());
+        form.add(createPreviousButton());
+        form.add(createNextButton());
+        form.add(createFinishButton());
     }
 
     private void initBreadcrumbs(Form form) {
@@ -139,7 +143,6 @@ public abstract class WizardForm<T extends Serializable> extends Panel {
                 item.add(label);
 
                 if (getSelectedPanel().getClass().equals(breadcrumb.getPanelClass())) {
-//                    label.add(new AttributeAppender("class", new Model<String>("selected"), " "));
                     item.add(new AttributeAppender("class", new Model<String>("selected"), " "));
                 }
             }
@@ -151,8 +154,7 @@ public abstract class WizardForm<T extends Serializable> extends Panel {
         return new StringResourceModel(resourceKey, this, null, null, null);
     }
 
-    private void initButtons(Form form) {
-        //cancel
+    private AjaxLinkButton createCancelButton() {
         AjaxLinkButton button = new AjaxLinkButton("cancelButton", createStringResource("button.cancel")) {
 
             @Override
@@ -172,16 +174,24 @@ public abstract class WizardForm<T extends Serializable> extends Panel {
                 return isCancelVisible();
             }
         });
-        form.add(button);
-        //previous
-        button = new AjaxLinkButton("previousButton", createStringResource("button.previous")) {
+
+        return button;
+    }
+
+    private AjaxSubmitLinkButton createPreviousButton() {
+        AjaxSubmitLinkButton submit = new AjaxSubmitLinkButton("previousButton", createStringResource("button.previous")) {
 
             @Override
-            public void onClick(AjaxRequestTarget target) {
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
                 previousPerformed(target);
             }
+
+            @Override
+            protected void onError(AjaxRequestTarget target, Form<?> form) {
+
+            }
         };
-        button.add(new VisibleEnableBehaviour() {
+        submit.add(new VisibleEnableBehaviour() {
 
             @Override
             public boolean isEnabled() {
@@ -193,16 +203,24 @@ public abstract class WizardForm<T extends Serializable> extends Panel {
                 return isPreviousVisible();
             }
         });
-        form.add(button);
-        //next
-        button = new AjaxLinkButton("nextButton", createStringResource("button.next")) {
+
+        return submit;
+    }
+
+    private AjaxSubmitLinkButton createNextButton() {
+        AjaxSubmitLinkButton submit = new AjaxSubmitLinkButton("nextButton", createStringResource("button.next")) {
 
             @Override
-            public void onClick(AjaxRequestTarget target) {
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
                 nextPerformed(target);
             }
+
+            @Override
+            protected void onError(AjaxRequestTarget target, Form<?> form) {
+
+            }
         };
-        button.add(new VisibleEnableBehaviour() {
+        submit.add(new VisibleEnableBehaviour() {
 
             @Override
             public boolean isEnabled() {
@@ -214,16 +232,24 @@ public abstract class WizardForm<T extends Serializable> extends Panel {
                 return isNextVisible();
             }
         });
-        form.add(button);
-        //finish
-        button = new AjaxLinkButton("finishButton", createStringResource("button.finish")) {
+
+        return submit;
+    }
+
+    private AjaxSubmitLinkButton createFinishButton() {
+        AjaxSubmitLinkButton submit = new AjaxSubmitLinkButton("finishButton", createStringResource("button.finish")) {
 
             @Override
-            public void onClick(AjaxRequestTarget target) {
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
                 finishPerformed(target);
             }
+
+            @Override
+            protected void onError(AjaxRequestTarget target, Form<?> form) {
+
+            }
         };
-        button.add(new VisibleEnableBehaviour() {
+        submit.add(new VisibleEnableBehaviour() {
 
             @Override
             public boolean isEnabled() {
@@ -235,7 +261,8 @@ public abstract class WizardForm<T extends Serializable> extends Panel {
                 return isFinishVisible();
             }
         });
-        form.add(button);
+
+        return submit;
     }
 
     private WizardPanel getSelectedPanel() {
