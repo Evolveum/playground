@@ -124,7 +124,8 @@ public abstract class WizardForm extends Panel {
                 item.add(label);
 
                 if (getSelectedPanel().getClass().equals(breadcrumb.getPanelClass())) {
-                    label.add(new AttributeAppender("class", new Model<String>("selected"), " "));
+//                    label.add(new AttributeAppender("class", new Model<String>("selected"), " "));
+                    item.add(new AttributeAppender("class", new Model<String>("selected"), " "));
                 }
             }
         };

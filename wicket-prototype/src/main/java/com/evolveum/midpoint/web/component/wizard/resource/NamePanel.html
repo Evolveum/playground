@@ -22,6 +22,25 @@
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
 <wicket:panel>
-    name panel in here
+    <table>
+        <tr>
+            <td>
+                <wicket:message key="NamePanel.name"/>
+            </td>
+            <td><input wicket:id="name" type="text"/></td>
+        </tr>
+        <tr>
+            <td>
+                <wicket:message key="NamePanel.type"/>
+            </td>
+            <td><select wicket:id="type"/></td>
+        </tr>
+        <tr>
+            <td>
+                <wicket:message key="NamePanel.version"/>
+            </td>
+            <td><select wicket:id="version"/></td>
+        </tr>
+    </table>
 </wicket:panel>
 </html>

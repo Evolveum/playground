@@ -19,17 +19,6 @@
  * Portions Copyrighted 2011 [name of copyright owner]
  */
 
-ol li span.selected {
-    font-weight: bold;
-}
-
-div.buttons {
-    padding-top: 5px;
-    border-top: 1px solid #000;
-    margin-top: 10px;
-    float: none;
-}
-
 div.wizard {
     display: block;
     width: 800px;
@@ -39,4 +28,50 @@ div.wizard {
 
 div.wizard h2 {
     border-bottom: 1px solid #000;
+    margin-top: 0px;
+}
+
+div.content {
+    min-height: 220px;
+}
+
+div.wizard div.buttons {
+    padding-top: 5px;
+    border-top: 1px solid #000;
+    margin-top: 10px;
+    float: none;
+}
+
+ol.breadcrumbs {
+    color: #6e6e6e;
+    font: bold 12px Helvetica, Arial, sans-serif;
+    text-decoration: none;
+    padding: 7px 12px;
+    position: relative;
+    display: inline-block;
+    text-shadow: 0 1px 0 #fff;
+    -webkit-transition: border-color .218s;
+    -moz-transition: border .218s;
+    -o-transition: border-color .218s;
+    transition: border-color .218s;
+    background: #f3f3f3;
+    background: -webkit-gradient(linear, 0% 40%, 0% 70%, from(#F5F5F5), to(#F1F1F1));
+    background: -moz-linear-gradient(linear, 0% 40%, 0% 70%, from(#F5F5F5), to(#F1F1F1));
+    border: solid 1px #dcdcdc;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    margin-right: 10px;
+
+    width: 100%;
+    list-style: decimal inside none;
+}
+
+ol.breadcrumbs li {
+    float: left;
+    margin-right: 10px;
+}
+
+ol.breadcrumbs li.selected {
+    color: #000;
 }

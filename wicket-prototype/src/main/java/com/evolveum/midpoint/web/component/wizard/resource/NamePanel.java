@@ -23,6 +23,8 @@ package com.evolveum.midpoint.web.component.wizard.resource;
 
 import com.evolveum.midpoint.web.component.wizard.BaseWizardPanel;
 import com.evolveum.midpoint.web.component.wizard.Wizard;
+import org.apache.wicket.markup.html.form.DropDownChoice;
+import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.model.IModel;
 
 /**
@@ -32,6 +34,8 @@ public class NamePanel extends BaseWizardPanel {
 
     public NamePanel(String id) {
         super(id);
+
+        initLayout(null);
     }
 
     @Override
@@ -41,6 +45,13 @@ public class NamePanel extends BaseWizardPanel {
 
     @Override
     public void initLayout(IModel<Wizard> wizardModel) {
+        RequiredTextField<String> name = new RequiredTextField<String>("name");
+        add(name);
 
+        DropDownChoice<String> type = new DropDownChoice<String>("type");
+        add(type);
+
+        DropDownChoice<String> version = new DropDownChoice<String>("version");
+        add(version);
     }
 }
