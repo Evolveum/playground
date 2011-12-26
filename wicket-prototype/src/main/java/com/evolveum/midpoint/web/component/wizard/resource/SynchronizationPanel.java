@@ -21,8 +21,21 @@
 
 package com.evolveum.midpoint.web.component.wizard.resource;
 
+import com.evolveum.midpoint.web.component.wizard.WizardPanel;
+import com.evolveum.midpoint.xml.ns._public.common.common_1.ResourceType;
+import org.apache.wicket.model.IModel;
+
 /**
  * @author lazyman
  */
-public class SynchronizationPanel {
+public class SynchronizationPanel extends WizardPanel<ResourceType> {
+
+    public SynchronizationPanel(String id, IModel<ResourceType> wizardModel) {
+        super(id, wizardModel);
+    }
+
+    @Override
+    public IModel<String> getTitle() {
+        return createStringResource("SynchronizationPanel.title", this);
+    }
 }

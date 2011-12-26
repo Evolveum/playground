@@ -27,9 +27,12 @@ import com.evolveum.midpoint.xml.ns._public.common.common_1.*;
 import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.RequiredTextField;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
@@ -47,7 +50,6 @@ import java.util.Set;
  */
 public class NamePanel extends WizardPanel<ResourceType> {
 
-    private DropDownChoice<ConnectorType> version;
     private ConnectorType connectorType;
     private ConnectorType selectedConnector;
 
@@ -78,20 +80,26 @@ public class NamePanel extends WizardPanel<ResourceType> {
     }
 
     public void initLayout() {
+        //name text field
         RequiredTextField<String> name = new RequiredTextField<String>("resourceName",
                 new PropertyModel<String>(getWizardModel(), "name"));
         add(name);
 
-        final List<ConnectorType> connectors = getConnectors();
+        //connector selection
+        List<ConnectorType> connectors = getConnectors();
         final DropDownChoice<ConnectorType> type = createChoiceType(connectors);
-        version = createChoiceVersion(connectors);
-        version.add(new AjaxFormComponentUpdatingBehavior("onChange") {
+        final DropDownChoice<ConnectorType> version = createChoiceVersion(connectors);
+        add(type);
+        add(version);
 
-            @Override
-            protected void onUpdate(AjaxRequestTarget target) {
-            }
-        });
+        //feedback
+        add(new FeedbackPanel("feedback"));
 
+        //selected connector info
+        final WebMarkupContainer connectorInfo = createConnectorInfoTable();
+        add(connectorInfo);
+
+        //add ajax behaviour to combo boxes
         type.add(new AjaxFormComponentUpdatingBehavior("onChange") {
 
             @Override
@@ -99,8 +107,24 @@ public class NamePanel extends WizardPanel<ResourceType> {
                 target.add(version);
             }
         });
-        add(type);
-        add(version);
+        version.add(new AjaxFormComponentUpdatingBehavior("onChange") {
+
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                target.add(connectorInfo);
+            }
+        });
+    }
+
+    private WebMarkupContainer createConnectorInfoTable() {
+        WebMarkupContainer connectorInfo = new WebMarkupContainer("connectorInfo");
+        connectorInfo.setOutputMarkupId(true);
+        connectorInfo.add(new Label("connectorFramework", new PropertyModel<Object>(this, "selectedConnector.framework")));
+        connectorInfo.add(new Label("connectorType", new PropertyModel<Object>(this, "selectedConnector.connectorType")));
+        connectorInfo.add(new Label("connectorVersionInfo", new PropertyModel<Object>(this, "selectedConnector.connectorVersion")));
+        connectorInfo.add(new Label("connectorBundle", new PropertyModel<Object>(this, "selectedConnector.connectorBundle")));
+
+        return connectorInfo;
     }
 
     private DropDownChoice<ConnectorType> createChoiceType(final List<ConnectorType> connectors) {
@@ -209,8 +233,6 @@ public class NamePanel extends WizardPanel<ResourceType> {
 
     @Override
     public void performAfterNext(AjaxRequestTarget target) {
-        System.out.println("neeeeeeeeeeeeeeeext stuff");
-
         IModel<ResourceType> model = getWizardModel();
         ResourceType resource = model.getObject();
 

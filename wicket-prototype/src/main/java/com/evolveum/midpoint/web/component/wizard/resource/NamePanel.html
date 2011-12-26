@@ -42,11 +42,36 @@
             <td><select wicket:id="connectorVersion"/></td>
         </tr>
     </table>
+    <div wicket:id="feedback"/>
 
-    <!--<table>-->
-        <!--<tr>-->
-            <!--<td><wicket:message key=""/></td>-->
-        <!--</tr>-->
-    <!--</table>-->
+    <h4 style="margin: 15px 0 5px 0;">
+        <wicket:message key="NamePanel.connectorInformation"/>
+    </h4>
+    <table wicket:id="connectorInfo">
+        <tr>
+            <td>
+                <wicket:message key="NamePanel.connectorFramework"/>
+            </td>
+            <td><span wicket:id="connectorFramework"/></td>
+        </tr>
+        <tr>
+            <td>
+                <wicket:message key="NamePanel.connectorType"/>
+            </td>
+            <td><span wicket:id="connectorType"/></td>
+        </tr>
+        <tr>
+            <td>
+                <wicket:message key="NamePanel.connectorVersion"/>
+            </td>
+            <td><span wicket:id="connectorVersionInfo"/></td>
+        </tr>
+        <tr>
+            <td>
+                <wicket:message key="NamePanel.connectorBundle"/>
+            </td>
+            <td><span wicket:id="connectorBundle"/></td>
+        </tr>
+    </table>
 </wicket:panel>
 </html>
