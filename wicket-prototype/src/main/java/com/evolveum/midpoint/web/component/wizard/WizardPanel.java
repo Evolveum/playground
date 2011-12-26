@@ -71,6 +71,22 @@ public abstract class WizardPanel<T extends Serializable> extends Panel {
         return false;
     }
 
+    public boolean isNextEnabled() {
+        return true;
+    }
+
+    public boolean isPreviousEnabled() {
+        return true;
+    }
+
+    public boolean isCancelEnabled() {
+        return true;
+    }
+
+    public boolean isFinishEnabled() {
+        return true;
+    }
+
     public void performAfterNext(AjaxRequestTarget target) {
     }
 

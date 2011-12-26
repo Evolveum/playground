@@ -26,29 +26,32 @@ form.wizard {
     border: 1px solid #aaa;
 }
 
-div.wizard h2 {
+form.wizard h2 {
     border-bottom: 1px solid #000;
     margin-top: 0px;
 }
 
-div.content {
+form.wizard div.content {
     min-height: 220px;
 }
 
-div.wizard div.buttons {
+form.wizard div.buttons {
     padding-top: 5px;
     border-top: 1px solid #000;
     margin-top: 10px;
     float: none;
 }
 
-ol.breadcrumbs {
+form.wizard div.buttons a.button {
+    margin-right: 0px;
+}
+
+form.wizard ol.breadcrumbs {
     color: #6e6e6e;
     font: bold 12px Helvetica, Arial, sans-serif;
     text-decoration: none;
     padding: 7px 12px;
     position: relative;
-    display: inline-block;
     text-shadow: 0 1px 0 #fff;
     -webkit-transition: border-color .218s;
     -moz-transition: border .218s;
@@ -61,17 +64,18 @@ ol.breadcrumbs {
     border-radius: 2px;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
-    margin-right: 10px;
-
-    width: 100%;
     list-style: decimal inside none;
+    margin: 0 0 15px 0;
+
+    display: block;
+    height: 16px;
 }
 
-ol.breadcrumbs li {
+form.wizard ol.breadcrumbs li {
     float: left;
     margin-right: 10px;
 }
 
-ol.breadcrumbs li.selected {
+form.wizard ol.breadcrumbs li.selected {
     color: #000;
 }
