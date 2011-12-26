@@ -23,6 +23,7 @@ package com.evolveum.midpoint.web.component.wizard;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.html.form.validation.IFormValidator;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
@@ -37,12 +38,14 @@ public abstract class WizardPanel<T extends Serializable> extends Panel {
     private IModel<T> wizardModel;
 
     public WizardPanel(String id) {
-        super(id, null);
+        this(id, null);
     }
 
     public WizardPanel(String id, IModel<T> wizardModel) {
         super(id);
         this.wizardModel = wizardModel;
+
+        setOutputMarkupId(true);
     }
 
     public abstract IModel<String> getTitle();
@@ -53,6 +56,10 @@ public abstract class WizardPanel<T extends Serializable> extends Panel {
 
     public IModel<String> getBreadcrumbsTitle() {
         return getTitle();
+    }
+
+    public IFormValidator getValidator() {
+        return null;
     }
 
     public boolean showNext() {

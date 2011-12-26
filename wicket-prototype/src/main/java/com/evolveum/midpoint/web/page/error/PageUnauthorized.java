@@ -19,28 +19,20 @@
  * Portions Copyrighted 2011 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.web.component.wizard.resource;
+package com.evolveum.midpoint.web.page.error;
 
-import com.evolveum.midpoint.web.component.wizard.WizardPanel;
-import com.evolveum.midpoint.xml.ns._public.common.common_1.ResourceType;
-import org.apache.wicket.markup.html.form.RequiredTextField;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 
 /**
+ * Page for code 401
+ *
  * @author lazyman
  */
-public class ConfigurationPanel extends WizardPanel<ResourceType> {
-
-    public ConfigurationPanel(String id) {
-        super(id);
-
-        add(new RequiredTextField("text"));
-        add(new FeedbackPanel("feedback"));
-    }
+public class PageUnauthorized extends PageError {
 
     @Override
-    public IModel<String> getTitle() {
-        return createStringResource("ConfigurationPanel.title", this);
+    protected IModel<String> getErrorMessage() {
+        return new Model<String>("page unauthorized");
     }
 }

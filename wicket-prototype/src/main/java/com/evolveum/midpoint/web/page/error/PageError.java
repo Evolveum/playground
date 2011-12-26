@@ -19,28 +19,32 @@
  * Portions Copyrighted 2011 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.web.component.wizard.resource;
+package com.evolveum.midpoint.web.page.error;
 
-import com.evolveum.midpoint.web.component.wizard.WizardPanel;
-import com.evolveum.midpoint.xml.ns._public.common.common_1.ResourceType;
-import org.apache.wicket.markup.html.form.RequiredTextField;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 
 /**
+ * Base class for error web pages.
+ *
  * @author lazyman
  */
-public class ConfigurationPanel extends WizardPanel<ResourceType> {
+public abstract class PageError extends WebPage {
 
-    public ConfigurationPanel(String id) {
-        super(id);
-
-        add(new RequiredTextField("text"));
-        add(new FeedbackPanel("feedback"));
+    public PageError() {
+        add(new Label("message", getErrorMessage()));
     }
 
     @Override
-    public IModel<String> getTitle() {
-        return createStringResource("ConfigurationPanel.title", this);
+    public boolean isVersioned() {
+        return false;
     }
+
+    @Override
+    public boolean isErrorPage() {
+        return true;
+    }
+
+    protected abstract IModel<String> getErrorMessage();
 }

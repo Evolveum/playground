@@ -31,6 +31,7 @@ import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.validation.IFormValidator;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -42,6 +43,7 @@ import org.apache.wicket.request.resource.PackageResourceReference;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -112,7 +114,12 @@ public abstract class WizardForm<T extends Serializable> extends Panel {
         title.setVisible(showTitle);
         form.add(title);
         //content
-        form.add(getSelectedPanel());
+        WizardPanel<T> panel = getSelectedPanel();
+        form.add(panel);
+        IFormValidator validator = panel.getValidator();
+        if (validator != null) {
+            form.add(validator);
+        }
         //buttons
         form.add(createCancelButton());
         form.add(createPreviousButton());
@@ -188,7 +195,7 @@ public abstract class WizardForm<T extends Serializable> extends Panel {
 
             @Override
             protected void onError(AjaxRequestTarget target, Form<?> form) {
-
+                WizardForm.this.onError(target, form);
             }
         };
         submit.add(new VisibleEnableBehaviour() {
@@ -217,7 +224,7 @@ public abstract class WizardForm<T extends Serializable> extends Panel {
 
             @Override
             protected void onError(AjaxRequestTarget target, Form<?> form) {
-
+                WizardForm.this.onError(target, form);
             }
         };
         submit.add(new VisibleEnableBehaviour() {
@@ -246,7 +253,7 @@ public abstract class WizardForm<T extends Serializable> extends Panel {
 
             @Override
             protected void onError(AjaxRequestTarget target, Form<?> form) {
-
+                WizardForm.this.onError(target, form);
             }
         };
         submit.add(new VisibleEnableBehaviour() {
@@ -312,7 +319,18 @@ public abstract class WizardForm<T extends Serializable> extends Panel {
     }
 
     private void updateContent(AjaxRequestTarget target) {
-        form.addOrReplace(getSelectedPanel());
+        WizardPanel<T> panel = getSelectedPanel();
+        form.addOrReplace(panel);
+
+        Collection<IFormValidator> validators = form.getFormValidators();
+        for (IFormValidator validator : validators) {
+            form.remove(validator);
+        }
+
+        IFormValidator validator = panel.getValidator();
+        if (validator != null) {
+            form.add(validator);
+        }
 
         target.add(this);
     }
@@ -343,5 +361,9 @@ public abstract class WizardForm<T extends Serializable> extends Panel {
 
         index = 0;
         updateContent(target);
+    }
+
+    private void onError(AjaxRequestTarget target, Form<?> form) {
+        target.add(getSelectedPanel());
     }
 }

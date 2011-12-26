@@ -29,9 +29,8 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.DropDownChoice;
-import org.apache.wicket.markup.html.form.IChoiceRenderer;
-import org.apache.wicket.markup.html.form.RequiredTextField;
+import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.markup.html.form.validation.IFormValidator;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
@@ -50,6 +49,7 @@ import java.util.Set;
  */
 public class NamePanel extends WizardPanel<ResourceType> {
 
+    //data todo refactor to dto
     private ConnectorType connectorType;
     private ConnectorType selectedConnector;
 
@@ -114,6 +114,24 @@ public class NamePanel extends WizardPanel<ResourceType> {
                 target.add(connectorInfo);
             }
         });
+    }
+
+    @Override
+    public IFormValidator getValidator() {
+        return new IFormValidator() {
+
+            @Override
+            public FormComponent<?>[] getDependentFormComponents() {
+                return new FormComponent<?>[0];
+            }
+
+            @Override
+            public void validate(Form<?> form) {
+                if (getSelectedConnector() == null) {
+                    error(createStringResource("NamePanel.connectorNotSelected", NamePanel.this).getString());
+                }
+            }
+        };
     }
 
     private WebMarkupContainer createConnectorInfoTable() {
@@ -233,6 +251,8 @@ public class NamePanel extends WizardPanel<ResourceType> {
 
     @Override
     public void performAfterNext(AjaxRequestTarget target) {
+        get("resourceName").error("asdf");
+
         IModel<ResourceType> model = getWizardModel();
         ResourceType resource = model.getObject();
 

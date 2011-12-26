@@ -24,6 +24,10 @@ package com.evolveum.midpoint.web;
 import com.evolveum.midpoint.spring.SomeService;
 import com.evolveum.midpoint.web.admin.home.PageHome;
 import com.evolveum.midpoint.web.admin.user.PageUser;
+import com.evolveum.midpoint.web.page.error.PageForbidden;
+import com.evolveum.midpoint.web.page.error.PageNotFound;
+import com.evolveum.midpoint.web.page.error.PageServerError;
+import com.evolveum.midpoint.web.page.error.PageUnauthorized;
 import com.evolveum.midpoint.web.pretty.MidPointPageParametersEncoder;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.mapper.MountedMapper;
@@ -63,6 +67,12 @@ public class MidPointApplication extends WebApplication {
         mount(new MountedMapper("/home", PageHome.class, encoder));
         mount(new MountedMapper("/user", PageUser.class, encoder));
         mount(new MountedMapper("/test", PageTest.class, encoder));
+
+        //error pages
+        mount(new MountedMapper("/error/401", PageUnauthorized.class, encoder));
+        mount(new MountedMapper("/error/403", PageForbidden.class, encoder));
+        mount(new MountedMapper("/error/404", PageNotFound.class, encoder));
+        mount(new MountedMapper("/error/500", PageServerError.class, encoder));
     }
 
     public SomeService getService() {
