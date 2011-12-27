@@ -28,8 +28,12 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.PropertyModel;
 
+import com.evolveum.midpoint.configuration.Configuration;
 import com.evolveum.midpoint.menu.common.MenuItem;
 import com.evolveum.midpoint.menu.multiLevelCss.MultiLevelCssMenu;
+import com.evolveum.midpoint.resources.Resources;
+import com.evolveum.midpoint.roles.Roles;
+import com.evolveum.midpoint.server.ServerTasks;
 import com.evolveum.midpoint.user.UserPage;
 
 public class HomePage extends WebPage {
@@ -43,8 +47,10 @@ public class HomePage extends WebPage {
 		add(new Label("title", new PropertyModel<String>(this, "title")));
 		add(new BookmarkablePageLink<Void>("navigateHome", HomePage.class));
 		add(new BookmarkablePageLink<Void>("navigateUsers", UserPage.class));
-		add(new BookmarkablePageLink<Void>("navigateResources", HomePage.class));
-		add(new BookmarkablePageLink<Void>("navigateServers", HomePage.class));
+		add(new BookmarkablePageLink<Void>("navigateRoles", Roles.class));
+		add(new BookmarkablePageLink<Void>("navigateResources", Resources.class));
+		add(new BookmarkablePageLink<Void>("navigateServerTasks", ServerTasks.class));
+		add(new BookmarkablePageLink<Void>("navigateConfiguration", Configuration.class));
 
 		if (primaryMenuList == null) {
 			add(new MultiLevelCssMenu("multiLevelCssMenu", ""));

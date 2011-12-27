@@ -1,0 +1,55 @@
+<!--
+  ~ Copyright (c) 2011 Evolveum
+  ~
+  ~ The contents of this file are subject to the terms
+  ~ of the Common Development and Distribution License
+  ~ (the License). You may not use this file except in
+  ~ compliance with the License.
+  ~
+  ~ You can obtain a copy of the License at
+  ~ http://www.opensource.org/licenses/cddl1 or
+  ~ CDDLv1.0.txt file in the source code distribution.
+  ~ See the License for the specific language governing
+  ~ permission and limitations under the License.
+  ~
+  ~ If applicable, add the following below the CDDL Header,
+  ~ with the fields enclosed by brackets [] replaced by
+  ~ your own identifying information:
+  ~
+  ~ Portions Copyrighted 2011 [name of copyright owner]
+  -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:wicket="http://wicket.apache.org">
+
+
+<body>
+	<wicket:extend>
+		<table cellspacing="0" class="tablesorter" border="0">
+			<thead>
+				<tr>
+					<th>Test</th>
+					<th>ID</th>
+					<th wicket:id="orderByFirstName">First Name</th>
+					<th wicket:id="orderByLastName">Last Name</th>
+					<th>Home Phone</th>
+					<th>Cell Phone</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr wicket:id="sorting">
+					<td><a wicket:id="test"><span wicket:id="linkTest">[test]</span></a></td>
+					<td><span wicket:id="contactid">[contactid]</span></td>
+					<td><span wicket:id="firstname">[firstname]</span></td>
+					<td><span wicket:id="lastname">[lastname]</span></td>
+					<td><span wicket:id="homephone">[homephone]</span></td>
+					<td><span wicket:id="cellphone">[cellphone]</span></td>
+				</tr>
+			</tbody>
+		</table>
+		<div id="pagerNavigator">
+			<span wicket:id="navigator">[dataview navigator]</span>
+		</div>
+	</wicket:extend>
+</body>
+</html>

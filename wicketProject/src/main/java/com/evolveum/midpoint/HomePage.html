@@ -29,20 +29,23 @@
 <link type="text/css" rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-	<table style="border-collapse: collapse; width: 100%; position: absolute; left: 0px; top: 0px; border: none;">
+	<table id="mainTable"
+		style="border-style: none; border-collapse: collapse; width: 100%; position: absolute; left: 0px; top: 0px; border: hidden;">
 		<tr>
 			<td><div id="top">
-					<div id="logo">Evolveum - MidPoint</div>
+					<div id="logo"></div>
 					<div id="login">
-						You are logged as: <span>midPoint Administrator</span><br />Logout
+						You are logged as: <span>midPoint Administrator</span>Logout
 					</div>
 					<div id="navbar">
 						<table>
 							<tr>
 								<td><a wicket:id="navigateHome">Home</a></td>
 								<td><a wicket:id="navigateUsers">Users</a></td>
+								<td><a wicket:id="navigateRoles">Roles</a></td>
 								<td><a wicket:id="navigateResources">Resources</a></td>
-								<td><a wicket:id="navigateServers">Servers</a></td>
+								<td><a wicket:id="navigateServerTasks">Server Tasks</a></td>
+								<td><a wicket:id="navigateConfiguration">Configuration</a></td>
 							</tr>
 						</table>
 						<div wicket:id="multiLevelCssMenu"></div>
@@ -58,8 +61,8 @@
 				</div></td>
 		</tr>
 		<tr>
-			<td><div id="footer">Evolveum copyright 2011. Template
-					created by serbak.</div></td>
+			<td><div id="footer">© Copyright Evolveum. All Rights
+					Reserved. Theme created by serbak.</div></td>
 		</tr>
 	</table>
 

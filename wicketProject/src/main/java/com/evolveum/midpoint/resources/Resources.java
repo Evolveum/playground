@@ -19,7 +19,7 @@
  * Portions Copyrighted 2011 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.user;
+package com.evolveum.midpoint.resources;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,11 +36,14 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import com.evolveum.midpoint.HomePage;
 import com.evolveum.midpoint.menu.common.MenuItem;
+import com.evolveum.midpoint.user.Contact;
+import com.evolveum.midpoint.user.ResultPage;
+import com.evolveum.midpoint.user.SortableContactDataProvider;
 
-public class UserPage extends HomePage {
+public class Resources extends HomePage {
 	private static final long serialVersionUID = 1L;
 
-	public UserPage() {
+	public Resources() {
 		super();
 		SortableContactDataProvider dp = new SortableContactDataProvider();
 
@@ -104,18 +107,18 @@ public class UserPage extends HomePage {
 		add(new PagingNavigator("navigator", dataView));
 
 		setPrimaryMenuList(menu());
-		setPageTitle("Users");
-		setTitle("Users");
+		setPageTitle("Resources");
+		setTitle("Connected resources");
 	}
 
 	private List<MenuItem> menu() {
-		MenuItem primaryMenu1 = new MenuItem("Create user", UserPage.class);
-		
+		MenuItem primaryMenu1 = new MenuItem("Connected resources", Resources.class);
+
 		// Create a List which contains the primary menu items in it.
 		List<MenuItem> primaryMenuList = new ArrayList<MenuItem>();
 
 		primaryMenuList.add(primaryMenu1);
-
+		
 		return primaryMenuList;
 	}
 
