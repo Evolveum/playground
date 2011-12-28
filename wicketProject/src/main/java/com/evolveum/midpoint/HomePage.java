@@ -36,7 +36,7 @@ import com.evolveum.midpoint.roles.Roles;
 import com.evolveum.midpoint.server.ServerTasks;
 import com.evolveum.midpoint.user.UserPage;
 
-public class HomePage extends WebPage {
+public class HomePage extends WebPage{
 	private String pageTitle = "MidPoint wicket template";
 	private String title = "Home page";
 	List<MenuItem> primaryMenuList = null;
@@ -85,5 +85,4 @@ public class HomePage extends WebPage {
 		this.primaryMenuList = primaryMenuList;
 		replace(new MultiLevelCssMenu("multiLevelCssMenu", primaryMenuList));
 	}
-
 }

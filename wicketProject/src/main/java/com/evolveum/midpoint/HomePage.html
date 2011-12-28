@@ -29,30 +29,27 @@
 <link type="text/css" rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-	<table id="mainTable"
-		style="border-style: none; border-collapse: collapse; width: 100%; position: absolute; left: 0px; top: 0px; border: hidden;">
-		<tr>
-			<td><div id="top">
-					<div id="logo"></div>
-					<div id="login">
-						You are logged as: <span>midPoint Administrator</span>Logout
-					</div>
-					<div id="navbar">
-						<table>
-							<tr>
-								<td><a wicket:id="navigateHome">Home</a></td>
-								<td><a wicket:id="navigateUsers">Users</a></td>
-								<td><a wicket:id="navigateRoles">Roles</a></td>
-								<td><a wicket:id="navigateResources">Resources</a></td>
-								<td><a wicket:id="navigateServerTasks">Server Tasks</a></td>
-								<td><a wicket:id="navigateConfiguration">Configuration</a></td>
-							</tr>
-						</table>
-						<div wicket:id="multiLevelCssMenu"></div>
-					</div>
-				</div></td>
-		</tr>
-		<tr>
+	<div id="top">
+		<div id="logo"></div>
+		<div id="login">
+			You are logged as: <span>midPoint Administrator</span>Logout
+		</div>
+		<div id="navbar">
+			<table>
+				<tr>
+					<td><a wicket:id="navigateHome">Home</a></td>
+					<td><a wicket:id="navigateUsers">Users</a></td>
+					<td><a wicket:id="navigateRoles">Roles</a></td>
+					<td><a wicket:id="navigateResources">Resources</a></td>
+					<td><a wicket:id="navigateServerTasks">Server Tasks</a></td>
+					<td><a wicket:id="navigateConfiguration">Configuration</a></td>
+				</tr>
+			</table>
+			<div wicket:id="multiLevelCssMenu"></div>
+		</div>
+	</div>
+	<table id="mainTable">
+		<tr style="vertical-align: top;">
 			<td><div id="middle">
 					<h1 wicket:id="title"></h1>
 					<div id="content">
@@ -60,7 +57,7 @@
 					</div>
 				</div></td>
 		</tr>
-		<tr>
+		<tr height="30px">
 			<td><div id="footer">© Copyright Evolveum. All Rights
 					Reserved. Theme created by serbak.</div></td>
 		</tr>

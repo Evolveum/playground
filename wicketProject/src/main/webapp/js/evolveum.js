@@ -1,6 +1,7 @@
 $(document).ready(function() {
-	setMenuWhileScroll();
-	
+	setMenuPosiotionWhileScroll();
+	setMiddleHeight();
+
 	$(".tablesorter tbody tr").mouseover(function() {
 		$(this).css("cursor", "pointer");
 		$(this).css("background", "#bddbe4");
@@ -15,14 +16,15 @@ $(document).ready(function() {
 	});
 
 	window.onresize = function() {
-		setMenuWhileScroll();
+		setMenuPosiotionWhileScroll();
+		setMiddleHeight();
 	};
 });
 
-function setMenuWhileScroll() {
+function setMenuPosiotionWhileScroll() {
 	$(window).scroll(function() {
 		var scroll = $(window).scrollTop();
-		if (scroll >= 67) {
+		if (scroll >= 65) {
 			$("#navbar").css("position", "fixed");
 			$("#navbar").css("top", "0px");
 			$("#navbar").css("bottom", "auto");
@@ -32,4 +34,9 @@ function setMenuWhileScroll() {
 			$("#navbar").css("bottom", "0px");
 		}
 	});
+}
+
+function setMiddleHeight(){
+	var height = $(window).height() - 115;
+	$("#mainTable").css("height", height);
 }

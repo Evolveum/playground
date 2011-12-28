@@ -36,6 +36,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import com.evolveum.midpoint.HomePage;
 import com.evolveum.midpoint.menu.common.MenuItem;
+import com.evolveum.midpoint.user.newUser.NewUser;
 
 public class UserPage extends HomePage {
 	private static final long serialVersionUID = 1L;
@@ -109,12 +110,14 @@ public class UserPage extends HomePage {
 	}
 
 	private List<MenuItem> menu() {
-		MenuItem primaryMenu1 = new MenuItem("Create user", UserPage.class);
+		MenuItem primaryMenu1 = new MenuItem("List user", UserPage.class);
+		MenuItem primaryMenu2 = new MenuItem("New user", NewUser.class);
 		
 		// Create a List which contains the primary menu items in it.
 		List<MenuItem> primaryMenuList = new ArrayList<MenuItem>();
 
 		primaryMenuList.add(primaryMenu1);
+		primaryMenuList.add(primaryMenu2);
 
 		return primaryMenuList;
 	}
