@@ -251,8 +251,6 @@ public class NamePanel extends WizardPanel<ResourceType> {
 
     @Override
     public void performAfterNext(AjaxRequestTarget target) {
-        get("resourceName").error("asdf");
-
         IModel<ResourceType> model = getWizardModel();
         ResourceType resource = model.getObject();
 

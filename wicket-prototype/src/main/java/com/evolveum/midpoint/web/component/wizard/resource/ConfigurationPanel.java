@@ -26,6 +26,7 @@ import com.evolveum.midpoint.xml.ns._public.common.common_1.ResourceType;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 
 /**
  * @author lazyman
@@ -35,7 +36,7 @@ public class ConfigurationPanel extends WizardPanel<ResourceType> {
     public ConfigurationPanel(String id) {
         super(id);
 
-        add(new RequiredTextField("text"));
+        add(new RequiredTextField("text", new Model<String>()));
         add(new FeedbackPanel("feedback"));
     }
 
