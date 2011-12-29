@@ -26,6 +26,7 @@ import com.evolveum.midpoint.web.component.autoform.custom.TextPanel;
 import org.apache.commons.lang.Validate;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
@@ -55,7 +56,8 @@ public class ValueFormPanel extends Panel {
 
     private void initLayout() {
         //input
-        add(new TextPanel<String>("input", new PropertyModel<String>(model, "value")));
+        TextPanel<String> text = new TextPanel<String>("input", new PropertyModel<String>(model, "value"));
+        add(text);
 
         //buttons
         add(new AjaxLink("addButton") {
@@ -74,7 +76,7 @@ public class ValueFormPanel extends Panel {
         });
 
         //feedback
-        add(new FeedbackPanel("feedback"));
+        add(new FeedbackPanel("feedback", new ComponentFeedbackMessageFilter(text)));
     }
 
     private void addValue(AjaxRequestTarget target) {

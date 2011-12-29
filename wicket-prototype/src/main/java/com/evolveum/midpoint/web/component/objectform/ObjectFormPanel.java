@@ -31,9 +31,9 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.resource.PackageResourceReference;
 
+import javax.xml.namespace.QName;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -78,7 +78,7 @@ public class ObjectFormPanel extends Panel {
 
     private void initLayout() {
         //title
-        Label title = new Label("title", new PropertyModel<String>(model, "displayName"));
+        Label title = new Label("title", createItemNameModel(model));
         //todo title value and visibility
         add(title);
         //attributes
@@ -103,7 +103,7 @@ public class ObjectFormPanel extends Panel {
 
     private void populateListItem(ListItem<Property> listItem) {
         final IModel<Property> propertyModel = listItem.getModel();
-        Label name = new Label("name", createAttributeNameModel(propertyModel));
+        Label name = new Label("name", createItemNameModel(propertyModel));
         listItem.add(name);
 
 
@@ -118,7 +118,7 @@ public class ObjectFormPanel extends Panel {
                 }
 
                 if (values.isEmpty()) {
-                    values.add(new PropertyValue("empty"));
+                    values.add(new PropertyValue(""));
                 }
 
                 return values;
@@ -138,17 +138,22 @@ public class ObjectFormPanel extends Panel {
         listItem.add(values);
     }
 
-    private IModel<String> createAttributeNameModel(final IModel<Property> model) {
+    private <T extends Item> IModel<String> createItemNameModel(final IModel<T> model) {
         return new LoadableModel<String>() {
 
             @Override
             protected String load() {
-                Property property = model.getObject();
-                Validate.notNull(property, "Property must not be null.");
+                T item = model.getObject();
+                Validate.notNull(item, "Property must not be null.");
 
-                String displayName = property.getDisplayName();
+                String displayName = item.getDisplayName();
                 if (StringUtils.isEmpty(displayName)) {
-                    displayName = property.getName().getLocalPart();
+                    QName name = item.getName();
+                    if (name != null) {
+                        displayName = name.getLocalPart();
+                    } else {
+                        displayName = item.getDefinition().getTypeName().getLocalPart();
+                    }
                 }
 
                 return displayName;

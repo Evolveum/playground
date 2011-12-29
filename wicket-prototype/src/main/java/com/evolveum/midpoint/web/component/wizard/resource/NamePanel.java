@@ -105,6 +105,7 @@ public class NamePanel extends WizardPanel<ResourceType> {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
                 target.add(version);
+                target.add(connectorInfo);
             }
         });
         version.add(new AjaxFormComponentUpdatingBehavior("onChange") {
@@ -198,6 +199,10 @@ public class NamePanel extends WizardPanel<ResourceType> {
                     if (connector.getConnectorType().equals(connectorType.getConnectorType())) {
                         list.add(connector);
                     }
+                }
+
+                if (list.size() == 1) {
+                    setSelectedConnector(list.get(0));
                 }
 
                 return list;

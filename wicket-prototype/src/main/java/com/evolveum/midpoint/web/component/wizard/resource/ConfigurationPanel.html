@@ -22,9 +22,12 @@
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
 <wicket:panel>
-    configuration panel
-    <input wicket:id="text" type="text"/>
-
+    <div wicket:id="configurations" class="configurations">
+        <div wicket:id="configuration" class="configuration"/>
+    </div>
     <div wicket:id="feedback"/>
+    <div style="display: block; text-align: right;">
+        <a wicket:id="testButton"/>
+    </div>
 </wicket:panel>
 </html>
