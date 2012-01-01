@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Evolveum
+ * Copyright (c) 2012 Evolveum
  *
  * The contents of this file are subject to the terms
  * of the Common Development and Distribution License
@@ -16,7 +16,7 @@
  * with the fields enclosed by brackets [] replaced by
  * your own identifying information:
  *
- * Portions Copyrighted 2011 [name of copyright owner]
+ * Portions Copyrighted 2012 [name of copyright owner]
  */
 
 package com.evolveum.midpoint.web.component.wizard.resource;
@@ -25,7 +25,9 @@ import com.evolveum.midpoint.schema.exception.SchemaException;
 import com.evolveum.midpoint.schema.processor.*;
 import com.evolveum.midpoint.schema.util.JAXBUtil;
 import com.evolveum.midpoint.web.component.button.AjaxSubmitLinkButton;
+import com.evolveum.midpoint.web.component.objectform.ContainerStatus;
 import com.evolveum.midpoint.web.component.objectform.ObjectFormPanel;
+import com.evolveum.midpoint.web.component.objectform.PropertyContainerWrapper;
 import com.evolveum.midpoint.web.component.util.LoadableModel;
 import com.evolveum.midpoint.web.component.wizard.WizardPanel;
 import com.evolveum.midpoint.xml.ns._public.common.common_1.ResourceType;
@@ -51,11 +53,11 @@ public class ConfigurationPanel extends WizardPanel<ResourceType> {
     public ConfigurationPanel(String id) {
         super(id);
 
-        ListView<PropertyContainer> configurations = new ListView<PropertyContainer>("configurations",
+        ListView<PropertyContainerWrapper> configurations = new ListView<PropertyContainerWrapper>("configurations",
                 createConfigurationsModel()) {
 
             @Override
-            protected void populateItem(ListItem<PropertyContainer> listItem) {
+            protected void populateItem(ListItem<PropertyContainerWrapper> listItem) {
                 listItem.add(new ObjectFormPanel("configuration", listItem.getModel()));
             }
         };
@@ -86,11 +88,11 @@ public class ConfigurationPanel extends WizardPanel<ResourceType> {
         return createStringResource("ConfigurationPanel.title", this);
     }
 
-    private IModel<List<PropertyContainer>> createConfigurationsModel() {
-        return new LoadableModel<List<PropertyContainer>>() {
+    private IModel<List<PropertyContainerWrapper>> createConfigurationsModel() {
+        return new LoadableModel<List<PropertyContainerWrapper>>() {
             @Override
-            protected List<PropertyContainer> load() {
-                List<PropertyContainer> containers = new ArrayList<PropertyContainer>();
+            protected List<PropertyContainerWrapper> load() {
+                List<PropertyContainerWrapper> containers = new ArrayList<PropertyContainerWrapper>();
                 //todo implement - get configuration containers
 
                 containers.add(createTestContainer());
@@ -101,7 +103,7 @@ public class ConfigurationPanel extends WizardPanel<ResourceType> {
     }
 
     @Deprecated
-    private PropertyContainer createTestContainer() {
+    private PropertyContainerWrapper createTestContainer() {
         PropertyContainer container = null;
         try {
             URL url = ConfigurationPanel.class.getClassLoader().getResource("com/test/resource.xml");
@@ -120,7 +122,7 @@ public class ConfigurationPanel extends WizardPanel<ResourceType> {
             ex.printStackTrace();
         }
 
-        return container;
+        return new PropertyContainerWrapper(container, ContainerStatus.MODIFYING);
     }
 
     @Deprecated

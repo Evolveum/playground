@@ -25,8 +25,10 @@ import com.evolveum.midpoint.schema.processor.PropertyValue;
 import com.evolveum.midpoint.web.component.objectform.input.TextPanel;
 import org.apache.commons.lang.Validate;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
+import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -51,9 +53,16 @@ public class ValueFormPanel extends Panel {
     }
 
     private void initLayout() {
+        //feedback
+        FeedbackPanel feedback = new FeedbackPanel("feedback");
+        feedback.setOutputMarkupId(true);
+        add(feedback);
+
         //input
-        InputPanel component = createInputComponent("input");
+        InputPanel component = createInputComponent("input", feedback);
         add(component);
+
+        feedback.setFilter(new ComponentFeedbackMessageFilter(component.getComponent()));
 
         //buttons
         add(new AjaxLink("addButton") {
@@ -70,15 +79,29 @@ public class ValueFormPanel extends Panel {
                 removeValue(target);
             }
         });
-
-        //feedback
-        add(new FeedbackPanel("feedback", new ComponentFeedbackMessageFilter(component.getComponent())));
     }
 
-    private InputPanel createInputComponent(String id) {
+    private InputPanel createInputComponent(String id, final FeedbackPanel feedback) {
         //todo create input components
         InputPanel component = new TextPanel<String>(id, new PropertyModel<String>(model, "value.value"));
 
+        final FormComponent formComponent = component.getComponent();
+        formComponent.add(new AjaxFormComponentUpdatingBehavior("onblur") {
+
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                target.add(formComponent);
+                target.add(feedback);
+            }
+
+            @Override
+            protected void onError(AjaxRequestTarget target, RuntimeException e) {
+                super.onError(target, e);
+
+                target.add(formComponent);
+                target.add(feedback);
+            }
+        });
 
         return component;
     }

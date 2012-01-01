@@ -24,14 +24,17 @@ package com.evolveum.midpoint.web.admin;
 import com.evolveum.midpoint.schema.exception.SchemaException;
 import com.evolveum.midpoint.schema.processor.*;
 import com.evolveum.midpoint.schema.util.JAXBUtil;
+import com.evolveum.midpoint.web.component.button.AjaxSubmitLinkButton;
 import com.evolveum.midpoint.web.component.objectform.ContainerStatus;
 import com.evolveum.midpoint.web.component.objectform.ObjectFormPanel;
 import com.evolveum.midpoint.web.component.objectform.PropertyContainerWrapper;
 import com.evolveum.midpoint.web.component.util.LoadableModel;
 import com.evolveum.midpoint.xml.ns._public.common.common_1.ResourceType;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
@@ -72,11 +75,24 @@ public class PageForm extends PageAdmin {
             }
         };
 
-        Form form = new Form("form");
+        final Form form = new Form("form");
         add(form);
 
         form.add(new ObjectFormPanel("containerForm", model));
         form.add(new FeedbackPanel("feedback"));
+        form.add(new AjaxSubmitLinkButton("submit", new Model<String>("submit")) {
+            @Override
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+                target.add(form);
+                System.out.println("onSubmit");
+            }
+
+            @Override
+            protected void onError(AjaxRequestTarget target, Form<?> form) {
+                target.add(form);
+                System.out.println("onError");
+            }
+        });
     }
 
     private PropertyContainer createObject(ResourceType resource) throws Exception {

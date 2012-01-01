@@ -22,8 +22,6 @@
 package com.evolveum.midpoint.web.component.objectform.input;
 
 import com.evolveum.midpoint.web.component.objectform.InputPanel;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
@@ -31,23 +29,14 @@ import org.apache.wicket.model.IModel;
 public class TextPanel<T> extends InputPanel {
 
     public TextPanel(String id, IModel<T> model) {
+        this(id, model, String.class);
+    }
+
+    public TextPanel(String id, IModel<T> model, Class clazz) {
         super(id);
 
-        TextField<T> text = new TextField<T>("input", model);
-//        text.add(new AjaxEventBehavior("onFocus") {
-//
-//            @Override
-//            protected void onEvent(AjaxRequestTarget target) {
-//                System.out.println("onFocus");
-//            }
-//        });
-        text.add(new AjaxFormComponentUpdatingBehavior("onFocus") {
-
-            @Override
-            protected void onUpdate(AjaxRequestTarget target) {
-                System.out.println("onFocus");
-            }
-        });
+        final TextField<T> text = new TextField<T>("input", model);
+        text.setType(clazz);
         add(text);
     }
 

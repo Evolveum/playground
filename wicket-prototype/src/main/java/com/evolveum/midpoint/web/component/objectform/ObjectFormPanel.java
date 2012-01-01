@@ -49,10 +49,6 @@ public class ObjectFormPanel extends Panel {
     private boolean showEmptyProperties;
 
     public ObjectFormPanel(String id, IModel<PropertyContainerWrapper> model) {
-        this(id, model, false);
-    }
-
-    public ObjectFormPanel(String id, IModel<PropertyContainerWrapper> model, boolean isNewObject) {
         super(id);
         Validate.notNull(model, "Model with property container must not be null.");
 
