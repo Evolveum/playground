@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Evolveum
+ * Copyright (c) 2012 Evolveum
  *
  * The contents of this file are subject to the terms
  * of the Common Development and Distribution License
@@ -16,12 +16,14 @@
  * with the fields enclosed by brackets [] replaced by
  * your own identifying information:
  *
- * Portions Copyrighted 2011 [name of copyright owner]
+ * Portions Copyrighted 2012 [name of copyright owner]
  */
 
 package com.evolveum.midpoint.web.component.wizard.resource;
 
+import com.evolveum.midpoint.schema.constants.SchemaConstants;
 import com.evolveum.midpoint.schema.util.JAXBUtil;
+import com.evolveum.midpoint.util.DOMUtil;
 import com.evolveum.midpoint.web.component.wizard.WizardPanel;
 import com.evolveum.midpoint.xml.ns._public.common.common_1.*;
 import org.apache.commons.lang.StringUtils;
@@ -35,6 +37,8 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import javax.xml.bind.JAXBElement;
 import java.io.File;
@@ -263,5 +267,33 @@ public class NamePanel extends WizardPanel<ResourceType> {
         reference.setType(ConnectorType.ELEMENT_TYPE);
         reference.setOid(getSelectedConnector().getOid());
         resource.setConnectorRef(reference);
+
+        Element filter = createFilter(getSelectedConnector());
+        reference.setFilter(filter);
+    }
+
+    private Element createFilter(ConnectorType connector) {
+        Document document = DOMUtil.getDocument();
+
+        Element and = document.createElementNS(SchemaConstants.NS_C, "c:and");
+        document.appendChild(and);
+
+        Element type = document.createElementNS(SchemaConstants.NS_C, "c:type");
+        //todo use some util method to get URI for ConnectorType
+        type.setAttribute("uri", ConnectorType.ELEMENT_TYPE.getNamespaceURI()
+                + "#" + ConnectorType.ELEMENT_TYPE.getLocalPart());
+        and.appendChild(type);
+
+        Element equal = document.createElementNS(SchemaConstants.NS_C, "c:equal");
+        and.appendChild(equal);
+
+        Element value = document.createElementNS(SchemaConstants.NS_C, "c:value");
+        equal.appendChild(value);
+
+        Element connectorType = document.createElementNS(SchemaConstants.NS_C, "c:connectorType");
+        connectorType.setTextContent(connector.getConnectorType());
+        value.appendChild(connectorType);
+
+        return and;
     }
 }

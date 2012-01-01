@@ -29,6 +29,7 @@ import org.apache.commons.lang.Validate;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -102,5 +103,25 @@ public class PropertyWrapper implements Serializable, Comparable<PropertyWrapper
         }
 
         return builder.toString();
+    }
+
+    public void cleanup() {
+        Collection<PropertyValue<Object>> valuesToDelete = new ArrayList<PropertyValue<Object>>();
+
+        for (PropertyValueWrapper value : getPropertyValueWrappers()) {
+            switch (value.getStatus()) {
+                case ADDED:
+                    if (!value.hasValueChanged()) {
+                        valuesToDelete.add(value.getValue());
+                    }
+                    break;
+                case DELETED:
+                    valuesToDelete.add(value.getValue());
+                    break;
+            }
+        }
+
+        getProperty().deleteValues(valuesToDelete);
+        values = null;
     }
 }
