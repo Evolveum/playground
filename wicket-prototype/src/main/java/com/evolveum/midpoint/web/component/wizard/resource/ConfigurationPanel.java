@@ -50,6 +50,15 @@ import java.util.List;
  */
 public class ConfigurationPanel extends WizardPanel<ResourceType> {
 
+    private static final List<PropertyContainerWrapper> containers;
+
+    static {
+        containers = new ArrayList<PropertyContainerWrapper>();
+        //todo implement - get configuration containers from resource and connector type and remove this static block
+
+        containers.add(createTestContainer());
+    }
+
     public ConfigurationPanel(String id) {
         super(id);
 
@@ -63,6 +72,7 @@ public class ConfigurationPanel extends WizardPanel<ResourceType> {
         };
 
         add(configurations);
+
         add(new FeedbackPanel("feedback"));
         add(new AjaxSubmitLinkButton("testButton", createStringResource("ConfigurationPanel.testButton", this)) {
 
@@ -92,18 +102,13 @@ public class ConfigurationPanel extends WizardPanel<ResourceType> {
         return new LoadableModel<List<PropertyContainerWrapper>>() {
             @Override
             protected List<PropertyContainerWrapper> load() {
-                List<PropertyContainerWrapper> containers = new ArrayList<PropertyContainerWrapper>();
-                //todo implement - get configuration containers
-
-                containers.add(createTestContainer());
-
                 return containers;
             }
         };
     }
 
     @Deprecated
-    private PropertyContainerWrapper createTestContainer() {
+    private static PropertyContainerWrapper createTestContainer() {
         PropertyContainer container = null;
         try {
             URL url = ConfigurationPanel.class.getClassLoader().getResource("com/test/resource.xml");
@@ -126,7 +131,7 @@ public class ConfigurationPanel extends WizardPanel<ResourceType> {
     }
 
     @Deprecated
-    private PropertyContainer createObject(ResourceType resource) throws Exception {
+    private static PropertyContainer createObject(ResourceType resource) throws Exception {
         //todo
         QName accountType = new QName("http://midpoint.evolveum.com/xml/ns/public/" +
                 "resource/instance/10000000-0000-0000-0000-000000000003", "AccountObjectClass");

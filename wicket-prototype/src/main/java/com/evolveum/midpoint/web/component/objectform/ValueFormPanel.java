@@ -86,7 +86,7 @@ public class ValueFormPanel extends Panel {
         InputPanel component = new TextPanel<String>(id, new PropertyModel<String>(model, "value.value"));
 
         final FormComponent formComponent = component.getComponent();
-        formComponent.add(new AjaxFormComponentUpdatingBehavior("onblur") {
+        formComponent.add(new AjaxFormComponentUpdatingBehavior("onBlur") {
 
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
@@ -96,10 +96,10 @@ public class ValueFormPanel extends Panel {
 
             @Override
             protected void onError(AjaxRequestTarget target, RuntimeException e) {
-                super.onError(target, e);
-
                 target.add(formComponent);
                 target.add(feedback);
+
+                super.onError(target, e);
             }
         });
 
