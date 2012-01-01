@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Evolveum
+ * Copyright (c) 2012 Evolveum
  *
  * The contents of this file are subject to the terms
  * of the Common Development and Distribution License
@@ -16,7 +16,7 @@
  * with the fields enclosed by brackets [] replaced by
  * your own identifying information:
  *
- * Portions Copyrighted 2011 [name of copyright owner]
+ * Portions Copyrighted 2012 [name of copyright owner]
  */
 
 package com.evolveum.midpoint.web.admin;
@@ -24,9 +24,13 @@ package com.evolveum.midpoint.web.admin;
 import com.evolveum.midpoint.schema.exception.SchemaException;
 import com.evolveum.midpoint.schema.processor.*;
 import com.evolveum.midpoint.schema.util.JAXBUtil;
+import com.evolveum.midpoint.web.component.objectform.ContainerStatus;
 import com.evolveum.midpoint.web.component.objectform.ObjectFormPanel;
+import com.evolveum.midpoint.web.component.objectform.PropertyContainerWrapper;
 import com.evolveum.midpoint.web.component.util.LoadableModel;
 import com.evolveum.midpoint.xml.ns._public.common.common_1.ResourceType;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 
 import javax.xml.bind.JAXBElement;
@@ -42,10 +46,10 @@ public class PageForm extends PageAdmin {
     public PageForm() {
         add(new org.apache.wicket.devutils.debugbar.DebugBar("debug"));
 
-        IModel<PropertyContainer> model = new LoadableModel<PropertyContainer>() {
+        IModel<PropertyContainerWrapper> model = new LoadableModel<PropertyContainerWrapper>() {
 
             @Override
-            protected PropertyContainer load() {
+            protected PropertyContainerWrapper load() {
                 PropertyContainer container = null;
                 try {
                     URL url = PageForm.class.getClassLoader().getResource("com/test/resource.xml");
@@ -64,11 +68,15 @@ public class PageForm extends PageAdmin {
                     ex.printStackTrace();
                 }
 
-                return container;
+                return new PropertyContainerWrapper(container, ContainerStatus.MODIFYING);
             }
         };
 
-        add(new ObjectFormPanel("containerForm", model));
+        Form form = new Form("form");
+        add(form);
+
+        form.add(new ObjectFormPanel("containerForm", model));
+        form.add(new FeedbackPanel("feedback"));
     }
 
     private PropertyContainer createObject(ResourceType resource) throws Exception {

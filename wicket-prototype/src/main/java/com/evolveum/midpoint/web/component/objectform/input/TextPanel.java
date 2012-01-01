@@ -19,15 +19,16 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.web.component.autoform.custom;
+package com.evolveum.midpoint.web.component.objectform.input;
 
+import com.evolveum.midpoint.web.component.objectform.InputPanel;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
+import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
-public class TextPanel<T> extends Panel {
+public class TextPanel<T> extends InputPanel {
 
     public TextPanel(String id, IModel<T> model) {
         super(id);
@@ -48,5 +49,10 @@ public class TextPanel<T> extends Panel {
             }
         });
         add(text);
+    }
+
+    @Override
+    public FormComponent getComponent() {
+        return (FormComponent) get("input");
     }
 }

@@ -1,0 +1,114 @@
+/*
+ * Copyright (c) 2012 Evolveum
+ *
+ * The contents of this file are subject to the terms
+ * of the Common Development and Distribution License
+ * (the License). You may not use this file except in
+ * compliance with the License.
+ *
+ * You can obtain a copy of the License at
+ * http://www.opensource.org/licenses/cddl1 or
+ * CDDLv1.0.txt file in the source code distribution.
+ * See the License for the specific language governing
+ * permission and limitations under the License.
+ *
+ * If applicable, add the following below the CDDL Header,
+ * with the fields enclosed by brackets [] replaced by
+ * your own identifying information:
+ *
+ * Portions Copyrighted 2012 [name of copyright owner]
+ */
+
+package com.evolveum.midpoint.web.component.objectform;
+
+import com.evolveum.midpoint.schema.processor.*;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.Validate;
+
+import javax.xml.namespace.QName;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
+/**
+ * @author lazyman
+ */
+public class PropertyContainerWrapper implements Serializable {
+
+    private PropertyContainer container;
+    private ContainerStatus status;
+    private List<PropertyWrapper> properties;
+
+    public PropertyContainerWrapper(PropertyContainer container, ContainerStatus status) {
+        Validate.notNull(container, "Item must not be null.");
+        Validate.notNull(status, "Status must not be null.");
+
+        this.container = container;
+        this.status = status;
+    }
+
+    public PropertyContainer getContainer() {
+        return container;
+    }
+
+    public ContainerStatus getStatus() {
+        return status;
+    }
+
+    public List<PropertyWrapper> getPropertyWrappers() {
+        if (properties != null) {
+            return properties;
+        }
+
+        properties = new ArrayList<PropertyWrapper>();
+
+        PropertyContainerDefinition definition = container.getDefinition();
+        Set<PropertyDefinition> propertyDefinitions = definition.getPropertyDefinitions();
+        for (PropertyDefinition def : propertyDefinitions) {
+            Property property = container.findProperty(def);
+            if (property == null) {
+                properties.add(new PropertyWrapper(def.instantiate(), ValueStatus.ADDED));
+            } else {
+                properties.add(new PropertyWrapper(property, ValueStatus.NOT_CHANGED));
+            }
+        }
+
+        Collections.sort(properties);
+
+        return properties;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(getDisplayNameFromItem(container));
+        builder.append(", ");
+        builder.append(status);
+        builder.append("\n");
+        for (PropertyWrapper wrapper : getPropertyWrappers()) {
+            builder.append("\t");
+            builder.append(wrapper.toString());
+            builder.append("\n");
+        }
+
+        return builder.toString();
+    }
+
+    static String getDisplayNameFromItem(Item item) {
+        Validate.notNull(item, "Item must not be null.");
+
+        String displayName = item.getDisplayName();
+        if (StringUtils.isEmpty(displayName)) {
+            QName name = item.getName();
+            if (name != null) {
+                displayName = name.getLocalPart();
+            } else {
+                displayName = item.getDefinition().getTypeName().getLocalPart();
+            }
+        }
+
+        return displayName;
+    }
+}

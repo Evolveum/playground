@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Evolveum
+ * Copyright (c) 2012 Evolveum
  *
  * The contents of this file are subject to the terms
  * of the Common Development and Distribution License
@@ -16,48 +16,44 @@
  * with the fields enclosed by brackets [] replaced by
  * your own identifying information:
  *
- * Portions Copyrighted 2011 [name of copyright owner]
+ * Portions Copyrighted 2012 [name of copyright owner]
  */
 
 package com.evolveum.midpoint.web.component.objectform;
 
 import com.evolveum.midpoint.schema.processor.PropertyValue;
-import com.evolveum.midpoint.web.component.autoform.custom.TextPanel;
+import com.evolveum.midpoint.web.component.objectform.input.TextPanel;
 import org.apache.commons.lang.Validate;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
+import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
+
+import java.util.List;
 
 /**
  * @author lazyman
  */
 public class ValueFormPanel extends Panel {
 
-    private IModel<PropertyValue> model;
-    private boolean isNewObject;
+    private IModel<PropertyValueWrapper> model;
 
-    public ValueFormPanel(String id, IModel<PropertyValue> model) {
-        this(id, model, false);
-    }
-
-    public ValueFormPanel(String id, IModel<PropertyValue> model, boolean isNewObject) {
+    public ValueFormPanel(String id, IModel<PropertyValueWrapper> model) {
         super(id);
         Validate.notNull(model, "Property value model must not be null.");
-
         this.model = model;
-        this.isNewObject = isNewObject;
 
         initLayout();
     }
 
     private void initLayout() {
         //input
-        TextPanel<String> text = new TextPanel<String>("input", new PropertyModel<String>(model, "value"));
-        add(text);
+        InputPanel component = createInputComponent("input");
+        add(component);
 
         //buttons
         add(new AjaxLink("addButton") {
@@ -76,14 +72,46 @@ public class ValueFormPanel extends Panel {
         });
 
         //feedback
-        add(new FeedbackPanel("feedback", new ComponentFeedbackMessageFilter(text)));
+        add(new FeedbackPanel("feedback", new ComponentFeedbackMessageFilter(component.getComponent())));
+    }
+
+    private InputPanel createInputComponent(String id) {
+        //todo create input components
+        InputPanel component = new TextPanel<String>(id, new PropertyModel<String>(model, "value.value"));
+
+
+        return component;
     }
 
     private void addValue(AjaxRequestTarget target) {
+        PropertyValueWrapper wrapper = model.getObject();
+        PropertyWrapper propertyWrapper = wrapper.getProperty();
 
+        List<PropertyValueWrapper> values = propertyWrapper.getPropertyValueWrappers();
+        values.add(new PropertyValueWrapper(propertyWrapper, new PropertyValue(null), ValueStatus.ADDED));
+
+        ListView parent = findParent(ListView.class);
+        target.add(parent.getParent());
     }
 
     private void removeValue(AjaxRequestTarget target) {
+        PropertyValueWrapper wrapper = model.getObject();
+        PropertyWrapper propertyWrapper = wrapper.getProperty();
 
+        List<PropertyValueWrapper> values = propertyWrapper.getPropertyValueWrappers();
+
+        switch (wrapper.getStatus()) {
+            case ADDED:
+                values.remove(wrapper);
+                break;
+            case DELETED:
+                throw new IllegalStateException("Couldn't delete already deleted item: " + toString());
+            case NOT_CHANGED:
+                wrapper.setStatus(ValueStatus.DELETED);
+                break;
+        }
+
+        ListView parent = findParent(ListView.class);
+        target.add(parent.getParent());
     }
 }
