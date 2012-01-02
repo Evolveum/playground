@@ -50,9 +50,13 @@ import java.util.List;
  */
 public class ConfigurationPanel extends WizardPanel<ResourceType> {
 
-    public ConfigurationPanel(String id) {
-        super(id);
+    public ConfigurationPanel(String id, IModel<ResourceType> model) {
+        super(id, model);
 
+        initLayout();
+    }
+
+    private void initLayout() {
         ListView<PropertyContainerWrapper> configurations = new ListView<PropertyContainerWrapper>("configurations",
                 createConfigurationsModel()) {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Evolveum
+ * Copyright (c) 2012 Evolveum
  *
  * The contents of this file are subject to the terms
  * of the Common Development and Distribution License
@@ -16,7 +16,7 @@
  * with the fields enclosed by brackets [] replaced by
  * your own identifying information:
  *
- * Portions Copyrighted 2011 [name of copyright owner]
+ * Portions Copyrighted 2012 [name of copyright owner]
  */
 
 package com.evolveum.midpoint.web.component.wizard.resource;
@@ -41,10 +41,11 @@ public class ResourceWizard extends WizardForm<ResourceType> {
     @Override
     public List<WizardPanel> initPanels() {
         List<WizardPanel> panels = new ArrayList<WizardPanel>();
-        panels.add(new NamePanel(WizardForm.WIZARD_PANEL_ID, getWizardModel()));
-        panels.add(new ConfigurationPanel(WizardForm.WIZARD_PANEL_ID));
-        panels.add(new SchemaHandlingPanel(WizardForm.WIZARD_PANEL_ID));
-        panels.add(new SynchronizationPanel(WizardForm.WIZARD_PANEL_ID, getWizardModel()));
+        panels.add(new NamePanel(WIZARD_PANEL_ID, getWizardModel()));
+        panels.add(new ConfigurationPanel(WIZARD_PANEL_ID, getWizardModel()));
+        panels.add(new SchemaHandlingPanel(WIZARD_PANEL_ID, getWizardModel()));
+        panels.add(new SynchronizationPanel(WIZARD_PANEL_ID, getWizardModel()));
+        panels.add(new ReviewPanel(WIZARD_PANEL_ID, getWizardModel()));
 
 
         return panels;

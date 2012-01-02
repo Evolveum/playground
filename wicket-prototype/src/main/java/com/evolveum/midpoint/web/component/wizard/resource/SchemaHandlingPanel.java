@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Evolveum
+ * Copyright (c) 2012 Evolveum
  *
  * The contents of this file are subject to the terms
  * of the Common Development and Distribution License
@@ -16,7 +16,7 @@
  * with the fields enclosed by brackets [] replaced by
  * your own identifying information:
  *
- * Portions Copyrighted 2011 [name of copyright owner]
+ * Portions Copyrighted 2012 [name of copyright owner]
  */
 
 package com.evolveum.midpoint.web.component.wizard.resource;
@@ -30,12 +30,18 @@ import org.apache.wicket.model.IModel;
  */
 public class SchemaHandlingPanel extends WizardPanel<ResourceType> {
 
-    public SchemaHandlingPanel(String id) {
-        super(id);
+    public SchemaHandlingPanel(String id, IModel<ResourceType> model) {
+        super(id, model);
+
+        initLayout();
     }
 
     @Override
     public IModel<String> getTitle() {
         return createStringResource("SchemaHandlingPanel.title", this);
+    }
+
+    private void initLayout() {
+
     }
 }

@@ -23,39 +23,24 @@ package com.evolveum.midpoint.web.component.wizard.resource;
 
 import com.evolveum.midpoint.web.component.wizard.WizardPanel;
 import com.evolveum.midpoint.xml.ns._public.common.common_1.ResourceType;
-import org.apache.wicket.markup.html.form.CheckBox;
-import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 
 /**
  * @author lazyman
  */
-public class SynchronizationPanel extends WizardPanel<ResourceType> {
+public class ReviewPanel extends WizardPanel<ResourceType> {
 
-    public SynchronizationPanel(String id, IModel<ResourceType> wizardModel) {
+    public ReviewPanel(String id, IModel<ResourceType> wizardModel) {
         super(id, wizardModel);
-
         initLayout();
     }
 
     @Override
     public IModel<String> getTitle() {
-        return createStringResource("SynchronizationPanel.title", this);
+        return createStringResource("ReviewPanel.title", this);
     }
 
     private void initLayout() {
-        CheckBox enabled = new CheckBox("enabled", new Model<Boolean>());
-        add(enabled);
-
-        TextArea<String> correlation = new TextArea<String>("correlation", new Model<String>());
-        add(correlation);
-
-        TextArea<String> confirmation = new TextArea<String>("confirmation", new Model<String>());
-        add(confirmation);
-
-        //todo synchronization situations
+        //todo add xml editor with full resource xml
     }
-
-
 }
