@@ -50,15 +50,6 @@ import java.util.List;
  */
 public class ConfigurationPanel extends WizardPanel<ResourceType> {
 
-    private static final List<PropertyContainerWrapper> containers;
-
-    static {
-        containers = new ArrayList<PropertyContainerWrapper>();
-        //todo implement - get configuration containers from resource and connector type and remove this static block
-
-        containers.add(createTestContainer());
-    }
-
     public ConfigurationPanel(String id) {
         super(id);
 
@@ -99,9 +90,14 @@ public class ConfigurationPanel extends WizardPanel<ResourceType> {
     }
 
     private IModel<List<PropertyContainerWrapper>> createConfigurationsModel() {
-        return new LoadableModel<List<PropertyContainerWrapper>>() {
+        return new LoadableModel<List<PropertyContainerWrapper>>(false) {
+
             @Override
             protected List<PropertyContainerWrapper> load() {
+                List<PropertyContainerWrapper> containers = new ArrayList<PropertyContainerWrapper>();
+                //todo implement - get configuration containers from resource and connector type
+
+                containers.add(createTestContainer());
                 return containers;
             }
         };
