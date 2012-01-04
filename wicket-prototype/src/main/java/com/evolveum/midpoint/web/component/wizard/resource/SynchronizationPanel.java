@@ -40,6 +40,11 @@ public class SynchronizationPanel extends WizardPanel<ResourceType> {
     }
 
     @Override
+    public IModel<String> getBreadcrumbsTitle() {
+        return createStringResource("SynchronizationPanel.breadcrumbs", this);
+    }
+
+    @Override
     public IModel<String> getTitle() {
         return createStringResource("SynchronizationPanel.title", this);
     }

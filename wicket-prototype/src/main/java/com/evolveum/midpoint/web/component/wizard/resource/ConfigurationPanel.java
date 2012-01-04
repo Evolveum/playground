@@ -89,6 +89,11 @@ public class ConfigurationPanel extends WizardPanel<ResourceType> {
     }
 
     @Override
+    public IModel<String> getBreadcrumbsTitle() {
+        return createStringResource("ConfigurationPanel.breadcrumbs", this);
+    }
+
+    @Override
     public IModel<String> getTitle() {
         return createStringResource("ConfigurationPanel.title", this);
     }

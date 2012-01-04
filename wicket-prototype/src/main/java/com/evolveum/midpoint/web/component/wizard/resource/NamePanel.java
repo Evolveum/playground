@@ -21,9 +21,11 @@
 
 package com.evolveum.midpoint.web.component.wizard.resource;
 
+import com.evolveum.midpoint.schema.constants.ObjectTypes;
 import com.evolveum.midpoint.schema.constants.SchemaConstants;
 import com.evolveum.midpoint.schema.util.JAXBUtil;
 import com.evolveum.midpoint.util.DOMUtil;
+import com.evolveum.midpoint.util.QNameUtil;
 import com.evolveum.midpoint.web.component.wizard.WizardPanel;
 import com.evolveum.midpoint.xml.ns._public.common.common_1.*;
 import org.apache.commons.lang.StringUtils;
@@ -60,6 +62,11 @@ public class NamePanel extends WizardPanel<ResourceType> {
     public NamePanel(String id, IModel<ResourceType> wizardModel) {
         super(id, wizardModel);
         initLayout();
+    }
+
+    @Override
+    public IModel<String> getBreadcrumbsTitle() {
+        return createStringResource("NamePanel.breadcrumbs", this);
     }
 
     @Override
@@ -279,9 +286,7 @@ public class NamePanel extends WizardPanel<ResourceType> {
         document.appendChild(and);
 
         Element type = document.createElementNS(SchemaConstants.NS_C, "c:type");
-        //todo use some util method to get URI for ConnectorType
-        type.setAttribute("uri", ConnectorType.ELEMENT_TYPE.getNamespaceURI()
-                + "#" + ConnectorType.ELEMENT_TYPE.getLocalPart());
+        type.setAttribute("uri", QNameUtil.qNameToUri(ObjectTypes.CONNECTOR.getTypeQName()));
         and.appendChild(type);
 
         Element equal = document.createElementNS(SchemaConstants.NS_C, "c:equal");

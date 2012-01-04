@@ -45,6 +45,7 @@ public class ResourceWizard extends WizardForm<ResourceType> {
         panels.add(new ConfigurationPanel(WIZARD_PANEL_ID, getWizardModel()));
         panels.add(new SchemaHandlingPanel(WIZARD_PANEL_ID, getWizardModel()));
         panels.add(new SynchronizationPanel(WIZARD_PANEL_ID, getWizardModel()));
+        panels.add(new ReactionPanel(WIZARD_PANEL_ID, getWizardModel()));
         panels.add(new ReviewPanel(WIZARD_PANEL_ID, getWizardModel()));
 
 

@@ -28,24 +28,25 @@ import org.apache.wicket.model.IModel;
 /**
  * @author lazyman
  */
-public class ReviewPanel extends WizardPanel<ResourceType> {
+public class ReactionPanel extends WizardPanel<ResourceType> {
 
-    public ReviewPanel(String id, IModel<ResourceType> wizardModel) {
+    public ReactionPanel(String id, IModel<ResourceType> wizardModel) {
         super(id, wizardModel);
+
         initLayout();
     }
 
     @Override
     public IModel<String> getBreadcrumbsTitle() {
-        return createStringResource("ReviewPanel.breadcrumbs", this);
+        return createStringResource("ReactionPanel.breadcrumbs", this);
     }
 
     @Override
     public IModel<String> getTitle() {
-        return createStringResource("ReviewPanel.title", this);
+        return createStringResource("ReactionPanel.title", this);
     }
 
     private void initLayout() {
-        //todo add xml editor with full resource xml
+        //todo synchronization situations
     }
 }
