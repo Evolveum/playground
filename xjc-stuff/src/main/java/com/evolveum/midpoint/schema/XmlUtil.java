@@ -52,18 +52,18 @@ public class XmlUtil {
         return values;
     }
 
-    public static <T> T getPropertyValue(PropertyContainer container, QName name) {
+    public static <T> T getPropertyValue(PropertyContainer container, QName name, Class<T> clazz) {
         Property property = container.findProperty(name);
         if (property == null) {
             return null;
         }
 
-        PropertyValue<Object> value = property.getValue();
+        PropertyValue<T> value = property.getValue(clazz);
         if (value == null) {
             return null;
         }
 
-        return (T) value.getValue();
+        return value.getValue();
     }
 
     public static <T> void setPropertyValue(PropertyContainer container, QName name, T value) {
