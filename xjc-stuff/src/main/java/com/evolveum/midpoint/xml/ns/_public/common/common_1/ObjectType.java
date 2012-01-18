@@ -1,7 +1,6 @@
 package com.evolveum.midpoint.xml.ns._public.common.common_1;
 
 import com.evolveum.midpoint.schema.SchemaConstants;
-import com.evolveum.midpoint.schema.processorFake.MidpointObject;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.namespace.QName;

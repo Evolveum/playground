@@ -10,47 +10,6 @@ import javax.xml.namespace.QName;
 import java.io.Serializable;
 import java.util.List;
 
-
-/**
- * User object type. Represents physical user of the system.
- * <p/>
- * TODO: More details
- * <p/>
- * Inspired by FOAF, but still quite LDAP-ish.
- * <p/>
- * <p/>
- * <p>Java class for UserType complex type.
- * <p/>
- * <p>The following schema fragment specifies the expected content contained within this class.
- * <p/>
- * <pre>
- * &lt;complexType name="UserType">
- *   &lt;complexContent>
- *     &lt;extension base="{http://midpoint.evolveum.com/xml/ns/public/common/common-1.xsd}ExtensibleObjectType">
- *       &lt;sequence>
- *         &lt;element name="fullName" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="givenName" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="familyName" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="additionalNames" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="honorificPrefix" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="honorificSuffix" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="eMailAddress" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="telephoneNumber" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="employeeNumber" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="employeeType" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="organizationalUnit" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="locality" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="credentials" type="{http://midpoint.evolveum.com/xml/ns/public/common/common-1.xsd}CredentialsType" minOccurs="0"/>
- *         &lt;element name="activation" type="{http://midpoint.evolveum.com/xml/ns/public/common/common-1.xsd}ActivationType" minOccurs="0"/>
- *         &lt;element name="assignment" type="{http://midpoint.evolveum.com/xml/ns/public/common/common-1.xsd}AssignmentType" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="account" type="{http://midpoint.evolveum.com/xml/ns/public/common/common-1.xsd}AccountShadowType" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="accountRef" type="{http://midpoint.evolveum.com/xml/ns/public/common/common-1.xsd}ObjectReferenceType" maxOccurs="unbounded" minOccurs="0"/>
- *       &lt;/sequence>
- *     &lt;/extension>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
- */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "UserType", propOrder = {
         "fullName",
@@ -67,8 +26,6 @@ import java.util.List;
         "locality",
         "credentials",
         "activation",
-        "assignment",
-        "account",
         "accountRef"
 })
 public class UserType
@@ -93,8 +50,6 @@ public class UserType
     public final static QName F_LOCALITY = new QName(SchemaConstants.NS_COMMON, "locality");
     public final static QName F_CREDENTIALS = new QName(SchemaConstants.NS_COMMON, "credentials");
     public final static QName F_ACTIVATION = new QName(SchemaConstants.NS_COMMON, "activation");
-    public final static QName F_ASSIGNMENT = new QName(SchemaConstants.NS_COMMON, "assignment");
-    public final static QName F_ACCOUNT = new QName(SchemaConstants.NS_COMMON, "account");
     public final static QName F_ACCOUNT_REF = new QName(SchemaConstants.NS_COMMON, "accountRef");
 
     /**
@@ -214,14 +169,6 @@ public class UserType
         } else {
             setPropertyValue(F_ACTIVATION, value.getContainer());
         }
-    }
-
-    public List<AssignmentType> getAssignment() {
-        return getPropertyValues(F_ASSIGNMENT, AssignmentType.class);
-    }
-
-    public List<AccountShadowType> getAccount() {
-        return getPropertyValues(F_ACCOUNT, AccountShadowType.class);
     }
 
     public List<ObjectReferenceType> getAccountRef() {
