@@ -1,0 +1,1 @@
+@javax.xml.bind.annotation.XmlSchema(namespace = "http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/connector-schema-1.xsd", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED) package com.evolveum.midpoint.xml.ns._public.connector.icf_1.connector_schema_1;
