@@ -41,87 +41,118 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr class="tableRow">
+				<tr>
 					<td class="tableFormLabel"><label for="userName">Name:</label></td>
 					<td class="tableFormInput">
-						<div class="infoSlider">
-							<div class="infoSliderArrows"></div>
-						</div> <input wicket:id="userName" id="userName" type="text" size="40">
+						<input wicket:id="userName" id="userName" type="text" size="40">
 					</td>
 				</tr>
-				<tr class="tableRow">
+				<tr>
 					<td class="tableFormLabel"><label for="userGivenName">Given
 							name:</label></td>
 					<td class="tableFormInput">
-						<div class="infoSlider">
-							<div class="infoSliderArrows"></div>
-						</div> <input wicket:id="userGivenName" id="userGivenName" type="text"
+						<input wicket:id="userGivenName" id="userGivenName" type="text"
 						size="40">
 					</td>
 				</tr>
-				<tr class="tableRow">
+				<tr>
 					<td class="tableFormLabel"><label for="userFamilyName">Family
 							name:</label></td>
-					<td class="tableFormInput"><div class="infoSlider">
-							<div class="infoSliderArrows"></div>
-						</div> <input wicket:id="userFamilyName" id="userFamilyName" type="text"
+					<td class="tableFormInput">
+					<input wicket:id="userFamilyName" id="userFamilyName" type="text"
 						size="40"></td>
 				</tr>
-				<tr class="tableRow">
+				<tr>
 					<td class="tableFormLabel"><label for="userFullName">Full
 							name:</label></td>
-					<td class="tableFormInput"><div class="infoSlider">
-							<div class="infoSliderArrows"></div>
-						</div> <input wicket:id="userFullName" id="userFullName" type="text"
+					<td class="tableFormInput">
+						<input wicket:id="userFullName" id="userFullName" type="text"
 						size="40"></td>
 				</tr>
-				<tr class="tableRow" style="vertical-align: top;">
+				<tr id="mailRow">
 					<td class="tableFormLabel" style="padding-top: 10px;"><label
 						for="userEmail">E-mail:</label></td>
-					<td class="tableFormInput"><div class="infoSlider">
-							<div class="infoSliderArrows"></div>
-						</div> <input wicket:id="userEmail" id="userEmail" type="text" size="40"><br />
+					<td class="tableFormInput"><div id="mailSlider">
+							<div id="mailSliderArrows"></div>
+						</div><input wicket:id="userEmail" id="userEmail" type="text" size="40"><br />
 						<input id="userEmail2" type="text" size="40"></td>
 				</tr>
-				<tr class="tableRow">
+				<tr>
 					<td class="tableFormLabel"><label for="userLocality">Locality:</label></td>
-					<td class="tableFormInput"><div class="infoSlider">
-							<div class="infoSliderArrows"></div>
-						</div> <input wicket:id="userLocality" id="userLocality" type="text"
+					<td class="tableFormInput">
+					<input wicket:id="userLocality" id="userLocality" type="text"
 						size="40"></td>
 				</tr>
-				<tr class="tableRow">
+				<tr>
 					<td class="tableFormLabel"><label for="userPassword">Password:</label></td>
-					<td class="tableFormInput"><div class="infoSlider">
-							<div class="infoSliderArrows"></div>
-						</div>
+					<td class="tableFormInput">
 						<input wicket:id="userPassword" id="userPassword" type="password"
 						size="40"></td>
 				</tr>
-				<tr class="tableRow">
+				<tr>
 					<td class="tableFormLabel"><label for="userConfirmPassword">Confirm
 							password:</label></td>
-					<td class="tableFormInput"><div class="infoSlider">
-							<div class="infoSliderArrows"></div>
-						</div>
+					<td class="tableFormInput">
 						<input wicket:id="userConfirmPassword" id="userConfirmPassword"
 						type="password" size="40" /></td>
 				</tr>
-				<tr class="tableRow">
+				<tr>
 					<td class="tableFormLabel"><label for="userEnable">Enable:</label></td>
-					<td class="tableFormInput"><div class="infoSlider">
-							<div class="infoSliderArrows"></div>
-						</div>
+					<td class="tableFormInput">
 						<input wicket:id="userEnable" id="userEnable" type="checkbox"></td>
 				</tr>
-				<tr class="tableRow">
+				<tr>
 					<td class="tableFormLabel"><label for="userWebAccess">Web
 							access enabled:</label></td>
-					<td class="tableFormInput"><div class="infoSlider">
-							<div class="infoSliderArrows"></div>
-						</div>
+					<td class="tableFormInput">
 						<input wicket:id="userWebAccess" id="userWebAccess"
 						type="checkbox"></td>
+				</tr>
+				<tr>
+					<td class="tableFormSeparator" colspan="2"><span class="tableFormSeparatorText">Optional information</span></td>
+				</tr>
+				<tr>
+					<td class="tableFormLabel"><label>Optional 1:</label></td>
+					<td class="tableFormInput"><input type="text" size="40"></td>
+				</tr>
+				<tr>
+					<td class="tableFormLabel"><label>Optional 2:</label></td>
+					<td class="tableFormInput"><input type="text" size="40"></td>
+				</tr>
+				<tr>
+					<td class="tableFormLabel"><label>Optional 3:</label></td>
+					<td class="tableFormInput"><input type="text" size="40"></td>
+				</tr>
+				<tr>
+					<td class="tableFormLabel"><label>Optional 4:</label></td>
+					<td class="tableFormInput"><input type="text" size="40"></td>
+				</tr>
+				<tr>
+					<td class="tableFormLabel"><label>Optional 5:</label></td>
+					<td class="tableFormInput"><input type="text" size="40"></td>
+				</tr>
+				<tr>
+					<td class="tableFormSeparator" colspan="2"><span class="tableFormSeparatorText">Optional information 2</span></td>
+				</tr>
+				<tr>
+					<td class="tableFormLabel"><label>Optional 6:</label></td>
+					<td class="tableFormInput"><input type="text" size="40"></td>
+				</tr>
+				<tr>
+					<td class="tableFormLabel"><label>Optional 7:</label></td>
+					<td class="tableFormInput"><input type="text" size="40"></td>
+				</tr>
+				<tr>
+					<td class="tableFormLabel"><label>Optional 8:</label></td>
+					<td class="tableFormInput"><input type="text" size="40"></td>
+				</tr>
+				<tr>
+					<td class="tableFormLabel"><label>Optional 9:</label></td>
+					<td class="tableFormInput"><input type="text" size="40"></td>
+				</tr>
+				<tr>
+					<td class="tableFormLabel"><label>Optional 10:</label></td>
+					<td class="tableFormInput"><input type="text" size="40"></td>
 				</tr>
 
 			</tbody>
@@ -138,11 +169,10 @@
 			<thead>
 				<tr>
 					<td colspan="2" class="tableFormHeader"><img
-						class="headerIcon" src="img/formIcon/User.png" alt="" />
+						class="headerIcon" src="img/formIcon/Smiley1.png" alt="" />
 						<div class="headerText">
-							<span class="headerName">User information</span><br /> <span
-								class="headerDescription">Complete user information to
-								complete creation of a new user.</span>
+							<span class="headerName">I don't know</span><br /> <span
+								class="headerDescription">Something here</span>
 						</div></td>
 				</tr>
 			</thead>
@@ -211,7 +241,7 @@
 				</tr>
 			</tfoot>
 		</table>
-		<div id="infoContent"></div>
+		<div id="mailContent">asdasdasdasd<br />asdasda asdas dada</div>
 		<div class="buttonsPanel">
 			<div class="button" wicket:id="cancelButton">
 				<img src="img/door_in.png" alt="" />Cancel
