@@ -28,7 +28,7 @@ public class MultiLevelCssMenu extends Panel implements IHeaderContributor {
 	private final static ResourceReference RIGHT_GIF = new PackageResourceReference(MultiLevelCssMenu.class, "js/right.gif");
 	
 	private final static ResourceReference MENU_CSS = new CssResourceReference(MultiLevelCssMenu.class,"css/MultiLevelCssMenu.css");
-	private final static ResourceReference JQUERY_MIN_JAVASCRIPT = new JavaScriptResourceReference(MultiLevelCssMenu.class,"js/jqueryMin.js");
+	//private final static ResourceReference JQUERY_MIN_JAVASCRIPT = new JavaScriptResourceReference(MultiLevelCssMenu.class,"js/jqueryMin.js");
 	private final static ResourceReference MENU_JAVASCRIPT = new JavaScriptResourceReference(MultiLevelCssMenu.class,"js/MultiLevelCssMenu.js");
 	
 	
@@ -43,7 +43,7 @@ public class MultiLevelCssMenu extends Panel implements IHeaderContributor {
         response.getResponse().write(buffer.toString());
         response.getResponse().write(JavaScriptUtils.SCRIPT_CLOSE_TAG); 
 		
-		response.renderJavaScriptReference(JQUERY_MIN_JAVASCRIPT);
+		//response.renderJavaScriptReference(JQUERY_MIN_JAVASCRIPT);
 		response.renderJavaScriptReference(MENU_JAVASCRIPT);
 		response.renderCSSReference(MENU_CSS);
 	}
