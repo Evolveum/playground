@@ -41,6 +41,8 @@ import javax.xml.namespace.QName;
 import java.io.File;
 import java.net.URL;
 
+import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
+
 /**
  * @author lazyman
  */
@@ -67,6 +69,13 @@ public class PageForm extends PageAdmin {
                     property.addValue(new PropertyValue("value2"));
                     System.out.println(property.getName().getLocalPart());
                     container.add(property);
+
+                    QName date = new QName("http://example.com", "date");
+                    PropertyDefinition definition = new PropertyDefinition(date, date, new QName(W3C_XML_SCHEMA_NS_URI, "dateTime"));
+                    definition.setMaxOccurs(3);
+                    definition.setDisplayName("Date display name");
+                    definition.setHelp("date help message");
+                    container.getDefinition().getComplexTypeDefinition().getDefinitions().add(definition);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }

@@ -21,7 +21,9 @@
 
 package com.evolveum.midpoint.web.component.objectform;
 
+import com.evolveum.midpoint.schema.processor.Property;
 import com.evolveum.midpoint.schema.processor.PropertyValue;
+import com.evolveum.midpoint.web.component.objectform.input.DatePanel;
 import com.evolveum.midpoint.web.component.objectform.input.TextPanel;
 import org.apache.commons.lang.Validate;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -35,7 +37,11 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 
+import javax.xml.namespace.QName;
+import java.util.Date;
 import java.util.List;
+
+import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 
 /**
  * @author lazyman
@@ -83,7 +89,7 @@ public class ValueFormPanel extends Panel {
 
     private InputPanel createInputComponent(String id, final FeedbackPanel feedback) {
         //todo create input components
-        InputPanel component = new TextPanel<String>(id, new PropertyModel<String>(model, "value.value"));
+        InputPanel component = createTypedInputComponent(id);
 
         final FormComponent formComponent = component.getComponent();
         formComponent.add(new AjaxFormComponentUpdatingBehavior("onBlur") {
@@ -104,6 +110,20 @@ public class ValueFormPanel extends Panel {
         });
 
         return component;
+    }
+
+    private InputPanel createTypedInputComponent(String id) {
+        Property property = model.getObject().getProperty().getProperty();
+        QName valueType = property.getDefinition().getTypeName();
+
+        InputPanel panel = null;
+        if (new QName(W3C_XML_SCHEMA_NS_URI, "dateTime").equals(valueType)) {
+            panel = new DatePanel(id, new PropertyModel<Date>(model, "value.value"));
+        } else {
+            panel = new TextPanel<String>(id, new PropertyModel<String>(model, "value.value"));
+        }
+
+        return panel;
     }
 
     private void addValue(AjaxRequestTarget target) {
