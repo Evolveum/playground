@@ -38,9 +38,9 @@ div.top-container {
 }
 
 div.bottom-container {
-    height: 29px;
-    background: none repeat scroll 0 0 #152539;
+    background: none repeat scroll 0 0 #333333;
     width: 100%;
+    float: left;
 }
 
 div.top-container ul, div.bottom-container ul {
@@ -60,7 +60,6 @@ div.top-container li {
 }
 
 div.bottom-container li {
-    height: 29px;
 }
 
 div.top-container li a {
@@ -73,8 +72,7 @@ div.top-container li a {
 }
 
 div.bottom-container li a {
-    display: inline-block;
-    padding: 7px 140px 0 140px;
+    padding: 0 12px 0 12px;
     text-decoration: none;
     width: auto;
 }
@@ -97,20 +95,20 @@ div.top-container a.last {
 div.top-container a span {
     display: block;
     font: 12px;
-    color: #152539;
+    color: #333333;
 }
 
 div.top-container a:hover span, .selected-top span {
-    color: #2D3223 !important;
+    color: #333333 !important;
 }
 
-div.bottom-container a:hover span, .selected-top span {
+div.bottom-container a:hover span, .selected-bottom span {
     color: #fff !important;
 }
 
 div.top-container a:hover, div.top-container .selected-top {
-    background: repeat-x scroll left top transparent #F0F0F6;
-    color: #2D3223;
+    background: #F0F0F6;
+    color: #333333;
     text-decoration: none;
 }
 
