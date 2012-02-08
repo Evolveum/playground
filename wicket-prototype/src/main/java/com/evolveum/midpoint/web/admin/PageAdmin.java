@@ -42,7 +42,7 @@ public class PageAdmin extends PageBase {
         items.add(new TopMenuItem("pageAdmin.serverTasks", "pageAdmin.serverTasks.description", PageForm.class));
         items.add(new TopMenuItem("pageAdmin.roles", "pageAdmin.roles.description", PageHome.class));
         items.add(new TopMenuItem("pageAdmin.resources", "pageAdmin.resources.description", PageHome.class));
-        items.add(new TopMenuItem("pageAdmin.reports", "pageAdmin.reports.description", PageHome.class));
+//        items.add(new TopMenuItem("pageAdmin.reports", "pageAdmin.reports.description", PageHome.class));
         items.add(new TopMenuItem("pageAdmin.configuration", "pageAdmin.configuration.description", PageTest.class));
 
         return items;

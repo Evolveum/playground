@@ -24,14 +24,15 @@
 <html xmlns:wicket="http://wicket.apache.org">
 <wicket:extend>
     <div wicket:id="debug"/>
-    <h1>Property container form</h1>
+    <div style="margin: 0 40px;">
+        <h1>Property container form</h1>
 
-    <form wicket:id="form">
-        <div wicket:id="feedback" style="color: #f00;"/>
-        <a wicket:id="submit"/>
-        <hr/>
-        <div wicket:id="containerForm"/>
-        <hr/>
-    </form>
+        <form wicket:id="form">
+            <div wicket:id="containerForm"/>
+            <hr/>
+            <div wicket:id="feedback" style="color: #f00;"/>
+            <a wicket:id="submit"/>
+        </form>
+    </div>
 </wicket:extend>
 </html>

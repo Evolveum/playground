@@ -73,9 +73,9 @@ public class ObjectFormPanel extends Panel {
 
     private void initLayout() {
         //title
-        Label title = new Label("title", createContainerNameModel(model));
-        //todo title value and visibility
-        add(title);
+//        Label title = new Label("title", createContainerNameModel(model));
+//        //todo title value and visibility
+//        add(title);
         //attributes
         ListView<PropertyWrapper> attributes = new ListView<PropertyWrapper>("attributes", createAttributesModel()) {
 

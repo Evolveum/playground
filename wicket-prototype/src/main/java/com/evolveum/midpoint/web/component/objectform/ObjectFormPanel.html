@@ -22,37 +22,38 @@
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
 <wicket:panel>
-	<div class="objectForm">
-		<h3 wicket:id="title"></h3>
-		<table cellspacing="0" border="0">
-			<thead>
-				<tr>
-					<td colspan="2" class="objectFormHeader"><img
-						class="objectFormHeaderIcon" src="img/formIcon/User.png" alt="" />
-						<div class="objectFormHeaderText">
-							<span class="objectFormHeaderName">User information</span><br /> <span
-								class="objectFormHeaderDescription">Complete user information to
+    <div class="objectForm">
+        <table cellspacing="0" border="0">
+            <thead>
+            <tr>
+                <td colspan="2" class="objectFormHeader"><img
+                        class="objectFormHeaderIcon" src="img/formIcon/User.png" alt=""/>
+
+                    <div class="objectFormHeaderText">
+                        <span class="objectFormHeaderName">User information</span><br/> <span
+                            class="objectFormHeaderDescription">Complete user information to
 								complete creation of a new user.</span>
-						</div></td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr wicket:id="attributes" class="objectFormAttribute">
-					<td class="objectFormLabel"><span wicket:id="name" />:</td>
-					<td class="objectFormValues" wicket:id="container">
-						<div wicket:id="values">
-							<div wicket:id="value" class="objectFormValue" />
-						</div>
-					</td>
-				</tr>
-			</tbody>
-			<tfoot>
-				<tr>
-					<td colspan="2" class="objectFormFooter"></td>
-				</tr>
-			</tfoot>
-		</table>
-		<div wicket:id="debug" />
-	</div>
+                    </div>
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr wicket:id="attributes" class="objectFormAttribute">
+                <td class="objectFormLabel"><span wicket:id="name"/>:</td>
+                <td class="objectFormValues" wicket:id="container">
+                    <div wicket:id="values">
+                        <div wicket:id="value" class="objectFormValue"/>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="2" class="objectFormFooter"></td>
+            </tr>
+            </tfoot>
+        </table>
+        <div wicket:id="debug"/>
+    </div>
 </wicket:panel>
 </html>
