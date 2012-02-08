@@ -22,6 +22,7 @@
 package com.evolveum.midpoint.web.component.menu.top2;
 
 import com.evolveum.midpoint.web.component.menu.top.TopMenuItem;
+import org.apache.commons.lang.Validate;
 import org.apache.wicket.Page;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.IHeaderResponse;
@@ -38,33 +39,44 @@ import java.util.List;
 
 public class TopMenu2 extends Panel {
 
-    private List<TopMenuItem> items;
+    private List<TopMenuItem> topItems;
+    private List<BottomMenuItem> bottomItems;
 
-    public TopMenu2(String id, List<TopMenuItem> items) {
+    public TopMenu2(String id, List<TopMenuItem> topItems, List<BottomMenuItem> bottomItems) {
         super(id);
-        if (items == null) {
-            throw new IllegalArgumentException("List with top menu items must not be null.");
-        }
-        this.items = items;
+        Validate.notNull(topItems, "List with top menu topItems must not be null.");
+        Validate.notNull(bottomItems, "List with top menu bottomItems must not be null.");
+        this.topItems = topItems;
+        this.bottomItems = bottomItems;
 
-        add(new Loop("list", items.size()) {
+        add(new Loop("topList", topItems.size()) {
 
             @Override
             protected void populateItem(LoopItem loopItem) {
-                final TopMenuItem item = TopMenu2.this.items.get(loopItem.getIndex());
-                BookmarkablePageLink<String> link = new BookmarkablePageLink<String>("link", item.getPage()); // {
-//
-//                    @Override
-//                    public void onClick(AjaxRequestTarget target) {
-//                        setResponsePage(item.getPage());
-//                    }
-//                };
-                link.add(new Label("label", new StringResourceModel(item.getLabel(), TopMenu2.this, null)));
-                link.add(new Label("description", new StringResourceModel(item.getDescription(), TopMenu2.this, null)));
+                final TopMenuItem item = TopMenu2.this.topItems.get(loopItem.getIndex());
+                BookmarkablePageLink<String> link = new BookmarkablePageLink<String>("topLink", item.getPage());
+                link.add(new Label("topLabel", new StringResourceModel(item.getLabel(), TopMenu2.this, null)));
+                link.add(new Label("topDescription", new StringResourceModel(item.getDescription(), TopMenu2.this, null)));
 
                 Page page = TopMenu2.this.getPage();
                 if (page != null && page.getClass().isAssignableFrom(item.getPage())) {
                     link.add(new AttributeAppender("class", new Model("selected-top"), " "));
+                }
+                loopItem.add(link);
+            }
+        });
+
+        add(new Loop("bottomList", bottomItems.size()) {
+
+            @Override
+            protected void populateItem(LoopItem loopItem) {
+                final BottomMenuItem item = TopMenu2.this.bottomItems.get(loopItem.getIndex());
+                BookmarkablePageLink<String> link = new BookmarkablePageLink<String>("bottomLink", item.getPage());
+                link.add(new Label("bottomLabel", new StringResourceModel(item.getLabel(), TopMenu2.this, null)));
+
+                Page page = TopMenu2.this.getPage();
+                if (page != null && page.getClass().isAssignableFrom(item.getPage())) {
+                    link.add(new AttributeAppender("class", new Model("selected-bottom"), " "));
                 }
                 loopItem.add(link);
             }
@@ -75,8 +87,6 @@ public class TopMenu2 extends Panel {
     public void renderHead(IHeaderResponse response) {
         super.renderHead(response);
 
-        response.renderCSSReference(new PackageResourceReference(TopMenu2.class, "TopMenu.css"));
+        response.renderCSSReference(new PackageResourceReference(TopMenu2.class, "TopMenu2.css"));
     }
-
-
 }

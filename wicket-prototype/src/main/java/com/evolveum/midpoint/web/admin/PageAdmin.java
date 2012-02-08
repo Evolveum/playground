@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Evolveum
+ * Copyright (c) 2012 Evolveum
  *
  * The contents of this file are subject to the terms
  * of the Common Development and Distribution License
@@ -16,7 +16,7 @@
  * with the fields enclosed by brackets [] replaced by
  * your own identifying information:
  *
- * Portions Copyrighted 2011 [name of copyright owner]
+ * Portions Copyrighted 2012 [name of copyright owner]
  */
 
 package com.evolveum.midpoint.web.admin;
@@ -25,6 +25,7 @@ import com.evolveum.midpoint.web.PageTest;
 import com.evolveum.midpoint.web.admin.home.PageHome;
 import com.evolveum.midpoint.web.admin.user.PageUser;
 import com.evolveum.midpoint.web.component.menu.top.TopMenuItem;
+import com.evolveum.midpoint.web.component.menu.top2.BottomMenuItem;
 import com.evolveum.midpoint.web.page.PageBase;
 
 import java.util.ArrayList;
@@ -43,6 +44,18 @@ public class PageAdmin extends PageBase {
         items.add(new TopMenuItem("pageAdmin.resources", "pageAdmin.resources.description", PageHome.class));
         items.add(new TopMenuItem("pageAdmin.reports", "pageAdmin.reports.description", PageHome.class));
         items.add(new TopMenuItem("pageAdmin.configuration", "pageAdmin.configuration.description", PageTest.class));
+
+        return items;
+    }
+
+    @Override
+    public List<BottomMenuItem> getBottomMenuItems() {
+        List<BottomMenuItem> items = new ArrayList<BottomMenuItem>();
+
+        items.add(new BottomMenuItem("pageAdmin.users.newUser", PageHome.class));
+        items.add(new BottomMenuItem("pageAdmin.users.listUsers", PageHome.class));
+        items.add(new BottomMenuItem("pageAdmin.users.something", PageHome.class));
+        items.add(new BottomMenuItem("pageAdmin.users.whatever", PageHome.class));
 
         return items;
     }
