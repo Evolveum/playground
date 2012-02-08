@@ -18,9 +18,140 @@
  *
  * Portions Copyrighted 2011 [name of copyright owner]
  */
-
-div.objectForm table tr.attribute td.label {
-    vertical-align: top;
-    padding-top: 4px;
+div.objectForm table {
+	border: 1px solid #8FA6AB;
+	background: #C1D9DE;
+	width: 576px;
 }
 
+div.objectForm table input {
+	outline: none;
+	margin: 4px 0px 4px 10px;
+	padding: 5px;
+	font-size: 15px;
+	border: 1px solid #8D9095;
+	-webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.3) inset;
+	-moz-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.3) inset;
+	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.3) inset;
+}
+
+div.objectForm table input:focus {
+	border: 1px solid #8D9095;
+	-webkit-box-shadow: 0px 0px 4px rgba(22, 79, 164, 1);
+	-moz-box-shadow: 0px 0px 4px rgba(22, 79, 164, 1);
+	box-shadow: 0px 0px 4px rgba(22, 79, 164, 1);
+}
+
+div.objectForm table thead,div.objectForm table tfoot {
+	background: #F0F0F6;
+}
+
+div.objectForm table thead .objectFormHeader {
+	border-bottom: 1px solid #8FA6AB;
+	height: 50px;
+	position: relative;
+}
+
+div.objectForm table thead .objectFormHeaderIcon {
+	-webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
+	box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
+	margin-left: 5px;
+	margin-top: -15px;
+	position: relative;
+	float: left;
+}
+
+div.objectForm table thead .objectFormHeaderText {
+	width: 460px;
+	right: 15px;
+	float: right;
+	padding: 5px;
+	line-height:110%;
+	position: relative;
+}
+
+div.objectForm table thead .objectFormHeaderName {
+	text-shadow: 0 1px 0 #fff;
+	color: #164FA4;
+	font-weight: bold;
+	font-size: 19px;
+}
+
+div.objectForm table thead .objectFormHeaderDescription {
+	text-shadow: 0 1px 0 #fff;
+	color: #333;
+	font-weight: bold;
+	font-size: 11px;
+}
+
+div.objectForm table tbody tr {
+	vertical-align: top;
+}
+
+div.objectForm table tfoot .objectFormFooter {
+	height: 15px;
+}
+
+div.objectForm table tbody .objectFormLabel, div.objectForm table tbody .objectFormValues {
+	border-top: 1px solid #DBF2F7;
+	border-bottom: 1px solid #8FA6AB;
+	position: relative;
+}
+
+div.objectForm table tbody .objectFormLabel {
+	width: 200px;
+	text-align: right;
+	text-shadow: 0 1px 0 #DBF2F7;
+	color: #333;
+	font-weight: bold;
+	font-size: 13px;
+	padding-top: 12px;
+	text-transform:capitalize;
+}
+
+div.objectForm table tbody input[type='text'], div.objectForm table tbody input[type='password'] {
+	width: 305px;
+	height: 20px;
+}
+
+div.objectForm table tbody input[type='checkbox'] { 
+	margin-top: 13px;
+	margin-bottom: 14px;
+}
+
+div.objectForm table tbody .objectFormSeparator {
+	background: #F0F0F6;
+	border-top: 1px solid #DBF2F7;
+	border-bottom: 1px solid #8FA6AB;
+	padding: 5px 0px;
+}
+
+div.objectForm table tbody .objectFormSeparatorText {
+	text-shadow: 0 1px 0 #fff;
+	color: #164FA4;
+	font-weight: bold;
+	font-size: 15px;
+	margin-left: 60px;
+}
+
+div.objectForm table tbody .objectFormButtons {
+	padding: 11px 4px 10px;
+	position: absolute;
+	display: inline-block;
+}
+
+div.objectForm table tbody .objectFormAddButton:hover, div.objectForm table tbody .objectFormDeleteButton:hover {
+	/* border: 1px solid #8D9095; */
+	-webkit-box-shadow: 0px 0px 5px rgba(22, 79, 164, 1);
+	-moz-box-shadow: 0px 0px 5px rgba(22, 79, 164, 1);
+	box-shadow: 0px 0px 5px rgba(22, 79, 164, 1);
+	
+	/* -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.7);
+	-moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.7);
+	box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.7); */
+}
+
+div.objectForm table tbody .objectFormInputs {
+	display: inline-block;
+}
