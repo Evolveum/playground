@@ -271,7 +271,7 @@ public class NamePanel extends WizardPanel<ResourceType> {
         ResourceType resource = model.getObject();
 
         ObjectReferenceType reference = new ObjectReferenceType();
-        reference.setType(ConnectorType.ELEMENT_TYPE);
+        reference.setType(ConnectorType.COMPLEX_TYPE);
         reference.setOid(getSelectedConnector().getOid());
         resource.setConnectorRef(reference);
 

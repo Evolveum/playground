@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (c) 2011 Evolveum
+  ~ Copyright (c) 2012 Evolveum
   ~
   ~ The contents of this file are subject to the terms
   ~ of the Common Development and Distribution License
@@ -16,7 +16,7 @@
   ~ with the fields enclosed by brackets [] replaced by
   ~ your own identifying information:
   ~
-  ~ Portions Copyrighted 2011 [name of copyright owner]
+  ~ Portions Copyrighted 2012 [name of copyright owner]
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -91,7 +91,7 @@
         <dependency>
             <groupId>com.evolveum.midpoint.infra</groupId>
             <artifactId>schema</artifactId>
-            <version>2.0-SNAPSHOT</version>
+            <version>1.10-SNAPSHOT</version>
         </dependency>
 
         <!--  WICKET DEPENDENCIES -->

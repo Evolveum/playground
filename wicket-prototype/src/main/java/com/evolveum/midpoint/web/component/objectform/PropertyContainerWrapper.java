@@ -67,7 +67,8 @@ public class PropertyContainerWrapper implements Serializable {
         for (PropertyDefinition def : propertyDefinitions) {
             Property property = container.findProperty(def);
             if (property == null) {
-                properties.add(new PropertyWrapper(def.instantiate(), ValueStatus.ADDED));
+                properties.add(new PropertyWrapper(def.instantiate(
+                        new PropertyPath(new QName("http://example.com", "example"))), ValueStatus.ADDED));
             } else {
                 properties.add(new PropertyWrapper(property, ValueStatus.NOT_CHANGED));
             }

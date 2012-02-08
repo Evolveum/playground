@@ -123,7 +123,7 @@ public class ConfigurationPanel extends WizardPanel<ResourceType> {
             container = createObject(resource);
 
             PropertyDefinition def = container.getDefinition().getPropertyDefinitions().iterator().next();
-            Property property = def.instantiate();
+            Property property = def.instantiate(new PropertyPath(new QName("http://example.com", "exampleProperty")));
             property.addValue(new PropertyValue("value1"));
             property.addValue(new PropertyValue("value2"));
             System.out.println(property.getName().getLocalPart());
