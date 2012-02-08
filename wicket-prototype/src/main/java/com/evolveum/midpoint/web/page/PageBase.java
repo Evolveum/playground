@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Evolveum
+ * Copyright (c) 2012 Evolveum
  *
  * The contents of this file are subject to the terms
  * of the Common Development and Distribution License
@@ -16,7 +16,7 @@
  * with the fields enclosed by brackets [] replaced by
  * your own identifying information:
  *
- * Portions Copyrighted 2011 [name of copyright owner]
+ * Portions Copyrighted 2012 [name of copyright owner]
  */
 
 package com.evolveum.midpoint.web.page;
@@ -25,6 +25,7 @@ import com.evolveum.midpoint.web.MidPointApplication;
 import com.evolveum.midpoint.web.component.login.LoginPanel;
 import com.evolveum.midpoint.web.component.menu.top.TopMenu;
 import com.evolveum.midpoint.web.component.menu.top.TopMenuItem;
+import com.evolveum.midpoint.web.component.menu.top2.TopMenu2;
 import org.apache.wicket.markup.html.WebPage;
 
 import java.util.List;
@@ -37,6 +38,7 @@ public abstract class PageBase extends WebPage {
             throw new IllegalArgumentException("Top menu item list must not be null.");
         }
         add(new TopMenu("topMenu", topMenuItems));
+        add(new TopMenu2("topMenu2", topMenuItems));
         add(new LoginPanel("loginPanel"));
     }
 

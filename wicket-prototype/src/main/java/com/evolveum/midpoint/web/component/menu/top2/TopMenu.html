@@ -19,28 +19,27 @@
   ~ Portions Copyrighted 2012 [name of copyright owner]
   -->
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
-<head>
-    <title>
-        <wicket:message key="page.title"></wicket:message>
-    </title>
-    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico"/>
-    <link type="text/css" rel="stylesheet" href="css/evolveum.css"/>
-</head>
-<body>
-<div id="header">
-    <div wicket:id="loginPanel" class="login-box"/>
-    <div class="container">
-        <div id="logo">
-            <img src="./logo.png" height="40"/>
+<wicket:panel>
+    <div class="top-menu">
+        <div class="top-container">
+            <ul>
+                <li wicket:id="list">
+                    <a wicket:id="link">
+                        <span class="label" wicket:id="label"/>
+                        <span class="description" wicket:id="description"/>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="bottom-container">
+            <ul>
+                <li wicket:id="list">
+                    <a wicket:id="link"><span class="label" wicket:id="label"/></a>
+                </li>
+            </ul>
         </div>
     </div>
-</div>
-<div wicket:id="topMenu"/>
-
-<div wicket:id="topMenu2"/>
-<wicket:child/>
-</body>
+</wicket:panel>
 </html>

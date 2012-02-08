@@ -30,7 +30,7 @@
     <description></description>
     <properties>
         <spring.version>3.0.5.RELEASE</spring.version>
-        <wicket.version>1.5.3</wicket.version>
+        <wicket.version>1.5.4</wicket.version>
         <jetty.version>7.5.0.v20110901</jetty.version>
     </properties>
     <dependencies>
