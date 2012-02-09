@@ -24,6 +24,7 @@ package com.evolveum.midpoint.web.admin;
 import com.evolveum.midpoint.web.PageTest;
 import com.evolveum.midpoint.web.admin.home.PageHome;
 import com.evolveum.midpoint.web.admin.user.PageUser;
+import com.evolveum.midpoint.web.component.menu.left.LeftMenuItem;
 import com.evolveum.midpoint.web.component.menu.top.TopMenuItem;
 import com.evolveum.midpoint.web.component.menu.top2.BottomMenuItem;
 import com.evolveum.midpoint.web.page.PageBase;
@@ -56,6 +57,17 @@ public class PageAdmin extends PageBase {
         items.add(new BottomMenuItem("pageAdmin.users.listUsers", PageHome.class));
         items.add(new BottomMenuItem("pageAdmin.users.something", PageHome.class));
         items.add(new BottomMenuItem("pageAdmin.users.whatever", PageHome.class));
+
+        return items;
+    }
+
+    @Override
+    public List<LeftMenuItem> getLeftMenuItems() {
+        List<LeftMenuItem> items = new ArrayList<LeftMenuItem>();
+        items.add(new LeftMenuItem("pageAdmin.left.menu1", "icon.png", PageHome.class));
+        items.add(new LeftMenuItem("pageAdmin.left.menu2", "icon.png", PageHome.class));
+        items.add(new LeftMenuItem("pageAdmin.left.menu3", "icon.png", PageHome.class));
+        items.add(new LeftMenuItem("pageAdmin.left.menu4", "icon.png", PageHome.class));
 
         return items;
     }

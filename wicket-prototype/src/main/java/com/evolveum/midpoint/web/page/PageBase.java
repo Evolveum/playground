@@ -23,6 +23,8 @@ package com.evolveum.midpoint.web.page;
 
 import com.evolveum.midpoint.web.MidPointApplication;
 import com.evolveum.midpoint.web.component.login.LoginPanel;
+import com.evolveum.midpoint.web.component.menu.left.LeftMenu;
+import com.evolveum.midpoint.web.component.menu.left.LeftMenuItem;
 import com.evolveum.midpoint.web.component.menu.top.TopMenuItem;
 import com.evolveum.midpoint.web.component.menu.top2.BottomMenuItem;
 import com.evolveum.midpoint.web.component.menu.top2.TopMenu2;
@@ -42,6 +44,8 @@ public abstract class PageBase extends WebPage {
 
 //        add(new TopMenu("topMenu", topMenuItems));
         add(new TopMenu2("topMenu2", topMenuItems, bottomMenuItems));
+        add(new LeftMenu("leftMenu", getLeftMenuItems()));
+
         add(new LoginPanel("loginPanel"));
     }
 
@@ -52,4 +56,6 @@ public abstract class PageBase extends WebPage {
     public abstract List<TopMenuItem> getTopMenuItems();
 
     public abstract List<BottomMenuItem> getBottomMenuItems();
+
+    public abstract List<LeftMenuItem> getLeftMenuItems();
 }
