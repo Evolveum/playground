@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	
 	
-	$("#objectFormHeaderControllButtonMinMax_tableForm01").click(function(){
+	$(".objectFormHeaderControllButtonMinMax").click(function(){
 		var id = $(this).attr("id");
 		var tableForm = id.substring((id.length) - 11, id.length); 
 		//alert(tableForm);
@@ -20,15 +20,19 @@ $(document).ready(function() {
 			$("#tbody_" + tableForm).show();
 			$("#tfoot_" + tableForm).show();
 		}
-		//if (str)
-
-		/*$("#tbody_" + tableForm).animate({opacity : 0}, 300,function(){
-			$("#tbody_" + tableForm).hide();
-		});
-		$("#tfoot_" + tableForm).animate({opacity : 0}, 300,function(){
-			$("#tfoot_" + tableForm).hide();
-		});
-		*/
+	});
+	
+	$(".objectFormHeaderControllButtonShowEmptyFields").click(function(){
+		if($(this).attr("src").indexOf("Show") != -1){
+			var img = $(this).attr("src").replace("Show","Hide");
+			$(this).attr("src", img);
+			$(this).attr("title", "Hide empty fields");
+			
+		} else {
+			var img = $(this).attr("src").replace("Hide","Show");
+			$(this).attr("src", img);
+			$(this).attr("title", "Show empty fields");
+		}
 	});
 });
 
