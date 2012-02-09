@@ -55,6 +55,12 @@ public class TopMenu2 extends Panel {
             protected void populateItem(LoopItem loopItem) {
                 final TopMenuItem item = TopMenu2.this.topItems.get(loopItem.getIndex());
                 BookmarkablePageLink<String> link = new BookmarkablePageLink<String>("topLink", item.getPage());
+                if (loopItem.getIndex() == 0) {
+                    link.add(new AttributeAppender("class", new Model("first"), " "));
+                } else if (loopItem.getIndex() == (TopMenu2.this.topItems.size() - 1)) {
+                    link.add(new AttributeAppender("class", new Model("last"), " "));
+                }
+
                 link.add(new Label("topLabel", new StringResourceModel(item.getLabel(), TopMenu2.this, null)));
                 link.add(new Label("topDescription", new StringResourceModel(item.getDescription(), TopMenu2.this, null)));
 
