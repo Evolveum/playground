@@ -1,5 +1,24 @@
 $(document).ready(function() {
+	//var leftMenuPosition = $(".left-menu ul").height() / 2;
+	$(".left-menu ul li").css("opacity", .9);
 	
+	$(".left-menu").css("margin-top", - $(".left-menu ul").height() / 2);
+	
+	$(".left-menu ul").mouseenter(function(){
+		
+	});
+	
+	$(".left-menu ul li").mouseenter(function(){
+		//alert($(".left-menu ul li").children());
+		$(this).stop();
+		$(this).animate({opacity : 1}, 200);
+		alert($(this).children(".label").text());
+		$(this).children(".label").animate({color: "#FFFFFF"}, 200);
+	}).mouseleave(function(){
+		$(this).stop();
+		$(this).animate({opacity : .9}, 200);
+		$(this).children(".label").animate({color: "#868686"}, 200);
+	});
 	
 	$(".objectFormHeaderControllButtonMinMax").click(function(){
 		var id = $(this).attr("id");

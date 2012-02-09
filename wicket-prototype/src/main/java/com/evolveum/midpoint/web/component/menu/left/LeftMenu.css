@@ -19,3 +19,68 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
+.left-menu {
+	position: fixed;
+	top: 50%;
+	margin-top: ;
+	left: 0px;
+	z-index: 999;
+	text-align: center;
+	overflow: hidden;
+}
+
+.left-menu ul {
+	list-style-image:initial;
+  	list-style-position:initial;
+  	list-style-type:none;
+	margin: 0px;
+	padding: 0px 7px 0px 0px;
+  	float:left;
+  	width:100%;
+  	background-image: url("../../../img/leftNavArrow.png");
+  	background-position: right center;
+  	background-repeat: no-repeat;
+  	height: auto;
+  	width: auto;
+  	background-color: transparent;
+  	position: fixed;
+}
+
+.left-menu ul li {
+	background-color:#000000;
+	float: none;
+	width: auto;
+	display: block;
+	margin: 0px;
+	padding: 0px 0px 0px 10px;
+	vertical-align: baseline;
+}
+
+.left-menu ul li a {
+	float: none;
+	height: auto;
+    padding: 10px 10px 10px 0px;
+    text-align: left;
+    text-indent: 0;
+    width: 100%;
+    color: #868686;
+    display: block;
+    font-size: 16px;
+	text-decoration: none;
+	line-height: 2;
+	font-weight: 300;
+	
+	/* color: #FFFFFF;
+	display: block;
+	float: left;
+	line-height: 3;
+	width: 100%;
+	font-size: 15px;
+	text-decoration: none; */
+}
+
+.left-menu ul li a .icon {
+	color: red;
+	float: right;
+	padding: 0 15px;
+}
