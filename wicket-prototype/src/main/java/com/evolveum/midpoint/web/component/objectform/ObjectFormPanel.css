@@ -18,13 +18,13 @@
  *
  * Portions Copyrighted 2011 [name of copyright owner]
  */
-div.objectForm table {
+div.objectForm .tableForm {
 	border: 1px solid #8FA6AB;
 	background: #C1D9DE;
-	width: 576px;
+	width: 600px;
 }
 
-div.objectForm table input {
+div.objectForm .tableForm input {
 	outline: none;
 	margin: 4px 0px 4px 10px;
 	padding: 5px;
@@ -35,24 +35,24 @@ div.objectForm table input {
 	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.3) inset;
 }
 
-div.objectForm table input:focus {
+div.objectForm .tableForm input:focus {
 	border: 1px solid #8D9095;
 	-webkit-box-shadow: 0px 0px 4px rgba(22, 79, 164, 1);
 	-moz-box-shadow: 0px 0px 4px rgba(22, 79, 164, 1);
 	box-shadow: 0px 0px 4px rgba(22, 79, 164, 1);
 }
 
-div.objectForm table thead,div.objectForm table tfoot {
+div.objectForm .tableForm thead,div.objectForm .tableForm tfoot {
 	background: #F0F0F6;
 }
 
-div.objectForm table thead .objectFormHeader {
+div.objectForm .tableForm thead .objectFormHeader {
 	border-bottom: 1px solid #8FA6AB;
 	height: 50px;
 	position: relative;
 }
 
-div.objectForm table thead .objectFormHeaderIcon {
+div.objectForm .tableForm thead .objectFormHeaderIcon {
 	-webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
 	-moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
 	box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
@@ -62,44 +62,44 @@ div.objectForm table thead .objectFormHeaderIcon {
 	float: left;
 }
 
-div.objectForm table thead .objectFormHeaderText {
-	width: 480px;
-	right: 30px;
-	float: right;
+div.objectForm .tableForm thead .objectFormHeaderText {
+	width: 485px;
+	left: 10px;
+	float: left;
 	line-height:110%;
 	position: relative;
 	padding-top: 1px;
 }
 
-div.objectForm table thead .objectFormHeaderName {
+div.objectForm .tableForm thead .objectFormHeaderName {
 	text-shadow: 0 1px 0 #fff;
 	color: #164FA4;
 	font-weight: bold;
 	font-size: 19px;
 }
 
-div.objectForm table thead .objectFormHeaderDescription {
+div.objectForm .tableForm thead .objectFormHeaderDescription {
 	text-shadow: 0 1px 0 #fff;
 	color: #333;
 	font-weight: bold;
 	font-size: 11px;
 }
 
-div.objectForm table tbody tr {
+div.objectForm .tableForm tbody tr {
 	vertical-align: top;
 }
 
-div.objectForm table tfoot .objectFormFooter {
+div.objectForm .tableForm tfoot .objectFormFooter {
 	height: 15px;
 }
 
-div.objectForm table tbody .objectFormLabel, div.objectForm table tbody .objectFormValues {
+div.objectForm .tableForm tbody .objectFormLabel, div.objectForm .tableForm tbody .objectFormValues {
 	border-top: 1px solid #DBF2F7;
 	border-bottom: 1px solid #8FA6AB;
 	position: relative;
 }
 
-div.objectForm table tbody .objectFormLabel {
+div.objectForm .tableForm tbody .objectFormLabel {
 	width: 200px;
 	text-align: right;
 	text-shadow: 0 1px 0 #DBF2F7;
@@ -110,24 +110,24 @@ div.objectForm table tbody .objectFormLabel {
 	text-transform:capitalize;
 }
 
-div.objectForm table tbody input[type='text'], div.objectForm table tbody input[type='password'] {
-	width: 305px;
+div.objectForm .tableForm tbody input[type='text'], div.objectForm .tableForm tbody input[type='password'] {
+	width: 323px;
 	height: 20px;
 }
 
-div.objectForm table tbody input[type='checkbox'] { 
+div.objectForm .tableForm tbody input[type='checkbox'] { 
 	margin-top: 13px;
 	margin-bottom: 14px;
 }
 
-div.objectForm table tbody .objectFormSeparator {
+div.objectForm .tableForm tbody .objectFormSeparator {
 	background: #F0F0F6;
 	border-top: 1px solid #DBF2F7;
 	border-bottom: 1px solid #8FA6AB;
 	padding: 5px 0px;
 }
 
-div.objectForm table tbody .objectFormSeparatorText {
+div.objectForm .tableForm tbody .objectFormSeparatorText {
 	text-shadow: 0 1px 0 #fff;
 	color: #164FA4;
 	font-weight: bold;
@@ -135,19 +135,57 @@ div.objectForm table tbody .objectFormSeparatorText {
 	margin-left: 60px;
 }
 
-div.objectForm table tbody .objectFormButtons {
-	padding: 11px 4px 10px;
+div.objectForm .tableForm tbody .objectFormButtons {
+	padding: 11px 7px 10px;
 	position: absolute;
 	display: inline-block;
 }
 
-div.objectForm table tbody .objectFormAddButton:hover, div.objectForm table tbody .objectFormDeleteButton:hover {
-	/* border: 1px solid #8D9095; */
+div.objectForm .tableForm tbody .objectFormAddButton:hover, div.objectForm .tableForm tbody .objectFormDeleteButton:hover {
 	-webkit-box-shadow: 0px 0px 4px rgba(22, 79, 164, 1);
 	-moz-box-shadow: 0px 0px 4px rgba(22, 79, 164, 1);
 	box-shadow: 0px 0px 4px rgba(22, 79, 164, 1);
 }
 
-div.objectForm table tbody .objectFormInputs {
+div.objectForm .tableForm tbody .objectFormInput {
 	display: inline-block;
+	width: 345px;
+	position: relative;
 }
+
+div.objectForm .tableForm tbody .objectFormValue div.feedbackPanel ul {
+	list-style: none;
+	margin: 0px 0 10px 10px;
+	padding: 0px;
+	width: 325px;
+	font-weight: bold;
+	color: #DB0000;
+	font-size: 12px;
+	text-shadow: 0 1px 0 #FECBCB;
+}
+
+div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam {
+	position: absolute;
+	right: 9px;
+	top: 11px;
+}
+
+div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam  .yui-calcontainer, div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam  .yui-calcontainer table {
+	width: 216px;
+}
+
+div.objectForm .tableForm thead .objectFormHeaderControllButtons {
+	float: right;
+	line-height:110%;
+	position: relative;
+	padding: 0px 6px;
+}
+
+div.objectForm .tableForm thead .objectFormHeaderControllButtons .objectFormHeaderControllButtonMinMax:hover {
+	cursor: pointer;
+	-webkit-box-shadow: 0px 0px 2px rgba(0, 0, 0, 1);
+	-moz-box-shadow: 0px 0px 2px rgba(0, 0, 0, 1);
+	box-shadow: 0px 0px 2px rgba(0, 0, 0, 1);
+}
+
+

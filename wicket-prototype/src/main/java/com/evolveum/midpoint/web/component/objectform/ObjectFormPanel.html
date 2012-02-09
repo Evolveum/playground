@@ -23,8 +23,8 @@
 <html xmlns:wicket="http://wicket.apache.org">
 <wicket:panel>
     <div class="objectForm">
-        <table cellspacing="0" border="0">
-            <thead>
+        <table id="tableForm01" class="tableForm" cellspacing="0" border="0">
+            <thead id="thead_tableForm1">
             <tr>
                 <td colspan="2" class="objectFormHeader"><img
                         class="objectFormHeaderIcon" src="img/formIcon/User.png" alt=""/>
@@ -34,10 +34,14 @@
                             class="objectFormHeaderDescription">Complete user information to
 								complete creation of a new user.</span>
                     </div>
+                    <div class="objectFormHeaderControllButtons"><img
+                        id="objectFormHeaderControllButtonMinMax_tableForm01" class="objectFormHeaderControllButtonMinMax" src="img/formIcon/MinimizeSmall.png" alt="" title="Minimize" /><br/> 
+                        <span id="objectFormHeaderControllButtonShowEmpty_tableForm1"></span>
+                    </div>
                 </td>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="tbody_tableForm01">
             <tr wicket:id="attributes" class="objectFormAttribute">
                 <td class="objectFormLabel"><span wicket:id="name"/>:</td>
                 <td class="objectFormValues" wicket:id="container">
@@ -47,7 +51,7 @@
                 </td>
             </tr>
             </tbody>
-            <tfoot>
+            <tfoot id="tfoot_tableForm01">
             <tr>
                 <td colspan="2" class="objectFormFooter"></td>
             </tr>
