@@ -1,8 +1,13 @@
+var objectFormHelpButton = null;
+var objectFormHelpContent = null;
+var interval = 0;
+
 $(document).ready(function() {
+	
 	$(".left-menu ul li").css("opacity", .8);
 	$(".left-menu ul li a").css("opacity", .5);
 	$(".left-menu").css("margin-top", - $(".left-menu ul").height() / 2);
-	$(".left-menu ul").css("left", -250);
+	setTimeout("showLeftMenu()",500);
 	
 	$(".left-menu ul").mouseenter(function(){
 		$(".left-menu ul").stop();
@@ -13,7 +18,6 @@ $(document).ready(function() {
 	});
 	
 	$(".left-menu ul li").mouseenter(function(){
-		//alert($(".left-menu ul li").children());
 		$(this).stop();
 		$(this).find("a").stop();
 		$(this).animate({opacity : 1}, 200);
@@ -28,7 +32,6 @@ $(document).ready(function() {
 	$(".objectFormHeaderControllButtonMinMax").click(function(){
 		var id = $(this).attr("id");
 		var tableForm = id.substring((id.length) - 11, id.length); 
-		//alert(tableForm);
 		
 		if($(this).attr("src").indexOf("Minimize") != -1){
 			var img = $(this).attr("src").replace("Minimize","Maximize");
@@ -58,5 +61,29 @@ $(document).ready(function() {
 			$(this).attr("title", "Show empty fields");
 		}
 	});
+	
+	$(".objectFormAttribute").mouseenter(function(){
+		objectFormHelpButton = $(this).find(".objectFormHelpButton");
+		objectFormHelpContent = $(this).find(".objectFormHelpContent");
+
+		interval = setTimeout("showFormHelpContent()",1000);
+	}).mouseleave(function(){
+		hideFormHelpContent();
+	});
 });
 
+function showLeftMenu() {
+	$(".left-menu ul").animate({left: -250}, {duration: 500, easing: "easeOutQuart"});
+}
+
+function showFormHelpContent(){
+	objectFormHelpContent.show();
+	objectFormHelpButton.show();
+	clearTimeout(interval);
+}
+
+function hideFormHelpContent(){
+	clearTimeout(interval);
+	objectFormHelpContent.hide();
+	objectFormHelpButton.hide();
+}

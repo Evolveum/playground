@@ -43,6 +43,7 @@
   	width: 300px;
   	background-color: transparent;
   	position: fixed;
+  	left: -310px;
 }
 
 .left-menu ul li {
@@ -60,14 +61,14 @@
 	height: auto;
     padding: 10px 10px 10px 0px;
     text-align: left;
-    text-indent: 0;
     width: 100%;
     color: #FFFFFF;
     display: block;
-    font-size: 16px;
+    font-size: 15px;
 	text-decoration: none;
 	line-height: 2;
-	/* font-weight: bold; */
+	font-weight: bold;
+	text-transform: capitalize;
 }
 
 .left-menu ul li a .icon {

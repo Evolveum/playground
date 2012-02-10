@@ -23,6 +23,7 @@ package com.evolveum.midpoint.web.component.objectform;
 
 import com.evolveum.midpoint.schema.processor.Property;
 import com.evolveum.midpoint.schema.processor.PropertyValue;
+import com.evolveum.midpoint.web.component.menu.left.LeftMenu.StaticImage;
 import com.evolveum.midpoint.web.component.objectform.input.DatePanel;
 import com.evolveum.midpoint.web.component.objectform.input.TextPanel;
 import org.apache.commons.lang.Validate;
@@ -30,11 +31,15 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
+import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.html.WebComponent;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
 import javax.xml.namespace.QName;
@@ -47,7 +52,6 @@ import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
  * @author lazyman
  */
 public class ValueFormPanel extends Panel {
-
     private IModel<PropertyValueWrapper> model;
 
     public ValueFormPanel(String id, IModel<PropertyValueWrapper> model) {
@@ -59,11 +63,22 @@ public class ValueFormPanel extends Panel {
     }
 
     private void initLayout() {
+    	String idCounter;
         //feedback
         FeedbackPanel feedback = new FeedbackPanel("feedback");
         feedback.setOutputMarkupId(true);
         add(feedback);
 
+        //helpButton
+        StaticImage helpButtonImage = new StaticImage("helpButton", new Model<String>("../../img/formIcon/InfoSmall.png"));
+        helpButtonImage.setOutputMarkupId(true);
+        add(helpButtonImage);
+        
+        //helpContent
+        Label labelHelpContent = new Label("helpContent", "This is help text sample...");
+        labelHelpContent.setMarkupId("content_"+helpButtonImage.getMarkupId());
+        add(labelHelpContent);
+        
         //input
         InputPanel component = createInputComponent("input", feedback);
         add(component);
@@ -157,4 +172,21 @@ public class ValueFormPanel extends Panel {
         ListView parent = findParent(ListView.class);
         target.add(parent.getParent());
     }
+    
+    public class StaticImage extends WebComponent {
+		private static final long serialVersionUID = 1L;
+
+		public StaticImage(String id, IModel<String> model) {
+            super(id, model);
+        }
+
+        protected void onComponentTag(ComponentTag tag) {
+            super.onComponentTag(tag);
+            checkComponentTag(tag, "img");
+            tag.put("src", getDefaultModelObjectAsString());
+            tag.put("alt", "");
+        }
+
+    }
+    
 }
