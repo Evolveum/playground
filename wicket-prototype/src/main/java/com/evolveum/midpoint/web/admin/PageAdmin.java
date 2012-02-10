@@ -64,10 +64,10 @@ public class PageAdmin extends PageBase {
     @Override
     public List<LeftMenuItem> getLeftMenuItems() {
         List<LeftMenuItem> items = new ArrayList<LeftMenuItem>();
-        items.add(new LeftMenuItem("pageAdmin.left.menu1", "icon.png", PageHome.class));
-        items.add(new LeftMenuItem("pageAdmin.left.menu2", "icon.png", PageHome.class));
-        items.add(new LeftMenuItem("pageAdmin.left.menu3", "icon.png", PageHome.class));
-        items.add(new LeftMenuItem("pageAdmin.left.menu4", "icon.png", PageHome.class));
+        items.add(new LeftMenuItem("pageAdmin.left.menu1", "../../img/icon.png", PageHome.class));
+        items.add(new LeftMenuItem("pageAdmin.left.menu2", "../../img/icon.png", PageHome.class));
+        items.add(new LeftMenuItem("pageAdmin.left.menu3", "../../img/icon.png", PageHome.class));
+        items.add(new LeftMenuItem("pageAdmin.left.menu4", "../../img/icon.png", PageHome.class));
 
         return items;
     }

@@ -1,23 +1,28 @@
 $(document).ready(function() {
-	//var leftMenuPosition = $(".left-menu ul").height() / 2;
-	$(".left-menu ul li").css("opacity", .9);
-	
+	$(".left-menu ul li").css("opacity", .8);
+	$(".left-menu ul li a").css("opacity", .5);
 	$(".left-menu").css("margin-top", - $(".left-menu ul").height() / 2);
+	$(".left-menu ul").css("left", -250);
 	
 	$(".left-menu ul").mouseenter(function(){
-		
+		$(".left-menu ul").stop();
+		$(".left-menu ul").animate({left: 0}, {duration: 500, easing: "easeOutQuart"});
+	}).mouseleave(function(){
+		$(".left-menu ul").stop();
+		$(".left-menu ul").animate({left: -250}, {duration: 500, easing: "easeOutQuart"});
 	});
 	
 	$(".left-menu ul li").mouseenter(function(){
 		//alert($(".left-menu ul li").children());
 		$(this).stop();
+		$(this).find("a").stop();
 		$(this).animate({opacity : 1}, 200);
-		alert($(this).children(".label").text());
-		$(this).children(".label").animate({color: "#FFFFFF"}, 200);
+		$(this).find("a").animate({opacity : 1}, 250);
 	}).mouseleave(function(){
 		$(this).stop();
-		$(this).animate({opacity : .9}, 200);
-		$(this).children(".label").animate({color: "#868686"}, 200);
+		$(this).find("a").stop();
+		$(this).animate({opacity : .8}, 200);
+		$(this).find("a").animate({opacity : .5}, 250);
 	});
 	
 	$(".objectFormHeaderControllButtonMinMax").click(function(){

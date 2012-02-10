@@ -25,12 +25,15 @@ import com.evolveum.midpoint.web.component.util.VisibleEnableBehaviour;
 import org.apache.commons.lang.Validate;
 import org.apache.wicket.Page;
 import org.apache.wicket.behavior.AttributeAppender;
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.list.Loop;
 import org.apache.wicket.markup.html.list.LoopItem;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.resource.PackageResourceReference;
@@ -61,7 +64,8 @@ public class LeftMenu extends Panel {
                 BookmarkablePageLink<String> link = new BookmarkablePageLink<String>("link", item.getPage());
 
                 link.add(new Label("label", new StringResourceModel(item.getLabel(), LeftMenu.this, null)));
-                link.add(new Label("icon", new Model<String>(item.getIcon())));
+                //link.add(new Label("icon", new Model<String>(item.getIcon())));
+                link.add(new StaticImage("icon", new Model<String>(item.getIcon())));
 
                 Page page = LeftMenu.this.getPage();
                 if (page != null && page.getClass().isAssignableFrom(item.getPage())) {
@@ -86,5 +90,21 @@ public class LeftMenu extends Panel {
         super.renderHead(response);
 
         response.renderCSSReference(new PackageResourceReference(LeftMenu.class, "LeftMenu.css"));
+    }
+    
+    public class StaticImage extends WebComponent {
+		private static final long serialVersionUID = 1L;
+
+		public StaticImage(String id, IModel<String> model) {
+            super(id, model);
+        }
+
+        protected void onComponentTag(ComponentTag tag) {
+            super.onComponentTag(tag);
+            checkComponentTag(tag, "img");
+            tag.put("src", getDefaultModelObjectAsString());
+            tag.put("alt", "");
+        }
+
     }
 }
