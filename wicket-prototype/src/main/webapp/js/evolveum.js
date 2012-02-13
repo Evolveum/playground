@@ -4,6 +4,9 @@ var interval = 0;
 
 $(document).ready(function() {
 	
+	setMenuPosiotionWhileScroll();
+	setMenuWidth();
+	
 	$(".left-menu ul li").css("opacity", .8);
 	$(".left-menu ul li a").css("opacity", .5);
 	$(".left-menu").css("margin-top", - $(".left-menu ul").height() / 2);
@@ -86,4 +89,29 @@ function hideFormHelpContent(){
 	clearTimeout(interval);
 	objectFormHelpContent.hide();
 	objectFormHelpButton.hide();
+}
+
+function setMenuPosiotionWhileScroll() {
+	$(window).scroll(function() {
+		var scroll = $(window).scrollTop();
+		if (scroll >= 56) {
+			$(".top-menu").css("position", "fixed");
+			$(".top-menu").css("top", "0px");
+			/*$(".top-menu").css("bottom", "auto");*/
+		} else {
+			$(".top-menu").css("position", "absolute");
+			$(".top-menu").css("top", "56px");
+			/*$(".top-menu").css("bottom", "0px");*/
+		}
+	});
+}
+
+function setMenuWidth(){
+	var menuWidthMiddle = $("div.top-container ul").width() / 2;
+	//$("div.top-container ul").css("margin-left", - menuWidthMiddle);
+	/*$(window).resize(function(){
+		$("div.top-container ul").css("margin-left", - menuWidthMiddle);
+	});*/
+	var height = $(window).height();
+	/*$("#mainTable").css("height", height - 115);*/
 }

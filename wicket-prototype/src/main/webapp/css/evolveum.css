@@ -11,3 +11,21 @@ body {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
 }
+
+#body {
+	border-style: none;
+	width: 100%;
+	position: absolute;
+	left: 0px;
+	top: 155px;
+	border: hidden;
+	height: 100%;
+	min-width: 1200px;
+}
+
+.content {
+	position: relative;
+	padding: 0px 55px;
+	height: 100%;
+}
+

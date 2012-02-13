@@ -23,32 +23,42 @@ div.top-menu {
     width: 100%;
     font: Helvetica, Arial, sans-serif;
     margin: 0;
+    position: absolute;
+    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.6);
+    z-index: 100000;
+    min-width: 1200px;
+    top: 56px;
+    left: 0px;
+
 }
 
 div.top-container {
-    height: 58px;
-    background: url("./back.png") repeat-x scroll left top transparent;
+    height: 44px;
+    background: #267994;
+    /* background: url("./back.png") repeat-x scroll left top transparent; */
     width: 100%;
-    padding: 0;
 }
 
 div.top-container ul {
-    margin-left: auto;
-    margin-right: auto;
-    width: 1200px;
+    width: auto;
+    position: absolute;
+    left: 0px;
+    margin: 0px;
+    padding: 0px;
 }
 
 div.top-container ul li {
-    height: 58px;
     float: left;
     width: auto;
     list-style: none;
+    padding: 0px;
 }
 
 div.top-container li a {
     display: inline-block;
-    height: 48px;
-    padding: 10px 20px 0 20px;
+    /* height: 48px; */
+    /* padding: 10px 20px 0 20px; */
+    padding: 3px 20px;
     text-decoration: none;
     width: auto;
     border-right: 1px solid #333;
@@ -81,7 +91,8 @@ div.top-container a:hover, div.top-container a:hover span.description {
 }
 
 div.bottom-container {
-    background-color: #333333;
+    /* background-color: #333333; */
+    background: #5C9FB4;
     height: 28px;
     display: inline-block;
     width: 100%;
@@ -89,7 +100,8 @@ div.bottom-container {
 
 div.bottom-container ul {
     width: 1170px;
-    margin: 0 auto;
+    padding: 0px;
+    margin: 1px 0px;
 }
 
 div.bottom-container ul li {
