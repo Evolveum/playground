@@ -56,20 +56,33 @@ div.objectForm .tableForm thead .objectFormHeaderIcon {
 	-webkit-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
 	-moz-box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
 	box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
-	margin-left: 5px;
-	margin-top: -15px;
+	margin-top: -10px;
 	position: relative;
+	display: inline-block;
+	margin-left: 5px;
+	width: 48px;
 	float: left;
 }
 
 div.objectForm .tableForm thead .objectFormHeaderText {
 	width: 485px;
-	left: 10px;
-	float: left;
-	line-height:110%;
+	margin-left: 0px;
+	line-height: 110%;
 	position: relative;
-	padding-top: 1px;
+	margin-top: 5px;
+	display: inline-block;
+	float: left;
+	margin-left: 10px;
 }
+
+div.objectForm .tableForm thead .objectFormHeaderControllButtons {
+	position: relative;
+	display: inline-block;
+	padding-left: 4px;
+	width: 40px;
+	margin-top: 5px;
+}
+
 
 div.objectForm .tableForm thead .objectFormHeaderName {
 	text-shadow: 0 1px 0 #fff;
@@ -145,6 +158,10 @@ div.objectForm .tableForm tbody .objectFormButtons {
 	display: inline-block;
 }
 
+div.objectForm .tableForm tbody .objectFormButtons a, div.objectForm .tableForm tbody .objectFormButtons img {
+	
+}
+
 div.objectForm .tableForm tbody .objectFormAddButton:hover, div.objectForm .tableForm tbody .objectFormDeleteButton:hover {
 	-webkit-box-shadow: 0px 0px 4px rgba(22, 79, 164, 1);
 	-moz-box-shadow: 0px 0px 4px rgba(22, 79, 164, 1);
@@ -178,21 +195,7 @@ div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam  .yui-calcontaine
 	width: 216px;
 }
 
-div.objectForm .tableForm thead .objectFormHeaderControllButtons {
-	float: right;
-	line-height:110%;
-	position: relative;
-	padding: 0px 9px;
-}
-
-div.objectForm .tableForm thead .objectFormHeaderControllButtons .objectFormHeaderControllButtonMinMax:hover {
-	cursor: pointer;
-	-webkit-box-shadow: 0px 0px 2px rgba(0, 0, 0, 1);
-	-moz-box-shadow: 0px 0px 2px rgba(0, 0, 0, 1);
-	box-shadow: 0px 0px 2px rgba(0, 0, 0, 1);
-}
-
-div.objectForm .tableForm thead .objectFormHeaderControllButtons .objectFormHeaderControllButtonShowEmptyFields:hover {
+div.objectForm .tableForm thead .objectFormHeaderControllButtons .objectFormHeaderControllButtonMinMax:hover, div.objectForm .tableForm thead .objectFormHeaderControllButtons .objectFormHeaderControllButtonShowEmptyFields:hover {
 	cursor: pointer;
 	-webkit-box-shadow: 0px 0px 2px rgba(0, 0, 0, 1);
 	-moz-box-shadow: 0px 0px 2px rgba(0, 0, 0, 1);

@@ -18,16 +18,24 @@
   ~
   ~ Portions Copyrighted 2012 [name of copyright owner]
   -->
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
         "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns:wicket="http://wicket.apache.org">
+
+<html xmlns:wicket="http://wicket.apache.org" lang="en" class="no-js">
 <head>
     <title>
         <wicket:message key="page.title"></wicket:message>
     </title>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /> 
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico"/>
     <link type="text/css" rel="stylesheet" href="css/evolveum.css"/>
+    <link rel="stylesheet" type="text/css" href="css/position-fixed.css" />
+	<!--[if IE]>
+	    <link rel="stylesheet" type="text/css" href="css/position-fixed.IE.css" />
+	<![endif]-->
+	<!--[if lt IE 7]>
+    <link rel="stylesheet" type="text/css" href="css/position-fixed.IE.css?444" />
+	<![endif]-->
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/evolveum.js"></script>
     <script type="text/javascript" src="js/easing.js"></script>
@@ -41,9 +49,11 @@
         </div>
     </div>
 </div>
-
 <div wicket:id="topMenu2" class="top-menu" />
-<div wicket:id="leftMenu"/>
+
+
+<div wicket:id="leftMenu" class="left-menu" />
 <div id="body"><wicket:child /></div>
+
 </body>
 </html>

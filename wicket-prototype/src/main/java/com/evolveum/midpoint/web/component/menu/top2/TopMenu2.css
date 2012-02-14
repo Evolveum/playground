@@ -23,13 +23,12 @@ div.top-menu {
     width: 100%;
     font: Helvetica, Arial, sans-serif;
     margin: 0;
-    position: absolute;
+    /* position: absolute; */
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.6);
     z-index: 100000;
     min-width: 1200px;
     top: 56px;
     left: 0px;
-
 }
 
 div.top-container {
@@ -37,14 +36,17 @@ div.top-container {
     background: #267994;
     /* background: url("./back.png") repeat-x scroll left top transparent; */
     width: 100%;
+    z-index: 100000;
 }
 
 div.top-container ul {
     width: auto;
     position: absolute;
-    left: 0px;
+    left: 10px;
     margin: 0px;
     padding: 0px;
+    z-index: 100000;
+    height: 44px;
 }
 
 div.top-container ul li {
@@ -52,17 +54,20 @@ div.top-container ul li {
     width: auto;
     list-style: none;
     padding: 0px;
+    z-index: 100000;
+    height: 44px;
 }
 
 div.top-container li a {
     display: inline-block;
-    /* height: 48px; */
+    height: 44px;
     /* padding: 10px 20px 0 20px; */
-    padding: 3px 20px;
+    padding: 0px 20px;
     text-decoration: none;
     width: auto;
-    border-right: 1px solid #333;
-    border-left: 1px solid #ccc;
+    border-right: 1px solid #64a3b7;
+    border-left: 1px solid #004156;
+    z-index: 100000;
 }
 
 div.top-container li a.first {
@@ -79,6 +84,13 @@ div.top-container a span {
     color: #333;
 }
 
+div.top-container a span.label {
+    display: block;
+    font: 12px;
+    color: #333;
+    padding: 3px 0px 0px 0px;
+}
+
 div.top-container li a span.label {
     color: #fff;
     font-size: 18px;
@@ -87,21 +99,26 @@ div.top-container li a span.label {
 div.top-container a.selected-top, div.top-container a.selected-top span.description,
 div.top-container a:hover, div.top-container a:hover span.description {
     background-color: #333 !important;
-    color: #3385b6;
+    color: #81bacc;
+}
+
+div.top-container a.selected-top, div.top-container a:hover {
+	height: 44px;
 }
 
 div.bottom-container {
-    /* background-color: #333333; */
-    background: #5C9FB4;
+    background-color: #333333;
     height: 28px;
     display: inline-block;
     width: 100%;
+    z-index: 100000;
 }
 
 div.bottom-container ul {
     width: 1170px;
     padding: 0px;
     margin: 1px 0px;
+    z-index: 100000;
 }
 
 div.bottom-container ul li {
@@ -110,17 +127,19 @@ div.bottom-container ul li {
     width: auto;
     list-style: none;
     padding: 0 10px;
+    z-index: 100000;
 }
 
 div.bottom-container li a {
     display: inline-block;
-    height: 28px;
+    height: 22px;
     padding: 5px 5px 0 5px;
     text-decoration: none;
     width: auto;
     color: #F0F0F6;
+    z-index: 100000;
 }
 
 div.bottom-container li a:hover, div.bottom-container li a.selected-bottom {
-    color: #3385B6;
+    color: #81bacc;
 }

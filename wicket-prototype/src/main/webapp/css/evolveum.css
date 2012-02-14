@@ -12,6 +12,10 @@ body {
 	font-size: 14px;
 }
 
+img {
+	border-style: none;
+}
+
 #body {
 	border-style: none;
 	width: 100%;
