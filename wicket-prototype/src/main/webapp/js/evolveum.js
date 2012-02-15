@@ -6,11 +6,21 @@ $(document).ready(function() {
 	
 	setMenuPositionWhileScroll();
 	setFooterPos();
-	//$("input[type='text']").attr("size","42");
+	
 	$(".left-menu ul li").css("opacity", .8);
 	$(".left-menu ul li a").css("opacity", .5);
 	$(".left-menu ul").css("margin-top", - $(".left-menu ul").height() / 2);
 	setTimeout("showLeftMenu()",500);
+	$(".left-menu .selected-left").css("opacity", 1);
+	$(".left-menu .selected-left").parent().css("opacity", 1);
+	$(".left-menu .selected-left").parent().css("background", "#333333");
+	$(".left-menu .selected-left").parent().css("background-image", "url('../../img/leftNavArrow.png')");
+	$(".left-menu .selected-left").parent().css("background-position","right center");
+	$(".left-menu .selected-left").parent().css("background-repeat","no-repeat");
+	
+	/*if($(".left-menu ul li").find("a").attr("class") != "selected-left"){
+		$(this).find("a").css("background", "red");
+	}*/
 	
 	$(".left-menu ul").mouseenter(function(){
 		$(".left-menu ul").stop();
@@ -28,8 +38,10 @@ $(document).ready(function() {
 	}).mouseleave(function(){
 		$(this).stop();
 		$(this).find("a").stop();
-		$(this).animate({opacity : .8}, 200);
-		$(this).find("a").animate({opacity : .5}, 250);
+		if($(this).find("a").attr("class") != "selected-left"){
+			$(this).animate({opacity : .8}, 200);
+			$(this).find("a").animate({opacity : .5}, 250);
+		}
 	});
 	
 	$(".objectFormHeaderControllButtonMinMax").click(function(){
@@ -92,16 +104,19 @@ function hideFormHelpContent(){
 }
 
 function setMenuPositionWhileScroll() {
-	$(window).scroll(function() {
-		var scroll = $(window).scrollTop();
-		if (scroll >= 60) {
-			$(".top-menu").css("position", "fixed");
-			$(".top-menu").css("top", "0px");
-		} else {
-			$(".top-menu").css("position", "absolute");
-			$(".top-menu").css("top", "60px");
-		}
-	});
+	if (($.browser.msie && $.browser.version >= 9.0) || (!$.browser.msie)) {
+		$(window).scroll(function() {
+			var scroll = $(window).scrollTop();
+			if (scroll >= 60) {
+				$(".top-menu").css("position", "fixed");
+				$(".top-menu").css("top", "0px");
+			} else {
+				$(".top-menu").css("position", "absolute");
+				$(".top-menu").css("top", "60px");
+			}
+		}); 
+	 } 
+	
 }
 
 function setFooterPos(){
