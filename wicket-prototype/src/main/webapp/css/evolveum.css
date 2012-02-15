@@ -33,3 +33,63 @@ img {
 	height: 100%;
 }
 
+#header {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	background: url(../img/headerBg.jpg);
+	background-repeat: repeat-x;
+	height: 60px;
+}
+
+#header #login-box {
+	position: absolute;
+	right: 15px;
+	top: 5px;
+	width: auto;
+	text-align: right;
+	vertical-align: middle;
+}
+
+#header #login-box span {
+	color: #81BACC;
+}
+
+#header #login-box span em {
+	color: white;
+	font-size: 18px;
+    font-weight: bold;
+    padding: 0 5px;
+    font-style: normal;
+    text-shadow: 0 0 5px #000000;
+}
+
+#header #login-box a {
+	text-decoration: none;
+	color: #81BACC;
+}
+
+#header #login-box .delimiter {
+	color: white;
+	
+}
+
+#header #logo {
+	position: absolute;
+	background: url(../img/logo.jpg);
+	height: 60px;
+	left: 15px;
+	width: 291px;
+}
+
+
+#footer {
+	color: #5C9FB4;
+    font-size: 12px;
+    font-weight: bold;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    padding: 10px 0;
+}

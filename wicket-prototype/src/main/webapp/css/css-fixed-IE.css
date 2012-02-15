@@ -11,3 +11,11 @@
     position: absolute !important;
     top: expression(((document.documentElement.scrollTop || document.body.scrollTop) + (document.documentElement.clientHeight || document.body.clientHeight) - this.offsetHeight) + "px");
 }
+
+div.objectForm .tableForm input {
+	outline: none;
+	margin: 8px 0px 4px 10px;
+	font-size: 15px;
+	border: 1px solid #8D9095;
+	padding: 0 0 0 5px;
+}

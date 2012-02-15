@@ -1,0 +1,24 @@
+/** A WebReflection Solution */
+.position-fixed-top {
+    position:fixed !important;
+    top: 0;
+}
+.position-fixed-center {
+    position:fixed !important;
+    top: 50%;
+}
+.position-fixed-bottom {
+    position:fixed !important;
+    bottom:0;
+}
+
+div.objectForm .tableForm input {
+	outline: none;
+	margin: 4px 0px 4px 10px;
+	padding: 5px;
+	font-size: 15px;
+	border: 1px solid #8D9095;
+	-webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.3) inset;
+	-moz-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.3) inset;
+	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.3) inset;
+}

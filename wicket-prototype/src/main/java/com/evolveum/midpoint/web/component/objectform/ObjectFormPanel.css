@@ -24,17 +24,6 @@ div.objectForm .tableForm {
 	width: 600px;
 }
 
-div.objectForm .tableForm input {
-	outline: none;
-	margin: 4px 0px 4px 10px;
-	padding: 5px;
-	font-size: 15px;
-	border: 1px solid #8D9095;
-	-webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.3) inset;
-	-moz-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.3) inset;
-	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.3) inset;
-}
-
 div.objectForm .tableForm input:focus {
 	border: 1px solid #8D9095;
 	-webkit-box-shadow: 0px 0px 4px rgba(22, 79, 164, 1);
@@ -130,6 +119,9 @@ div.objectForm .tableForm tbody .objectFormLabel {
 div.objectForm .tableForm tbody input[type='text'], div.objectForm .tableForm tbody input[type='password'] {
 	width: 323px;
 	height: 20px;
+	position: relative;
+	float: left;
+	display: inline-block;
 }
 
 div.objectForm .tableForm tbody input[type='checkbox'] { 
@@ -153,9 +145,10 @@ div.objectForm .tableForm tbody .objectFormSeparatorText {
 }
 
 div.objectForm .tableForm tbody .objectFormButtons {
-	padding: 11px 7px 10px;
-	position: absolute;
+	padding: 11px 0px 10px 7px;
+	position: relative;
 	display: inline-block;
+	width: 43px;
 }
 
 div.objectForm .tableForm tbody .objectFormButtons a, div.objectForm .tableForm tbody .objectFormButtons img {
@@ -172,6 +165,7 @@ div.objectForm .tableForm tbody .objectFormInput {
 	display: inline-block;
 	width: 345px;
 	position: relative;
+	float: left;
 }
 
 div.objectForm .tableForm tbody .objectFormValue div.feedbackPanel ul {

@@ -21,15 +21,20 @@
 
 package com.evolveum.midpoint.web.component.objectform;
 
-import com.evolveum.midpoint.schema.processor.Property;
-import com.evolveum.midpoint.schema.processor.PropertyValue;
-import com.evolveum.midpoint.web.component.menu.left.LeftMenu.StaticImage;
-import com.evolveum.midpoint.web.component.objectform.input.DatePanel;
-import com.evolveum.midpoint.web.component.objectform.input.TextPanel;
+import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.xml.namespace.QName;
+
 import org.apache.commons.lang.Validate;
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.behavior.AttributeAppender;
+import org.apache.wicket.behavior.SimpleAttributeModifier;
 import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebComponent;
@@ -42,11 +47,10 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
-import javax.xml.namespace.QName;
-import java.util.Date;
-import java.util.List;
-
-import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
+import com.evolveum.midpoint.schema.processor.Property;
+import com.evolveum.midpoint.schema.processor.PropertyValue;
+import com.evolveum.midpoint.web.component.objectform.input.DatePanel;
+import com.evolveum.midpoint.web.component.objectform.input.TextPanel;
 
 /**
  * @author lazyman
@@ -107,6 +111,7 @@ public class ValueFormPanel extends Panel {
         InputPanel component = createTypedInputComponent(id);
 
         final FormComponent formComponent = component.getComponent();
+        formComponent.add(new SimpleAttributeModifier("size", "42"));
         formComponent.add(new AjaxFormComponentUpdatingBehavior("onBlur") {
 
             @Override
@@ -123,6 +128,8 @@ public class ValueFormPanel extends Panel {
                 super.onError(target, e);
             }
         });
+        
+        
 
         return component;
     }
@@ -137,7 +144,7 @@ public class ValueFormPanel extends Panel {
         } else {
             panel = new TextPanel<String>(id, new PropertyModel<String>(model, "value.value"));
         }
-
+        //panel.add(new SimpleAttributeModifier("class", "aaaaaaaa"));
         return panel;
     }
 
