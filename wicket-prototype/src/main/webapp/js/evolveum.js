@@ -1,5 +1,5 @@
-var objectFormHelpButton = null;
-var objectFormHelpContent = null;
+var objectFormHelpContainer = null;
+//var objectFormHelpContent = null;
 var interval = 0;
 
 $(document).ready(function() {
@@ -75,12 +75,12 @@ $(document).ready(function() {
 	});
 	
 	$(".objectFormAttribute").mouseenter(function(){
-		objectFormHelpButton = $(this).find(".objectFormHelpButton");
-		objectFormHelpContent = $(this).find(".objectFormHelpContent");
+		objectFormHelpContainer = $(this).find(".objectFormHelpContainer");
+		//objectFormHelpContent = $(this).find(".objectFormHelpContent");
 
-		interval = setTimeout("showFormHelpContent()",1000);
+		interval = setTimeout("showFormHelpContainer()",1000);
 	}).mouseleave(function(){
-		hideFormHelpContent();
+		hideFormHelpContainer();
 	});
 });
 
@@ -88,16 +88,16 @@ function showLeftMenu() {
 	$(".left-menu ul").animate({left: -252}, {duration: 500, easing: "easeOutQuart"});
 }
 
-function showFormHelpContent(){
-	objectFormHelpContent.show();
-	objectFormHelpButton.show();
+function showFormHelpContainer(){
+	objectFormHelpContainer.show();
+	//objectFormHelpButton.show();
 	clearTimeout(interval);
 }
 
-function hideFormHelpContent(){
+function hideFormHelpContainer(){
 	clearTimeout(interval);
-	objectFormHelpContent.hide();
-	objectFormHelpButton.hide();
+	objectFormHelpContainer.hide();
+	//objectFormHelpButton.hide();
 }
 
 function setMenuPositionWhileScroll() {

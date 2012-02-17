@@ -103,6 +103,7 @@ div.objectForm .tableForm tbody .objectFormLabel, div.objectForm .tableForm tbod
 
 div.objectForm .tableForm tbody .objectFormLabel, div.objectForm .tableForm tbody .objectFormValue {
 	position: relative;
+	height: 40px;
 }
 
 div.objectForm .tableForm tbody .objectFormLabel {
@@ -198,13 +199,11 @@ div.objectForm .tableForm thead .objectFormHeaderControllButtons .objectFormHead
 
 div.objectForm .tableForm tbody .objectFormValue .objectFormHelpContent {
 	position: absolute;
-	left: 426px;
-	top: 8px;
-	display: none;
-	background: red;
+	left: 23px;
+	top: 0px;
 	padding: 3px 10px;
-	width: 100%;
 	height: auto;
+	width: auto;
 	border: 1px solid #DBF2F7;
 	background: #dedee4;
 	-webkit-box-shadow: 0px 0px 3px rgba(0, 0, 0, 1);
@@ -218,11 +217,20 @@ div.objectForm .tableForm tbody .objectFormValue .objectFormHelpContent {
 
 div.objectForm .tableForm tbody .objectFormValue .objectFormHelpButton {
 	position: absolute;
-	right: -30px;
-	top: 8px;
-	display: none;
+	left: 0px;
+	top: 0px;
 	-webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
 	-moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
 	box-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
 	z-index: 5;
+}
+
+div.objectForm .tableForm tbody .objectFormValue .objectFormHelpContainer {
+	position: absolute;
+	margin-left: 405px;
+	top: 8px;
+	display: none;
+	z-index: 5;
+	height: auto;
+	width: 100%;
 }
