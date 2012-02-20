@@ -1,6 +1,10 @@
 var objectFormHelpContainer = null;
-//var objectFormHelpContent = null;
 var interval = 0;
+
+window.onresize = function() {
+	//setMenuPositionWhileScroll();
+	setFooterPos();
+}; 
 
 $(document).ready(function() {
 	
@@ -76,7 +80,6 @@ $(document).ready(function() {
 	
 	$(".objectFormAttribute").mouseenter(function(){
 		objectFormHelpContainer = $(this).find(".objectFormHelpContainer");
-		//objectFormHelpContent = $(this).find(".objectFormHelpContent");
 
 		interval = setTimeout("showFormHelpContainer()",1000);
 	}).mouseleave(function(){
@@ -85,19 +88,19 @@ $(document).ready(function() {
 });
 
 function showLeftMenu() {
-	$(".left-menu ul").animate({left: -252}, {duration: 500, easing: "easeOutQuart"});
+	if($(".left-menu ul").find(".leftMenuRow").html() != null){
+		$(".left-menu ul").animate({left: -252}, {duration: 500, easing: "easeOutQuart"});
+	}
 }
 
 function showFormHelpContainer(){
 	objectFormHelpContainer.show();
-	//objectFormHelpButton.show();
 	clearTimeout(interval);
 }
 
 function hideFormHelpContainer(){
 	clearTimeout(interval);
 	objectFormHelpContainer.hide();
-	//objectFormHelpButton.hide();
 }
 
 function setMenuPositionWhileScroll() {
@@ -113,10 +116,12 @@ function setMenuPositionWhileScroll() {
 			}
 		}); 
 	 } 
-	
 }
 
 function setFooterPos(){
 	var height = $(document).height();
-	$("#footer").css("top", height);
+	//alert(height);
+	$("#aaa").html($(document).height());
+	//$(".content").css("height", height - 180);
+	//$("#footer").css("top", height - 45);
 }

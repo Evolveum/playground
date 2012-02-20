@@ -19,11 +19,10 @@ img {
 #body {
 	border-style: none;
 	width: 100%;
-	position: absolute;
+	position: relative;
 	left: 0px;
-	top: 155px;
+	margin-top: 155px;
 	min-width: 1200px;
-	background: red;
 	height: auto;
 }
 
@@ -90,7 +89,7 @@ img {
   	position: absolute;
     text-align: center;
     width: 100%;
-    padding: 10px 0;
+    padding: 10px 0 10px 0;
     min-width: 1200px;
 }
 
