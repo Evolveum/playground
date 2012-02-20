@@ -113,8 +113,14 @@ div.objectForm .tableForm tbody .objectFormLabel {
 	color: #333;
 	font-weight: bold;
 	font-size: 13px;
-	padding: 13px 0;
+	padding: 0px;
 	text-transform: capitalize;
+	position: relative;
+}
+
+div.objectForm .tableForm tbody .objectFormLabel .objectFormLabelName {
+	float: right;
+    margin-top: 12px;
 }
 
 div.objectForm .tableForm tbody input[type='text'], div.objectForm .tableForm tbody input[type='password'] {
@@ -184,10 +190,6 @@ div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam {
 	position: absolute;
 	right: 9px;
 	top: 11px;
-}
-
-div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam  .yui-calcontainer, div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam  .yui-calcontainer table {
-	width: 216px;
 }
 
 div.objectForm .tableForm thead .objectFormHeaderControllButtons .objectFormHeaderControllButtonMinMax:hover, div.objectForm .tableForm thead .objectFormHeaderControllButtons .objectFormHeaderControllButtonShowEmptyFields:hover {

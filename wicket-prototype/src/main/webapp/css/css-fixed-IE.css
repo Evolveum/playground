@@ -19,3 +19,13 @@ div.objectForm .tableForm input {
 	border: 1px solid #8D9095;
 	padding: 0 0 0 5px;
 }
+
+div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam .yui-calcontainer {
+	width: 252px;
+	z-index: 99999;
+}
+
+div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam  .yui-calcontainer table {
+	width: 230px;
+	z-index: 99999;
+}

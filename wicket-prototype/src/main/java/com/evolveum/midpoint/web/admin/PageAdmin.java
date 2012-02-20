@@ -23,6 +23,7 @@ package com.evolveum.midpoint.web.admin;
 
 import com.evolveum.midpoint.web.PageTest;
 import com.evolveum.midpoint.web.admin.home.PageHome;
+import com.evolveum.midpoint.web.admin.resources.PageResources;
 import com.evolveum.midpoint.web.admin.user.PageUser;
 import com.evolveum.midpoint.web.component.menu.left.LeftMenuItem;
 import com.evolveum.midpoint.web.component.menu.top.TopMenuItem;
@@ -41,8 +42,8 @@ public class PageAdmin extends PageBase {
         items.add(new TopMenuItem("pageAdmin.workItems", "pageAdmin.workItems.description", PageWizard.class));
         items.add(new TopMenuItem("pageAdmin.accounts", "pageAdmin.accounts.description", PageUser.class));
         items.add(new TopMenuItem("pageAdmin.serverTasks", "pageAdmin.serverTasks.description", PageForm.class));
-        items.add(new TopMenuItem("pageAdmin.roles", "pageAdmin.roles.description", PageHome.class));
-        items.add(new TopMenuItem("pageAdmin.resources", "pageAdmin.resources.description", PageHome.class));
+        items.add(new TopMenuItem("pageAdmin.roles", "pageAdmin.roles.description", PageRoles.class));
+        items.add(new TopMenuItem("pageAdmin.resources", "pageAdmin.resources.description", PageResources.class));
 //        items.add(new TopMenuItem("pageAdmin.reports", "pageAdmin.reports.description", PageHome.class));
         items.add(new TopMenuItem("pageAdmin.configuration", "pageAdmin.configuration.description", PageTest.class));
 
@@ -66,8 +67,8 @@ public class PageAdmin extends PageBase {
         List<LeftMenuItem> items = new ArrayList<LeftMenuItem>();
         items.add(new LeftMenuItem("pageAdmin.left.menu1", "../../img/icon.png", PageForm.class));
         items.add(new LeftMenuItem("pageAdmin.left.menu2", "../../img/icon.png", PageWizard.class));
-        items.add(new LeftMenuItem("pageAdmin.left.menu3", "../../img/icon.png", PageUser.class));
-        items.add(new LeftMenuItem("pageAdmin.left.menu4", "../../img/icon.png", PageHome.class));
+        items.add(new LeftMenuItem("pageAdmin.left.menu3", "../../img/icon.png", PageRoles.class));
+        items.add(new LeftMenuItem("pageAdmin.left.menu4", "../../img/icon.png", PageResources.class));
 
         return items;
     }

@@ -22,3 +22,8 @@ div.objectForm .tableForm input {
 	-moz-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.3) inset;
 	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.3) inset;
 }
+
+div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam .yui-calcontainer, div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam  .yui-calcontainer table {
+	width: 216px;
+	z-index: 99999;
+}

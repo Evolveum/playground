@@ -41,16 +41,17 @@
     <script type="text/javascript" src="js/easing.js"></script>
 </head>
 <body style="margin: 0;">
-<div id="header">
-    <div wicket:id="loginPanel" id="login-box"/>
-    <div id="logo" />
-</div>
-<div wicket:id="topMenu2" class="top-menu" />
-
-
-<div wicket:id="leftMenu" class="left-menu" />
-<div id="body"><wicket:child /></div>
-
-<div id="footer">&copy; Evolveum. All Rights Reserved. Theme created by Serbak &amp; Lazyman.</div>
+	<div id="header">
+	    <div wicket:id="loginPanel" id="login-box"/>
+	    <div id="logo" />
+	</div>
+	<div>
+	<div wicket:id="topMenu2" class="top-menu" />
+	<span id="aaa" style="position: fixed; top: 40px; right: 0px; color: white; z-index: 10000000000;"></span>
+	</div>
+	
+	<div wicket:id="leftMenu" class="left-menu" />
+	<div id="body"><wicket:child /></div>
+	<div id="footer">&copy; Evolveum. All Rights Reserved. Theme created by Serbak &amp; Lazyman.</div>
 </body>
 </html>
