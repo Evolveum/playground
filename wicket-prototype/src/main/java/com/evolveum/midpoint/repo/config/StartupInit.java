@@ -21,7 +21,7 @@
 
 package com.evolveum.midpoint.repo.config;
 
-import com.evolveum.midpoint.repo.poc.XmlFactory;
+import com.evolveum.midpoint.repo.poc.SqlFactory;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 
@@ -47,8 +47,8 @@ public class StartupInit {
         LOGGER.info("init method");
 
         config = new Config();
-        config.setClassName(XmlFactory.class.getName());
-//        config.setClassName(SqlFactory.class.getName());
+//        config.setClassName(XmlFactory.class.getName());
+        config.setClassName(SqlFactory.class.getName());
         config.setSomeValue("some setting value");
     }
 }

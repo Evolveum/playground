@@ -23,12 +23,10 @@ package com.evolveum.midpoint.repo.config;
 
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.core.env.ConfigurableEnvironment;
 
 /**
  * @author lazyman
@@ -51,12 +49,12 @@ public class RepoFactoryInit implements ApplicationContextAware {
             Config config = startupInit.getConfig();
             Factory factory = getFactory(config);
 
-            String profile = factory.getProfile();
-            if (StringUtils.isNotEmpty(profile)) {
-                LOGGER.info("Setting profile: " + profile);
-                ConfigurableEnvironment environment = (ConfigurableEnvironment) context.getEnvironment();
-                environment.setActiveProfiles(profile);
-            }
+//            String profile = factory.getProfile();
+//            if (StringUtils.isNotEmpty(profile)) {
+//                LOGGER.info("Setting profile: " + profile);
+//                ConfigurableEnvironment environment = (ConfigurableEnvironment) context.getEnvironment();
+//                environment.setActiveProfiles(profile);
+//            }
 
             factory.init(config);
         } catch (Exception ex) {

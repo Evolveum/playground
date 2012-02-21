@@ -52,9 +52,4 @@ public class XmlFactory implements Factory {
     public void destroy() {
         LOGGER.info("destroy method");
     }
-
-    public String getProfile() {
-        LOGGER.info("getProfile");
-        return null;
-    }
 }

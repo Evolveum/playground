@@ -26,8 +26,6 @@ package com.evolveum.midpoint.repo.config;
  */
 public interface Factory {
 
-    String getProfile();
-
     Service getService();
 
     void init(Config config);

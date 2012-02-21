@@ -57,9 +57,4 @@ public class SqlFactory implements Factory {
     public SqlConfig getConfig() {
         return config;
     }
-
-    public String getProfile() {
-        LOGGER.info("getProfile");
-        return "sqlFactoryProfile";
-    }
 }
