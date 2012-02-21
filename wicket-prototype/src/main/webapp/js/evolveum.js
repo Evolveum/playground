@@ -89,7 +89,7 @@ $(document).ready(function() {
 	});
 	
 	$(".sortedTable table tbody tr").mouseenter(function(){
-		$(this).css("background", "#81bacc");
+		$(this).css("background", "#ceeef5");
 	}).mouseleave(function(){
 		if($(this).attr("class") == "odd"){
 			$(this).css("background", "#F0F0F6");

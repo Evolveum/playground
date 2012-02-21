@@ -29,3 +29,32 @@ div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam  .yui-calcontaine
 	width: 230px;
 	z-index: 99999;
 }
+
+.sortedTable .addSortedTableSettings {
+	background: #8eb3ba;
+}
+
+.sortedTable .addSortedTableSettings select, .sortedTable .addSortedTableSettings input {
+	color: #6e6e6e;
+	font: bold 12px Helvetica, Arial, sans-serif;
+	text-decoration: none;
+	position: relative;
+	display: inline-block;
+	border: solid 1px #dcdcdc;
+	outline: none;
+	margin-top: 6px;
+	background: #FFFFFF;
+}
+
+.sortedTable table thead .sortable .sortableArrowIcon {
+    background-image: url("../img/sortableArrowUpDown.png");
+	background-position: center;
+    position: absolute;
+    right: 10px;
+    width: 8px;
+    height: 10px;
+    float: right;
+    background-repeat: no-repeat;
+    margin-top: 0px;
+    top: 0px;
+}

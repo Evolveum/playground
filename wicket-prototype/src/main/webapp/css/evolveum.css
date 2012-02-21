@@ -113,6 +113,7 @@ img {
 	text-transform: capitalize;
 	border: 1px solid #FFFFFF;
 	text-shadow: 0 1px 0 #DBF2F7;
+	font-size: 14px;
 }
 
 .sortedTable table thead th div {
@@ -123,25 +124,19 @@ img {
 	color: #333333;
 	text-shadow: 0 1px 0 #DBF2F7;
 	text-decoration: none;
+	outline: none;
+	clear: left;
+	font-size: 14px;
 }
-
-.sortedTable table thead .sortable .sortableArrowIcon {
-	background-image: url("../img/sortableArrowUpDown.png");
-	margin-top: -5px;
-    position: absolute;
-    right: 2px;
-    top: 50%;
-    width: 8px;
-    height: 10px;
-    float: right;
-}
-
 
 .sortedTable table tbody td {
 	padding: 4px;
 	font-size: 13px;
 }
 
+.sortedTable table tbody td a {
+	font-size: 14px;
+}
 .sortedTable table tbody .odd {
 	background: none repeat scroll 0 0 #F0F0F6;
 }
@@ -206,23 +201,34 @@ img {
 }
 
 .sortedTable .addSortedTableSettings {
-	background: #8FA6AB;
-	padding: 5px 0;
+	/* padding: 5px 0; */
 	color: #FFFFFF;
 	display: block;
+	height: 30px;
+    width: 100%;
 }
 
-.sortedTable .addSortedTableSettings div {
-	padding: 0px 5px;
-	margin: 0px;
-	color: #FFFFFF;
+.sortedTable .addSortedTableSettings ul {
+	height: 30px;
+    margin: 0;
+    padding: 0;
+    width: auto;
+}
+
+.sortedTable .addSortedTableSettings ul li{
+	list-style: none;
+	padding: 0px;
+    width: auto;
+    float: left;
+}
+
+.sortedTable .addSortedTableSettings span {
+	padding: 0 5px;
 	position: relative;
     width: auto;
     display: inline-block;
-}
-
-.sortedTable .addSortedTableSettingsDelimiter {
-	color: #333333;
+    text-decoration: none;
+    height: 30px;
 }
 
 .sortedTable .addSortedTableSettings .showEntries {
@@ -233,7 +239,7 @@ img {
 	color: #6e6e6e;
 	font: bold 12px Helvetica, Arial, sans-serif;
 	text-decoration: none;
-	padding: 1px 2px;
+	padding: 0px 2px;
 	position: relative;
 	display: inline-block;
 	text-shadow: 0 1px 0 #fff;
@@ -250,29 +256,7 @@ img {
 	border-radius: 2px;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
-}
-
-.sortedTable .addSortedTableSettings select, .sortedTable .addSortedTableSettings input {
-	color: #6e6e6e;
-	font: bold 12px Helvetica, Arial, sans-serif;
-	text-decoration: none;
-	padding: 1px 2px;
-	position: relative;
-	display: inline-block;
-	-webkit-transition: border-color .218s;
-	-moz-transition: border .218s;
-	-o-transition: border-color .218s;
-	transition: border-color .218s;
-	background: #F5F5F5;
-	background: -webkit-gradient(linear, 0% 40%, 0% 70%, from(#F5F5F5),
-		to(#F1F1F1) );
-	background: -moz-linear-gradient(linear, 0% 40%, 0% 70%, from(#F5F5F5),
-		to(#F1F1F1) );
-	border: solid 1px #dcdcdc;
-	border-radius: 2px;
-	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	outline: none;
+	margin-top: 5px;
 }
 
 .sortedTable .addSortedTableSettings input[type='text'] {
