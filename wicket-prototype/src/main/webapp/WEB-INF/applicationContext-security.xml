@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2011 Evolveum
+  ~ Copyright (c) 2012 Evolveum
   ~
   ~ The contents of this file are subject to the terms
   ~ of the Common Development and Distribution License
@@ -17,16 +17,16 @@
   ~ with the fields enclosed by brackets [] replaced by
   ~ your own identifying information:
   ~
-  ~ Portions Copyrighted 2011 [name of copyright owner]
+  ~ Portions Copyrighted 2012 [name of copyright owner]
   -->
 
 <beans:beans xmlns="http://www.springframework.org/schema/security"
              xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 http://www.springframework.org/schema/security
-http://www.springframework.org/schema/security/spring-security-3.0.3.xsd">
+http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
 
     <http auto-config="true" use-expressions="true">

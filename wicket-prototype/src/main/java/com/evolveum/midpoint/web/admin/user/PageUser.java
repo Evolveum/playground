@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Evolveum
+ * Copyright (c) 2012 Evolveum
  *
  * The contents of this file are subject to the terms
  * of the Common Development and Distribution License
@@ -16,12 +16,13 @@
  * with the fields enclosed by brackets [] replaced by
  * your own identifying information:
  *
- * Portions Copyrighted 2011 [name of copyright owner]
+ * Portions Copyrighted 2012 [name of copyright owner]
  */
 
 package com.evolveum.midpoint.web.admin.user;
 
 
+import com.evolveum.midpoint.repo.config.Service;
 import com.evolveum.midpoint.schema.exception.SchemaException;
 import com.evolveum.midpoint.schema.processor.PropertyDefinition;
 import com.evolveum.midpoint.schema.processor.ResourceObjectAttributeDefinition;
@@ -63,6 +64,10 @@ public class PageUser extends PageAdmin {
 
             @Override
             protected FormObject load() {
+                Service service = getMidpointApplication().getRepositoryService();
+                System.out.println(">>>>>>>>>>>>>>>>>>> " + service.doSomething());
+
+
                 FormObject object = null;
                 try {
                     URL url = PageUser.class.getClassLoader().getResource("com/test/resource.xml");

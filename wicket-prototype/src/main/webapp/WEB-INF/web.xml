@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
-  ~ Copyright (c) 2011 Evolveum
+  ~ Copyright (c) 2012 Evolveum
   ~
   ~ The contents of this file are subject to the terms
   ~ of the Common Development and Distribution License
@@ -17,7 +17,7 @@
   ~ with the fields enclosed by brackets [] replaced by
   ~ your own identifying information:
   ~
-  ~ Portions Copyrighted 2011 [name of copyright owner]
+  ~ Portions Copyrighted 2012 [name of copyright owner]
   -->
 
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -34,6 +34,8 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
+            /WEB-INF/applicationContext-configuration.xml
+            /WEB-INF/applicationContext-repo.xml
             /WEB-INF/applicationContext.xml
             /WEB-INF/applicationContext-security.xml
         </param-value>

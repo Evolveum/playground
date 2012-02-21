@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Evolveum
+ * Copyright (c) 2012 Evolveum
  *
  * The contents of this file are subject to the terms
  * of the Common Development and Distribution License
@@ -16,11 +16,12 @@
  * with the fields enclosed by brackets [] replaced by
  * your own identifying information:
  *
- * Portions Copyrighted 2011 [name of copyright owner]
+ * Portions Copyrighted 2012 [name of copyright owner]
  */
 
 package com.evolveum.midpoint.web;
 
+import com.evolveum.midpoint.repo.config.Service;
 import com.evolveum.midpoint.spring.SomeService;
 import com.evolveum.midpoint.web.admin.home.PageHome;
 import com.evolveum.midpoint.web.admin.user.PageUser;
@@ -41,7 +42,9 @@ import org.springframework.stereotype.Component;
 public class MidPointApplication extends WebApplication {
 
     @Autowired(required = true)
-    private SomeService service;
+    SomeService service;
+    @Autowired(required = true)
+    Service repositoryService;
 
     /**
      * @see org.apache.wicket.Application#getHomePage()
@@ -79,7 +82,7 @@ public class MidPointApplication extends WebApplication {
         return service;
     }
 
-    public void setService(SomeService service) {
-        this.service = service;
+    public Service getRepositoryService() {
+        return repositoryService;
     }
 }

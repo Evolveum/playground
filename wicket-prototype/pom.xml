@@ -29,7 +29,7 @@
     <name>wicket-prototype</name>
     <description></description>
     <properties>
-        <spring.version>3.0.5.RELEASE</spring.version>
+        <spring.version>3.1.0.RELEASE</spring.version>
         <wicket.version>1.5.4</wicket.version>
         <jetty.version>7.5.0.v20110901</jetty.version>
     </properties>
@@ -60,6 +60,16 @@
             <artifactId>spring-context-support</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
 
         <!-- SPRING SECURITY -->
         <dependency>
@@ -74,12 +84,12 @@
             <version>${spring.version}</version>
             <type>jar</type>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-taglibs</artifactId>
-            <version>${spring.version}</version>
-            <type>jar</type>
-        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>org.springframework.security</groupId>-->
+        <!--<artifactId>spring-security-taglibs</artifactId>-->
+        <!--<version>${spring.version}</version>-->
+        <!--<type>jar</type>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
