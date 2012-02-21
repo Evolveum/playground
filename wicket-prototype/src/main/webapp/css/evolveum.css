@@ -150,10 +150,10 @@ img {
 	-moz-transition: border .218s;
 	-o-transition: border-color .218s;
 	transition: border-color .218s;
-	background: #f3f3f3;
-	background: -webkit-gradient(linear, 0% 40%, 0% 70%, from(#F5F5F5),
+	background: #F0F0F6;
+	background: -webkit-gradient(linear, 0% 40%, 0% 70%, from(#F0F0F6),
 		to(#F1F1F1) );
-	background: -moz-linear-gradient(linear, 0% 40%, 0% 70%, from(#F5F5F5),
+	background: -moz-linear-gradient(linear, 0% 40%, 0% 70%, from(#F0F0F6),
 		to(#F1F1F1) );
 	border: solid 1px #dcdcdc;
 	border-radius: 2px;
@@ -173,6 +173,7 @@ img {
 .sortedTable .pagerNavigator .next a {
 	margin-left: 10px;
 }
+
 
 .sortedTable .pagerNavigator a:hover {
     color: #333;

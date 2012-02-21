@@ -119,9 +119,14 @@ function setMenuPositionWhileScroll() {
 }
 
 function setFooterPos(){
-	var height = $(document).height();
+	var winHeight = $(window).height();
+	var contentHeight = $(".content").height() + 200;
 	//alert(height);
-	$("#aaa").html($(document).height());
-	//$(".content").css("height", height - 180);
-	//$("#footer").css("top", height - 45);
+	if(winHeight > contentHeight){
+		$("#footer").css("position", "absolute");
+		$("#footer").css("bottom", 0);
+	} else {
+		$("#footer").css("position", "relative");
+		$("#footer").css("bottom", 0);
+	}
 }
