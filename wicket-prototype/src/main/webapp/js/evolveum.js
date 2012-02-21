@@ -20,6 +20,8 @@ $(document).ready(function() {
 	$(".left-menu .selected-left").parent().css("opacity", 1);
 	$(".left-menu .selected-left").parent().css("background", "#333333");
 	
+	$(".sortedTable table thead").find(".sortable").find("a").find("div").append("<span class='sortableArrowIcon'></span>");
+	
 	$(".left-menu ul").mouseenter(function(){
 		$(".left-menu ul").stop();
 		$(".left-menu ul").animate({left: 0}, {duration: 500, easing: "easeOutQuart"});
@@ -84,6 +86,16 @@ $(document).ready(function() {
 		interval = setTimeout("showFormHelpContainer()",1000);
 	}).mouseleave(function(){
 		hideFormHelpContainer();
+	});
+	
+	$(".sortedTable table tbody tr").mouseenter(function(){
+		$(this).css("background", "#81bacc");
+	}).mouseleave(function(){
+		if($(this).attr("class") == "odd"){
+			$(this).css("background", "#F0F0F6");
+		} else {
+			$(this).css("background", "#FFFFFF");
+		}
 	});
 });
 
