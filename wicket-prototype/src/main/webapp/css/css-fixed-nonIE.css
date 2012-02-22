@@ -72,3 +72,14 @@ div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam .yui-calcontainer
     float: right;
     background-repeat: no-repeat;
 }
+
+.sortedTable .pagerNavigator .goto em span {
+	padding: 4px 6px;
+	position: relative;
+	display: inline-block;
+}
+
+.sortedTable .addSortedTableSettings .showEntries {
+	position: absolute;
+    right: 0;
+}

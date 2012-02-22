@@ -201,7 +201,6 @@ img {
 }
 
 .sortedTable .addSortedTableSettings {
-	/* padding: 5px 0; */
 	color: #FFFFFF;
 	display: block;
 	height: 30px;
@@ -213,6 +212,7 @@ img {
     margin: 0;
     padding: 0;
     width: auto;
+    position: relative;
 }
 
 .sortedTable .addSortedTableSettings ul li{
@@ -229,10 +229,6 @@ img {
     display: inline-block;
     text-decoration: none;
     height: 30px;
-}
-
-.sortedTable .addSortedTableSettings .showEntries {
-	float: right;
 }
 
 .sortedTable .button{

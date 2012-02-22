@@ -34,7 +34,7 @@ div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam  .yui-calcontaine
 	background: #8eb3ba;
 }
 
-.sortedTable .addSortedTableSettings select, .sortedTable .addSortedTableSettings input {
+.sortedTable .addSortedTableSettings select, .sortedTable .addSortedTableSettings .searchPanel {
 	color: #6e6e6e;
 	font: bold 12px Helvetica, Arial, sans-serif;
 	text-decoration: none;
@@ -45,6 +45,11 @@ div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam  .yui-calcontaine
 	margin-top: 6px;
 	background: #FFFFFF;
 }
+
+.sortedTable .addSortedTableSettings .button {
+	background-color: #F5F5F5;
+}
+
 
 .sortedTable table thead .sortable .sortableArrowIcon {
     background-image: url("../img/sortableArrowUpDown.png");
@@ -57,4 +62,15 @@ div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam  .yui-calcontaine
     background-repeat: no-repeat;
     margin-top: 0px;
     top: 0px;
+}
+
+.sortedTable .pagerNavigator .goto em span {
+	padding: 4px 2px 4px 6px;
+	position: relative;
+	display: inline-block;
+}
+
+.sortedTable .addSortedTableSettings .showEntries {
+	float: right;
+	position: relative;
 }
