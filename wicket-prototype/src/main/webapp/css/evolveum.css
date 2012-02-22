@@ -1,10 +1,10 @@
 a {
 	outline: none;
+	color: #551A8B;
 }
 
 a:hover {
 	text-decoration: none;
-	font-size: 14;
 }
 
 body {
@@ -126,7 +126,6 @@ img {
 	text-decoration: none;
 	outline: none;
 	clear: left;
-	font-size: 14px;
 }
 
 .sortedTable table tbody td {
@@ -134,9 +133,6 @@ img {
 	font-size: 13px;
 }
 
-.sortedTable table tbody td a {
-	font-size: 14px;
-}
 .sortedTable table tbody .odd {
 	background: none repeat scroll 0 0 #F0F0F6;
 }
@@ -157,27 +153,38 @@ img {
 }
 
 .sortedTable .pagerNavigator a {
-	color: #6e6e6e;
+	color: #5c8a92;
 	font: bold 12px Helvetica, Arial, sans-serif;
 	text-decoration: none;
 	padding: 4px 15px;
 	position: relative;
 	display: inline-block;
-	text-shadow: 0 1px 0 #fff;
-	-webkit-transition: border-color .218s;
+	text-shadow: 0 1px 0 #cdedf3;
+	/* -webkit-transition: border-color .218s;
 	-moz-transition: border .218s;
 	-o-transition: border-color .218s;
-	transition: border-color .218s;
-	background: #FFFFFF;
-	background-image: linear-gradient(bottom, rgb(241,241,241) 40%, rgb(255,255,255) 60%);
+	transition: border-color .218s; */
+	background: #87b2ba;
+/* 	background-image: linear-gradient(bottom, rgb(241,241,241) 40%, rgb(255,255,255) 60%);
 background-image: -o-linear-gradient(bottom, rgb(241,241,241) 40%, rgb(255,255,255) 60%);
 background-image: -moz-linear-gradient(bottom, rgb(241,241,241) 40%, rgb(255,255,255) 60%);
 background-image: -webkit-linear-gradient(bottom, rgb(241,241,241) 40%, rgb(255,255,255) 60%);
-background-image: -ms-linear-gradient(bottom, rgb(241,241,241) 40%, rgb(255,255,255) 60%);
-	border: solid 1px #dcdcdc;
-	border-radius: 2px;
-	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
+background-image: -ms-linear-gradient(bottom, rgb(241,241,241) 40%, rgb(255,255,255) 60%); */
+
+	background-image: linear-gradient(bottom, rgb(132,175,184) 0%, rgb(189,222,229) 100%);
+	background-image: -o-linear-gradient(bottom, rgb(132,175,184) 0%, rgb(189,222,229) 100%);
+	background-image: -moz-linear-gradient(bottom, rgb(132,175,184) 0%, rgb(189,222,229) 100%);
+	background-image: -webkit-linear-gradient(bottom, rgb(132,175,184) 0%, rgb(189,222,229) 100%);
+	background-image: -ms-linear-gradient(bottom, rgb(132,175,184) 0%, rgb(189,222,229) 100%);
+	
+	-webkit-box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 1) inset;
+	-moz-box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 1) inset;
+	box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 1) inset;
+	
+	border: 1px solid #b6d4db;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
 }
 
 .sortedTable .pagerNavigator .goto a {
@@ -194,11 +201,17 @@ background-image: -ms-linear-gradient(bottom, rgb(241,241,241) 40%, rgb(255,255,
 
 
 .sortedTable .pagerNavigator a:hover {
-    color: #333;
-    border-color: #999;
-    -moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.4) 
+    color: #29555d;
+    border-color: #87b2ba;
+    /* -moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.4) 
     -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.4); */
+    
+    background-image: linear-gradient(bottom, rgb(106,154,163) 0%, rgb(169,208,216) 100%);
+	background-image: -o-linear-gradient(bottom, rgb(106,154,163) 0%, rgb(169,208,216) 100%);
+	background-image: -moz-linear-gradient(bottom, rgb(106,154,163) 0%, rgb(169,208,216) 100%);
+	background-image: -webkit-linear-gradient(bottom, rgb(106,154,163) 0%, rgb(169,208,216) 100%);
+	background-image: -ms-linear-gradient(bottom, rgb(106,154,163) 0%, rgb(169,208,216) 100%);
 }
 
 .sortedTable .addSortedTableSettings {
@@ -261,6 +274,7 @@ background-image: -ms-linear-gradient(bottom, rgb(241,241,241) 40%, rgb(255,255,
 	-webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.3) inset;
 	-moz-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.3) inset;
 	box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.3) inset;
+	padding: 1px 2px;
 }
 
 .sortedTable .button:hover {

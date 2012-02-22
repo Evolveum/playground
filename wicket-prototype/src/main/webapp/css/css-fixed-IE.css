@@ -68,7 +68,12 @@ div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam  .yui-calcontaine
 	padding: 4px 2px 4px 6px;
 	position: relative;
 	display: inline-block;
-	color: #6e6e6e;
+	color: #5c8a92;
+}
+
+
+.sortedTable .pagerNavigator a {
+	color: #e9f8fa;
 }
 
 .sortedTable .addSortedTableSettings .showEntries {

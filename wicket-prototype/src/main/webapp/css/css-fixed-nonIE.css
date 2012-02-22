@@ -29,7 +29,6 @@ div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam .yui-calcontainer
 }
 
 .sortedTable .addSortedTableSettings {
-	/* background: #8FA6AB; */
 	background-image: linear-gradient(bottom, rgb(68,88,92) 0%, rgb(83,138,148) 50%, rgb(86,147,158) 51%, rgb(144,196,209) 95%);
 	background-image: linear-gradient(bottom, rgb(106,137,143) 0%, rgb(136,172,179) 50%, rgb(142,179,186) 50%, rgb(162,208,219) 100%);
 	background-image: -o-linear-gradient(bottom, rgb(106,137,143) 0%, rgb(136,172,179) 50%, rgb(142,179,186) 50%, rgb(162,208,219) 100%);
@@ -39,10 +38,9 @@ div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam .yui-calcontainer
 }
 
 .sortedTable .addSortedTableSettings select, .sortedTable .addSortedTableSettings input {
-	border: 0px solid #8D9095;
+	border: 1px solid #8D9095;
 	background: #FFFFFF;
 	margin-top: 6px;
-	
 	color: #6e6e6e;
 	font: bold 13px Helvetica, Arial, sans-serif;
 	text-decoration: none;
@@ -53,6 +51,7 @@ div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam .yui-calcontainer
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
 	margin-top: 6px;
+	outline: none;
 }
 
 .sortedTable table thead .sortable .sortableArrowIcon {
@@ -71,7 +70,7 @@ div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam .yui-calcontainer
 	padding: 4px 6px;
 	position: relative;
 	display: inline-block;
-	color: #6e6e6e;
+	color: #5c8a92;
 }
 
 .sortedTable .addSortedTableSettings .showEntries {
