@@ -39,25 +39,19 @@ div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam .yui-calcontainer
 }
 
 .sortedTable .addSortedTableSettings select, .sortedTable .addSortedTableSettings input {
+	border: 0px solid #8D9095;
+	background: #FFFFFF;
+	margin-top: 6px;
+	
 	color: #6e6e6e;
-	font: bold 12px Helvetica, Arial, sans-serif;
+	font: bold 13px Helvetica, Arial, sans-serif;
 	text-decoration: none;
+	padding: 0px 2px;
 	position: relative;
 	display: inline-block;
-	-webkit-transition: border-color .218s;
-	-moz-transition: border .218s;
-	-o-transition: border-color .218s;
-	transition: border-color .218s;
-	background: #F5F5F5;
-	background: -webkit-gradient(linear, 0% 40%, 0% 70%, from(#F5F5F5),
-		to(#F1F1F1) );
-	background: -moz-linear-gradient(linear, 0% 40%, 0% 70%, from(#F5F5F5),
-		to(#F1F1F1) );
-	border: solid 1px #dcdcdc;
 	border-radius: 2px;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
-	outline: none;
 	margin-top: 6px;
 }
 
@@ -77,6 +71,7 @@ div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam .yui-calcontainer
 	padding: 4px 6px;
 	position: relative;
 	display: inline-block;
+	color: #6e6e6e;
 }
 
 .sortedTable .addSortedTableSettings .showEntries {
