@@ -160,16 +160,7 @@ img {
 	position: relative;
 	display: inline-block;
 	text-shadow: 0 1px 0 #cdedf3;
-	/* -webkit-transition: border-color .218s;
-	-moz-transition: border .218s;
-	-o-transition: border-color .218s;
-	transition: border-color .218s; */
 	background: #87b2ba;
-/* 	background-image: linear-gradient(bottom, rgb(241,241,241) 40%, rgb(255,255,255) 60%);
-background-image: -o-linear-gradient(bottom, rgb(241,241,241) 40%, rgb(255,255,255) 60%);
-background-image: -moz-linear-gradient(bottom, rgb(241,241,241) 40%, rgb(255,255,255) 60%);
-background-image: -webkit-linear-gradient(bottom, rgb(241,241,241) 40%, rgb(255,255,255) 60%);
-background-image: -ms-linear-gradient(bottom, rgb(241,241,241) 40%, rgb(255,255,255) 60%); */
 
 	background-image: linear-gradient(bottom, rgb(132,175,184) 0%, rgb(189,222,229) 100%);
 	background-image: -o-linear-gradient(bottom, rgb(132,175,184) 0%, rgb(189,222,229) 100%);
@@ -206,13 +197,23 @@ background-image: -ms-linear-gradient(bottom, rgb(241,241,241) 40%, rgb(255,255,
     /* -moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.4) 
     -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.4); */
-    
-    background-image: linear-gradient(bottom, rgb(106,154,163) 0%, rgb(169,208,216) 100%);
+    background: rgb(169,208,216);
+    background-image: linear-gradient(bottom, rgb(169,208,216) 0%, rgb(169,208,216) 100%);
 	background-image: -o-linear-gradient(bottom, rgb(106,154,163) 0%, rgb(169,208,216) 100%);
 	background-image: -moz-linear-gradient(bottom, rgb(106,154,163) 0%, rgb(169,208,216) 100%);
 	background-image: -webkit-linear-gradient(bottom, rgb(106,154,163) 0%, rgb(169,208,216) 100%);
 	background-image: -ms-linear-gradient(bottom, rgb(106,154,163) 0%, rgb(169,208,216) 100%);
 }
+
+.sortedTable .pagerNavigator a:active {
+	background-image: linear-gradient(bottom, rgb(115,163,171) 0%, rgb(106,154,163) 100%);
+	background-image: -o-linear-gradient(bottom, rgb(115,163,171) 0%, rgb(106,154,163) 100%);
+	background-image: -moz-linear-gradient(bottom, rgb(115,163,171) 0%, rgb(106,154,163) 100%);
+	background-image: -webkit-linear-gradient(bottom, rgb(115,163,171) 0%, rgb(106,154,163) 100%);
+	background-image: -ms-linear-gradient(bottom, rgb(115,163,171) 0%, rgb(106,154,163) 100%);
+}
+
+
 
 .sortedTable .addSortedTableSettings {
 	color: #FFFFFF;
