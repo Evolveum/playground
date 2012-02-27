@@ -29,11 +29,9 @@ import java.util.List;
 import javax.xml.namespace.QName;
 
 import org.apache.commons.lang.Validate;
-import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.behavior.SimpleAttributeModifier;
 import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
 import org.apache.wicket.markup.ComponentTag;
@@ -57,6 +55,7 @@ import com.evolveum.midpoint.web.component.objectform.input.TextPanel;
  */
 public class ValueFormPanel extends Panel {
     private IModel<PropertyValueWrapper> model;
+    private Integer count = 0;
 
     public ValueFormPanel(String id, IModel<PropertyValueWrapper> model) {
         super(id);
@@ -67,7 +66,6 @@ public class ValueFormPanel extends Panel {
     }
 
     private void initLayout() {
-    	String idCounter;
         //feedback
         FeedbackPanel feedback = new FeedbackPanel("feedback");
         feedback.setOutputMarkupId(true);
@@ -111,6 +109,7 @@ public class ValueFormPanel extends Panel {
         InputPanel component = createTypedInputComponent(id);
 
         final FormComponent formComponent = component.getComponent();
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>> " + count);
         formComponent.add(new SimpleAttributeModifier("size", "42"));
         formComponent.add(new AjaxFormComponentUpdatingBehavior("onBlur") {
 
@@ -129,8 +128,7 @@ public class ValueFormPanel extends Panel {
             }
         });
         
-        
-
+        count++;
         return component;
     }
 
@@ -144,7 +142,7 @@ public class ValueFormPanel extends Panel {
         } else {
             panel = new TextPanel<String>(id, new PropertyModel<String>(model, "value.value"));
         }
-        //panel.add(new SimpleAttributeModifier("class", "aaaaaaaa"));
+        
         return panel;
     }
 
