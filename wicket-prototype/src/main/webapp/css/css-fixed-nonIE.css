@@ -68,26 +68,10 @@ div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam .yui-calcontainer
 
 .sortedTable table thead .asc .sortableArrowIcon {
 	background-image: url("../img/sortableArrowUp.png");
-	margin-top: -5px;
-    position: absolute;
-    right: 2px;
-    top: 50%;
-    width: 8px;
-    height: 10px;
-    float: right;
-    background-repeat: no-repeat;
 }
 
 .sortedTable table thead .desc .sortableArrowIcon {
 	background-image: url("../img/sortableArrowDown.png");
-	margin-top: -5px;
-    position: absolute;
-    right: 2px;
-    top: 50%;
-    width: 8px;
-    height: 10px;
-    float: right;
-    background-repeat: no-repeat;
 }
 
 .sortedTable .pagerNavigator .goto em span {
