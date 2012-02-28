@@ -7,7 +7,6 @@ window.onresize = function() {
 }; 
 
 $(document).ready(function() {
-	
 	setMenuPositionWhileScroll();
 	setFooterPos();
 	
@@ -108,8 +107,8 @@ $(document).ready(function() {
             e.target.value = e.target.defaultValue;
     });
     
-    $("#accordion").togglepanels();
-	
+    $(".accordion").togglepanels();
+    
 });
 
 function showLeftMenu() {
@@ -129,8 +128,10 @@ function hideFormHelpContainer(){
 }
 
 function setMenuPositionWhileScroll() {
+	setFooterPos();
 	if (($.browser.msie && $.browser.version >= 9.0) || (!$.browser.msie)) {
 		$(window).scroll(function() {
+			setFooterPos();
 			var scroll = $(window).scrollTop();
 			if (scroll >= 60) {
 				$(".top-menu").css("position", "fixed");

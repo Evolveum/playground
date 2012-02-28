@@ -330,7 +330,7 @@
 .ui-accordion .ui-accordion-header a { display: block; font-size: 1em; padding: .5em .5em .5em .7em; }
 .ui-accordion-icons .ui-accordion-header a { padding-left: 2.2em; }
 .ui-accordion .ui-accordion-header .ui-icon { position: absolute; left: .5em; top: 50%; margin-top: -8px; }
-.ui-accordion .ui-accordion-content { padding: 1em 2.2em; border-top: 0; margin-top: -2px; position: relative; top: 1px; margin-bottom: 2px; overflow: auto; display: none; zoom: 1; }
+.ui-accordion .ui-accordion-content { padding: 1em; border-top: 0; margin-top: -2px; position: relative; top: 1px; margin-bottom: 2px; overflow: auto; display: none; zoom: 1; }
 .ui-accordion .ui-accordion-content-active { display: block; }
 /*
  * jQuery UI Autocomplete 1.8.18
@@ -563,3 +563,22 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
  */
 .ui-progressbar { height:2em; text-align: left; overflow: hidden; }
 .ui-progressbar .ui-progressbar-value {margin: -1px; height:100%; }
+
+
+
+#acc {width: auto; list-style:none; color:#000000; margin:0px; padding:0px;}
+#acc h3 {width: auto; border:1px solid #AAAAAA; -moz-border-radius: 4px; -webkit-border-radius: 4px; -khtml-border-radius: 4px; border-radius: 4px; padding:6px 6px 6px; font-size:14px; font-weight: normal; color:#FFFFFF; margin:0px; margin-top:1px; cursor:pointer; background:url(images/ui-bg_highlight-soft_75_333333_1x100.png) repeat-x scroll 50% 50% #333333;}
+#acc h3:hover {background:url(images/ui-bg_highlight-soft_75_4f4f4f_1x100.png) repeat-x scroll 50% 50% #4F4F4F;}
+#acc .0 {background:#4F4F4F;}
+#acc .acc-section {overflow:hidden; background:#fff}
+#acc .acc-content {width:auto; margin-top: 1px; padding:15px; border:1px solid #AAAAAA; -moz-border-radius: 4px; -webkit-border-radius: 4px; -khtml-border-radius: 4px; border-radius: 4px; background:#fff}
+#acc .acc-selected {background:#9F9F9F;}
+#acc .acc-selected:hover {background:#9F9F9F;}
+
+#nested {width: auto; list-style:none; color:#000000; margin-bottom:15px; padding:0px;}
+#nested h3 {width: auto; border:1px solid #AAAAAA; -moz-border-radius: 4px; -webkit-border-radius: 4px; -khtml-border-radius: 4px; border-radius: 4px; padding:6px 6px 8px; font-size:14px; font-weight: normal; color:#FFFFFF; margin-top:1px; cursor:pointer; background:url(images/ui-bg_highlight-soft_75_333333_1x100.png) repeat-x scroll 50% 50% #4F4F4F;}
+#nested h3:hover {background:url(images/ui-bg_highlight-soft_75_4f4f4f_1x100.png) repeat-x scroll 50% 50% #4F4F4F;}
+#nested .acc-section {overflow:hidden; background:#fff}
+#nested .acc-content {width:auto; margin-top: 1px; padding:15px; border:1px solid #AAAAAA; -moz-border-radius: 4px; -webkit-border-radius: 4px; -khtml-border-radius: 4px; border-radius: 4px; background:#fff}
+#nested .nested-selected {background:#737373;}
+#nested .nested-selected:hover {background:#737373;}
