@@ -567,18 +567,21 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 
 
 #acc {width: auto; list-style:none; color:#000000; margin:0px; padding:0px;}
-#acc h3 {width: auto; border:1px solid #AAAAAA; -moz-border-radius: 4px; -webkit-border-radius: 4px; -khtml-border-radius: 4px; border-radius: 4px; padding:6px 6px 6px; font-size:14px; font-weight: normal; color:#FFFFFF; margin:0px; margin-top:1px; cursor:pointer; background:url(images/ui-bg_highlight-soft_75_333333_1x100.png) repeat-x scroll 50% 50% #333333;}
+#acc h3 {width: auto; border:1px solid #757575; -moz-border-radius: 4px; -webkit-border-radius: 4px; -khtml-border-radius: 4px; border-radius: 4px; padding:8px 6px 8px 10px; font-size:14px; font-weight: normal; color:#FFFFFF; margin:0px; margin-top:1px; cursor:pointer; background:url(images/ui-bg_highlight-soft_75_333333_1x100.png) repeat-x scroll 50% 50% #333333;}
 #acc h3:hover {background:url(images/ui-bg_highlight-soft_75_4f4f4f_1x100.png) repeat-x scroll 50% 50% #4F4F4F;}
 #acc .0 {background:#4F4F4F;}
 #acc .acc-section {overflow:hidden; background:#fff}
 #acc .acc-content {width:auto; margin-top: 1px; padding:15px; border:1px solid #AAAAAA; -moz-border-radius: 4px; -webkit-border-radius: 4px; -khtml-border-radius: 4px; border-radius: 4px; background:#fff}
 #acc .acc-selected {background:#9F9F9F;}
 #acc .acc-selected:hover {background:#9F9F9F;}
+#acc .acc-arrow {position:relative; background:url(images/ui-arrow.png); background-position: 0px 0px; width:16px; height:16px; margin-right:8px; float: left;}
+#acc .acc-selected .acc-arrow {background-position: 0px -16px;}
 
 #nested {width: auto; list-style:none; color:#000000; margin-bottom:15px; padding:0px;}
-#nested h3 {width: auto; border:1px solid #AAAAAA; -moz-border-radius: 4px; -webkit-border-radius: 4px; -khtml-border-radius: 4px; border-radius: 4px; padding:6px 6px 8px; font-size:14px; font-weight: normal; color:#FFFFFF; margin-top:1px; cursor:pointer; background:url(images/ui-bg_highlight-soft_75_333333_1x100.png) repeat-x scroll 50% 50% #4F4F4F;}
+#nested h3 {width: auto; border:1px solid #757575; -moz-border-radius: 4px; -webkit-border-radius: 4px; -khtml-border-radius: 4px; border-radius: 4px; padding:8px 6px 8px 10px; font-size:14px; font-weight: normal; color:#FFFFFF; margin-top:1px; cursor:pointer; background:url(images/ui-bg_highlight-soft_75_333333_1x100.png) repeat-x scroll 50% 50% #4F4F4F;}
 #nested h3:hover {background:url(images/ui-bg_highlight-soft_75_4f4f4f_1x100.png) repeat-x scroll 50% 50% #4F4F4F;}
 #nested .acc-section {overflow:hidden; background:#fff}
 #nested .acc-content {width:auto; margin-top: 1px; padding:15px; border:1px solid #AAAAAA; -moz-border-radius: 4px; -webkit-border-radius: 4px; -khtml-border-radius: 4px; border-radius: 4px; background:#fff}
 #nested .nested-selected {background:#737373;}
 #nested .nested-selected:hover {background:#737373;}
+#nested .nested-selected .acc-arrow {background-position: 0px -16px;}

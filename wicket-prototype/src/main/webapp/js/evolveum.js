@@ -18,6 +18,7 @@ $(document).ready(function() {
 	$(".left-menu .selected-left").append("<img class='leftNavArrow' src='../../img/leftNavArrow.png' alt='' />");
 	$(".left-menu .selected-left").parent().css("opacity", 1);
 	$(".left-menu .selected-left").parent().css("background", "#333333");
+	$("#acc li h3").append("<span class='acc-arrow'></span>");
 	
 	$(".sortedTable table thead").find(".sortable").find("a").find("div").append("<span class='sortableArrowIcon'></span>");
 	

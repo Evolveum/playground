@@ -49,7 +49,7 @@ import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 public class PageForm extends PageAdmin {
 
     public PageForm() {
-        add(new org.apache.wicket.devutils.debugbar.DebugBar("debug"));
+        /*add(new org.apache.wicket.devutils.debugbar.DebugBar("debug"));*/
 
         IModel<PropertyContainerWrapper> model = new LoadableModel<PropertyContainerWrapper>() {
 
