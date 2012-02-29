@@ -24,6 +24,7 @@ img {
 	margin-top: 155px;
 	min-width: 1200px;
 	height: auto;
+	margin-bottom: 70px;
 }
 
 .content {
@@ -83,14 +84,20 @@ img {
 }
 
 #footer {
-	color: #5C9FB4;
-    font-size: 12px;
-    font-weight: bold;
-  	position: absolute;
+  	position: fixed;
+  	bottom: 0px;
     text-align: center;
     width: 100%;
-    padding: 10px 0 10px 0;
+    padding: 10px 0;
     min-width: 1200px;
+    background-color: #267994;
+    box-shadow: 0 -2px 3px 0 rgba(0, 0, 0, 0.4);
+}
+
+#footer #copyright {
+	color: #FFFFFF;
+	font-size: 12px;
+    font-weight: bold;
 }
 
 .sortedTable table {

@@ -3,12 +3,10 @@ var interval = 0;
 
 window.onresize = function() {
 	//setMenuPositionWhileScroll();
-	setFooterPos();
 }; 
 
 $(document).ready(function() {
 	setMenuPositionWhileScroll();
-	setFooterPos();
 	
 	$(".left-menu ul li").css("opacity", .8);
 	$(".left-menu ul li a").css("opacity", .5);
@@ -19,6 +17,12 @@ $(document).ready(function() {
 	$(".left-menu .selected-left").parent().css("opacity", 1);
 	$(".left-menu .selected-left").parent().css("background", "#333333");
 	$("#acc li h3").append("<span class='acc-arrow'></span>");
+	
+	if ($.browser.msie && $.browser.version < 9.0){
+		$("#acc .acc-section").css("height", "1px");
+		$(".acc-content .sortedTable table").css("width", $(".acc-content").width());
+	}
+	
 	
 	$(".sortedTable table thead").find(".sortable").find("a").find("div").append("<span class='sortableArrowIcon'></span>");
 	
@@ -129,10 +133,8 @@ function hideFormHelpContainer(){
 }
 
 function setMenuPositionWhileScroll() {
-	setFooterPos();
 	if (($.browser.msie && $.browser.version >= 9.0) || (!$.browser.msie)) {
 		$(window).scroll(function() {
-			setFooterPos();
 			var scroll = $(window).scrollTop();
 			if (scroll >= 60) {
 				$(".top-menu").css("position", "fixed");
@@ -148,7 +150,6 @@ function setMenuPositionWhileScroll() {
 function setFooterPos(){
 	var winHeight = $(window).height();
 	var contentHeight = $(".content").height() + 200;
-	//alert(height);
 	if(winHeight > contentHeight){
 		$("#footer").css("position", "absolute");
 		$("#footer").css("bottom", 0);

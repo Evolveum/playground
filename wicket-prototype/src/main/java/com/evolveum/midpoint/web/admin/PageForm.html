@@ -28,7 +28,7 @@
 		
 		<ul class="acc" id="acc">
 			<li>
-				<h3>User details</h3>
+				<h3><span class="headerText">User details</span></h3>
 				<div class="acc-section">
 					<div class="acc-content">
 						<form wicket:id="form">
@@ -42,12 +42,12 @@
 			</li>
 			
 			<li>
-				<h3>Accounts (3)</h3>
+				<h3><span class="headerText">Accounts (3)</span></h3>
 				<div class="acc-section">
 					<div class="acc-content">
 						<ul class="acc" id="nested">
 							<li>
-								<h3>Account 1</h3>
+								<h3><span class="headerText">Account 1</span></h3>
 								<div class="acc-section">
 									<div class="acc-content">
 										Account 1 and his content
@@ -55,7 +55,7 @@
 								</div>
 							</li>
 							<li>
-								<h3>Account 2</h3>
+								<h3><span class="headerText">Account 2</span></h3>
 								<div class="acc-section">
 									<div class="acc-content">
 										Account 2 and his content
@@ -63,7 +63,7 @@
 								</div>
 							</li>
 							<li>
-								<h3>Account 3</h3>
+								<h3><span class="headerText">Account 3</span></h3>
 								<div class="acc-section">
 									<div class="acc-content">
 										Account 3 and his content
@@ -76,7 +76,7 @@
 			</li>
 			
 			<li>
-				<h3>Roles (0)</h3>
+				<h3><span class="headerText">Roles (0)</span></h3>
 				<div class="acc-section">
 					<div class="acc-content">
 						No roles available.
@@ -85,7 +85,7 @@
 			</li>
 			
 			<li>
-				<h3>Assignments (1)</h3>
+				<h3><span class="headerText">Assignments (1)</span></h3>
 				<div class="acc-section">
 					<div class="acc-content">
 						<div class="sortedTable">
@@ -248,13 +248,14 @@
 				</div>
 			</li>
 		</ul>
+		
     </div>
 <script type="text/javascript">
 	var parentAccordion=new TINY.accordion.slider("parentAccordion");
-	parentAccordion.init("acc","h3",0,-1,"acc-selected");
+	parentAccordion.init("acc","h3",1,-1,"acc-selected");
 	
 	var nestedAccordion=new TINY.accordion.slider("nestedAccordion");
-	nestedAccordion.init("nested","h3",0,-1,"nested-selected");
+	nestedAccordion.init("nested","h3",1,-1,"nested-selected");
 </script>
 </wicket:extend>
 </html>
