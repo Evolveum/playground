@@ -1,0 +1,78 @@
+<!--
+  ~ Copyright (c) 2012 Evolveum
+  ~
+  ~ The contents of this file are subject to the terms
+  ~ of the Common Development and Distribution License
+  ~ (the License). You may not use this file except in
+  ~ compliance with the License.
+  ~
+  ~ You can obtain a copy of the License at
+  ~ http://www.opensource.org/licenses/cddl1 or
+  ~ CDDLv1.0.txt file in the source code distribution.
+  ~ See the License for the specific language governing
+  ~ permission and limitations under the License.
+  ~
+  ~ If applicable, add the following below the CDDL Header,
+  ~ with the fields enclosed by brackets [] replaced by
+  ~ your own identifying information:
+  ~
+  ~ Portions Copyrighted 2012 [name of copyright owner]
+  -->
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:wicket="http://wicket.apache.org">
+<wicket:extend>
+	<div class="content">
+        <h1>Submit</h1>
+        <ul class="acc" id="acc">
+			<li>
+				<h3><span class="headerText">Assigned Resource Accounts</span></h3>
+				<div class="acc-section">
+					<div class="acc-content">
+						Select the accounts to update
+						<table class="submitTable">
+							<thead>
+								<tr>
+									<th colspan="2">Account ID</th><th>Resource Name</th><th>Resource Type</th><th>Exists</th><th>Disabled</th>
+								</tr>
+							</thead>
+							<tr class="odd">
+								<td class="checkBox"><input type="checkbox" checked /></td><td>uld=test093,ou=OM_assd,ou=DS_asdasd,ou=hromadna_automaticaia,dc=assd,dc=example,dc=com</td><td>LDAP demo</td><td>LDAP</td><td>Yees</td><td>Noo</td>
+							</tr>
+							<tr class="even">
+								<td class="checkBox"><input type="checkbox" /></td><td>uld=test093,ou=OM_assd,ou=DS_asdasd,ou=hromadna_automaticaia,dc=assd,dc=example,dc=com</td><td>LDAP demo</td><td>LDAP</td><td>Yees</td><td>Noo</td>
+							</tr>
+							<tr class="odd">
+								<td class="checkBox"><input type="checkbox" /></td><td>uld=test093,ou=OM_assd,ou=DS_asdasd,ou=hromadna_automaticaia,dc=assd,dc=example,dc=com</td><td>LDAP demo</td><td>LDAP</td><td>Yees</td><td>Noo</td>
+							</tr>
+							<tr class="even">
+								<td class="checkBox"><input type="checkbox" checked /></td><td>uld=test093,ou=OM_assd,ou=DS_asdasd,ou=hromadna_automaticaia,dc=assd,dc=example,dc=com</td><td>LDAP demo</td><td>LDAP</td><td>Yees</td><td>Noo</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</li>
+			<li>
+				<h3><span class="headerText">Changes</span></h3>
+				<div class="acc-section">
+					<div class="acc-content">
+						
+					</div>
+				</div>
+			</li>
+		</ul>
+        
+		<div class="operatingFormButtons">
+				<a href="#" class="button">Save</a>
+				<a href="#" class="button">Return to Edit</a>
+				<a href="#" class="button">Cancel</a>
+		</div>
+    </div>
+    <script type="text/javascript">
+		var parentAccordion=new TINY.accordion.slider("parentAccordion");
+		parentAccordion.init("acc","h3",0,-1,"acc-selected");
+		parentAccordion.pr(1);
+	</script>
+</wicket:extend>
+</html>

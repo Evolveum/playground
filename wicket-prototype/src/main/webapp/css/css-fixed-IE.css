@@ -92,3 +92,7 @@ div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam  .yui-calcontaine
 .sortedTable .pagerNavigator .goto {
     margin-right: 2px;
 }
+
+div.top-menu {
+    width: auto;
+}

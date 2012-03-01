@@ -20,7 +20,6 @@
  */
 
 div.top-menu {
-    width: 100%;
     font: Helvetica, Arial, sans-serif;
     margin: 0;
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.6);
@@ -37,6 +36,7 @@ div.top-container {
     /* background: url("./back.png") repeat-x scroll left top transparent; */
     width: 100%;
     z-index: 100000;
+    min-width: 1200px;
 }
 
 div.top-container ul {
@@ -112,6 +112,7 @@ div.bottom-container {
     display: inline-block;
     width: 100%;
     z-index: 100000;
+    min-width: 1200px;
 }
 
 div.bottom-container ul {

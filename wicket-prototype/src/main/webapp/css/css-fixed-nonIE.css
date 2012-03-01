@@ -85,3 +85,7 @@ div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam .yui-calcontainer
 	position: absolute;
     right: 0;
 }
+
+div.top-menu {
+    width: 100%;
+}
