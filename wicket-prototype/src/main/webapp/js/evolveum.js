@@ -23,7 +23,7 @@ $(document).ready(function() {
 		$(".acc-content .sortedTable table").css("width", $(".acc-content").width());
 	}
 	
-	$("tbody input[type='checkbox']:checked").parent().parent().css("background","#7effa8");
+	$("tbody input[type='checkbox']:checked").parent().parent().css("background","#cbf3cb");
 	
 	$(".sortedTable table thead").find(".sortable").find("a").find("div").append("<span class='sortableArrowIcon'></span>");
 	
@@ -104,14 +104,14 @@ $(document).ready(function() {
 	
 	$(".submitTable tbody tr").mouseenter(function(){
 		if($(this).find("input[type='checkbox']").is(":checked")){
-			$(this).css("background", "#58f08a");
+			$(this).css("background", "#b8ebb8");
 		} else {
 			$(this).css("background", "#ceeef5");
 		}
 		
 	}).mouseleave(function(){
 		if($(this).find("input[type='checkbox']").is(":checked")){
-			$(this).css("background", "#7effa8");
+			$(this).css("background", "#cbf3cb");
 		} else {
 			if($(this).attr("class") == "odd"){
 				$(this).css("background", "#F0F0F6");
