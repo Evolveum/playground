@@ -32,7 +32,7 @@ TINY.accordion=function(){
 	};
 	function su(c){c.t=setInterval(function(){sl(c);},20);}
 	function sl(c){
-		var h=c.offsetHeight, d=c.d==1?c.m-h:h; c.style.height=h+(Math.ceil(d/5)*c.d)+'px';
+		var h=c.offsetHeight, d=c.d==1?c.m-h:h; c.style.height=h+(Math.ceil(d/4)*c.d)+'px';
 		c.style.opacity=h/c.m; c.style.filter='alpha(opacity='+h*100/c.m+')';
 		if((c.d==1&&h>=c.m)||(c.d!=1&&h==1)){if(c.d==1){c.style.height='auto';} clearInterval(c.t);}
 	};
