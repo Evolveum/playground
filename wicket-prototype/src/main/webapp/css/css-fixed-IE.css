@@ -52,7 +52,6 @@ div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam  .yui-calcontaine
 
 
 .sortedTable table thead .sortable .sortableArrowIcon {
-    background-image: url("../img/sortableArrowUpDown.png");
 	background-position: center;
     position: absolute;
     right: 10px;

@@ -23,15 +23,17 @@ $(document).ready(function() {
 		$(".acc-content .sortedTable table").css("width", $(".acc-content").width());
 	}
 	
-	$("tbody input[type='checkbox']:checked").parent().parent().css("background","#cbf3cb");
+	$("tbody input[type='checkbox']:checked").parent().parent().find("td").css("background","#d8f4d8");
+	$("tbody input[type='checkbox']:checked").parent().parent().find("td").css("border-color","#FFFFFF");
 	
 	$("thead input[type='checkbox']").click(function(){
 		if($(this).is(":checked")){
 			$(this).parent().parent().parent().parent().find("tbody").find("tr").find("input[type='checkbox']").attr("checked", true);
-			$(this).parent().parent().parent().parent().find("tbody").find("tr").css("background","#CBF3CB");
+			$(this).parent().parent().parent().parent().find("tbody").find("td").css("background","#d8f4d8");
+			$(this).parent().parent().parent().parent().find("tbody").find("td").css("border-color","#FFFFFF");
 		} else {
-			$(this).parent().parent().parent().parent().find("tbody").find(".odd").css("background","#F0F0F6");
-			$(this).parent().parent().parent().parent().find("tbody").find(".even").css("background","#FFFFFF");
+			$(this).parent().parent().parent().parent().find("tbody").find("td").css("background","#FFFFFF");
+			$(this).parent().parent().parent().parent().find("tbody").find("td").css("border-color","#F2F2F2");
 			$(this).parent().parent().parent().parent().find("tbody").find("tr").find("input[type='checkbox']").attr("checked", false);
 		}
 	});
@@ -105,37 +107,34 @@ $(document).ready(function() {
 	
 	$(".sortedTable table tbody tr").mouseenter(function(){
 		if($(this).find("input[type='checkbox']").is(":checked")){
-			$(this).css("background", "#b8ebb8");
+			$(this).find("td").css("background", "#c6e9c6");
 		} else {
-			$(this).css("background", "#ceeef5");
+			$(this).find("td").css("background", "#f2f2f2");
 		}
 	}).mouseleave(function(){
 		if($(this).find("input[type='checkbox']").is(":checked")){
-			$(this).css("background", "#cbf3cb");
+			$(this).find("td").css("background", "#d8f4d8");
+			$(this).find("td").css("border-color","#FFFFFF");
 		} else {
-			if($(this).attr("class") == "odd"){
-				$(this).css("background", "#F0F0F6");
-			} else {
-				$(this).css("background", "#FFFFFF");
-			}
+			$(this).find("td").css("background", "#FFFFFF");
+			$(this).find("td").css("border-color","#F2F2F2");
 		}
 	});
 	
 	$(".submitTable tbody tr").mouseenter(function(){
 		if($(this).find("input[type='checkbox']").is(":checked")){
-			$(this).css("background", "#b8ebb8");
+			$(this).find("td").css("background", "#c6e9c6");
 		} else {
-			$(this).css("background", "#ceeef5");
+			$(this).find("td").css("background", "#f2f2f2");
 		}
 	}).mouseleave(function(){
 		if($(this).find("input[type='checkbox']").is(":checked")){
-			$(this).css("background", "#cbf3cb");
+			$(this).find("td").css("background", "#d8f4d8");
+			$(this).find("td").css("border-color","#FFFFFF");
 		} else {
-			if($(this).attr("class") == "odd"){
-				$(this).css("background", "#F0F0F6");
-			} else {
-				$(this).css("background", "#FFFFFF");
-			}
+			$(this).find("td").css("background", "#FFFFFF");
+			$(this).find("td").css("border-color","#F2F2F2");
+			
 		}
 	});
 	
