@@ -352,6 +352,7 @@ img {
 .submitTable thead th{
 	text-align: left;
 	padding: 5px;
+	text-transform: capitalize;
 }
 
 .submitTable tbody td {

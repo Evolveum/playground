@@ -25,12 +25,13 @@
 <wicket:extend>
 	<div class="content">
         <h1>Submit</h1>
+        Select the Accounts to be update, then click <b>Save</b>.<br /><br />
         <ul class="acc" id="acc">
 			<li>
 				<h3><span class="headerText">Assigned Resource Accounts</span></h3>
 				<div class="acc-section">
 					<div class="acc-content">
-						Select the accounts to update
+						Select a resource accounts to be updated.
 						<table class="submitTable">
 							<thead>
 								<tr>
@@ -57,7 +58,26 @@
 				<h3><span class="headerText">Changes</span></h3>
 				<div class="acc-section">
 					<div class="acc-content">
-						
+						The changes that occurred.
+						<table class="submitTable">
+							<thead>
+								<tr>
+									<th>Resource</th><th>Account ID</th><th>Attribute</th><th>Old value</th><th>New value</th>
+								</tr>
+							</thead>
+							<tr class="odd">
+								<td>LDAP demo</td><td>uld=test093,ou=OM_assd,ou=DS_asdasd,ou=hromadna_automaticaia,dc=assd,dc=example,dc=com</td><td>firstname</td><td>Janko</td><td>Janci</td>
+							</tr>
+							<tr class="even">
+								<td>LDAP demo</td><td>uld=test093,ou=OM_assd,ou=DS_asdasd,ou=hromadna_automaticaia,dc=assd,dc=example,dc=com</td><td>lastname</td><td>Hrasko</td><td>Sosovicka</td>
+							</tr>
+							<tr class="odd">
+								<td>LDAP demo</td><td>uld=test093,ou=OM_assd,ou=DS_asdasd,ou=hromadna_automaticaia,dc=assd,dc=example,dc=com</td><td>address</td><td>Zimna 5</td><td>Letna 32/A</td>
+							</tr>
+							<tr class="even">
+								<td>LDAP demo</td><td>uld=test093,ou=OM_assd,ou=DS_asdasd,ou=hromadna_automaticaia,dc=assd,dc=example,dc=com</td><td>phone</td><td>+421303876245</td><td>+421876038748</td>
+							</tr>
+						</table>
 					</div>
 				</div>
 			</li>

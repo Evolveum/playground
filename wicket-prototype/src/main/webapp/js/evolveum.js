@@ -25,6 +25,17 @@ $(document).ready(function() {
 	
 	$("tbody input[type='checkbox']:checked").parent().parent().css("background","#cbf3cb");
 	
+	$("thead input[type='checkbox']").click(function(){
+		if($(this).is(":checked")){
+			$(this).parent().parent().parent().parent().find("tbody").find("tr").find("input[type='checkbox']").attr("checked", true);
+			$(this).parent().parent().parent().parent().find("tbody").find("tr").css("background","#CBF3CB");
+		} else {
+			$(this).parent().parent().parent().parent().find("tbody").find(".odd").css("background","#F0F0F6");
+			$(this).parent().parent().parent().parent().find("tbody").find(".even").css("background","#FFFFFF");
+			$(this).parent().parent().parent().parent().find("tbody").find("tr").find("input[type='checkbox']").attr("checked", false);
+		}
+	});
+	
 	$(".sortedTable table thead").find(".sortable").find("a").find("div").append("<span class='sortableArrowIcon'></span>");
 	
 	$(".left-menu ul").mouseenter(function(){
@@ -93,22 +104,11 @@ $(document).ready(function() {
 	});
 	
 	$(".sortedTable table tbody tr").mouseenter(function(){
-		$(this).css("background", "#ceeef5");
-	}).mouseleave(function(){
-		if($(this).attr("class") == "odd"){
-			$(this).css("background", "#F0F0F6");
-		} else {
-			$(this).css("background", "#FFFFFF");
-		}
-	});
-	
-	$(".submitTable tbody tr").mouseenter(function(){
 		if($(this).find("input[type='checkbox']").is(":checked")){
 			$(this).css("background", "#b8ebb8");
 		} else {
 			$(this).css("background", "#ceeef5");
 		}
-		
 	}).mouseleave(function(){
 		if($(this).find("input[type='checkbox']").is(":checked")){
 			$(this).css("background", "#cbf3cb");
@@ -119,7 +119,24 @@ $(document).ready(function() {
 				$(this).css("background", "#FFFFFF");
 			}
 		}
-		
+	});
+	
+	$(".submitTable tbody tr").mouseenter(function(){
+		if($(this).find("input[type='checkbox']").is(":checked")){
+			$(this).css("background", "#b8ebb8");
+		} else {
+			$(this).css("background", "#ceeef5");
+		}
+	}).mouseleave(function(){
+		if($(this).find("input[type='checkbox']").is(":checked")){
+			$(this).css("background", "#cbf3cb");
+		} else {
+			if($(this).attr("class") == "odd"){
+				$(this).css("background", "#F0F0F6");
+			} else {
+				$(this).css("background", "#FFFFFF");
+			}
+		}
 	});
 	
 	var el = $('.searchPanel');
