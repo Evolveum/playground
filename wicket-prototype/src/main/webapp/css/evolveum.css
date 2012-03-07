@@ -1,10 +1,11 @@
 a {
 	outline: none;
-	color: #551A8B;
+	color: #52AACC;
+	text-decoration: none;
 }
 
 a:hover {
-	text-decoration: none;
+	text-decoration: underline;
 }
 
 body {
@@ -110,23 +111,16 @@ img {
 }
 
 .sortedTable {
-	padding: 15px 0px;
-    border: 1px solid #BBBBBB;
-    -moz-border-radius: 6px; 
-    -webkit-border-radius: 6px; 
-    -khtml-border-radius: 6px; 
-    border-radius: 6px;
-}
-
-.sortedTable .sortingResult {
-	padding: 15px;
+	
 }
 
 .sortedTable table {
     width: 100%;
     color: #333333;
     border-collapse: collapse;
-    margin-top: 15px;
+    margin: 20px 0;
+    height: auto;
+    
 }
 
 .sortedTable table thead {
@@ -210,61 +204,48 @@ img {
 .sortedTable .pagerNavigator {
 	clear: both;
     color: #6E6E6E;
-    font: bold 12px Helvetica,Arial,sans-serif;
-    margin-top: 20px;
-    text-align: center;
     text-decoration: none;
     width: 100%;
+    height: 16px;
+    padding: 10px 0px;
+    background: #F2F2F2;
 }
 
-.sortedTable .pagerNavigator a {
-	color: #5c8a92;
-	font: bold 12px Helvetica, Arial, sans-serif;
-	text-decoration: none;
-	padding: 4px 15px;
-	position: relative;
-	display: inline-block;
-	text-shadow: 0 1px 0 #cdedf3;
-	background: #87b2ba;
-
-	background-image: linear-gradient(bottom, rgb(132,175,184) 0%, rgb(189,222,229) 100%);
-	background-image: -o-linear-gradient(bottom, rgb(132,175,184) 0%, rgb(189,222,229) 100%);
-	background-image: -moz-linear-gradient(bottom, rgb(132,175,184) 0%, rgb(189,222,229) 100%);
-	background-image: -webkit-linear-gradient(bottom, rgb(132,175,184) 0%, rgb(189,222,229) 100%);
-	background-image: -ms-linear-gradient(bottom, rgb(132,175,184) 0%, rgb(189,222,229) 100%);
-	
-	-webkit-box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 1) inset;
-	-moz-box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 1) inset;
-	box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 1) inset;
-	
-	border: 1px solid #b6d4db;
-	border-radius: 4px;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-}
-
-.sortedTable .pagerNavigator .goto a {
-	padding: 4px 6px;
-}
-
-.sortedTable .pagerNavigator .prev a {
+.sortedTable .pagerNavigator .pager {
+	float: right;
 	margin-right: 10px;
 }
 
-.sortedTable .pagerNavigator .next a {
+.sortedTable .pagerNavigator .sortingResult {
+	float: left;
 	margin-left: 10px;
+}
+
+.sortedTable .pagerNavigator a {
+	position: relative;
+	display: inline-block;
+}
+
+.sortedTable .pagerNavigator .goto a{
+	padding: 0px 2px;
+}
+
+.sortedTable .pagerNavigator .prev {
+	height:16px;
+	position: relative;
+}
+
+.sortedTable .pagerNavigator .prev a {
+	margin-right: 5px;
+}
+
+.sortedTable .pagerNavigator .next a {
+	margin-left: 5px;
 }
 
 
 .sortedTable .pagerNavigator a:hover {
-    color: #29555d;
-    border-color: #87b2ba;
-    background: rgb(169,208,216);
-    background-image: linear-gradient(bottom, rgb(169,208,216) 0%, rgb(169,208,216) 100%);
-	background-image: -o-linear-gradient(bottom, rgb(106,154,163) 0%, rgb(169,208,216) 100%);
-	background-image: -moz-linear-gradient(bottom, rgb(106,154,163) 0%, rgb(169,208,216) 100%);
-	background-image: -webkit-linear-gradient(bottom, rgb(106,154,163) 0%, rgb(169,208,216) 100%);
-	background-image: -ms-linear-gradient(bottom, rgb(106,154,163) 0%, rgb(169,208,216) 100%);
+    
 }
 
 .sortedTable .pagerNavigator a:active {
@@ -280,6 +261,7 @@ img {
 	display: block;
 	height: 30px;
     width: 100%;
+    display: none;
 }
 
 .sortedTable .addSortedTableSettings ul {

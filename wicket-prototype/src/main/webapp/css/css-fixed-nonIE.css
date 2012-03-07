@@ -74,10 +74,10 @@ div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam .yui-calcontainer
 }
 
 .sortedTable .pagerNavigator .goto em span {
-	padding: 4px 6px;
+	padding: 0px 2px;
 	position: relative;
 	display: inline-block;
-	color: #5c8a92;
+	color: #333333;
 }
 
 .sortedTable .addSortedTableSettings .showEntries {
