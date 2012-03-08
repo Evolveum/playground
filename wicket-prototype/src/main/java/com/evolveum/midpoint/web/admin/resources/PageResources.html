@@ -25,8 +25,76 @@
 <wicket:extend>
 	<div class="content">
         <h1>Resources</h1>
+        <ul id="messages">
+       		<li>
+       			<div class="messages-error">
+       				<div id="msg0_top" class="messages-topError">Couldn't update object 'SystemConfiguration'.
+       					<span class="messages-topError-arrow  arrow-down"></span>
+       				</div>
+       				<div id="msg0" class="messages-error-content">
+       					<ul class="messages-details">
+       						<li class="messages-details-section selected-section">
+       							<span id="errorNumber0" class="messages-details-bold">operation.com.evolveum.midpoint.web.repo.RepositoryManager.saveObject: Couldn't update object 'SystemConfiguration'.
+       								<span class="messages-details-bold-arrow arrow-right"></span>
+       							</span>
+       							<div id="errorNumber0_content" class="messages-details-content">
+       								<ul>
+										<li>
+											<span class="message-info">Couldn't update object 'SystemConfiguration'.</span>
+										</li>
+										<li>
+											<span class="message-info"><u>Cause:</u> Exception message is null.<span id="errorStack0" class="errorStack">[ SHOW ERROR STACK ]</span></span>
+											<div id="errorStack0_block" class="errorStack-block">
+												 at com.evolveum.midpoint.schema.processor.Schema.parseObject(Schema.java:522)<br />
+											     at com.evolveum.midpoint.schema.processor.DiffUtil.diff(DiffUtil.java:77)<br />
+											     at com.evolveum.midpoint.web.repo.RepositoryManagerImpl.saveObject(RepositoryManagerImpl.java:179)<br />
+											     at com.evolveum.midpoint.web.controller.config.DebugViewController.savePerformed(DebugViewController.java:226)<br />
+											     at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br />
+											     at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)<br />
+											     at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)<br />
+											     at java.lang.reflect.Method.invoke(Method.java:597)<br />
+											     at com.sun.el.parser.AstValue.invoke(AstValue.java:234)<br />
+											     at com.sun.el.MethodExpressionImpl.invoke(MethodExpressionImpl.java:297)<br />
+											     at com.sun.faces.facelets.el.TagMethodExpression.invoke(TagMethodExpression.java:105)<br />
+											     at javax.faces.component.MethodBindingMethodExpressionAdapter.invoke(MethodBindingMethodExpressionAdapter.java:88)<br />
+											     at com.sun.faces.application.ActionListenerImpl.processAction(ActionListenerImpl.java:102)<br />
+											     at javax.faces.component.UICommand.broadcast(UICommand.java:315)<br />
+											     at javax.faces.component.UIViewRoot.broadcastEvents(UIViewRoot.java:794)<br />
+											     at javax.faces.component.UIViewRoot.processApplication(UIViewRoot.java:1259)<br />
+											     at com.sun.faces.lifecycle.InvokeApplicationPhase.execute(InvokeApplicationPhase.java:81)<br />
+											     at com.sun.faces.lifecycle.Phase.doPhase(Phase.java:101)<br />
+											     at com.sun.faces.lifecycle.LifecycleImpl.execute(LifecycleImpl.java:118)<br />
+											     at javax.faces.webapp.FacesServlet.service(FacesServlet.java:409)<br />
+											     at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)<br />
+											     at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)<br />
+											     at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:369)<br />
+											     at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:109)<br />
+											     at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:83)<br />
+											     at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)<br />
+											     at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:97)<br />
+											     at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)<br />
+											     at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:60)<br />
+											     at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)<br />
+											     at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:100)<br />
+											     at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)<br />
+											     at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:78)<br />
+											</div>
+										</li>
+									</ul>
+       							</div>
+       						</li>
+       						<li class="messages-details-section">
+       							<span id="errorNumber1" class="messages-details-bold">operation.com.evolveum.midpoint.web.repo.RepositoryManager.saveObject: Couldn't update object 'SystemConfiguration'.
+       								<span class="messages-details-bold-arrow arrow-right"></span>
+       							</span>
+       						</li>
+       					</ul>
+       				</div>
+       			</div>
+       		</li>
+       	</ul>
+        
         <div class="sortedTable">
-        	
         	<div class="pagerNavigator">
         		<span class="sortingResult">Displaying 1 to 50 of 210 matching result.</span>
         		<div class="pager">
