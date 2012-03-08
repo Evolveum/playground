@@ -402,13 +402,17 @@ img {
 
 #messages {
 	margin: 0px;
-	margin-bottom: 15px;
+	margin-bottom: 20px;
 	padding: 0px;
 }
 
 #messages ul, #messages li{
 	list-style: none outside none;
 	margin: 0px;
+}
+
+#messages li {
+	padding-bottom: 5px;
 }
 
 #messages ul li{
@@ -428,7 +432,7 @@ img {
 }
 
 #messages .messages-error .messages-error-content {
-	display: block;
+	display: none;
 }
 
 #messages .messages-error .messages-topError {
@@ -460,8 +464,8 @@ img {
 	background-position: 0px 0px;
 }
 
-#messages .messages-error .messages-details-section {
-	padding: 5px 0px;
+#messages .messages-error .messages-error-details-section {
+	padding: 2px 0px;
 	padding-left: 25px;
 	font-size: 12px;
 	background-image: url(../img/messages-error-icon.png);
@@ -484,7 +488,7 @@ img {
 	cursor: pointer;
 }
 
-#messages .messages-error .messages-details-bold .messages-details-bold-arrow {
+#messages .messages-error .messages-error-details-section .messages-details-bold .messages-details-bold-arrow {
 	background-image: url(../img/messages-error-arrow.png);
 	background-repeat: no-repeat;
 	display: inline-block;
@@ -494,16 +498,16 @@ img {
     margin: 0px 5px;
 }
 
-#messages .messages-error .messages-details-bold .arrow-right {
+#messages .messages-error .messages-error-details-section .messages-details-bold .arrow-right {
 	background-position: 0px -16px;
 }
 
-#messages .messages-error .messages-details-bold .arrow-down {
+#messages .messages-error .messages-error-details-section .messages-details-bold .arrow-down {
 	background-position: 0px -32px;
 }
 
 #messages .messages-error .messages-details-content {
-	display: block;
+	display: none;
 }
 
 #messages .messages-error .message-info .errorStack {
@@ -518,7 +522,108 @@ img {
 	cursor: pointer;
 }
 
-#messages .messages-error .errorStack-block {
+#messages .messages-error .errorStack-content {
 	margin: 5px 0 5px 15px;
 	overflow: auto;
+	display: none;
+}
+
+#messages .messages-info {
+	color: #4F8A10;
+	border: 1px solid #4F8A10;
+	padding: 0px;
+	-moz-border-radius: 4px; 
+	-webkit-border-radius: 4px; 
+	-khtml-border-radius: 4px; 
+	border-radius: 4px;
+	background: #DFF2BF;
+	display: block;
+}
+
+#messages .messages-info .messages-topInfo {
+	padding: 10px 5px 10px 40px;
+	font-weight: bold;
+	background-image: url(../img/messages-error-icon.png);
+	background-repeat: no-repeat;
+	background-position: 12px center;
+}
+
+#messages .messages-error .messages-info-details-section {
+	padding: 2px 0px;
+	padding-left: 25px;
+	font-size: 12px;
+	background-image: url(../img/messages-info-icon.png);
+	background-repeat: no-repeat;
+	background-position: 9px center;
+	margin-bottom: 5px;
+	margin-right: 25px;
+	color: #4F8A10;
+}
+
+#messages .messages-error .messages-info-details-section .messages-details-bold .messages-details-bold-arrow {
+	background-image: url(../img/messages-info-arrow.png);
+	background-repeat: no-repeat;
+	display: inline-block;
+    height: 16px;
+    width: 16px;
+    float: left;
+    margin: 0px 5px;
+}
+
+#messages .messages-error .messages-info-details-section .messages-details-bold .arrow-right {
+	background-position: 0px -16px;
+}
+
+#messages .messages-error .messages-info-details-section .messages-details-bold .arrow-down {
+	background-position: 0px -32px;
+}
+
+#messages .messages-succ {
+	color: #4F8A10;
+	border: 1px solid #4F8A10;
+	padding: 0px;
+	-moz-border-radius: 4px; 
+	-webkit-border-radius: 4px; 
+	-khtml-border-radius: 4px; 
+	border-radius: 4px;
+	background: #DFF2BF;
+	display: block;
+}
+
+#messages .messages-succ .messages-topSucc {
+	padding: 10px 5px 10px 40px;
+	font-weight: bold;
+	background-image: url(../img/messages-succ-icon.png);
+	background-repeat: no-repeat;
+	background-position: 12px center;
+}
+
+#messages .messages-error .messages-succ-details-section {
+	padding: 2px 0px;
+	padding-left: 25px;
+	font-size: 12px;
+	background-image: url(../img/messages-succ-icon.png);
+	background-repeat: no-repeat;
+	background-position: 9px center;
+	margin-bottom: 5px;
+	margin-right: 25px;
+	color: #4F8A10;
+}
+
+#messages .messages-error .messages-succ-details-section .messages-details-bold .messages-details-bold-arrow {
+	background-image: url(../img/messages-succ-arrow.png);
+	background-repeat: no-repeat;
+	display: inline-block;
+    height: 16px;
+    width: 16px;
+    float: left;
+    margin: 0px 5px;
+}
+
+#messages .messages-error .messages-succ-details-section .messages-details-bold .arrow-right {
+	background-position: 0px -16px;
+}
+
+#messages .messages-error .messages-succ-details-section .messages-details-bold .arrow-down {
+	background-position: 0px -32px;
 }
