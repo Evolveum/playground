@@ -406,17 +406,25 @@ img {
 	padding: 0px;
 }
 
-#messages ul, #messages li{
+#messages ul {
+	list-style: none outside none;
+	margin: 0px;
+	padding: 0px;
+}
+
+
+#messages li {
+	padding-bottom: 5px;
 	list-style: none outside none;
 	margin: 0px;
 }
 
-#messages li {
-	padding-bottom: 5px;
-}
-
 #messages ul li{
 	padding: 1px 0px;
+}
+
+#messages .messages-details {
+	margin-top: 5px;
 }
 
 #messages .messages-error {
@@ -433,7 +441,8 @@ img {
 
 #messages .messages-error .messages-error-content {
 	display: none;
-	margin-top: 5px;
+	padding-left: 20px;
+	padding-bottom: 5px;
 }
 
 #messages .messages-error .messages-topError {
@@ -476,9 +485,9 @@ img {
 	font-size: 12px;
 	background-image: url(../img/messages-error-icon.png);
 	background-repeat: no-repeat;
-	background-position: 9px center;
-	margin-bottom: 5px;
-	margin-right: 25px;
+	background-position: 9px 2px;
+	color: #CC0A0C;
+	margin-top: 5px;
 }
 
 #messages .messages-error .selected-section {
@@ -516,6 +525,7 @@ img {
 
 #messages .messages-error .messages-details-content {
 	display: none;
+	padding-left: 30px;
 }
 
 #messages .messages-error .message-info .errorStack {
@@ -537,21 +547,21 @@ img {
 }
 
 #messages .messages-info {
-	color: #4F8A10;
-	border: 1px solid #4F8A10;
+	color: #4b49b2;
+	border: 1px solid #f3f149;
 	padding: 0px;
 	-moz-border-radius: 4px; 
 	-webkit-border-radius: 4px; 
 	-khtml-border-radius: 4px; 
 	border-radius: 4px;
-	background: #DFF2BF;
+	background: #fffbe1;
 	display: block;
 }
 
 #messages .messages-info .messages-topInfo {
 	padding: 10px 5px 10px 40px;
 	font-weight: bold;
-	background-image: url(../img/messages-error-icon.png);
+	background-image: url(../img/messages-info-icon.png);
 	background-repeat: no-repeat;
 	background-position: 12px center;
 }
@@ -565,7 +575,7 @@ img {
 	background-position: 9px center;
 	margin-bottom: 5px;
 	margin-right: 25px;
-	color: #4F8A10;
+	color: #4b49b2;
 }
 
 #messages .messages-error .messages-info-details-section .messages-details-bold .messages-details-bold-arrow {
@@ -612,10 +622,9 @@ img {
 	font-size: 12px;
 	background-image: url(../img/messages-succ-icon.png);
 	background-repeat: no-repeat;
-	background-position: 9px center;
-	margin-bottom: 5px;
-	margin-right: 25px;
+	background-position: 9px 2px;
 	color: #4F8A10;
+	margin-top: 5px;
 }
 
 #messages .messages-error .messages-succ-details-section .messages-details-bold .messages-details-bold-arrow {
