@@ -1,0 +1,194 @@
+<!--
+  ~ Copyright (c) 2012 Evolveum
+  ~
+  ~ The contents of this file are subject to the terms
+  ~ of the Common Development and Distribution License
+  ~ (the License). You may not use this file except in
+  ~ compliance with the License.
+  ~
+  ~ You can obtain a copy of the License at
+  ~ http://www.opensource.org/licenses/cddl1 or
+  ~ CDDLv1.0.txt file in the source code distribution.
+  ~ See the License for the specific language governing
+  ~ permission and limitations under the License.
+  ~
+  ~ If applicable, add the following below the CDDL Header,
+  ~ with the fields enclosed by brackets [] replaced by
+  ~ your own identifying information:
+  ~
+  ~ Portions Copyrighted 2012 [name of copyright owner]
+  -->
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:wicket="http://wicket.apache.org">
+<wicket:extend>
+	<div class="content">
+        <h1>Server task list</h1>
+		<div class="sortedTable">
+        	<div class="pagerNavigator">
+        		<span class="sortingResult">Displaying 1 to 50 of 210 matching result.</span>
+        		<div class="pager">
+        			<span class="first" >
+						<a href="#" title="First">&lt;&lt;</a>
+					</span>
+					<span class="prev" >
+						<a href="#"  title="Previous">&lt;</a>
+					</span>
+					<span class="goto">
+						<a href="#">
+							<span>1</span>
+						</a>
+					</span>
+					<span class="goto">
+						<a href="#">
+							<span>2</span>
+						</a>
+					</span>
+					<span class="goto">
+						<em>
+							<span>3</span>
+						</em>
+					</span>
+					<span class="goto">
+						<a href="#">
+							<span>4</span>
+						</a>
+					</span>
+					<span class="goto">
+						<a href="#">
+							<span>5</span>
+						</a>
+					</span>
+					<span class="goto">
+						<a href="#">
+							<span>6</span>
+						</a>
+					</span>
+					<span class="goto">
+						<a href="#">
+							<span>7</span>
+						</a>
+					</span>
+					<span class="goto">
+						<a href="#">
+							<span>8</span>
+						</a>
+					</span>
+					<span class="goto">
+						<a href="#">
+							<span>9</span>
+						</a>
+					</span>
+					<span class="next">
+						<a href="#"  title="Next">&gt;</a>
+					</span>
+					<span class="last">
+						<a href="#"  title="Last">&gt;&gt;</a>
+					</span>
+        		</div>
+			</div>
+        	
+			<table cellspacing="1" border="0">
+				<thead>
+					<tr>
+						<th width="20px"><input type="checkbox" title="Select all" /></th><th class="sortable asc"><a href="#"><div>Name</div></a></th><th class="sortable"><a href="#"><div>Handler</div></a></th><th class="sortable"><a href="#"><div>Object ref</div></a></th><th class="sortable"><a href="#"><div>Execution</div></a></th><th class="sortable"><a href="#"><div>Exclusivity</div></a></th><th class="sortable"><a href="#"><div>Thread alive</div></a></th><th>Current run time</th><th>	Scheduled to run again</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr>
+						<td><input type="checkbox"/></td><td><a wicket:id="task">Synchronization: Embedded Test OpenDJ</a></td><td>http://midpoint.evolveum.com/model/sync/handler-1</td><td>ef2bc95b-76e0-48e2-86d6-3d4f02d3e1a2</td><td>RUNNING</td><td>CLAIMED</td><td>true</td><td>-</td><td>now</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox"/></td><td><a href="PageTaskDetails.html">Synchronization: Embedded Test OpenDJ</a></td><td>http://midpoint.evolveum.com/model/sync/handler-1</td><td>ef2bc95b-76e0-48e2-86d6-3d4f02d3e1a2</td><td>RUNNING</td><td>CLAIMED</td><td>true</td><td>-</td><td>now</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox"/></td><td><a href="#">Synchronization: Embedded Test OpenDJ</a></td><td>http://midpoint.evolveum.com/model/sync/handler-1</td><td>ef2bc95b-76e0-48e2-86d6-3d4f02d3e1a2</td><td>RUNNING</td><td>CLAIMED</td><td>true</td><td>-</td><td>now</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox"/></td><td><a href="#">Synchronization: Embedded Test OpenDJ</a></td><td>http://midpoint.evolveum.com/model/sync/handler-1</td><td>ef2bc95b-76e0-48e2-86d6-3d4f02d3e1a2</td><td>RUNNING</td><td>CLAIMED</td><td>true</td><td>-</td><td>now</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox"/></td><td><a href="#">Synchronization: Embedded Test OpenDJ</a></td><td>http://midpoint.evolveum.com/model/sync/handler-1</td><td>ef2bc95b-76e0-48e2-86d6-3d4f02d3e1a2</td><td>RUNNING</td><td>CLAIMED</td><td>true</td><td>-</td><td>now</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox"/></td><td><a href="#">Synchronization: Embedded Test OpenDJ</a></td><td>http://midpoint.evolveum.com/model/sync/handler-1</td><td>ef2bc95b-76e0-48e2-86d6-3d4f02d3e1a2</td><td>RUNNING</td><td>CLAIMED</td><td>true</td><td>-</td><td>now</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox"/></td><td><a href="#">Synchronization: Embedded Test OpenDJ</a></td><td>http://midpoint.evolveum.com/model/sync/handler-1</td><td>ef2bc95b-76e0-48e2-86d6-3d4f02d3e1a2</td><td>RUNNING</td><td>CLAIMED</td><td>true</td><td>-</td><td>now</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="pagerNavigator">
+        		<span class="sortingResult">Displaying 1 to 50 of 210 matching result.</span>
+        		<div class="pager">
+        			<span class="first" >
+						<a href="#" title="First">&lt;&lt;</a>
+					</span>
+					<span class="prev" >
+						<a href="#"  title="Previous">&lt;</a>
+					</span>
+					<span class="goto">
+						<a href="#">
+							<span>1</span>
+						</a>
+					</span>
+					<span class="goto">
+						<a href="#">
+							<span>2</span>
+						</a>
+					</span>
+					<span class="goto">
+						<em>
+							<span>3</span>
+						</em>
+					</span>
+					<span class="goto">
+						<a href="#">
+							<span>4</span>
+						</a>
+					</span>
+					<span class="goto">
+						<a href="#">
+							<span>5</span>
+						</a>
+					</span>
+					<span class="goto">
+						<a href="#">
+							<span>6</span>
+						</a>
+					</span>
+					<span class="goto">
+						<a href="#">
+							<span>7</span>
+						</a>
+					</span>
+					<span class="goto">
+						<a href="#">
+							<span>8</span>
+						</a>
+					</span>
+					<span class="goto">
+						<a href="#">
+							<span>9</span>
+						</a>
+					</span>
+					<span class="next">
+						<a href="#"  title="Next">&gt;</a>
+					</span>
+					<span class="prev">
+						<a href="#"  title="Last">&gt;&gt;</a>
+					</span>
+        		</div>
+			</div>
+		</div>
+		<div class="operatingFormButtons">
+			<a class="button" href="#">List All tasks</a>
+			<a class="button" href="#">List currently executing tasks</a>
+			<a class="button" href="#">Deactivate all execution threads</a>
+			<a class="button" href="#">Reactivate all execution threads</a>
+		</div>
+    </div>
+</wicket:extend>
+</html>

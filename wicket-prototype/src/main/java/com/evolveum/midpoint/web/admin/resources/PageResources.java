@@ -21,37 +21,26 @@
 
 package com.evolveum.midpoint.web.admin.resources;
 
-import com.evolveum.midpoint.schema.exception.SchemaException;
-import com.evolveum.midpoint.schema.processor.*;
-import com.evolveum.midpoint.schema.util.JAXBUtil;
-import com.evolveum.midpoint.web.admin.PageAdmin;
-import com.evolveum.midpoint.web.component.button.AjaxSubmitLinkButton;
-import com.evolveum.midpoint.web.component.menu.left.LeftMenuItem;
-import com.evolveum.midpoint.web.component.objectform.ContainerStatus;
-import com.evolveum.midpoint.web.component.objectform.ObjectFormPanel;
-import com.evolveum.midpoint.web.component.objectform.PropertyContainerWrapper;
-import com.evolveum.midpoint.web.component.util.LoadableModel;
-import com.evolveum.midpoint.xml.ns._public.common.common_1.ResourceType;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-
-import javax.xml.bind.JAXBElement;
-import javax.xml.namespace.QName;
-import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+
+import com.evolveum.midpoint.web.admin.PageAdmin;
+import com.evolveum.midpoint.web.admin.PageTasks;
+import com.evolveum.midpoint.web.component.menu.left.LeftMenuItem;
 
 /**
  * @author lazyman
  */
 public class PageResources extends PageAdmin {
     
+	
+	public PageResources() {
+		add(new BookmarkablePageLink<Void>("tasks", PageTasks.class));
+	}
+	
+	
     @Override
     public List<LeftMenuItem> getLeftMenuItems() {
         return new ArrayList<LeftMenuItem>();

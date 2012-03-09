@@ -1,0 +1,71 @@
+<!--
+  ~ Copyright (c) 2012 Evolveum
+  ~
+  ~ The contents of this file are subject to the terms
+  ~ of the Common Development and Distribution License
+  ~ (the License). You may not use this file except in
+  ~ compliance with the License.
+  ~
+  ~ You can obtain a copy of the License at
+  ~ http://www.opensource.org/licenses/cddl1 or
+  ~ CDDLv1.0.txt file in the source code distribution.
+  ~ See the License for the specific language governing
+  ~ permission and limitations under the License.
+  ~
+  ~ If applicable, add the following below the CDDL Header,
+  ~ with the fields enclosed by brackets [] replaced by
+  ~ your own identifying information:
+  ~
+  ~ Portions Copyrighted 2012 [name of copyright owner]
+  -->
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:wicket="http://wicket.apache.org">
+<wicket:extend>
+	<div class="content">
+        <h1>Task details for task 'aaaaaaaa'</h1>
+		<div class="sortedTable">
+			<table cellspacing="1" border="0">
+				<thead>
+					<tr>
+						<th>Token</th><th>Operation</th><th>Status</th><th>Message</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr>
+						<td>1000000000000000324</td><td>com.evolveum.midpoint.common.operation.liveSync</td><td>PARTIAL_ERROR</td><td>Communication error: Cannot fetch resource schema: Communication error: javax.naming.CommunicationException(localhost:1389)->java.net.ConnectException(Connection refused: connect)</td>
+					</tr>
+					<tr>
+						<td>2220000000000000325</td><td>com.evolveum.midpoint.provisioning.api.ProvisioningService.synchronize</td><td>FATAL_ERROR</td><td>	Error communicating with connector: Cannot fetch resource schema: Communication error: javax.naming.CommunicationException(localhost:1389)->java.net.ConnectException(Connection refused: connect)</td>
+					</tr>
+					<tr>
+						<td>3330000000000000326</td><td>com.evolveum.midpoint.provisioning.api.ProvisioningService.getObject</td><td>FATAL_ERROR</td><td>Error communicating with resource</td>
+					</tr>
+					<tr>
+						<td>4440000000000000327</td><td>com.evolveum.midpoint.repo.api.RepositoryService.getObject</td><td>SUCCESS</td><td></td>
+					</tr>
+					<tr>
+						<td>5550000000000000328</td><td>com.evolveum.midpoint.provisioning.ucf.api.ConnectorInstance.getCapabilities</td><td>FATAL_ERROR</td><td>Communication error: javax.naming.CommunicationException(localhost:1389)->java.net.ConnectException(Connection refused: connect)</td>
+					</tr>
+					<tr>
+						<td>6660000000000000329</td><td>com.evolveum.midpoint.provisioning.ucf.api.ConnectorInstance.initialize</td><td>FATAL_ERROR</td><td>ICF communication error: Communication error: javax.naming.CommunicationException(localhost:1389)->java.net.ConnectException(Connection refused: connect)</td>
+					</tr>
+					<tr>
+						<td>7770000000000000330</td><td>org.identityconnectors.framework.api.ConnectorFacade.schema</td><td>FATAL_ERROR</td><td>Commnucation error: localhost:1389</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="operatingFormButtons">
+			<a class="button" href="#">Edit task</a>
+			<a class="button" href="#">Suspend task</a>
+			<a class="button" href="#">Resume suspended task</a>
+			<a class="button" href="#">Release claimed task</a>
+			<a class="button" href="#">Delete task</a>
+			<a class="button" href="#">Back</a>
+		</div>
+    </div>
+</wicket:extend>
+</html>
