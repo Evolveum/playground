@@ -433,6 +433,7 @@ img {
 
 #messages .messages-error .messages-error-content {
 	display: none;
+	margin-top: 5px;
 }
 
 #messages .messages-error .messages-topError {
@@ -445,6 +446,11 @@ img {
 
 #messages .messages-error .messages-topError:hover {
 	cursor: pointer;
+	background-color: #ffc2ae;
+}
+
+#messages .messages-error .selected {
+	background-color: #ffc2ae;
 }
 
 #messages .messages-error .messages-topError-arrow {
@@ -486,6 +492,8 @@ img {
 
 #messages .messages-error .messages-details-bold:hover {
 	cursor: pointer;
+	text-decoration: underline;
+	/* background-color: #ffc2ae; */
 }
 
 #messages .messages-error .messages-error-details-section .messages-details-bold .messages-details-bold-arrow {

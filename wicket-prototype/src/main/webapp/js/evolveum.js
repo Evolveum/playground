@@ -150,13 +150,15 @@ $(document).ready(function() {
     
     $(".accordion").togglepanels();
     
-    $(".messages-topError").click(function(){
+    $("#messages-topError").click(function(){
     	if($("#messages_error_content").css("display") === "none"){
     		$("#messages_error_content").show();
     		$(this).find(".messages-topError-arrow").addClass("arrow-up");
+    		$(this).addClass("selected");
     	} else {
     		$("#messages_error_content").hide();
     		$(this).find(".messages-topError-arrow").removeClass("arrow-up");
+    		$(this).removeClass("selected");
     	}
     });
     
