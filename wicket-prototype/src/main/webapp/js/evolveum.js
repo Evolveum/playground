@@ -23,8 +23,8 @@ $(document).ready(function() {
 		$(".acc-content .sortedTable table").css("width", $(".acc-content").width());
 	}
 	
-	$("tbody input[type='checkbox']:checked").parent().parent().find("td").css("background","#d8f4d8");
-	$("tbody input[type='checkbox']:checked").parent().parent().find("td").css("border-color","#FFFFFF");
+	$(".submitTable tbody input[type='checkbox']:checked").parent().parent().find("td").css("background","#d8f4d8");
+	$(".submitTable tbody input[type='checkbox']:checked").parent().parent().find("td").css("border-color","#FFFFFF");
 	
 	$("thead input[type='checkbox']").click(function(){
 		if($(this).is(":checked")){

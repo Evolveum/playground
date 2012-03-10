@@ -373,7 +373,7 @@ img {
 
 .submitTable {
 	width: 100%;
-	margin-top: 15px;
+	margin: 20px 0;
 	border-collapse: collapse;
 }
 
@@ -638,4 +638,142 @@ img {
 
 #messages .messages-error .messages-succ-details-section .messages-details-bold .arrow-down {
 	background-position: 0px -32px;
+}
+
+.tableFormAccordion {
+	margin: 20px 0px;
+	color: #333333;
+}
+
+.tableFormAccordion tr {
+	/* height: 35px; */
+}
+
+.tableFormAccordion tbody input[type='text']:focus, .tableFormAccordion tbody input[type='password']:focus {
+	-webkit-box-shadow: 0px 0px 2px rgba(22, 79, 164, 1);
+	-moz-box-shadow: 0px 0px 2px rgba(22, 79, 164, 1);
+	box-shadow: 0px 0px 2px rgba(22, 79, 164, 1);
+	color: #333333;
+}
+
+.tableFormAccordion tbody .label, .tableFormAccordion tbody .values {
+	border-bottom: 1px solid #BBBBBB;
+	padding: 5px 10px 5px 5px;
+}
+
+.tableFormAccordion tbody .label {
+	width: 200px;
+	text-align: left;
+	color: #999999;
+	font-weight: bold;
+	font-size: 13px;
+	text-transform: capitalize;
+}
+
+.tableFormAccordion tbody input[type='text'], .tableFormAccordion tbody input[type='password'] {
+	padding: 3px;
+	border: 1px solid #999999;
+	display: inline-block;
+	color: #999999;
+}
+
+.tableFormAccordion tbody select {
+	display: inline-block;
+	color: #333333;
+	border: 1px solid #999999;
+	width: 330px;
+	padding: 2px;
+}
+
+div.objectForm .tableForm tbody .objectFormSeparator {
+	background: #F0F0F6;
+	border-top: 1px solid #DBF2F7;
+	border-bottom: 1px solid #8FA6AB;
+	padding: 5px 0px;
+}
+
+div.objectForm .tableForm tbody .objectFormButtons {
+	padding: 11px 0px 10px 7px;
+	position: relative;
+	display: inline-block;
+	width: 43px;
+}
+
+div.objectForm .tableForm tbody .objectFormButtons a, div.objectForm .tableForm tbody .objectFormButtons img {
+	
+}
+
+div.objectForm .tableForm tbody .objectFormAddButton:hover, div.objectForm .tableForm tbody .objectFormDeleteButton:hover {
+	-webkit-box-shadow: 0px 0px 4px rgba(22, 79, 164, 1);
+	-moz-box-shadow: 0px 0px 4px rgba(22, 79, 164, 1);
+	box-shadow: 0px 0px 4px rgba(22, 79, 164, 1);
+}
+
+div.objectForm .tableForm tbody .objectFormInput {
+	display: inline-block;
+	width: 345px;
+	position: relative;
+	float: left;
+}
+
+div.objectForm .tableForm tbody .objectFormValue div.feedbackPanel ul {
+	list-style: none;
+	margin: 0px 0 10px 10px;
+	padding: 0px;
+	width: 325px;
+	font-weight: bold;
+	color: #DB0000;
+	font-size: 12px;
+	text-shadow: 0 1px 0 #FECBCB;
+}
+
+div.objectForm .tableForm tbody .objectFormInput .yui-skin-sam {
+	position: absolute;
+	right: 9px;
+	top: 11px;
+}
+
+div.objectForm .tableForm thead .objectFormHeaderControllButtons .objectFormHeaderControllButtonMinMax:hover, div.objectForm .tableForm thead .objectFormHeaderControllButtons .objectFormHeaderControllButtonShowEmptyFields:hover {
+	cursor: pointer;
+	-webkit-box-shadow: 0px 0px 2px rgba(0, 0, 0, 1);
+	-moz-box-shadow: 0px 0px 2px rgba(0, 0, 0, 1);
+	box-shadow: 0px 0px 2px rgba(0, 0, 0, 1);
+}
+
+div.objectForm .tableForm tbody .objectFormValue .objectFormHelpContent {
+	position: absolute;
+	left: 23px;
+	top: 0px;
+	padding: 3px 10px;
+	height: auto;
+	width: auto;
+	border: 1px solid #DBF2F7;
+	background: #dedee4;
+	-webkit-box-shadow: 0px 0px 3px rgba(0, 0, 0, 1);
+	-moz-box-shadow: 0px 0px 3px rgba(0, 0, 0, 1);
+	box-shadow: 0px 0px 3px rgba(0, 0, 0, 1);
+	color: #333333;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: left;
+}
+
+div.objectForm .tableForm tbody .objectFormValue .objectFormHelpButton {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	-webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
+	-moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
+	box-shadow: 0px 0px 5px rgba(0, 0, 0, 1);
+	z-index: 5;
+}
+
+div.objectForm .tableForm tbody .objectFormValue .objectFormHelpContainer {
+	position: absolute;
+	margin-left: 405px;
+	top: 8px;
+	display: none;
+	z-index: 5;
+	height: auto;
+	width: 100%;
 }
