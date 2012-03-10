@@ -27,6 +27,7 @@ import java.util.List;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 
 import com.evolveum.midpoint.web.admin.PageAdmin;
+import com.evolveum.midpoint.web.admin.PageLogging;
 import com.evolveum.midpoint.web.admin.PageTasks;
 import com.evolveum.midpoint.web.component.menu.left.LeftMenuItem;
 
@@ -37,7 +38,7 @@ public class PageResources extends PageAdmin {
     
 	
 	public PageResources() {
-		add(new BookmarkablePageLink<Void>("tasks", PageTasks.class));
+		add(new BookmarkablePageLink<Void>("tasks", PageLogging.class));
 	}
 	
 	

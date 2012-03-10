@@ -106,13 +106,13 @@ $(document).ready(function() {
 	});
 	
 	$(".sortedTable table tbody tr").mouseenter(function(){
-		if($(this).find("input[type='checkbox']").is(":checked")){
+		if($(this).find(".checkbox").find("input[type='checkbox']").is(":checked")){
 			$(this).find("td").css("background", "#c6e9c6");
 		} else {
 			$(this).find("td").css("background", "#f2f2f2");
 		}
 	}).mouseleave(function(){
-		if($(this).find("input[type='checkbox']").is(":checked")){
+		if($(this).find(".checkbox").find("input[type='checkbox']").is(":checked")){
 			$(this).find("td").css("background", "#d8f4d8");
 			$(this).find("td").css("border-color","#FFFFFF");
 		} else {
