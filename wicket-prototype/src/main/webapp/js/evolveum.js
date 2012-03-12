@@ -28,13 +28,13 @@ $(document).ready(function() {
 	
 	$("thead input[type='checkbox']").click(function(){
 		if($(this).is(":checked")){
-			$(this).parent().parent().parent().parent().find("tbody").find("tr").find("input[type='checkbox']").attr("checked", true);
+			$(this).parent().parent().parent().parent().find("tbody").find("tr").find(".checkbox").find("input[type='checkbox']").attr("checked", true);
 			$(this).parent().parent().parent().parent().find("tbody").find("td").css("background","#d8f4d8");
 			$(this).parent().parent().parent().parent().find("tbody").find("td").css("border-color","#FFFFFF");
 		} else {
 			$(this).parent().parent().parent().parent().find("tbody").find("td").css("background","#FFFFFF");
 			$(this).parent().parent().parent().parent().find("tbody").find("td").css("border-color","#F2F2F2");
-			$(this).parent().parent().parent().parent().find("tbody").find("tr").find("input[type='checkbox']").attr("checked", false);
+			$(this).parent().parent().parent().parent().find("tbody").find("tr").find(".checkbox").find("input[type='checkbox']").attr("checked", false);
 		}
 	});
 	
