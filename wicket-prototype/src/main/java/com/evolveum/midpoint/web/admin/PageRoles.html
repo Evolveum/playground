@@ -74,7 +74,7 @@
 					<h3><span class="headerText">Roles (0)</span></h3>
 					<div class="acc-section">
 						<div class="acc-content">
-							No roles available.
+							<textarea wicket:id="aceEditor"></textarea>
 						</div>
 					</div>
 				</li>
@@ -326,7 +326,7 @@
 		parentAccordion.init("acc","h3",0,-1,"acc-selected");
 		
 		var nestedAccordion=new TINY.accordion.slider("nestedAccordion");
-		nestedAccordion.init("nested","h3",1,-1,"nested-selected");
+		nestedAccordion.init("nested","h3",0,-1,"nested-selected");
 	</script>
 </wicket:extend>
 </html>

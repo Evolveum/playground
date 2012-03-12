@@ -21,36 +21,22 @@
 
 package com.evolveum.midpoint.web.admin;
 
-import com.evolveum.midpoint.schema.exception.SchemaException;
-import com.evolveum.midpoint.schema.processor.*;
-import com.evolveum.midpoint.schema.util.JAXBUtil;
-import com.evolveum.midpoint.web.component.button.AjaxSubmitLinkButton;
-import com.evolveum.midpoint.web.component.objectform.ContainerStatus;
-import com.evolveum.midpoint.web.component.objectform.ObjectFormPanel;
-import com.evolveum.midpoint.web.component.objectform.PropertyContainerWrapper;
-import com.evolveum.midpoint.web.component.util.LoadableModel;
-import com.evolveum.midpoint.xml.ns._public.common.common_1.ResourceType;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 
-import javax.xml.bind.JAXBElement;
-import javax.xml.namespace.QName;
-import java.io.File;
-import java.net.URL;
-
-import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
+import com.evolveum.midpoint.web.component.xml.ace.AceEditor;
 
 /**
  * @author lazyman
  */
 public class PageRoles extends PageAdmin {
-
+	private String xml = "aaaaaaaaaaa";
+	
     public PageRoles() {
     	add(new BookmarkablePageLink<Void>("submit", PageSubmit.class));
+    	add(new AceEditor<String>("aceEditor", new PropertyModel<String>(this, "xml")));
     }
+    
+    
    
 }

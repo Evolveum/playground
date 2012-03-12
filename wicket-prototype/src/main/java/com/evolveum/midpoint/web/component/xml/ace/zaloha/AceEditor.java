@@ -19,12 +19,16 @@
  * Portions Copyrighted 2011 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.web.component.xml.ace;
+package com.evolveum.midpoint.web.component.xml.ace.zaloha;
 
+import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.resource.PackageResourceReference;
+import org.wicketstuff.jslibraries.JSLib;
+import org.wicketstuff.jslibraries.Library;
+import org.wicketstuff.jslibraries.VersionDescriptor;
 
 public class AceEditor<T> extends TextArea<T> {
 
@@ -47,16 +51,13 @@ public class AceEditor<T> extends TextArea<T> {
     public void renderHead(IHeaderResponse response) {
         super.renderHead(response);
 
-        response.renderCSSReference(new PackageResourceReference(AceEditor.class, "style.css"));
+        response.renderCSSReference(new PackageResourceReference(AceEditor.class, "style-ace.css"));
         response.renderJavaScriptReference(new PackageResourceReference(AceEditor.class, "ace.js"));
-        response.renderJavaScriptReference(new PackageResourceReference(AceEditor.class, "xml.js"));
-        response.renderJavaScriptReference(new PackageResourceReference(AceEditor.class, "xml_util.js"));
-        response.renderJavaScriptReference(new PackageResourceReference(AceEditor.class, "xml_highlight_rules.js"));
-        response.renderJavaScriptReference(new PackageResourceReference(AceEditor.class, "theme-textmate.js"));
-        
+        response.renderJavaScriptReference(new PackageResourceReference(AceEditor.class, "mode-xml.js"));
+        response.renderJavaScriptReference(new PackageResourceReference(AceEditor.class, "theme-eclipse.js"));
 
-        /*IHeaderContributor header = JSLib.getHeaderContribution(VersionDescriptor.alwaysLatest(Library.JQUERY));
-        header.renderHead(response);*/
+        IHeaderContributor header = JSLib.getHeaderContribution(VersionDescriptor.alwaysLatest(Library.JQUERY));
+        header.renderHead(response);
         response.renderOnLoadJavaScript(createOnLoadJavascript());
     }
 
@@ -92,7 +93,6 @@ public class AceEditor<T> extends TextArea<T> {
         script.append(editorId).append(".getSession().setMode(new Mode());");
         script.append("jQuery('#").append(this.getMarkupId()).append("').hide();");
         script.append(editorId).append(".setShowPrintMargin(false); ");
-        script.append(editorId).append(".setHighlightActiveLine(true); ");
         script.append(editorId).append(".setReadOnly(").append(readonly).append("); ");
         script.append(editorId).append(".on('blur', function() { ");
         script.append("jQuery('#").append(getMarkupId()).append("').val(").append(editorId)
