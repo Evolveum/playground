@@ -34,7 +34,7 @@ public class AceEditor<T> extends TextArea<T> {
     private static final String MODE = "xml";
     private String editorId;
     private String width = "100%";
-    private String height = "100%";
+    private String height = "auto";
     private boolean readonly = false;
 
     public AceEditor(String id, IModel<T> model) {
@@ -49,7 +49,9 @@ public class AceEditor<T> extends TextArea<T> {
 
         response.renderCSSReference(new PackageResourceReference(AceEditor.class, "style.css"));
         response.renderJavaScriptReference(new PackageResourceReference(AceEditor.class, "ace.js"));
-        response.renderJavaScriptReference(new PackageResourceReference(AceEditor.class, "mode-xml.js"));
+        response.renderJavaScriptReference(new PackageResourceReference(AceEditor.class, "xml.js"));
+        response.renderJavaScriptReference(new PackageResourceReference(AceEditor.class, "xml_util.js"));
+        response.renderJavaScriptReference(new PackageResourceReference(AceEditor.class, "xml_highlight_rules.js"));
         response.renderJavaScriptReference(new PackageResourceReference(AceEditor.class, "theme-textmate.js"));
         
 
@@ -77,16 +79,7 @@ public class AceEditor<T> extends TextArea<T> {
      * }
      */
     private String createOnLoadJavascript() {
-    	StringBuilder script = new StringBuilder();
-        script.append("var ").append(editorId).append(" = ace.edit('").append(editorId).append("'); ");
-        script.append(editorId).append(".setTheme('ace/theme/").append(THEME).append("');");
-        script.append("var XmlMode = require('ace/mode/").append(MODE).append("').Mode; ");
-        script.append(editorId).append(".getSession().setMode(new XmlMode());");
-
-        System.out.println(script.toString());
-        return script.toString();
-        
-        /*StringBuilder script = new StringBuilder();
+        StringBuilder script = new StringBuilder();
         script.append("if (jQuery('#").append(editorId).append("').length == 0) {");
         script.append("jQuery(\"<div id='").append(editorId).append("' class='aceEditor' style='width: ")
                 .append(width).append("; height: ").append(height).append(";'></div>\").insertAfter(jQuery('#")
@@ -112,7 +105,7 @@ public class AceEditor<T> extends TextArea<T> {
 
         script.append(" }");
         System.out.println(script.toString());
-        return script.toString();*/
+        return script.toString();
     }
 
     public String getWidth() {

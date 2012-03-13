@@ -27,9 +27,13 @@ import java.util.List;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 
 import com.evolveum.midpoint.web.admin.PageAdmin;
+import com.evolveum.midpoint.web.admin.PageImportFromFile;
+import com.evolveum.midpoint.web.admin.PageImportFromXml;
 import com.evolveum.midpoint.web.admin.PageLogging;
 import com.evolveum.midpoint.web.admin.PageTasks;
+import com.evolveum.midpoint.web.admin.home.PageHome;
 import com.evolveum.midpoint.web.component.menu.left.LeftMenuItem;
+import com.evolveum.midpoint.web.component.menu.top2.BottomMenuItem;
 
 /**
  * @author lazyman
@@ -45,6 +49,17 @@ public class PageResources extends PageAdmin {
     @Override
     public List<LeftMenuItem> getLeftMenuItems() {
         return new ArrayList<LeftMenuItem>();
+    }
+    
+    @Override
+    public List<BottomMenuItem> getBottomMenuItems() {
+    	List<BottomMenuItem> items = new ArrayList<BottomMenuItem>();
+
+        items.add(new BottomMenuItem("pageAdmin.users.importFromXml", PageImportFromXml.class));
+        items.add(new BottomMenuItem("pageAdmin.users.importFromFile", PageImportFromFile.class));
+
+        return items;
+        
     }
    
 }
