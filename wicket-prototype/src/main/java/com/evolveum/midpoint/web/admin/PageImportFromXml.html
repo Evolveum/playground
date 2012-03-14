@@ -25,51 +25,32 @@
 <wicket:extend>
 	<div class="content">
         <h1>Import from XML</h1>
-        <div id="aceEditor">.text-layer {
-    font-family: Monaco, "Courier New", monospace;
-    font-size: 12px;
-    cursor: text;
-}
-
-.blinker {
-    animation-duration: 1s;
-    animation-name: blink;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-    animation-timing-function: linear;
-}
-
-. blink {
-    0% {
-        opacity: 0;
-    }
-    40% {
-        opacity: 0;
-    }
-    40.5% {
-        opacity: 1
-    }
-    100% {
-        opacity: 1
-    }
-}</div>
+        <div id="aceEditorContainer">
+        	<textarea wicket:id="aceEditor"></textarea>
+		</div>
+		<div>
+			<table cellspacing="0" cellpadding="0">
+				<tbody>
+					<tr>
+						<td class="label"><input type="checkbox" checked="checked" /> Protected by encryption</td>
+						<td class="label"><input type="checkbox" /> Fetch resource schema</td>
+						<td class="label"><input type="checkbox" /> Keep OID</td>
+						<td class="label"><input type="checkbox" /> Overwrite existing object</td>
+						<td class="label"><input type="checkbox" /> Referential integrity</td>
+					</tr>
+					<tr>
+						<td class="label"><input type="checkbox" /> Summarize errors</td>
+						<td class="label"><input type="checkbox" checked="checked" /> Summarize successes</td>
+						<td class="label"><input type="checkbox" checked="checked" /> Validate dynamic schema</td>
+						<td class="label"><input type="checkbox" checked="checked" /> Validate static schema</td>
+					<td class="label">Stop after <input type="text" size="5" /> errors</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="operatingFormButtons">
+			<a class="button" href="#">Import object</a>
+		</div>
 	</div>
-	
-	<script src="js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/ace/theme-textmate.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/ace/mode-xml.js" type="text/javascript" charset="utf-8"></script>
-    <link rel="stylesheet" type="text/css" href="js/ace/style.css" />
-    
-    <script type="text/javascript">
-	    window.onload = function() {
-	    	var editor = ace.edit("aceEditor");
-	        editor.setTheme("ace/theme/textmate");
-	        
-	        var XmlMode = require("ace/mode/xml").Mode;
-	        editor.getSession().setMode(new XmlMode());
-	        
-	        editor.setShowPrintMargin(false);
-	    };
-	</script>
 </wicket:extend>
 </html>
