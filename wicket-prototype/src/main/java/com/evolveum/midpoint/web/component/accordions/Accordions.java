@@ -24,14 +24,16 @@ package com.evolveum.midpoint.web.component.accordions;
 import java.util.List;
 
 import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.list.Loop;
+import org.apache.wicket.markup.html.list.LoopItem;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.resource.PackageResourceReference;
 
-import com.evolveum.midpoint.web.component.menu.top.TopMenuItem;
-
 public class Accordions extends Panel  {
-    
-    private boolean parentExpanded = false;
+	private static final long serialVersionUID = 7554515215048790384L;
+	private boolean parentExpanded = false;
     private boolean parentMultipleSelect = true;
     private int parentOpenedPanel = -1;
     
@@ -40,11 +42,45 @@ public class Accordions extends Panel  {
     private boolean nestedMultipleSelect = true;
     private int nestedOpenedPanel = -1;
     
-    private List<AccordionsParentItem> parentItems;
-    List<AccordionsNestedItem> nestedItems;
+    private List<AccordionsParentItem> accordionsParentItem;
 
-    public Accordions(String id, List<AccordionsParentItem> parentItems, List<AccordionsNestedItem> nestedItems) {
+    public Accordions(String id, List<AccordionsParentItem> accordionsParentItem) {
         super(id);
+
+        if (accordionsParentItem == null || accordionsParentItem.isEmpty()) {
+            throw new IllegalArgumentException("List with accordions items must not be null.");
+        }
+        //System.out.println(">>>>>>"+accordionsParentItem.size());
+        this.accordionsParentItem = accordionsParentItem;
+        //createListItems(accordionsParentItem);
+        
+       
+        add(new Loop("list", accordionsParentItem.size()) {
+			@Override
+			protected void populateItem(LoopItem loopParentItem) {
+	                final AccordionsParentItem item = Accordions.this.accordionsParentItem.get(loopParentItem.getIndex());
+	                
+	                loopParentItem.add(new Label("headerText", item.getHeaderText()));
+	                loopParentItem.add(new Label("content", item.getContent()));
+			}
+			
+        });
+    }
+    
+    private void createListItems(final List<?> accordionsItem){
+    	add(new Loop("list", accordionsParentItem.size()) {
+			private static final long serialVersionUID = 1L;
+
+			protected void populateItem(LoopItem loopParentItem) {
+                final AccordionsParentItem item = (AccordionsParentItem)accordionsItem.get(loopParentItem.getIndex());
+                
+                loopParentItem.add(new Label("label", new StringResourceModel(item.getHeaderText(), Accordions.this, null)));
+                loopParentItem.add(new Label("content", new StringResourceModel(item.getContent(), Accordions.this, null)));
+                /*if(!item.getAccordionsNestedItem().isEmpty()){
+                	createListItems(id+"_nested", item.getAccordionsNestedItem());
+                }*/
+            }
+        });
     }
     
     @Override
@@ -155,7 +191,6 @@ public class Accordions extends Panel  {
     }
 
 	public boolean isNested() {
-		
 		return nested;
 	}
 

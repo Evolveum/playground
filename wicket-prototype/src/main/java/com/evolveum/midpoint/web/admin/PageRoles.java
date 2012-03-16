@@ -21,15 +21,38 @@
 
 package com.evolveum.midpoint.web.admin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 
+import com.evolveum.midpoint.web.component.accordions.Accordions;
+import com.evolveum.midpoint.web.component.accordions.AccordionsNestedItem;
+import com.evolveum.midpoint.web.component.accordions.AccordionsParentItem;
+
 /**
- * @author lazyman
+ * @author mserbak
  */
 public class PageRoles extends PageAdmin {
+	
+	
+	
     public PageRoles() {
-    	add(new BookmarkablePageLink<Void>("submit", PageSubmit.class));
+    	List<AccordionsParentItem> itemsParent = new ArrayList<AccordionsParentItem>();
+    	
+    	itemsParent.add(new AccordionsParentItem("aaaaaaaaaaaaa", "bbbbbbbbbb", new ArrayList<AccordionsNestedItem>()));
+    	itemsParent.add(new AccordionsParentItem("aaaaaaaaaaaaa", "bbbbbbbbbb", new ArrayList<AccordionsNestedItem>()));
+    	itemsParent.add(new AccordionsParentItem("aaaaaaaaaaaaa", "bbbbbbbbbb", new ArrayList<AccordionsNestedItem>()));
+    	itemsParent.add(new AccordionsParentItem("aaaaaaaaaaaaa", "bbbbbbbbbb", new ArrayList<AccordionsNestedItem>()));
+    	itemsParent.add(new AccordionsParentItem("aaaaaaaaaaaaa", "bbbbbbbbbb", new ArrayList<AccordionsNestedItem>()));
+    	itemsParent.add(new AccordionsParentItem("aaaaaaaaaaaaa", "bbbbbbbbbb", new ArrayList<AccordionsNestedItem>()));
 
+    	//itemsParent.add(new AccordionsParentItem("fffffffffffff", "",itemsNested));
+    	Accordions acc = new Accordions("accordions", itemsParent);
+    	acc.setParentExpanded(true);
+    	add(acc);
+    	
+    	add(new BookmarkablePageLink<Void>("submit", PageSubmit.class));
     }
  
 }
