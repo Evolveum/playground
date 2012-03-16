@@ -25,6 +25,31 @@
 <wicket:extend>
 	<div class="content">
         <h1>Import from file</h1>
+        Choose file: <input type="file" />
+        <div>
+        	<br />
+			<table cellspacing="0" cellpadding="0">
+				<tbody>
+					<tr>
+						<td class="label"><input type="checkbox" checked="checked" /> Protected by encryption</td>
+						<td class="label"><input type="checkbox" /> Fetch resource schema</td>
+						<td class="label"><input type="checkbox" /> Keep OID</td>
+						<td class="label"><input type="checkbox" /> Overwrite existing object</td>
+						<td class="label"><input type="checkbox" /> Referential integrity</td>
+					</tr>
+					<tr>
+						<td class="label"><input type="checkbox" /> Summarize errors</td>
+						<td class="label"><input type="checkbox" checked="checked" /> Summarize successes</td>
+						<td class="label"><input type="checkbox" checked="checked" /> Validate dynamic schema</td>
+						<td class="label"><input type="checkbox" checked="checked" /> Validate static schema</td>
+					<td class="label">Stop after <input type="text" size="5" /> errors</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="operatingFormButtons">
+			<a class="button" href="#">Import object</a>
+		</div>
 	</div>
 </wicket:extend>
 </html>
