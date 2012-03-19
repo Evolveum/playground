@@ -22,14 +22,13 @@
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
 <wicket:panel>
-	<ul class="acc" id="acc">
-	    <li wicket:id="list">
-            <h3><span class="headerText" wicket:id="headerText"></span></h3>
-            <div class="acc-section">
-				<div class="acc-content" wicket:id="content"></div>
+	<ul class="acc" id="nested">
+		<li wicket:id="nestedList">
+			<h3><span class="headerText" wicket:id="nestedHeaderText"></span></h3>
+			<div class="acc-section">
+				<div class="acc-content" wicket:id="nestedContent"></div>
 			</div>
-	    </li>
+		</li>
 	</ul>
-	<script type="text/javascript" wicket:id="script"></script>
 </wicket:panel>
 </html>

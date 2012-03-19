@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 public class AccordionsNestedItem implements Serializable {
 	private String headerText;
-    private Object content;
+    private String content;
     
-    public AccordionsNestedItem(String headerText, Object content) {
+    public AccordionsNestedItem(String headerText, String content) {
         if (headerText == null || headerText.isEmpty()) {
             throw new IllegalArgumentException("Header text must not be null or empty.");
         }
@@ -22,7 +22,7 @@ public class AccordionsNestedItem implements Serializable {
         return headerText;
     }
     
-    public Object getContent() {
+    public String getContent() {
         return content;
     }
 }
