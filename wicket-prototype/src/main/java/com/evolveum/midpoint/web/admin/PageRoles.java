@@ -22,14 +22,17 @@
 package com.evolveum.midpoint.web.admin;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 
+import com.evolveum.midpoint.web.component.accordions.AccordionItem;
 import com.evolveum.midpoint.web.component.accordions.Accordions;
-import com.evolveum.midpoint.web.component.accordions.AccordionsNestedItem;
-import com.evolveum.midpoint.web.component.accordions.AccordionsParentItem;
 import com.evolveum.midpoint.web.component.accordions.AccordionsSettings;
+import com.evolveum.midpoint.web.component.login.LoginPanel;
 
 /**
  * @author mserbak
@@ -37,8 +40,19 @@ import com.evolveum.midpoint.web.component.accordions.AccordionsSettings;
 public class PageRoles extends PageAdmin {
 	
     public PageRoles() {
+    	Form form = new Form("form");
+    	add(form);
     	AccordionsSettings accSettings = new AccordionsSettings(false, true, -1, false, false, -1, true);
-    	List<AccordionsParentItem> itemsParent = new ArrayList<AccordionsParentItem>();
+    	
+    	Accordions a = new Accordions("accordions", accSettings);
+    	form.add(a);
+    	AccordionItem aa = new AccordionItem("first", new Model<String>("nejaky nadpis"));
+    	a.getBodyContainer().add(aa);
+//    	aa.add(new LoginPanel("aaa"));
+    	
+    	
+    	
+    	/*List<AccordionsParentItem> itemsParent = new ArrayList<AccordionsParentItem>();
     	List<AccordionsNestedItem> itemsNested = new ArrayList<AccordionsNestedItem>();
     	
     	itemsNested.add(new AccordionsNestedItem("nesteeed", "<b>asdasdasd</b>"));
@@ -51,11 +65,10 @@ public class PageRoles extends PageAdmin {
     	itemsParent.add(new AccordionsParentItem("aaaaaaaaaaaaa", "bbbbbbbbbb", new ArrayList<AccordionsNestedItem>()));
     	itemsParent.add(new AccordionsParentItem("aaaaaaaaaaaaa", "bbbbbbbbbb", new ArrayList<AccordionsNestedItem>()));
     	itemsParent.add(new AccordionsParentItem("aaaaaaaaaaaaa", "bbbbbbbbbb", new ArrayList<AccordionsNestedItem>()));
+    	*/
+//    	Accordions acc = new Accordions("accordions", itemsParent, accSettings);
+//    	add(acc);
     	
-    	Accordions acc = new Accordions("accordions", itemsParent, accSettings);
-    	add(acc);
-    	
-    	add(new BookmarkablePageLink<Void>("submit", PageSubmit.class));
+    	form.add(new BookmarkablePageLink<Void>("submit", PageSubmit.class));
     }
- 
 }

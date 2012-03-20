@@ -21,15 +21,17 @@
 
 package com.evolveum.midpoint.web.component.accordions;
 
-public class AccordionsSettings {
+import java.io.Serializable;
+
+public class AccordionsSettings implements Serializable {
 	
-	private static boolean parentExpanded = false;
-    private static boolean parentMultipleSelect = true;
-    private static int parentOpenedPanel = -1;
-    private static boolean nestedExpanded = false;
-    private static boolean nestedMultipleSelect = true;
-    private static int nestedOpenedPanel = -1;
-    private static boolean nested = false;
+	private boolean parentExpanded = false;
+    private boolean parentMultipleSelect = true;
+    private int parentOpenedPanel = -1;
+    private boolean nestedExpanded = false;
+    private boolean nestedMultipleSelect = true;
+    private int nestedOpenedPanel = -1;
+    private boolean nested = false;
 	
     public AccordionsSettings(Boolean parentExpanded, Boolean parentMultipleSelect, Integer parentOpenedPanel, Boolean nestedExpanded, Boolean nestedMultipleSelect, Integer nestedOpenedPanel, Boolean containsNested){
     	setParentExpanded(parentExpanded);
@@ -45,50 +47,50 @@ public class AccordionsSettings {
         if (parentExpanded == null) {
             throw new IllegalArgumentException("Parent expanded must not be null. Must be set to true or false.");
         }
-        AccordionsSettings.parentExpanded = parentExpanded;
+        this.parentExpanded = parentExpanded;
     }
     
 	public void setParentMultipleSelect(Boolean parentMultipleSelect) {
         if (parentMultipleSelect == null) {
             throw new IllegalArgumentException("Parent multiple select must not be null. Must be set to true or false.");
         }
-        AccordionsSettings.parentMultipleSelect = parentMultipleSelect;
+        this.parentMultipleSelect = parentMultipleSelect;
     }
     
     public void setParentOpenedPanel(Integer parentOpenedPanel) {
         if (parentOpenedPanel == null) {
             throw new IllegalArgumentException("Parent opened panel must not be null.");
         }
-        AccordionsSettings.parentOpenedPanel = parentOpenedPanel;
+        this.parentOpenedPanel = parentOpenedPanel;
     }
     
     public void setNestedExpanded(Boolean nestedExpanded) {
         if (nestedExpanded == null) {
             throw new IllegalArgumentException("Nested expanded must not be null. Must be set to true or false.");
         }
-        AccordionsSettings.nestedExpanded = nestedExpanded;
+        this.nestedExpanded = nestedExpanded;
     }
     
     public void setNestedMultipleSelect(Boolean nestedMultipleSelect) {
         if (nestedMultipleSelect == null) {
             throw new IllegalArgumentException("Nested multiple select must not be null. Must be set to true or false.");
         }
-        AccordionsSettings.nestedMultipleSelect = nestedMultipleSelect;
+        this.nestedMultipleSelect = nestedMultipleSelect;
     }
     
     public void setNestedOpenedPanel(Integer nestedOpenedPanel) {
         if (nestedOpenedPanel == null) {
             throw new IllegalArgumentException("Nested opened panel must not be null.");
         }
-        AccordionsSettings.nestedOpenedPanel = nestedOpenedPanel;
+        this.nestedOpenedPanel = nestedOpenedPanel;
     }
     
     public void setNested(Boolean nested) {
-        AccordionsSettings.nested = nested;
+    	this.nested = nested;
     }
     
     public Boolean getParentExpanded(){
-    	return AccordionsSettings.parentExpanded;
+    	return parentExpanded;
     }
     
     public Integer getParentMultipleSelect(){
@@ -97,11 +99,11 @@ public class AccordionsSettings {
     }
     
     public Integer getParentOpenedPanel(){
-    	return AccordionsSettings.parentOpenedPanel;
+    	return this.parentOpenedPanel;
     }
     
     public Boolean getNestedExpanded(){
-    	return AccordionsSettings.nestedExpanded;
+    	return nestedExpanded;
     }
     
     public Integer getNestedMultipleSelect(){
@@ -110,10 +112,10 @@ public class AccordionsSettings {
     }
     
     public Integer getNestedOpenedPanel(){
-    	return AccordionsSettings.nestedOpenedPanel;
+    	return nestedOpenedPanel;
     }
     
     public boolean getNested(){
-    	return AccordionsSettings.nested;
+    	return nested;
     }
 }

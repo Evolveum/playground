@@ -22,9 +22,13 @@
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
 <wicket:border>
-	<ul class="acc" wicket:id="parent">
-		<wicket:body/>		
-	</ul>    	
-	<script type="text/javascript" wicket:id="script"></script>
+	<li>
+		<h3><span class="headerText" wicket:id="headerText" /></h3>
+		<div class="acc-section">
+			<div class="acc-content">
+				<wicket:body/>
+			</div>
+		</div>
+	</li>
 </wicket:border>
 </html>
