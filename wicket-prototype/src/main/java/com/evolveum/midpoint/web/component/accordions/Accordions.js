@@ -1,8 +1,4 @@
 var TINY={};
-var msie = 0;
-if ($.browser.msie && $.browser.version < 9.0){
-	msie = 1;
-}
 
 function T$(i){return document.getElementById(i);}
 function T$$(e,p){return p.getElementsByTagName(e);}

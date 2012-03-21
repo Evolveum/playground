@@ -16,10 +16,10 @@ $(document).ready(function() {
 	$(".left-menu .selected-left").append("<img class='leftNavArrow' src='../../img/leftNavArrow.png' alt='' />");
 	$(".left-menu .selected-left").parent().css("opacity", 1);
 	$(".left-menu .selected-left").parent().css("background", "#333333");
-	$("#acc li h3").append("<span class='acc-arrow'></span>");
+	$(".acc h3").append("<span class='acc-arrow'></span>");
 	
 	if ($.browser.msie && $.browser.version < 9.0){
-		$("#acc .acc-section").css("height", "1px");
+		$(".acc .acc-section").css("height", "1px");
 		$(".acc-content .sortedTable table").css("width", $(".acc-content").width());
 	}
 	

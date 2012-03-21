@@ -36,7 +36,7 @@ public class PageRoles extends PageAdmin {
     public PageRoles() {
         Form form = new Form("form");
         add(form);
-        AccordionsSettings accSettings = new AccordionsSettings(false, true, -1, false, false, -1, true);
+        AccordionsSettings accSettings = new AccordionsSettings(false, true, -1);
 
         Accordions a = new Accordions("accordions", accSettings);
         form.add(a);

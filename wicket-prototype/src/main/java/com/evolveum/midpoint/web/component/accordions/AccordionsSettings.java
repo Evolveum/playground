@@ -24,98 +24,49 @@ package com.evolveum.midpoint.web.component.accordions;
 import java.io.Serializable;
 
 public class AccordionsSettings implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
-	private boolean parentExpanded = false;
-    private boolean parentMultipleSelect = true;
-    private int parentOpenedPanel = -1;
-    private boolean nestedExpanded = false;
-    private boolean nestedMultipleSelect = true;
-    private int nestedOpenedPanel = -1;
-    private boolean nested = false;
+	private boolean expanded = false;
+    private boolean multipleSelect = true;
+    private int openedPanel = -1;
 	
-    public AccordionsSettings(Boolean parentExpanded, Boolean parentMultipleSelect, Integer parentOpenedPanel, Boolean nestedExpanded, Boolean nestedMultipleSelect, Integer nestedOpenedPanel, Boolean containsNested){
-    	setParentExpanded(parentExpanded);
-    	setParentMultipleSelect(parentMultipleSelect);
-    	setParentOpenedPanel(parentOpenedPanel);
-    	setNestedExpanded(nestedExpanded);
-    	setNestedMultipleSelect(nestedMultipleSelect);
-    	setNestedOpenedPanel(nestedOpenedPanel);
-    	setNested(containsNested);
+    public AccordionsSettings(Boolean expanded, Boolean multipleSelect, Integer openedPanel){
+    	setExpanded(expanded);
+    	setMultipleSelect(multipleSelect);
+    	setOpenedPanel(openedPanel);
     }
 
-    public void setParentExpanded(Boolean parentExpanded) {
-        if (parentExpanded == null) {
+    public void setExpanded(Boolean expanded) {
+        if (expanded == null) {
             throw new IllegalArgumentException("Parent expanded must not be null. Must be set to true or false.");
         }
-        this.parentExpanded = parentExpanded;
+        this.expanded = expanded;
     }
     
-	public void setParentMultipleSelect(Boolean parentMultipleSelect) {
-        if (parentMultipleSelect == null) {
+	public void setMultipleSelect(Boolean multipleSelect) {
+        if (multipleSelect == null) {
             throw new IllegalArgumentException("Parent multiple select must not be null. Must be set to true or false.");
         }
-        this.parentMultipleSelect = parentMultipleSelect;
+        this.multipleSelect = multipleSelect;
     }
     
-    public void setParentOpenedPanel(Integer parentOpenedPanel) {
-        if (parentOpenedPanel == null) {
+    public void setOpenedPanel(Integer openedPanel) {
+        if (openedPanel == null) {
             throw new IllegalArgumentException("Parent opened panel must not be null.");
         }
-        this.parentOpenedPanel = parentOpenedPanel;
+        this.openedPanel = openedPanel;
     }
     
-    public void setNestedExpanded(Boolean nestedExpanded) {
-        if (nestedExpanded == null) {
-            throw new IllegalArgumentException("Nested expanded must not be null. Must be set to true or false.");
-        }
-        this.nestedExpanded = nestedExpanded;
+    public Boolean getExpanded(){
+    	return expanded;
     }
     
-    public void setNestedMultipleSelect(Boolean nestedMultipleSelect) {
-        if (nestedMultipleSelect == null) {
-            throw new IllegalArgumentException("Nested multiple select must not be null. Must be set to true or false.");
-        }
-        this.nestedMultipleSelect = nestedMultipleSelect;
-    }
-    
-    public void setNestedOpenedPanel(Integer nestedOpenedPanel) {
-        if (nestedOpenedPanel == null) {
-            throw new IllegalArgumentException("Nested opened panel must not be null.");
-        }
-        this.nestedOpenedPanel = nestedOpenedPanel;
-    }
-    
-    public void setNested(Boolean nested) {
-    	this.nested = nested;
-    }
-    
-    public Boolean getParentExpanded(){
-    	return parentExpanded;
-    }
-    
-    public Integer getParentMultipleSelect(){
-    	if(parentMultipleSelect) return 1;
+    public Integer getMultipleSelect(){
+    	if(multipleSelect) return 1;
     	return 0;
     }
     
-    public Integer getParentOpenedPanel(){
-    	return this.parentOpenedPanel;
-    }
-    
-    public Boolean getNestedExpanded(){
-    	return nestedExpanded;
-    }
-    
-    public Integer getNestedMultipleSelect(){
-    	if(nestedMultipleSelect) return 1;
-    	return 0;
-    }
-    
-    public Integer getNestedOpenedPanel(){
-    	return nestedOpenedPanel;
-    }
-    
-    public boolean getNested(){
-    	return nested;
+    public Integer getOpenedPanel(){
+    	return this.openedPanel;
     }
 }
