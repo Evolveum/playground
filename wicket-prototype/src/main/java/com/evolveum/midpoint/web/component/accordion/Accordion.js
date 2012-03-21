@@ -37,18 +37,22 @@ TINY.accordion = function () {
     }
 
     slider.prototype.init = function (accordionId, accordionControl, accordionMultipleSelect, accordionOpenedPanel, accordionSelectedAttr) {
-        var accordionComponent = T$(accordionId), i = s = 0, n = accordionComponent.childNodes, l = n.length;
-        this.s = accordionSelectedAttr || 0;
-        this.m = accordionMultipleSelect || 0;
-        for (i; i < l; i++) {
-            var v = n[i];
+        var accordionComponent = T$(accordionId);
+        var i = s = 0;
+        var accordionChildren = accordionComponent.childNodes;
+        var length = accordionChildren.length;
+
+        this.selectedAttr = accordionSelectedAttr || 0;
+        this.multipleSelect = accordionMultipleSelect || 0;
+        for (i; i < length; i++) {
+            var v = accordionChildren[i];
             if (v.nodeType != 3) {
                 this.accordions[s] = {};
                 this.accordions[s].h = h = T$$(accordionControl, v)[0];
                 this.accordions[s].c = c = T$$('div', v)[0];
                 h.onclick = new Function(this.accordionName + '.pr(0,' + s + ')');
                 if (accordionOpenedPanel == s) {
-                    h.className = this.s;
+                    h.className = this.selectedAttr;
                     c.style.height = 'auto';
                     c.d = 1;
                 } else {
@@ -71,28 +75,29 @@ TINY.accordion = function () {
                 c.m = c.offsetHeight;
                 c.style.height = k + 'px';
                 c.d = 1;
-                h.className = this.s;
-                su(c, 1);
-            } else if (k > 0 && (state == -1 || this.m || i == component)) {
+                h.className = this.selectedAttr;
+                timer(c, 1);
+            } else if (k > 0 && (state == -1 || this.multipleSelect || i == component)) {
                 c.d = -1;
                 h.className = '';
-                su(c, -1);
+                timer(c, -1);
             }
         }
     };
 
-    function su(content) {
+    function timer(content) {
         content.t = setInterval(function () {
-            sl(content);
+            slide(content);
         }, 20);
     }
 
-    function sl(content) {
-        var h = content.offsetHeight, d = content.d == 1 ? content.m - h : h;
-        content.style.height = h + (Math.ceil(d / 4) * content.d) + 'px';
-        content.style.opacity = h / content.m;
-        content.style.filter = 'alpha(opacity=' + h * 100 / content.m + ')';
-        if ((content.d == 1 && h >= content.m) || (content.d != 1 && h == 1)) {
+    function slide(content) {
+        var totalHeight = content.offsetHeight;
+        var opened = content.d == 1 ? content.m - totalHeight : totalHeight;
+        content.style.height = totalHeight + (Math.ceil(opened / 4) * content.d) + 'px';
+        content.style.opacity = totalHeight / content.m;
+        content.style.filter = 'alpha(opacity=' + totalHeight * 100 / content.m + ')';
+        if ((content.d == 1 && totalHeight >= content.m) || (content.d != 1 && totalHeight == 1)) {
             if (content.d == 1) {
                 content.style.height = 'auto';
             }
