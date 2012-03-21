@@ -28,10 +28,23 @@
 
         <form wicket:id="form">
             <div wicket:id="accordions" class="accordions">
-                <li wicket:id="first"></li>
-                <li wicket:id="second">
-                    <!--<textarea wicket:id="editor"/>-->
+                <li wicket:id="first">
+                	<div wicket:id="accordions2" class="accordions">
+                		<li wicket:id="first2">
+                			<div wicket:id="accordions3" class="accordions">
+                				<li wicket:id="first3">
+                					<div wicket:id="accordions4" class="accordions">
+		                				<li wicket:id="first4"></li>
+		                				<li wicket:id="second4"></li>
+		                			</div>
+                				</li>
+                				<li wicket:id="second3"></li>
+                			</div>
+                		</li>
+                		<li wicket:id="second2"></li>
+                	</div>
                 </li>
+                <li wicket:id="second"></li>
             </div>
 
             <div class="operatingFormButtons">

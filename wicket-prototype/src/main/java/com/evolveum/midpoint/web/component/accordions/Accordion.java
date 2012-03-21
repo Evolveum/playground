@@ -26,26 +26,25 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.border.Border;
 import org.apache.wicket.request.resource.PackageResourceReference;
 
-public class Accordions extends Border {
+public class Accordion extends Border {
     private static final long serialVersionUID = 7554515215048790384L;
 
-    private AccordionsSettings accSettings;
-
-    public Accordions(String id, AccordionsSettings accSettings) {
+    private AccordionSettings accSettings;
+    private String idAccordion;
+    public Accordion(String id, AccordionSettings accSettings) {
         super(id);
         this.accSettings = accSettings;
         WebMarkupContainer parent = new WebMarkupContainer("parent");
-        parent.setOutputMarkupId(true);
+        this.idAccordion = getMarkupId();
+        parent.setMarkupId(idAccordion);
         addToBorder(parent);
     }
 
     @Override
     public void renderHead(IHeaderResponse response) {
         super.renderHead(response);
-        response.renderJavaScriptReference(new PackageResourceReference(Accordions.class, "Accordions.js"));
-        response.renderCSSReference(new PackageResourceReference(Accordions.class, "Accordions.css"));
-        response.renderJavaScriptReference(new PackageResourceReference(Accordions.class, "ScriptAppender.js")); 
-        
-        response.renderOnLoadJavaScript("AppendAccordionScript('"+getMarkupId()+","+accSettings.getExpanded()+","+accSettings.getMultipleSelect()+","+accSettings.getOpenedPanel()+"')");
+        response.renderJavaScriptReference(new PackageResourceReference(Accordion.class, "Accordion.js"));
+        response.renderCSSReference(new PackageResourceReference(Accordion.class, "Accordion.css"));
+        response.renderOnLoadJavaScript("AppendAccordionScript('"+idAccordion+"',"+accSettings.getExpanded()+","+accSettings.getMultipleSelect()+","+accSettings.getOpenedPanel()+")");
     }
 }

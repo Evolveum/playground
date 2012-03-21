@@ -23,14 +23,14 @@ package com.evolveum.midpoint.web.component.accordions;
 
 import java.io.Serializable;
 
-public class AccordionsSettings implements Serializable {
+public class AccordionSettings implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private boolean expanded = false;
     private boolean multipleSelect = true;
     private int openedPanel = -1;
 	
-    public AccordionsSettings(Boolean expanded, Boolean multipleSelect, Integer openedPanel){
+    public AccordionSettings(Boolean expanded, Boolean multipleSelect, Integer openedPanel){
     	setExpanded(expanded);
     	setMultipleSelect(multipleSelect);
     	setOpenedPanel(openedPanel);
