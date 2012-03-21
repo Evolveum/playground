@@ -24,49 +24,45 @@ package com.evolveum.midpoint.web.component.accordion;
 import java.io.Serializable;
 
 public class AccordionSettings implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
-	boolean expanded = false;
-    boolean multipleSelect = true;
-    int openedPanel = -1;
-	
-    public AccordionSettings(Boolean expanded, Boolean multipleSelect, Integer openedPanel){
-    	setExpanded(expanded);
-    	setMultipleSelect(multipleSelect);
-    	setOpenedPanel(openedPanel);
+
+    private static final long serialVersionUID = 1L;
+    private boolean expanded = false;
+    private boolean multipleSelect = true;
+    private int openedPanel = -1;
+
+    public AccordionSettings() {
     }
 
-    void setExpanded(Boolean expanded) {
-        if (expanded == null) {
-            throw new IllegalArgumentException("Expanded must not be null. Must be set to true or false.");
-        }
+    public AccordionSettings(boolean expanded, boolean multipleSelect, int openedPanel) {
+        setExpanded(expanded);
+        setMultipleSelect(multipleSelect);
+        setOpenedPanel(openedPanel);
+    }
+
+    void setExpanded(boolean expanded) {
         this.expanded = expanded;
     }
-    
-	void setMultipleSelect(Boolean multipleSelect) {
-        if (multipleSelect == null) {
-            throw new IllegalArgumentException("Multiple select must not be null. Must be set to true or false.");
-        }
+
+    void setMultipleSelect(boolean multipleSelect) {
         this.multipleSelect = multipleSelect;
     }
-    
-    void setOpenedPanel(Integer openedPanel) {
-        if (openedPanel == null) {
-            throw new IllegalArgumentException("Opened panel must not be null. -1 for disable.");
-        }
+
+    void setOpenedPanel(int openedPanel) {
         this.openedPanel = openedPanel;
     }
-    
-    Boolean getExpanded(){
-    	return expanded;
+
+    Boolean getExpanded() {
+        return expanded;
     }
-    
-    Integer getMultipleSelect(){
-    	if(multipleSelect) return 1;
-    	return 0;
+
+    int getMultipleSelect() {
+        if (multipleSelect) {
+            return 1;
+        }
+        return 0;
     }
-    
-    Integer getOpenedPanel(){
-    	return this.openedPanel;
+
+    int getOpenedPanel() {
+        return openedPanel;
     }
 }

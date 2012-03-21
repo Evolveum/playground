@@ -27,16 +27,16 @@ import org.apache.wicket.markup.html.border.Border;
 import org.apache.wicket.request.resource.PackageResourceReference;
 
 public class Accordion extends Border {
-    private static final long serialVersionUID = 7554515215048790384L;
 
-    private AccordionSettings accSettings;
-    private String idAccordion;
-    public Accordion(String id, AccordionSettings accSettings) {
+    private static final long serialVersionUID = 7554515215048790384L;
+    private AccordionSettings settings;
+
+    public Accordion(String id, AccordionSettings settings) {
         super(id);
-        this.accSettings = accSettings;
+        this.settings = settings;
+
         WebMarkupContainer parent = new WebMarkupContainer("parent");
-        this.idAccordion = getMarkupId();
-        parent.setMarkupId(idAccordion);
+        parent.setOutputMarkupId(true);
         addToBorder(parent);
     }
 
@@ -45,6 +45,13 @@ public class Accordion extends Border {
         super.renderHead(response);
         response.renderJavaScriptReference(new PackageResourceReference(Accordion.class, "Accordion.js"));
         response.renderCSSReference(new PackageResourceReference(Accordion.class, "Accordion.css"));
-        response.renderOnLoadJavaScript("AppendAccordionScript('"+idAccordion+"',"+accSettings.getExpanded()+","+accSettings.getMultipleSelect()+","+accSettings.getOpenedPanel()+")");
+
+        WebMarkupContainer parent = (WebMarkupContainer) get("parent");
+
+        response.renderOnLoadJavaScript("createAccordion('"
+                + parent.getMarkupId()
+                + "'," + settings.getExpanded()
+                + "," + settings.getMultipleSelect()
+                + "," + settings.getOpenedPanel() + ")");
     }
 }
