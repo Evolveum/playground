@@ -29,11 +29,12 @@ import org.apache.wicket.request.resource.PackageResourceReference;
 public class Accordion extends Border {
 
     private static final long serialVersionUID = 7554515215048790384L;
-    private AccordionSettings settings;
+    private boolean expanded = false;
+    private boolean multipleSelect = true;
+    private int openedPanel = -1;
 
-    public Accordion(String id, AccordionSettings settings) {
+    public Accordion(String id) {
         super(id);
-        this.settings = settings;
 
         WebMarkupContainer parent = new WebMarkupContainer("parent");
         parent.setOutputMarkupId(true);
@@ -48,10 +49,34 @@ public class Accordion extends Border {
 
         WebMarkupContainer parent = (WebMarkupContainer) get("parent");
 
-        response.renderOnLoadJavaScript("createAccordion('"
-                + parent.getMarkupId()
-                + "'," + settings.getExpanded()
-                + "," + settings.getMultipleSelect()
-                + "," + settings.getOpenedPanel() + ")");
+        response.renderOnLoadJavaScript("createAccordion('" + parent.getMarkupId() + "'," + getExpanded()
+                + "," + getMultipleSelect() + "," + getOpenedPanel() + ")");
+    }
+
+    public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
+    }
+
+    public void setMultipleSelect(boolean multipleSelect) {
+        this.multipleSelect = multipleSelect;
+    }
+
+    public void setOpenedPanel(int openedPanel) {
+        this.openedPanel = openedPanel;
+    }
+
+    public boolean getExpanded() {
+        return expanded;
+    }
+
+    public int getMultipleSelect() {
+        if (multipleSelect) {
+            return 1;
+        }
+        return 0;
+    }
+
+    public int getOpenedPanel() {
+        return openedPanel;
     }
 }
