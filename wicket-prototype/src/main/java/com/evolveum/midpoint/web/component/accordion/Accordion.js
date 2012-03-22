@@ -22,98 +22,99 @@
 var accordion = {};
 var TINY = {};
 
-function T$(accordionId) {
-    return document.getElementById(accordionId);
+function getAccordion(accordionId) {
+	return document.getElementById(accordionId);
 }
-function T$$(accordionControl, child) {
-    return child.getElementsByTagName(accordionControl);
+function getPanel(accordionControl, child) {
+	return child.getElementsByTagName(accordionControl);
 }
 
-TINY.accordion = function () {
+TINY.accordion = function() {
 
-    function slider(accordionName) {
-        this.accordionName = accordionName;
-        this.accordions = [];
-    }
+	function slider(accordionName) {
+		this.accordionName = accordionName;
+		this.accordions = [];
+	}
 
-    slider.prototype.init = function (accordionId, accordionControl, accordionMultipleSelect, accordionOpenedPanel, accordionSelectedAttr) {
-        var accordionComponent = T$(accordionId);
-        var i = s = 0;
-        var accordionChildren = accordionComponent.childNodes;
-        var length = accordionChildren.length;
+	slider.prototype.init = function(accordionId, accordionControl, accordionMultipleSelect, accordionOpenedPanel, accordionSelectedAttr) {
+		var accordionComponent = getAccordion(accordionId), i = s = 0;
+		var accordionChilds = accordionComponent.childNodes;
+		var length = accordionChilds.length;
 
-        this.selectedAttr = accordionSelectedAttr || 0;
-        this.multipleSelect = accordionMultipleSelect || 0;
-        for (i; i < length; i++) {
-            var v = accordionChildren[i];
-            if (v.nodeType != 3) {
-                this.accordions[s] = {};
-                this.accordions[s].h = h = T$$(accordionControl, v)[0];
-                this.accordions[s].c = c = T$$('div', v)[0];
-                h.onclick = new Function(this.accordionName + '.pr(0,' + s + ')');
-                if (accordionOpenedPanel == s) {
-                    h.className = this.selectedAttr;
-                    c.style.height = 'auto';
-                    c.d = 1;
-                } else {
-                    c.style.height = 0;
-                    c.d = -1;
-                }
-                s++;
-            }
-        }
-        this.l = s;
-    };
+		this.selectedAttr = accordionSelectedAttr || 0;
+		this.multipleSelect = accordionMultipleSelect || 0;
 
-    slider.prototype.pr = function (state, component) {
-        for (var i = 0; i < this.l; i++) {
-            var h = this.accordions[i].h, c = this.accordions[i].c, k = c.style.height;
-            k = k == 'auto' ? 1 : parseInt(k);
-            clearInterval(c.t);
-            if ((k != 1 && c.d == -1) && (state == 1 || i == component)) {
-                c.style.height = '';
-                c.m = c.offsetHeight;
-                c.style.height = k + 'px';
-                c.d = 1;
-                h.className = this.selectedAttr;
-                timer(c, 1);
-            } else if (k > 0 && (state == -1 || this.multipleSelect || i == component)) {
-                c.d = -1;
-                h.className = '';
-                timer(c, -1);
-            }
-        }
-    };
+		for (i; i < length; i++) {
+			var child = accordionChilds[i];
+			if (child.nodeType != 3) {
+				this.accordions[s] = {};
+				this.accordions[s].header = header = getPanel(accordionControl, child)[0];
+				this.accordions[s].content = content = getPanel('div', child)[0];
+				header.onclick = new Function(this.accordionName + '.expand(0,' + s + ')');
 
-    function timer(content) {
-        content.t = setInterval(function () {
-            slide(content);
-        }, 20);
-    }
+				if (accordionOpenedPanel == s) {
+					header.className = selectedAttr;
+					content.style.height = 'auto';
+					content.opened = 1;
+				} else {
+					content.style.height = 0;
+					content.opened = -1;
+				}
+				s++;
+			}
+		}
+		this.length = s;
+	};
 
-    function slide(content) {
-        var totalHeight = content.offsetHeight;
-        var opened = content.d == 1 ? content.m - totalHeight : totalHeight;
-        content.style.height = totalHeight + (Math.ceil(opened / 4) * content.d) + 'px';
-        content.style.opacity = totalHeight / content.m;
-        content.style.filter = 'alpha(opacity=' + totalHeight * 100 / content.m + ')';
-        if ((content.d == 1 && totalHeight >= content.m) || (content.d != 1 && totalHeight == 1)) {
-            if (content.d == 1) {
-                content.style.height = 'auto';
-            }
-            clearInterval(content.t);
-        }
-    }
+	slider.prototype.expand = function(state, component) {
+		for ( var i = 0; i < this.length; i++) {
+			var header = this.accordions[i].header;
+			var content = this.accordions[i].content;
+			var currentHeight = content.style.height;
+			currentHeight = currentHeight == 'auto' ? 1 : parseInt(currentHeight);
+			clearInterval(content.timer);
 
-    ;
-    return{slider:slider};
+			if ((currentHeight != 1 && content.opened == -1) && (state == 1 || i == component)) {
+				content.style.height = '';
+				content.totalHeight = content.offsetHeight;
+				content.style.height = currentHeight + 'px';
+				content.opened = 1;
+				header.className = this.selectedAttr;
+				timer(content, 1);
+			} else if (currentHeight > 0 && (state == -1 || this.multipleSelect || i == component)) {
+				content.opened = -1;
+				header.className = '';
+				timer(content, -1);
+			}
+		}
+	};
+
+	function timer(content) {
+		content.timer = setInterval(function() {slide(content);}, 20);
+	}
+	function slide(content) {
+		var totalHeight = content.offsetHeight;
+		var opened = content.opened == 1 ? content.totalHeight - totalHeight : totalHeight;
+		content.style.height = totalHeight + (Math.ceil(opened / 4) * content.opened) + 'px';
+		content.style.opacity = totalHeight / content.totalHeight;
+		content.style.filter = 'alpha(opacity=' + totalHeight * 100 / content.totalHeight + ')';
+		if ((content.opened == 1 && totalHeight >= content.totalHeight) || (content.opened != 1 && totalHeight == 1)) {
+			if (content.opened == 1) {
+				content.style.height = 'auto';
+			}
+			clearInterval(content.timer);
+		}
+	};
+	return {
+		slider : slider
+	};
 }();
 
 function createAccordion(id, expanded, multipleSelect, openedPanel) {
-    accordion[id] = new TINY.accordion.slider("accordion['" + id + "']");
-    accordion[id].init(id, "h3", multipleSelect, openedPanel, "acc-selected");
+	accordion[id] = new TINY.accordion.slider("accordion['" + id + "']");
+	accordion[id].init(id, "h3", multipleSelect, openedPanel, "acc-selected");
 
-    if (expanded) {
-        accordion[id].expand(1);
-    }
+	if (expanded) {
+		accordion[id].expand(1);
+	}
 }
