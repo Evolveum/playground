@@ -21,8 +21,17 @@
 		</init-param>
 	</filter>
 
+<!-- 	<filter-mapping>
+		<filter-name>wicketProject</filter-name>
+		<url-pattern>/jasperreports/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+	</filter-mapping> -->
+	
 	<filter-mapping>
 		<filter-name>wicketProject</filter-name>
 		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
 	</filter-mapping>
 </web-app>

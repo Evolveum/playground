@@ -22,20 +22,61 @@
 package com.evolveum.midpoint.roles;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
+import org.apache.wicket.markup.html.link.ResourceLink;
+import org.apache.wicket.protocol.http.WebApplication;
+
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+
 import com.evolveum.midpoint.HomePage;
+import com.evolveum.midpoint.jasper.JasperReports;
 import com.evolveum.midpoint.menu.common.MenuItem;
+import com.evolveum.midpoint.xml.ns._public.common.common_2.LoggingComponentType;
 
 public class Roles extends HomePage {
 	private static final long serialVersionUID = 1L;
-
+	public static final HashMap<String, String> parameterMap = new HashMap<String, String>();
+	
 	public Roles() {
 		super();
 
 		setPrimaryMenuList(menu());
 		setPageTitle("Roles");
 		setTitle("Available roles");
+		
+		ServletContext context = ((WebApplication) getApplication()).getServletContext();
+		
+		parameterMap.put("paramName", "Janko Hraško");
+		
+		JasperDesign design;
+		JasperReport report = null;
+		JasperPrint jasperPrint = null;
+		
+		try {
+
+			design = JRXmlLoader.load(context.getRealPath("/reports/Report.jrxml"));
+			report = JasperCompileManager.compileReport(design);
+			jasperPrint = JasperFillManager.fillReport(report, parameterMap, new JREmptyDataSource());
+
+		} catch (JRException e) {
+
+			e.printStackTrace();
+		}
+		
+		JasperReports jr = new JasperReports(jasperPrint);
+
+		add(new ResourceLink("linkToPdf", jr));
 	}
 
 	private List<MenuItem> menu() {
