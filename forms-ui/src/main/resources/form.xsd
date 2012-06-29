@@ -33,13 +33,22 @@
             jaxb:extensionBindingPrefixes="xjc"
             jaxb:version="2.0">
 
-    <xsd:element name="form" type="FormType"/>
+    <xsd:annotation>
+        <xsd:appinfo>
+            <jaxb:globalBindings>
+                <xjc:typeSubstitution type="complex"/>
+                <xjc:serializable uid="201206291507"/>
+            </jaxb:globalBindings>
+        </xsd:appinfo>
+    </xsd:annotation>
+
+    <xsd:element name="form" type="tns:FormType"/>
 
     <xsd:complexType name="FormType">
         <xsd:sequence>
-            <xsd:element name="include" type="IncludeType" minOccurs="0" maxOccurs="unbounded"/>
-            <xsd:element name="field" type="FieldType" minOccurs="0" maxOccurs="unbounded"/>
-            <xsd:element name="fieldGroup" type="FieldGroupType" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="include" type="tns:IncludeType" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="field" type="tns:FieldType" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="fieldGroup" type="tns:FieldGroupType" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
     </xsd:complexType>
 
@@ -53,7 +62,7 @@
     <xsd:complexType name="FieldType">
         <xsd:sequence>
             <xsd:element name="label" type="xsd:string"/>
-            <xsd:element name="display" type="DisplayType"/>
+            <xsd:element name="display" type="tns:DisplayType"/>
         </xsd:sequence>
         <!-- type (display class) -->
         <!-- name -->
