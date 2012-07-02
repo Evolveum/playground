@@ -50,6 +50,15 @@
             <xsd:element name="field" type="tns:FieldType" minOccurs="0" maxOccurs="unbounded"/>
             <xsd:element name="fieldGroup" type="tns:FieldGroupType" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
+        <xsd:attribute name="name" type="xsd:string"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="AbstractField" abstract="true">
+        <xsd:sequence>
+            <xsd:element name="label" type="xsd:string"/>
+            <xsd:element name="tooltip" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="help" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
     </xsd:complexType>
 
     <xsd:complexType name="IncludeType">
@@ -60,31 +69,49 @@
     </xsd:complexType>
 
     <xsd:complexType name="FieldType">
-        <xsd:sequence>
-            <xsd:element name="label" type="xsd:string"/>
-            <xsd:element name="display" type="tns:DisplayType"/>
-        </xsd:sequence>
+        <xsd:complexContent>
+            <xsd:extension base="tns:AbstractField">
+                <xsd:sequence>
+                    <xsd:element name="display" type="tns:DisplayType"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
         <!-- type (display class) -->
-        <!-- name -->
+        <!-- name and pointer to some model -->
         <!-- value - also default values and so on -->
         <!-- validation ajax/on client -->
         <!-- enabled/disabled -->
+        <!-- some kind of renderer, probably something like IChoiceRenderer in wicket to translate
+        real value to display value and after edit to translate displayed value to real value -->
+        <!-- access??? -->
     </xsd:complexType>
 
     <xsd:complexType name="DisplayType">
         <xsd:sequence>
-            <xsd:element name="class" />
+            <xsd:element name="property" type="tns:PropertyType" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
+            <!-- for default types like text field, label, combo box, etc. -->
+            <xsd:attribute name="type" type="xsd:string" use="optional"/>
+            <!-- custom implementation of some interface -->
+            <xsd:attribute name="class" type="xsd:string" use="optional"/>
     </xsd:complexType>
 
     <xsd:complexType name="FieldGroupType">
-        <xsd:sequence>
-            <xsd:element name="label" type="xsd:string"/>
-        </xsd:sequence>
+        <xsd:complexContent>
+            <xsd:extension base="tns:AbstractField">
+                <xsd:sequence>
+
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
     </xsd:complexType>
 
 
-    <!-- field groups -->
+    <xsd:complexType name="PropertyType">
+        <xsd:attribute name="name" type="xsd:string"/>
+        <!-- todo value -->
+    </xsd:complexType>
+
     <!-- field and field group loops -->
     <!-- ajax validators - default existing stuff, users should be able to implement their own validators -->
     <!-- todo what else do we want in here? -->

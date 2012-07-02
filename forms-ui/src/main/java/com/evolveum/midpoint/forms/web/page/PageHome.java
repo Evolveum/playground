@@ -15,5 +15,7 @@ public class PageHome extends WebPage {
     private void initLayout() {
         DebugBar debugPanel = new DebugBar("debugPanel");
         add(debugPanel);
+
+
     }
 }
