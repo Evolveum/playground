@@ -22,13 +22,8 @@
 <xsd:schema targetNamespace="http://midpoint.evolveum.com/xml/ns/public/gui/form"
             xmlns:tns="http://midpoint.evolveum.com/xml/ns/public/gui/form"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-            xmlns:c="http://midpoint.evolveum.com/xml/ns/public/common/common-2"
-            xmlns:a="http://prism.evolveum.com/xml/ns/public/annotation-2"
-            xmlns:t="http://prism.evolveum.com/xml/ns/public/types-2"
-            xmlns:q="http://prism.evolveum.com/xml/ns/public/query-2"
             xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
             xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
-            xmlns:xenc="http://www.w3.org/2001/04/xmlenc#"
             elementFormDefault="qualified"
             jaxb:extensionBindingPrefixes="xjc"
             jaxb:version="2.0">
@@ -58,8 +53,13 @@
             <xsd:element name="label" type="xsd:string"/>
             <xsd:element name="tooltip" type="xsd:string" minOccurs="0"/>
             <xsd:element name="help" type="xsd:string" minOccurs="0"/>
+
             <xsd:element ref="tns:enabled"/>
             <xsd:element ref="tns:visible"/>
+
+            <!--todo move somewhere-->
+            <xsd:element name="cssStyle" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="cssClass" type="xsd:string" minOccurs="0"/>
         </xsd:sequence>
     </xsd:complexType>
 
@@ -77,6 +77,7 @@
             <xsd:extension base="tns:AbstractField">
                 <xsd:sequence>
                     <xsd:element name="display" type="tns:DisplayType"/>
+                    <xsd:element name="value" type="tns:ValueType"/>
                 </xsd:sequence>
                 <xsd:attribute name="newLine" type="xsd:boolean" use="optional" default="true"/>
             </xsd:extension>
@@ -84,11 +85,26 @@
         <!-- type (display class) *DONE* -->
         <!-- name and pointer to some model -->
         <!-- value - also default values and so on -->
-        <!-- validation ajax/on client -->
+        <!-- validation ajax/on client *DONE* -->
         <!-- enabled/disabled *DONE* -->
         <!-- some kind of renderer, probably something like IChoiceRenderer in wicket to translate
         real value to display value and after edit to translate displayed value to real value -->
         <!-- access??? *DONE* -->
+
+        <!-- spring expression language -->
+    </xsd:complexType>
+
+    <xsd:complexType name="ValueType">
+        <xsd:annotation>
+            <xsd:documentation>
+                <!--todo-->
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="type" type="xsd:QName"/>
+        </xsd:sequence>
+        <xsd:attribute name="maxOccurs" type="xsd:int" use="optional"/>
+        <xsd:attribute name="minOccurs" type="xsd:int" use="optional"/>
     </xsd:complexType>
 
     <xsd:complexType name="DisplayType">
@@ -128,28 +144,55 @@
                     </xsd:documentation>
                 </xsd:annotation>
             </xsd:element>
-            <xsd:element name="client" type="xsd:string" minOccurs="0">
-                <xsd:annotation>
-                    <xsd:documentation>
-                        <!--todo-->
-                        javascript stuff, we replate ${this} with proper input id
+            <xsd:element name="client" minOccurs="0">
+                <xsd:complexType>
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            <!--todo-->
+                            javascript stuff, we replate ${this} with proper input id
 
-                        TODO: add event type attribute to client element for this validator
-                    </xsd:documentation>
-                </xsd:annotation>
+                            TODO: add event type attribute to client element for this validator
+                        </xsd:documentation>
+                    </xsd:annotation>
+                    <xsd:simpleContent>
+                        <xsd:extension base="xsd:string">
+                            <xsd:attribute name="event" type="xsd:string" use="required"/>
+                        </xsd:extension>
+                    </xsd:simpleContent>
+                </xsd:complexType>
             </xsd:element>
         </xsd:sequence>
     </xsd:complexType>
 
     <xsd:complexType name="EnabledType">
+        <xsd:annotation>
+            <xsd:documentation>
+                This element is responsible for enabling/disabling input fields. Now it's only simple
+                decision based on state of edited object. When this element is not defined, input field
+                is always enabled. If it's defined and it's not empty than input field is only enabled
+                if object state is corresponds with OperationType definition.
+            </xsd:documentation>
+        </xsd:annotation>
         <xsd:sequence>
-            <!--todo-->
+            <xsd:element ref="tns:operation" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
     </xsd:complexType>
 
     <xsd:complexType name="VisibleType">
-        <!--todo-->
+        <xsd:annotation>
+            <xsd:documentation>
+                This element is responsible for visibility of input fields. Now it's only simple
+                decision based on state of edited object. When this element is not defined, input field
+                is always visible. If it's defined and it's not empty than input field is only visible
+                if object state is corresponds with OperationType definition.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="tns:operation" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
     </xsd:complexType>
+
+    <xsd:element name="operation" type="tns:OperationType"/>
 
     <xsd:simpleType name="OperationType">
         <xsd:annotation>
@@ -165,13 +208,6 @@
                 <xsd:annotation>
                     <xsd:appinfo>
                         <jaxb:typesafeEnumMember name="CREATE"/>
-                    </xsd:appinfo>
-                </xsd:annotation>
-            </xsd:enumeration>
-            <xsd:enumeration value="read">
-                <xsd:annotation>
-                    <xsd:appinfo>
-                        <jaxb:typesafeEnumMember name="READ"/>
                     </xsd:appinfo>
                 </xsd:annotation>
             </xsd:enumeration>

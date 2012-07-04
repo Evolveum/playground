@@ -43,7 +43,11 @@
             </visible>
         </field>
         <field value="user.givenName">
-
+            <label>xml.public.common.user.givenName</label>
+            <help>xml.public.common.user.givenName.help</help>
+            <display type="input">
+                <property name="size">20</property>
+            </display>
         </field>
         <field value="user.familyName" newLine="false">
 
