@@ -25,11 +25,12 @@
     <fieldGroup>
         <label>xml.public.common.user.main</label>
 
-        <field value="user.name">
-            <label>xml.public.common.user.name</label>
-            <help>xml.public.common.user.name.help</help>
-            <tooltip>xml.public.common.user.name.tooltip</tooltip>
+        <field ref="user.name">
             <display type="input">
+                <label>xml.public.common.user.name</label>
+                <help>xml.public.common.user.name.help</help>
+                <tooltip>xml.public.common.user.name.tooltip</tooltip>
+
                 <property name="size">20</property>
             </display>
             <enabled>
@@ -42,17 +43,17 @@
                 <update/>
             </visible>
         </field>
-        <field value="user.givenName">
-            <label>xml.public.common.user.givenName</label>
-            <help>xml.public.common.user.givenName.help</help>
+        <field ref="user.givenName">
             <display type="input">
-                <property name="size">20</property>
+                <label>xml.public.common.user.givenName</label>
+                <help>xml.public.common.user.givenName.help</help>
+
             </display>
         </field>
-        <field value="user.familyName" newLine="false">
+        <field ref="user.familyName" newLine="false">
 
         </field>
-        <field value="user.fullName">
+        <field ref="user.fullName">
 
         </field>
     </fieldGroup>

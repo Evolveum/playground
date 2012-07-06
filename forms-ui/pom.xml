@@ -23,10 +23,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.evolveum.midpoint</groupId>
-    <artifactId>wicket-prototype</artifactId>
+    <artifactId>forms-ui</artifactId>
     <packaging>war</packaging>
     <version>0.0.1-SNAPSHOT</version>
-    <name>wicket-prototype</name>
+    <name>forms-ui</name>
     <description></description>
     <properties>
         <spring.version>3.1.0.RELEASE</spring.version>

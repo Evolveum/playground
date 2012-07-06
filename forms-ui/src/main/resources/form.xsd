@@ -32,7 +32,7 @@
         <xsd:appinfo>
             <jaxb:globalBindings>
                 <xjc:typeSubstitution type="complex"/>
-                <xjc:serializable uid="201206291507"/>
+                <xjc:serializable uid="201207061507"/>
             </jaxb:globalBindings>
         </xsd:appinfo>
     </xsd:annotation>
@@ -44,60 +44,81 @@
             <xsd:element name="include" type="tns:IncludeType" minOccurs="0" maxOccurs="unbounded"/>
             <xsd:element ref="tns:field" minOccurs="0" maxOccurs="unbounded"/>
             <xsd:element name="fieldGroup" type="tns:FieldGroupType" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="tns:fieldRef" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
         <xsd:attribute name="name" type="xsd:string"/>
     </xsd:complexType>
 
-    <xsd:complexType name="AbstractField" abstract="true">
-        <xsd:sequence>
-            <xsd:element name="label" type="xsd:string"/>
-            <xsd:element name="tooltip" type="xsd:string" minOccurs="0"/>
-            <xsd:element name="help" type="xsd:string" minOccurs="0"/>
-
-            <xsd:element ref="tns:enabled"/>
-            <xsd:element ref="tns:visible"/>
-
-            <!--todo move somewhere-->
-            <xsd:element name="cssStyle" type="xsd:string" minOccurs="0"/>
-            <xsd:element name="cssClass" type="xsd:string" minOccurs="0"/>
-        </xsd:sequence>
+    <xsd:complexType name="IncludeType">
+        <xsd:annotation>
+            <xsd:documentation>
+                This type is used for including fields, field groups from other forms.
+                Base file path "." is ${midpoint.home}/forms
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:attribute name="file" type="xsd:string" use="required"/>
     </xsd:complexType>
 
-    <xsd:complexType name="IncludeType">
-        <!-- reference to another form -->
-        <!-- todo later -->
-        <!-- reference to form name (probably file name or other identificator for form)
-      in #{midpoint.home}/schema/forms -->
+    <xsd:complexType name="FieldRefType">
+        <xsd:annotation>
+            <xsd:documentation>
+                <!--todo documentation-->
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:attribute name="name" type="xsd:string" use="required"/>
+    </xsd:complexType>
+
+    <xsd:element name="fieldRef" type="tns:FieldRefType" />
+
+    <xsd:complexType name="AbstractFieldType" abstract="true">
+        <xsd:sequence>
+            <xsd:element name="display" type="tns:DisplayType"/>
+            <xsd:element name="enabled" type="tns:EnabledType"/>
+            <xsd:element name="visible" type="tns:VisibleType"/>
+        </xsd:sequence>
+        <xsd:attribute name="name" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="FieldGroupType">
+        <xsd:complexContent>
+            <xsd:extension base="tns:AbstractFieldType">
+                <xsd:sequence>
+                    <xsd:element ref="tns:field" maxOccurs="unbounded"/>
+                    <xsd:element ref="tns:fieldRef" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
     </xsd:complexType>
 
     <xsd:element name="field" type="tns:FieldType"/>
 
     <xsd:complexType name="FieldType">
         <xsd:complexContent>
-            <xsd:extension base="tns:AbstractField">
+            <xsd:extension base="tns:AbstractFieldType">
                 <xsd:sequence>
-                    <xsd:element name="display" type="tns:DisplayType"/>
                     <xsd:element name="value" type="tns:ValueType"/>
+                    <xsd:element name="validation" type="tns:ValidationType"/>
                 </xsd:sequence>
-                <xsd:attribute name="newLine" type="xsd:boolean" use="optional" default="true"/>
+                <xsd:attribute name="ref" type="xsd:string" use="required"/>
             </xsd:extension>
         </xsd:complexContent>
-        <!-- type (display class) *DONE* -->
+
         <!-- name and pointer to some model -->
         <!-- value - also default values and so on -->
-        <!-- validation ajax/on client *DONE* -->
-        <!-- enabled/disabled *DONE* -->
         <!-- some kind of renderer, probably something like IChoiceRenderer in wicket to translate
         real value to display value and after edit to translate displayed value to real value -->
-        <!-- access??? *DONE* -->
 
         <!-- spring expression language -->
     </xsd:complexType>
 
+
     <xsd:complexType name="ValueType">
         <xsd:annotation>
             <xsd:documentation>
-                <!--todo-->
+                <!--todo documentation-->
+
+                design possibility to invoke java code, create some default impl for example to invoke
+                model methods to list groups on resource or something like that
             </xsd:documentation>
         </xsd:annotation>
         <xsd:sequence>
@@ -109,31 +130,26 @@
 
     <xsd:complexType name="DisplayType">
         <xsd:sequence>
+            <xsd:element name="label" type="xsd:string"/>
+            <xsd:element name="tooltip" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="help" type="xsd:string" minOccurs="0"/>
+
+            <xsd:element name="cssStyle" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="cssClass" type="xsd:string" minOccurs="0"/>
+
             <xsd:element name="property" type="tns:PropertyType" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
         <!-- for default types like text field, label, combo box, etc. -->
         <xsd:attribute name="type" type="xsd:string" use="optional"/>
         <!-- custom implementation of some interface -->
         <xsd:attribute name="class" type="xsd:string" use="optional"/>
-    </xsd:complexType>
-
-    <xsd:complexType name="FieldGroupType">
-        <xsd:complexContent>
-            <xsd:extension base="tns:AbstractField">
-                <xsd:sequence>
-                    <xsd:element ref="tns:field" maxOccurs="unbounded"/>
-                </xsd:sequence>
-            </xsd:extension>
-        </xsd:complexContent>
+        <xsd:attribute name="newLine" type="xsd:boolean" use="optional" default="true"/>
     </xsd:complexType>
 
     <xsd:complexType name="PropertyType">
         <xsd:attribute name="name" type="xsd:string"/>
         <!-- todo value -->
     </xsd:complexType>
-
-    <xsd:element name="enabled" type="tns:EnabledType"/>
-    <xsd:element name="visible" type="tns:VisibleType"/>
 
     <xsd:complexType name="ValidationType">
         <xsd:sequence>
@@ -144,24 +160,25 @@
                     </xsd:documentation>
                 </xsd:annotation>
             </xsd:element>
-            <xsd:element name="client" minOccurs="0">
-                <xsd:complexType>
-                    <xsd:annotation>
-                        <xsd:documentation>
-                            <!--todo-->
-                            javascript stuff, we replate ${this} with proper input id
-
-                            TODO: add event type attribute to client element for this validator
-                        </xsd:documentation>
-                    </xsd:annotation>
-                    <xsd:simpleContent>
-                        <xsd:extension base="xsd:string">
-                            <xsd:attribute name="event" type="xsd:string" use="required"/>
-                        </xsd:extension>
-                    </xsd:simpleContent>
-                </xsd:complexType>
-            </xsd:element>
+            <xsd:element name="client" type="tns:ClientValidationType" minOccurs="0"/>
         </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ClientValidationType">
+        <xsd:annotation>
+            <xsd:documentation>
+                <!--todo-->
+                javascript stuff, we replate ${this} with proper input id, probably
+                some jQuery black magic
+
+                TODO: add event type attribute to client element for this validator
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="event" type="xsd:string" use="required"/>
+            </xsd:extension>
+        </xsd:simpleContent>
     </xsd:complexType>
 
     <xsd:complexType name="EnabledType">
@@ -223,6 +240,7 @@
 
     <!-- field and field group loops -->
     <!-- ajax validators - default existing stuff, users should be able to implement their own validators -->
+    <!-- label width for fields only also global defined in field groups -->
     <!-- todo what else do we want in here? -->
 
 
