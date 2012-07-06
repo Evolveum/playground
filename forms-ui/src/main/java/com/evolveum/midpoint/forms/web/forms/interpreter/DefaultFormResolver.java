@@ -44,13 +44,15 @@ public class DefaultFormResolver implements FormResolver {
     @Override
     public FormType loadForm(IModel<FormModel> formModel) {
         File file = new File(filePath);
-        if (!file.exists() || file.canRead()) {
+        if (!file.exists() || !file.canRead()) {
             //todo exception handling
             throw new RuntimeException("File doesn't exist, or can't be read.");
         }
 
         try {
-            return JaxbUtils.loadForm(file);
+            FormType formType = JaxbUtils.loadForm(file);
+            System.out.println();
+            return formType;
         } catch (Exception ex) {
             //todo exception handling
             throw new RuntimeException("Couldn't parse file.", ex);

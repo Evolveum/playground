@@ -23,6 +23,7 @@ package com.evolveum.midpoint.forms.web.forms.interpreter;
 
 import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.web.forms.StructuredForm;
+import com.evolveum.midpoint.forms.xml.FormType;
 import org.apache.wicket.model.IModel;
 
 /**
@@ -36,5 +37,11 @@ public class FormInterpreter {
     public FormInterpreter(StructuredForm form, IModel<FormModel> model) {
         this.form = form;
         this.model = model;
+    }
+
+    public void interpret(FormResolver resolver) {
+        FormType formType = resolver.loadForm(model);
+
+        //validate includes
     }
 }

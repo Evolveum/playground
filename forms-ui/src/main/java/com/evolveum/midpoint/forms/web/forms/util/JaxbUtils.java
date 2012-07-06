@@ -25,6 +25,7 @@ import com.evolveum.midpoint.forms.xml.FormType;
 import com.evolveum.midpoint.util.exception.SystemException;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
@@ -39,18 +40,20 @@ public class JaxbUtils {
 
     static {
         try {
-            context = JAXBContext.newInstance(FormType.class.getName());
+            context = JAXBContext.newInstance(FormType.class.getPackage().getName());
         } catch (Exception ex) {
             throw new SystemException("Couldn't initialize jaxb context for structured forms.", ex);
         }
     }
 
     public static FormType loadForm(File file) throws JAXBException {
-        return (FormType) createUnmarshaller().unmarshal(file);
+        JAXBElement<FormType> element = (JAXBElement<FormType>)createUnmarshaller().unmarshal(file);
+        return element.getValue();
     }
 
     public static FormType loadForm(InputStream stream) throws JAXBException {
-        return (FormType) createUnmarshaller().unmarshal(stream);
+        JAXBElement<FormType> element = (JAXBElement<FormType>) createUnmarshaller().unmarshal(stream);
+        return element.getValue();
     }
 
     private static Unmarshaller createUnmarshaller() throws JAXBException {

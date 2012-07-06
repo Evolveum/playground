@@ -43,9 +43,10 @@ public class StructuredForm extends Panel {
         Validate.notNull(model, "Form model must not be null.");
 
         try {
-            FormResolver resolver = new DefaultFormResolver("./src/main/java/webapp/WEB-INF/forms/userForm.xml");
+            FormResolver resolver = new DefaultFormResolver(
+                    "/home/lazyman/Work/evolveum/midpoint/playground/forms-ui/src/main/webapp/WEB-INF/forms/userForm.xml");
             FormInterpreter interpreter = new FormInterpreter(this, model);
-
+            interpreter.interpret(resolver);
         } catch (Exception ex) {
             LoggingUtils.logException(LOGGER, "Error occurred during form loading", ex);
         }

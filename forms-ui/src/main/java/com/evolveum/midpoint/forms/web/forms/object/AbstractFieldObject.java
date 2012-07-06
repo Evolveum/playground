@@ -21,12 +21,13 @@
 
 package com.evolveum.midpoint.forms.web.forms.object;
 
+import com.evolveum.midpoint.forms.web.forms.ui.FieldGroup;
 import com.evolveum.midpoint.forms.xml.AbstractFieldType;
 
 /**
  * @author lazyman
  */
-public class AbstractFieldObject<T extends AbstractFieldType> {
+public abstract class AbstractFieldObject<T extends AbstractFieldType> extends FormObject {
 
     private T field;
 

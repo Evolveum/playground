@@ -21,6 +21,7 @@
 
 package com.evolveum.midpoint.forms.web.forms.object;
 
+import com.evolveum.midpoint.forms.web.forms.ui.FieldGroup;
 import com.evolveum.midpoint.forms.xml.FieldGroupType;
 
 /**
@@ -30,5 +31,10 @@ public class FieldGroupObject extends AbstractFieldObject<FieldGroupType> {
 
     public FieldGroupObject(FieldGroupType field) {
         super(field);
+    }
+
+    @Override
+    public void interpret(FieldGroup parent) {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 }

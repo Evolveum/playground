@@ -20,10 +20,25 @@
   ~ Portions Copyrighted 2012 [name of copyright owner]
   -->
 <form xmlns="http://midpoint.evolveum.com/xml/ns/public/gui/form"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       name="User Detail Form">
 
+    <item xsi:type="FieldType" ref="asdf"/>
+
+    <field ref="user.name">
+        <display type="input">
+            <label>xml.public.common.user.name</label>
+            <help>xml.public.common.user.name.help</help>
+            <tooltip>xml.public.common.user.name.tooltip</tooltip>
+
+            <property name="size">20</property>
+        </display>
+    </field>
+
     <fieldGroup>
-        <label>xml.public.common.user.main</label>
+        <display>
+            <label>xml.public.common.user.main</label>
+        </display>
 
         <field ref="user.name">
             <display type="input">
@@ -62,4 +77,7 @@
 
 
     </fieldGroup>
+    <field ref="user.name"/>
+    <fieldRef alias="vilko"/>
+    <field ref="bla bla"/>
 </form>
