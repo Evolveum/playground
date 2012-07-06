@@ -19,16 +19,26 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms.object;
+package com.evolveum.midpoint.forms.web.forms.ui.field;
 
-import com.evolveum.midpoint.forms.xml.FieldGroupType;
+import com.evolveum.midpoint.forms.web.forms.ui.InputField;
+import org.apache.wicket.markup.html.form.TextField;
 
 /**
  * @author lazyman
  */
-public class FieldGroupImpl extends AbstractField<FieldGroupType> {
+public class TextInputField extends InputField {
 
-    public FieldGroupImpl(FieldGroupType field) {
-        super(field);
+    public TextInputField(String id) {
+        super(id);
+
+        initLayout();
+    }
+
+    private void initLayout() {
+        TextField text = new TextField("input");
+        add(text);
+
+        //todo impl text value, style, etc...
     }
 }

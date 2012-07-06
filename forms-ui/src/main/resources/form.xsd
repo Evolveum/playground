@@ -59,7 +59,7 @@
         <xsd:attribute name="file" type="xsd:string" use="required"/>
     </xsd:complexType>
 
-    <xsd:complexType name="FieldRefType">
+    <xsd:complexType name="FieldReferenceType">
         <xsd:annotation>
             <xsd:documentation>
                 <!--todo documentation-->
@@ -68,7 +68,7 @@
         <xsd:attribute name="name" type="xsd:string" use="required"/>
     </xsd:complexType>
 
-    <xsd:element name="fieldRef" type="tns:FieldRefType" />
+    <xsd:element name="fieldRef" type="tns:FieldReferenceType" />
 
     <xsd:complexType name="AbstractFieldType" abstract="true">
         <xsd:sequence>

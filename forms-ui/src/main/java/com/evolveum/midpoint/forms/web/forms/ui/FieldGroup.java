@@ -19,26 +19,10 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms.ui.field;
-
-import com.evolveum.midpoint.forms.web.forms.ui.InputField;
-import org.apache.wicket.markup.html.form.TextField;
+package com.evolveum.midpoint.forms.web.forms.ui;
 
 /**
  * @author lazyman
  */
-public class InputTextField extends InputField {
-
-    public InputTextField(String id) {
-        super(id);
-
-        initLayout();
-    }
-
-    private void initLayout() {
-        TextField text = new TextField("input");
-        add(text);
-
-        //todo impl text value, style, etc...
-    }
+public class FieldGroup {
 }

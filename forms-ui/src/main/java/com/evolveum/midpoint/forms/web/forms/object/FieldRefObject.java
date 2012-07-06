@@ -21,16 +21,18 @@
 
 package com.evolveum.midpoint.forms.web.forms.object;
 
-import com.evolveum.midpoint.forms.xml.FieldType;
+import com.evolveum.midpoint.forms.xml.FieldReferenceType;
+import org.apache.commons.lang.Validate;
 
 /**
  * @author lazyman
  */
-public class FieldImpl extends AbstractField<FieldType>
-{
+public class FieldRefObject {
 
-	public FieldImpl(FieldType field)
-	{
-		super(field);
-	}
+    private FieldReferenceType ref;
+
+    public FieldRefObject(FieldReferenceType ref) {
+        Validate.notNull(ref, "Field reference type must not be null.");
+        this.ref = ref;
+    }
 }

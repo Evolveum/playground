@@ -19,18 +19,16 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms.object;
+package com.evolveum.midpoint.forms.web.forms.interpreter;
 
-import com.evolveum.midpoint.forms.xml.AbstractFieldType;
+import com.evolveum.midpoint.forms.web.forms.FormModel;
+import com.evolveum.midpoint.forms.xml.FormType;
+import org.apache.wicket.model.IModel;
 
 /**
  * @author lazyman
  */
-public class AbstractField<T extends AbstractFieldType> {
+public interface FormResolver {
 
-    private T field;
-
-    public AbstractField(T field) {
-        this.field = field;
-    }
+    FormType loadForm(IModel<FormModel> formModel);
 }

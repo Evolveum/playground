@@ -21,7 +21,9 @@
 
 package com.evolveum.midpoint.forms.web.forms;
 
+import com.evolveum.midpoint.forms.web.forms.interpreter.DefaultFormResolver;
 import com.evolveum.midpoint.forms.web.forms.interpreter.FormInterpreter;
+import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolver;
 import com.evolveum.midpoint.util.logging.LoggingUtils;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
@@ -41,6 +43,7 @@ public class StructuredForm extends Panel {
         Validate.notNull(model, "Form model must not be null.");
 
         try {
+            FormResolver resolver = new DefaultFormResolver("./src/main/java/webapp/WEB-INF/forms/userForm.xml");
             FormInterpreter interpreter = new FormInterpreter(this, model);
 
         } catch (Exception ex) {

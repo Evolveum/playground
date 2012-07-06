@@ -21,8 +21,16 @@
 
 package com.evolveum.midpoint.forms.web.forms.object;
 
+import com.evolveum.midpoint.forms.xml.AbstractFieldType;
+
 /**
  * @author lazyman
  */
-public class FieldRefImpl {
+public class AbstractFieldObject<T extends AbstractFieldType> {
+
+    private T field;
+
+    public AbstractFieldObject(T field) {
+        this.field = field;
+    }
 }
