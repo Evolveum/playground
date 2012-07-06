@@ -19,27 +19,21 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web;
+package com.evolveum.midpoint.web.security;
 
-import com.evolveum.midpoint.forms.web.page.PageHome;
-import org.apache.wicket.Page;
-import org.apache.wicket.protocol.http.WebApplication;
-import org.springframework.stereotype.Component;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * @author lazyman
  */
-@Component("midpointApplication")
-public class MidPointApplication extends WebApplication {
+public class SecurityUtils {
 
-    @Override
-    protected void init() {
-        super.init();
+    public static com.evolveum.midpoint.model.security.api.PrincipalUser getPrincipalUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (!(principal instanceof com.evolveum.midpoint.model.security.api.PrincipalUser)) {
+            return null;
+        }
 
-    }
-
-    @Override
-    public Class<? extends Page> getHomePage() {
-        return PageHome.class;
+        return (com.evolveum.midpoint.model.security.api.PrincipalUser) principal;
     }
 }

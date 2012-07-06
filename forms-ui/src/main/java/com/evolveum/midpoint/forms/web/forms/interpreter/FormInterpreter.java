@@ -19,27 +19,22 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web;
+package com.evolveum.midpoint.forms.web.forms.interpreter;
 
-import com.evolveum.midpoint.forms.web.page.PageHome;
-import org.apache.wicket.Page;
-import org.apache.wicket.protocol.http.WebApplication;
-import org.springframework.stereotype.Component;
+import com.evolveum.midpoint.forms.web.forms.FormModel;
+import com.evolveum.midpoint.forms.web.forms.StructuredForm;
+import org.apache.wicket.model.IModel;
 
 /**
  * @author lazyman
  */
-@Component("midpointApplication")
-public class MidPointApplication extends WebApplication {
+public class FormInterpreter {
 
-    @Override
-    protected void init() {
-        super.init();
+    private StructuredForm form;
+    private IModel<FormModel> model;
 
-    }
-
-    @Override
-    public Class<? extends Page> getHomePage() {
-        return PageHome.class;
+    public FormInterpreter(StructuredForm form, IModel<FormModel> model) {
+        this.form = form;
+        this.model = model;
     }
 }

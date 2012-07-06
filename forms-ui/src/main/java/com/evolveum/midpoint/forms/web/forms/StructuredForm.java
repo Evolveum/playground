@@ -21,6 +21,10 @@
 
 package com.evolveum.midpoint.forms.web.forms;
 
+import com.evolveum.midpoint.forms.web.forms.interpreter.FormInterpreter;
+import com.evolveum.midpoint.util.logging.LoggingUtils;
+import com.evolveum.midpoint.util.logging.Trace;
+import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.Validate;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
@@ -30,12 +34,17 @@ import org.apache.wicket.model.IModel;
  */
 public class StructuredForm extends Panel {
 
-    private IModel<FormModel> model;
+    private static final Trace LOGGER = TraceManager.getTrace(StructuredForm.class);
 
     public StructuredForm(String id, IModel<FormModel> model) {
         super(id);
         Validate.notNull(model, "Form model must not be null.");
 
-        this.model = model;
+        try {
+            FormInterpreter interpreter = new FormInterpreter(this, model);
+
+        } catch (Exception ex) {
+            LoggingUtils.logException(LOGGER, "Error occurred during form loading", ex);
+        }
     }
 }

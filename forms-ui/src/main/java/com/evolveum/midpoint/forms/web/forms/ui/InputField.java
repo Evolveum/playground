@@ -19,27 +19,16 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web;
+package com.evolveum.midpoint.forms.web.forms.ui;
 
-import com.evolveum.midpoint.forms.web.page.PageHome;
-import org.apache.wicket.Page;
-import org.apache.wicket.protocol.http.WebApplication;
-import org.springframework.stereotype.Component;
+import org.apache.wicket.markup.html.panel.Panel;
 
 /**
  * @author lazyman
  */
-@Component("midpointApplication")
-public class MidPointApplication extends WebApplication {
+public class InputField extends Panel {
 
-    @Override
-    protected void init() {
-        super.init();
-
-    }
-
-    @Override
-    public Class<? extends Page> getHomePage() {
-        return PageHome.class;
+    public InputField(String id) {
+        super(id);
     }
 }
