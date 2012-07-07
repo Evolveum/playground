@@ -19,22 +19,18 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms.object;
-
-import com.evolveum.midpoint.forms.web.forms.ui.FieldGroup;
-import com.evolveum.midpoint.forms.xml.FieldType;
+package com.evolveum.midpoint.forms.web.forms.interpreter;
 
 /**
  * @author lazyman
  */
-public class FieldObject extends AbstractFieldObject<FieldType> {
+public class InterpreterException extends Exception {
 
-    public FieldObject(FieldType field) {
-        super(field);
+    public InterpreterException(String s) {
+        super(s);
     }
 
-    @Override
-    public void interpret(FieldGroup parent) {
-        //To change body of implemented methods use File | Settings | File Templates.
+    public InterpreterException(String s, Throwable throwable) {
+        super(s, throwable);
     }
 }

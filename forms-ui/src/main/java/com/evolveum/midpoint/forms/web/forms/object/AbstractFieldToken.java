@@ -21,20 +21,14 @@
 
 package com.evolveum.midpoint.forms.web.forms.object;
 
-import com.evolveum.midpoint.forms.web.forms.ui.FieldGroup;
-import com.evolveum.midpoint.forms.xml.FieldGroupType;
+import com.evolveum.midpoint.forms.xml.AbstractFieldType;
 
 /**
  * @author lazyman
  */
-public class FieldGroupObject extends AbstractFieldObject<FieldGroupType> {
+public abstract class AbstractFieldToken<T extends AbstractFieldType> extends ItemToken<T> {
 
-    public FieldGroupObject(FieldGroupType field) {
-        super(field);
-    }
-
-    @Override
-    public void interpret(FieldGroup parent) {
-        //To change body of implemented methods use File | Settings | File Templates.
+    protected AbstractFieldToken(T item) {
+        super(item);
     }
 }

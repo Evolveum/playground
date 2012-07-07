@@ -66,7 +66,7 @@
     <xsd:complexType name="FormItemType" abstract="true">
         <xsd:annotation>
             <xsd:documentation>
-                This is just paret "marker" type for FieldType, FieldGroupType (represented by
+                This is just parent "marker" type for FieldType, FieldGroupType (represented by
                 AbstractFieldType) and FieldReferenceType
             </xsd:documentation>
         </xsd:annotation>
@@ -108,7 +108,7 @@
         <xsd:complexContent>
             <xsd:extension base="tns:AbstractFieldType">
                 <xsd:sequence>
-                    <xsd:element ref="tns:field" maxOccurs="unbounded"/>
+                    <xsd:element ref="tns:field" minOccurs="0" maxOccurs="unbounded"/>
                     <xsd:element ref="tns:fieldRef" minOccurs="0" maxOccurs="unbounded"/>
                 </xsd:sequence>
             </xsd:extension>

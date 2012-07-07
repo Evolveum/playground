@@ -19,20 +19,25 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms.object;
+package com.evolveum.midpoint.forms.web.forms.ui.group;
 
-import com.evolveum.midpoint.forms.xml.FieldReferenceType;
-import org.apache.commons.lang.Validate;
+import com.evolveum.midpoint.forms.web.forms.ui.FieldGroup;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.TextField;
 
 /**
  * @author lazyman
  */
-public class FieldRefObject {
+public class LabeledFieldGroup extends FieldGroup {
 
-    private FieldReferenceType ref;
+    public LabeledFieldGroup(String id) {
+        super(id);
 
-    public FieldRefObject(FieldReferenceType ref) {
-        Validate.notNull(ref, "Field reference type must not be null.");
-        this.ref = ref;
+        initLayout();
+    }
+
+    private void initLayout() {
+        Label label = new Label("label");
+        add(label);
     }
 }

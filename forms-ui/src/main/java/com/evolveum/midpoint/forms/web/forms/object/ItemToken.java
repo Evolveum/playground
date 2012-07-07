@@ -21,12 +21,16 @@
 
 package com.evolveum.midpoint.forms.web.forms.object;
 
-import com.evolveum.midpoint.forms.web.forms.ui.FieldGroup;
+import com.evolveum.midpoint.forms.xml.FormItemType;
 
 /**
  * @author lazyman
  */
-public abstract class FormObject {
+public abstract class ItemToken<T extends FormItemType> implements Token {
 
-    public abstract void interpret(FieldGroup parent);
+    protected T item;
+
+    public ItemToken(T item) {
+        this.item = item;
+    }
 }

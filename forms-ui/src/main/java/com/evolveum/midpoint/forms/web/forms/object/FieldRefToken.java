@@ -19,16 +19,22 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms.ui;
+package com.evolveum.midpoint.forms.web.forms.object;
 
-import org.apache.wicket.markup.html.border.Border;
+import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
+import com.evolveum.midpoint.forms.xml.FieldReferenceType;
 
 /**
  * @author lazyman
  */
-public class FieldGroup extends Border {
+public class FieldRefToken extends ItemToken<FieldReferenceType> {
 
-    public FieldGroup(String id) {
-        super(id);
+    public FieldRefToken(FieldReferenceType ref) {
+        super(ref);
+    }
+
+    @Override
+    public void interpret(FormToken form) throws InterpreterException {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 }

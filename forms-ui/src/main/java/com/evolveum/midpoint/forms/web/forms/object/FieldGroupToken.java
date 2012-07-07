@@ -19,16 +19,23 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms.ui;
+package com.evolveum.midpoint.forms.web.forms.object;
 
-import org.apache.wicket.markup.html.border.Border;
+import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
+import com.evolveum.midpoint.forms.web.forms.ui.FieldGroup;
+import com.evolveum.midpoint.forms.xml.FieldGroupType;
 
 /**
  * @author lazyman
  */
-public class FieldGroup extends Border {
+public class FieldGroupToken extends AbstractFieldToken<FieldGroupType> {
 
-    public FieldGroup(String id) {
-        super(id);
+    public FieldGroupToken(FieldGroupType field) {
+        super(field);
+    }
+
+    @Override
+    public void interpret(FormToken form) throws InterpreterException {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 }

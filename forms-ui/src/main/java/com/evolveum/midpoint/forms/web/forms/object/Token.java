@@ -21,17 +21,12 @@
 
 package com.evolveum.midpoint.forms.web.forms.object;
 
-import com.evolveum.midpoint.forms.web.forms.ui.FieldGroup;
-import com.evolveum.midpoint.forms.xml.AbstractFieldType;
+import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 
 /**
  * @author lazyman
  */
-public abstract class AbstractFieldObject<T extends AbstractFieldType> extends FormObject {
+public interface Token {
 
-    private T field;
-
-    public AbstractFieldObject(T field) {
-        this.field = field;
-    }
+    void interpret(FormToken form) throws InterpreterException;
 }
