@@ -21,8 +21,14 @@
 
 package com.evolveum.midpoint.forms.web.forms.util;
 
-import com.evolveum.midpoint.forms.xml.FormType;
+import com.evolveum.midpoint.forms.web.forms.object.FieldGroupToken;
+import com.evolveum.midpoint.forms.web.forms.object.FieldRefToken;
+import com.evolveum.midpoint.forms.web.forms.object.FieldToken;
+import com.evolveum.midpoint.forms.web.forms.object.ItemToken;
+import com.evolveum.midpoint.forms.xml.*;
 import com.evolveum.midpoint.util.exception.SystemException;
+import com.evolveum.midpoint.util.logging.Trace;
+import com.evolveum.midpoint.util.logging.TraceManager;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -34,8 +40,9 @@ import java.io.InputStream;
 /**
  * @author lazyman
  */
-public class JaxbUtils {
+public class StructuredFormUtils {
 
+    private static final Trace LOGGER = TraceManager.getTrace(StructuredFormUtils.class);
     private static final JAXBContext context;
 
     static {
@@ -47,7 +54,7 @@ public class JaxbUtils {
     }
 
     public static FormType loadForm(File file) throws JAXBException {
-        JAXBElement<FormType> element = (JAXBElement<FormType>)createUnmarshaller().unmarshal(file);
+        JAXBElement<FormType> element = (JAXBElement<FormType>) createUnmarshaller().unmarshal(file);
         return element.getValue();
     }
 
@@ -60,5 +67,26 @@ public class JaxbUtils {
         Unmarshaller unmarshaller = context.createUnmarshaller();
 
         return unmarshaller;
+    }
+
+    public static ItemToken createItemToken(FormItemType item, boolean allowGroup) {
+        ItemToken token;
+        if (item instanceof FieldType) {
+            token = new FieldToken((FieldType) item);
+        } else if (item instanceof FieldGroupType) {
+            FieldGroupType group = (FieldGroupType) item;
+            if (!allowGroup) {
+                LOGGER.warn("Unsupported field group position '" + group.getName()
+                        + "' (field group in field group is not supported).");
+                return null;
+            }
+            token = new FieldGroupToken(group);
+        } else if (item instanceof FieldReferenceType) {
+            token = new FieldRefToken((FieldReferenceType) item);
+        } else {
+            throw new SystemException("Unsupported token type '" + item.getClass().getName() + "'.");
+        }
+
+        return token;
     }
 }

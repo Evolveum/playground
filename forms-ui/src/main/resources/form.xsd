@@ -108,8 +108,7 @@
         <xsd:complexContent>
             <xsd:extension base="tns:AbstractFieldType">
                 <xsd:sequence>
-                    <xsd:element ref="tns:field" minOccurs="0" maxOccurs="unbounded"/>
-                    <xsd:element ref="tns:fieldRef" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element ref="tns:item" minOccurs="0" maxOccurs="unbounded"/>
                 </xsd:sequence>
             </xsd:extension>
         </xsd:complexContent>

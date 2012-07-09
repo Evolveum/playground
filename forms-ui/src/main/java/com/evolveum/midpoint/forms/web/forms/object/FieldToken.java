@@ -21,9 +21,12 @@
 
 package com.evolveum.midpoint.forms.web.forms.object;
 
+import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.web.forms.ui.FieldGroup;
 import com.evolveum.midpoint.forms.xml.FieldType;
+import org.apache.wicket.Component;
+import org.apache.wicket.model.IModel;
 
 /**
  * @author lazyman
@@ -35,7 +38,7 @@ public class FieldToken extends AbstractFieldToken<FieldType> {
     }
 
     @Override
-    public void interpret(FormToken form) throws InterpreterException {
-        //To change body of implemented methods use File | Settings | File Templates.
+    public Component interpret(String componentId, IModel<FormModel> formModel, FormToken form) throws InterpreterException {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

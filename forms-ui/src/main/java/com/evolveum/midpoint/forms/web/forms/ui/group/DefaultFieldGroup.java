@@ -19,25 +19,22 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms.object;
+package com.evolveum.midpoint.forms.web.forms.ui.group;
 
-import com.evolveum.midpoint.forms.web.forms.FormModel;
-import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
-import com.evolveum.midpoint.forms.xml.FieldReferenceType;
-import org.apache.wicket.Component;
-import org.apache.wicket.model.IModel;
+import com.evolveum.midpoint.forms.web.forms.ui.FieldGroup;
 
 /**
  * @author lazyman
  */
-public class FieldRefToken extends ItemToken<FieldReferenceType> {
+public class DefaultFieldGroup extends FieldGroup {
 
-    public FieldRefToken(FieldReferenceType ref) {
-        super(ref);
+    public DefaultFieldGroup(String id) {
+        super(id);
+
+        initLayout();
     }
 
-    @Override
-    public Component interpret(String componentId, IModel<FormModel> formModel, FormToken form) throws InterpreterException {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    private void initLayout() {
+
     }
 }

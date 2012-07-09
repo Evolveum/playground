@@ -21,12 +21,15 @@
 
 package com.evolveum.midpoint.forms.web.forms.object;
 
+import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
-import com.evolveum.midpoint.forms.web.forms.util.JaxbUtils;
+import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.FormType;
 import com.evolveum.midpoint.forms.xml.IncludeType;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
+import org.apache.wicket.Component;
+import org.apache.wicket.model.IModel;
 
 import java.io.File;
 
@@ -46,7 +49,9 @@ public class IncludeToken implements Token {
     }
 
     @Override
-    public void interpret(FormToken token) throws InterpreterException {
+    public Component interpret(String componentId, IModel<FormModel> formModel, FormToken token)
+            throws InterpreterException {
+
         String alias = include.getAlias();
         if (StringUtils.isEmpty(alias)) {
             throw new InterpreterException("Include with path '" + include.getFile()
@@ -71,14 +76,20 @@ public class IncludeToken implements Token {
         }
 
         try {
-            formType = JaxbUtils.loadForm(formFile);
+            formType = StructuredFormUtils.loadForm(formFile);
         } catch (Exception ex) {
             throw new InterpreterException("Couldn't load structured form from file '" + formFile.getAbsolutePath()
                     + "' defined in <include> with alias '" + alias + "', reason: " + ex.getMessage(), ex);
         }
+
+        return null;
     }
 
-    private FormType getForm() {
+    String getAlias() {
+        return include.getAlias();
+    }
+
+    FormType getForm() {
         return formType;
     }
 }

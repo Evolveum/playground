@@ -22,7 +22,7 @@
 package com.evolveum.midpoint.forms.web.forms.interpreter;
 
 import com.evolveum.midpoint.forms.web.forms.FormModel;
-import com.evolveum.midpoint.forms.web.forms.util.JaxbUtils;
+import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.FormType;
 import org.apache.commons.lang.Validate;
 import org.apache.wicket.model.IModel;
@@ -50,7 +50,7 @@ public class DefaultFormResolver implements FormResolver {
         }
 
         try {
-            FormType formType = JaxbUtils.loadForm(file);
+            FormType formType = StructuredFormUtils.loadForm(file);
             System.out.println();
             return formType;
         } catch (Exception ex) {

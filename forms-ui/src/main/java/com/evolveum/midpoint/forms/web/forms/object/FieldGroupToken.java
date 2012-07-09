@@ -21,21 +21,56 @@
 
 package com.evolveum.midpoint.forms.web.forms.object;
 
+import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.web.forms.ui.FieldGroup;
+import com.evolveum.midpoint.forms.web.forms.ui.group.DefaultFieldGroup;
+import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
+import com.evolveum.midpoint.forms.xml.DisplayType;
 import com.evolveum.midpoint.forms.xml.FieldGroupType;
+import com.evolveum.midpoint.forms.xml.FormItemType;
+import org.apache.wicket.Component;
+import org.apache.wicket.model.IModel;
+
+import javax.xml.bind.JAXBElement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author lazyman
  */
 public class FieldGroupToken extends AbstractFieldToken<FieldGroupType> {
 
+    private List<ItemToken> items = new ArrayList<ItemToken>();
+
     public FieldGroupToken(FieldGroupType field) {
         super(field);
+
+        //initialize field, fieldGroup, fieldRef tokens
+        for (JAXBElement<? extends FormItemType> element : field.getItem()) {
+            FormItemType item = element.getValue();
+            items.add(StructuredFormUtils.createItemToken(item, false));
+        }
     }
 
     @Override
-    public void interpret(FormToken form) throws InterpreterException {
-        //To change body of implemented methods use File | Settings | File Templates.
+    public Component interpret(String componentId, IModel<FormModel> formModel, FormToken form)
+            throws InterpreterException {
+
+        DisplayType display = item.getDisplay();
+
+        FieldGroup groupComponent;
+        if (display == null) {
+            groupComponent = new DefaultFieldGroup(componentId);
+        } else {
+
+        }
+
+
+        for (ItemToken token : items) {
+            token.interpret(componentId, formModel, form);
+        }
+
+        return null;
     }
 }

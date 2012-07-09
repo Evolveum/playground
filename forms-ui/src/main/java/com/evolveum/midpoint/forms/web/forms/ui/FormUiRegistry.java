@@ -22,6 +22,8 @@
 package com.evolveum.midpoint.forms.web.forms.ui;
 
 import com.evolveum.midpoint.forms.web.forms.ui.field.TextInputField;
+import com.evolveum.midpoint.forms.web.forms.ui.group.DefaultFieldGroup;
+import com.evolveum.midpoint.forms.web.forms.ui.group.LabeledFieldGroup;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.Validate;
@@ -36,6 +38,9 @@ public class FormUiRegistry {
 
     public static final String FIELD_TEXT = "text";
 
+    public static final String FIELD_GROUP_DEFAULT = "default";
+    public static final String FIELD_GROUP_LABELED = "labeled";
+
     private static final Trace LOGGER = TraceManager.getTrace(FormUiRegistry.class);
     private static final Map<String, Class<? extends InputField>> FIELD_TYPES =
             new HashMap<String, Class<? extends InputField>>();
@@ -45,6 +50,9 @@ public class FormUiRegistry {
     static {
         FIELD_TYPES.put(FIELD_TEXT, TextInputField.class);
 
+
+        FIELD_GROUP_TYPES.put(FIELD_GROUP_DEFAULT, DefaultFieldGroup.class);
+        FIELD_GROUP_TYPES.put(FIELD_GROUP_LABELED, LabeledFieldGroup.class);
 
     }
 
