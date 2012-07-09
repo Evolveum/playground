@@ -25,10 +25,12 @@ import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.xml.FormType;
 import org.apache.wicket.model.IModel;
 
+import java.io.Serializable;
+
 /**
  * @author lazyman
  */
-public interface FormResolver {
+public interface FormResolver extends Serializable {
 
     FormType loadForm(IModel<FormModel> formModel);
 }

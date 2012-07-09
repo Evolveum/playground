@@ -25,6 +25,7 @@ import com.evolveum.midpoint.model.security.api.PrincipalUser;
 import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.web.security.SecurityUtils;
 
+import javax.xml.namespace.QName;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,27 +34,23 @@ import java.util.Map;
  */
 public class FormModel {
 
-    private PrincipalUser editor;
-    private Map<String, Item> objects = new HashMap<String, Item>();
+    private Map<QName, Item> objects = new HashMap<QName, Item>();
 
     private FormModel() {
         this(null);
     }
 
-    private FormModel(Map<String, Item> objects) {
+    private FormModel(Map<QName, Item> objects) {
         if (objects != null) {
             this.objects.putAll(objects);
         }
     }
 
-    public Item getObject(String key) {
+    public Item getObject(QName key) {
         return objects.get(key);
     }
 
     public PrincipalUser getEditor() {
-        if (editor == null) {
-            editor = SecurityUtils.getPrincipalUser();
-        }
-        return editor;
+        return SecurityUtils.getPrincipalUser();
     }
 }

@@ -23,13 +23,14 @@ package com.evolveum.midpoint.forms.web.forms.object;
 
 import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
-import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
+
+import java.io.Serializable;
 
 /**
  * @author lazyman
  */
-public interface Token {
+public interface Token extends Serializable {
 
-    Component interpret(String componentId, IModel<FormModel> formModel, FormToken form) throws InterpreterException;
+    void interpret(IModel<FormModel> formModel, FormToken form) throws InterpreterException;
 }

@@ -38,7 +38,7 @@ public class FieldToken extends AbstractFieldToken<FieldType> {
     }
 
     @Override
-    public Component interpret(String componentId, IModel<FormModel> formModel, FormToken form) throws InterpreterException {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public void interpret(IModel<FormModel> formModel, FormToken form) throws InterpreterException {
+
     }
 }

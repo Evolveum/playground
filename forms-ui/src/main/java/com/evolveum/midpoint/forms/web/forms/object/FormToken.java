@@ -31,7 +31,6 @@ import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
-import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
 
 import javax.xml.bind.JAXBElement;
@@ -74,8 +73,7 @@ public class FormToken implements Token {
     }
 
     @Override
-    public Component interpret(String componentId, IModel<FormModel> formModel, FormToken form)
-            throws InterpreterException {
+    public void interpret(IModel<FormModel> formModel, FormToken form) throws InterpreterException {
 
         //include alias uniqueness check
         Set<String> aliases = new HashSet<String>();
@@ -92,18 +90,16 @@ public class FormToken implements Token {
 
         //interpret includes
         for (IncludeToken include : includes) {
-            include.interpret(null, formModel, form);
+            include.interpret(formModel, form);
         }
 
         //interpret field, fieldGroup, fieldRef
         for (ItemToken item : items) {
-            Component component = item.interpret(componentId, formModel, form);
+            item.interpret(formModel, form);
         }
-
-        return null;
     }
 
-    IncludeToken getInclude(String alias) {
+    public IncludeToken getInclude(String alias) {
         Validate.notNull(alias, "Include alias must not be null.");
         for (IncludeToken include : includes) {
             if (alias.equals(include.getAlias())) {
@@ -112,5 +108,9 @@ public class FormToken implements Token {
         }
 
         return null;
+    }
+
+    public List<ItemToken> getItems() {
+        return items;
     }
 }

@@ -24,12 +24,25 @@ package com.evolveum.midpoint.forms.web.forms;
 import com.evolveum.midpoint.forms.web.forms.interpreter.DefaultFormResolver;
 import com.evolveum.midpoint.forms.web.forms.interpreter.FormInterpreter;
 import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolver;
+import com.evolveum.midpoint.forms.web.forms.object.AbstractFieldToken;
+import com.evolveum.midpoint.forms.web.forms.object.FieldRefToken;
+import com.evolveum.midpoint.forms.web.forms.object.FormToken;
+import com.evolveum.midpoint.forms.web.forms.object.ItemToken;
 import com.evolveum.midpoint.util.logging.LoggingUtils;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.Validate;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author lazyman
@@ -37,18 +50,83 @@ import org.apache.wicket.model.IModel;
 public class StructuredForm extends Panel {
 
     private static final Trace LOGGER = TraceManager.getTrace(StructuredForm.class);
+    private FormResolver formResolver;
+    private IModel<FormToken> formToken;
+
+    private IModel<FormModel> model;
+
+    private boolean initialized;
 
     public StructuredForm(String id, IModel<FormModel> model) {
         super(id);
         Validate.notNull(model, "Form model must not be null.");
+        this.model = model;
+    }
 
+    public FormResolver getFormResolver() {
+        return formResolver;
+    }
+
+    public void setFormResolver(FormResolver formResolver) {
+        this.formResolver = formResolver;
+    }
+
+    @Override
+    protected void onBeforeRender() {
+        super.onBeforeRender();
+
+        if (initialized) {
+            return;
+        }
+
+        //validate and updated form loaded from XML
         try {
             FormResolver resolver = new DefaultFormResolver(
                     "/home/lazyman/Work/evolveum/midpoint/playground/forms-ui/src/main/webapp/WEB-INF/forms/userForm.xml");
+            //todo user class resolver
             FormInterpreter interpreter = new FormInterpreter(this, model);
-            interpreter.interpret(resolver);
+            FormToken formToken = interpreter.interpret(resolver);
+
+            this.formToken = new Model<FormToken>(formToken);
+
+            initialized = true;
         } catch (Exception ex) {
             LoggingUtils.logException(LOGGER, "Error occurred during form loading", ex);
         }
+
+
+        ListView<ItemToken> items = new ListView<ItemToken>("items", new AbstractReadOnlyModel() {
+
+            @Override
+            public List<ItemToken> getObject() {
+                if (formToken == null || formToken.getObject() == null) {
+                    return new ArrayList<ItemToken>();
+                }
+
+                FormToken form = formToken.getObject();
+                return form.getItems();
+            }
+        }) {
+
+            @Override
+            protected void populateItem(ListItem<ItemToken> listItem) {
+                StructuredForm.this.populateItem(listItem);
+            }
+        };
+        add(items);
+    }
+
+    //method for populating list with fields/field groups in main form (root)
+    private void populateItem(ListItem<ItemToken> listItem) {
+        ItemToken token = listItem.getModelObject();
+        if (token instanceof FieldRefToken) {
+            FieldRefToken fieldRef = (FieldRefToken) token;
+
+            fieldRef.getReferencedToken();
+        }
+
+        AbstractFieldToken fieldToken = (AbstractFieldToken) token;
+        //todo remove sample and implement real stuff
+        listItem.add(new Label("item", new Model<Serializable>(fieldToken)));
     }
 }

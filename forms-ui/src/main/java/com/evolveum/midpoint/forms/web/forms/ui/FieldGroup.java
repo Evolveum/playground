@@ -21,14 +21,34 @@
 
 package com.evolveum.midpoint.forms.web.forms.ui;
 
-import org.apache.wicket.markup.html.border.Border;
+import com.evolveum.midpoint.forms.web.forms.FormModel;
+import com.evolveum.midpoint.forms.web.forms.object.FieldGroupToken;
+import org.apache.commons.lang.Validate;
+import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.IModel;
 
 /**
  * @author lazyman
  */
-public class FieldGroup extends Border {
+public class FieldGroup extends Panel {
 
-    public FieldGroup(String id) {
+    private IModel<FieldGroupToken> fieldGroup;
+    private IModel<FormModel> formModel;
+
+    public FieldGroup(String id, IModel<FieldGroupToken> fieldGroup, IModel<FormModel> formModel) {
         super(id);
+        Validate.notNull(fieldGroup, "Field group token model must not be null.");
+        Validate.notNull(formModel, "Form model must not be null.");
+
+        this.fieldGroup = fieldGroup;
+        this.formModel = formModel;
+    }
+
+    protected IModel<FieldGroupToken> getFieldGroup() {
+        return fieldGroup;
+    }
+
+    protected IModel<FormModel> getFormModel() {
+        return formModel;
     }
 }

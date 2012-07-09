@@ -28,7 +28,6 @@ import com.evolveum.midpoint.forms.xml.FormType;
 import com.evolveum.midpoint.forms.xml.IncludeType;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
-import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
 
 import java.io.File;
@@ -49,7 +48,7 @@ public class IncludeToken implements Token {
     }
 
     @Override
-    public Component interpret(String componentId, IModel<FormModel> formModel, FormToken token)
+    public void interpret(IModel<FormModel> formModel, FormToken parent)
             throws InterpreterException {
 
         String alias = include.getAlias();
@@ -65,9 +64,9 @@ public class IncludeToken implements Token {
 
         File formFile = new File(filePath);
         if (!formFile.isAbsolute()) {
-            File parent = new File(".");    //todo fix parent path, should be ${midpoint.home}/forms
+            File midpointHome = new File(".");    //todo fix parent path, should be ${midpoint.home}/forms
 
-            formFile = new File(parent, filePath);
+            formFile = new File(midpointHome, filePath);
         }
 
         if (!formFile.exists() || !formFile.canRead()) {
@@ -81,8 +80,6 @@ public class IncludeToken implements Token {
             throw new InterpreterException("Couldn't load structured form from file '" + formFile.getAbsolutePath()
                     + "' defined in <include> with alias '" + alias + "', reason: " + ex.getMessage(), ex);
         }
-
-        return null;
     }
 
     String getAlias() {

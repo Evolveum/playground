@@ -23,9 +23,11 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       name="User Detail Form">
 
+    <qname prefix="c">...common-2</qname>
+
     <item xsi:type="FieldType" ref="asdf"/>
 
-    <field ref="user.name">
+    <field ref="c:user/c:name">
         <display type="input">
             <label>xml.public.common.user.name</label>
             <help>xml.public.common.user.name.help</help>

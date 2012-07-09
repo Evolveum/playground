@@ -265,5 +265,14 @@
     <!-- label width for fields only also global defined in field groups -->
     <!-- todo what else do we want in here? -->
 
+    <xsd:element name="qname" type="tns:QNameType"/>
+
+    <xsd:complexType name="QNameType">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="prefix" type="xsd:string" use="required" />
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
 
 </xsd:schema>

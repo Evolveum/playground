@@ -32,12 +32,18 @@ import org.apache.wicket.model.IModel;
  */
 public class FieldRefToken extends ItemToken<FieldReferenceType> {
 
+    private ItemToken referencedToken;
+
     public FieldRefToken(FieldReferenceType ref) {
         super(ref);
     }
 
     @Override
-    public Component interpret(String componentId, IModel<FormModel> formModel, FormToken form) throws InterpreterException {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public void interpret(IModel<FormModel> formModel, FormToken form) throws InterpreterException {
+        //todo check recursion in here, resolve referenced token
+    }
+
+    public ItemToken getReferencedToken() {
+        return referencedToken;
     }
 }

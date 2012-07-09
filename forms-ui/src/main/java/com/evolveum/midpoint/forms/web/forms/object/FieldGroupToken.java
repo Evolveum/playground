@@ -54,23 +54,21 @@ public class FieldGroupToken extends AbstractFieldToken<FieldGroupType> {
     }
 
     @Override
-    public Component interpret(String componentId, IModel<FormModel> formModel, FormToken form)
+    public void interpret(IModel<FormModel> formModel, FormToken form)
             throws InterpreterException {
 
-        DisplayType display = item.getDisplay();
-
-        FieldGroup groupComponent;
-        if (display == null) {
-            groupComponent = new DefaultFieldGroup(componentId);
-        } else {
-
-        }
-
-
-        for (ItemToken token : items) {
-            token.interpret(componentId, formModel, form);
-        }
-
-        return null;
+//        DisplayType display = item.getDisplay();
+//
+//        FieldGroup groupComponent;
+//        if (display == null) {
+//            groupComponent = new DefaultFieldGroup(componentId);
+//        } else {
+//
+//        }
+//
+//
+//        for (ItemToken token : items) {
+//            token.interpret(formModel, form);
+//        }
     }
 }

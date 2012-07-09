@@ -40,10 +40,12 @@ public class FormInterpreter {
         this.model = model;
     }
 
-    public void interpret(FormResolver resolver) throws InterpreterException {
+    public FormToken interpret(FormResolver resolver) throws InterpreterException {
         FormType formType = resolver.loadForm(model);
 
         FormToken formToken = new FormToken(formType);
-        formToken.interpret(null, null, formToken);
+        formToken.interpret(null, formToken);
+
+        return formToken;
     }
 }

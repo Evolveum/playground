@@ -28,9 +28,13 @@ import com.evolveum.midpoint.forms.xml.FormItemType;
  */
 public abstract class ItemToken<T extends FormItemType> implements Token {
 
-    protected T item;
+    private T item;
 
     public ItemToken(T item) {
         this.item = item;
+    }
+
+    public T getItem() {
+        return item;
     }
 }
