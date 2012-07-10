@@ -21,7 +21,15 @@
 
 package com.evolveum.midpoint.forms.web.forms.object;
 
+import com.evolveum.midpoint.forms.web.forms.FormModel;
+import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
+import com.evolveum.midpoint.forms.web.forms.ui.UiRegistry;
 import com.evolveum.midpoint.forms.xml.AbstractFieldType;
+import com.evolveum.midpoint.forms.xml.DisplayType;
+import com.evolveum.midpoint.forms.xml.FieldGroupType;
+import com.evolveum.midpoint.forms.xml.FieldType;
+import org.apache.commons.lang.StringUtils;
+import org.apache.wicket.model.IModel;
 
 /**
  * @author lazyman
@@ -30,5 +38,32 @@ public abstract class AbstractFieldToken<T extends AbstractFieldType> extends It
 
     protected AbstractFieldToken(T item) {
         super(item);
+    }
+
+    @Override
+    public void interpret(IModel<FormModel> formModel, FormToken form) throws InterpreterException {
+        AbstractFieldType abstractField = getItem();
+        DisplayType display = abstractField.getDisplay();
+        if (display == null) {
+            display = new DisplayType();
+            abstractField.setDisplay(display);
+        }
+
+        //if type and class is not defined, insert there default values
+        if (StringUtils.isEmpty(display.getType()) && StringUtils.isEmpty(display.getClazz())) {
+            if (abstractField instanceof FieldType) {
+                display.setType(UiRegistry.FIELD_TEXT);
+            } else if (abstractField instanceof FieldGroupType) {
+                display.setType(UiRegistry.FIELD_GROUP_DEFAULT);
+            }
+        }
+
+        if (abstractField.getEnabled() == null) {
+            //todo implement some default
+        }
+
+        if (abstractField.getVisible() == null) {
+            //todo implement some default
+        }
     }
 }

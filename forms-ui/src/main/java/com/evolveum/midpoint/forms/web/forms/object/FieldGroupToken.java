@@ -52,6 +52,7 @@ public class FieldGroupToken extends AbstractFieldToken<FieldGroupType> {
     @Override
     public void interpret(IModel<FormModel> formModel, FormToken form)
             throws InterpreterException {
+        super.interpret(formModel, form);
 
 //        DisplayType display = item.getDisplay();
 //

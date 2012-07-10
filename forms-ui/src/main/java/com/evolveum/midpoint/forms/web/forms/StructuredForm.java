@@ -31,6 +31,8 @@ import com.evolveum.midpoint.util.logging.LoggingUtils;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.Validate;
+import org.apache.wicket.Component;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -108,7 +110,11 @@ public class StructuredForm extends Panel {
             @Override
             protected void populateItem(ListItem<ItemToken> listItem) {
                 //method for populating list with fields/field groups in main form (root)
-                listItem.add(UiRegistry.createUiItem("item", listItem.getModel(), model));
+                Component item = UiRegistry.createUiItem("item", listItem.getModel(), model);
+                if (item == null) {
+                    item = new Label("item");//todo add some warn stuff here
+                }
+                listItem.add(item);
             }
         };
         add(items);

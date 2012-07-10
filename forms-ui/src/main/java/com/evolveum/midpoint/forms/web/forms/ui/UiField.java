@@ -21,14 +21,34 @@
 
 package com.evolveum.midpoint.forms.web.forms.ui;
 
+import com.evolveum.midpoint.forms.web.forms.FormModel;
+import com.evolveum.midpoint.forms.web.forms.object.FieldToken;
+import org.apache.commons.lang.Validate;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.IModel;
 
 /**
  * @author lazyman
  */
 public class UiField extends Panel {
 
-    public UiField(String id) {
+    private IModel<FieldToken> field;
+    private IModel<FormModel> formModel;
+
+    public UiField(String id, IModel<FieldToken> field, IModel<FormModel> formModel) {
         super(id);
+        Validate.notNull(field, "Field token model must not be null.");
+        Validate.notNull(formModel, "Form model must not be null.");
+
+        this.field = field;
+        this.formModel = formModel;
+    }
+
+    protected IModel<FieldToken> getField() {
+        return field;
+    }
+
+    protected IModel<FormModel> getFormModel() {
+        return formModel;
     }
 }

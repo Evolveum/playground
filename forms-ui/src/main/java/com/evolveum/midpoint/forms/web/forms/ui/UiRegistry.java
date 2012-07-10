@@ -26,8 +26,12 @@ import com.evolveum.midpoint.forms.web.forms.object.*;
 import com.evolveum.midpoint.forms.web.forms.ui.field.TextInputField;
 import com.evolveum.midpoint.forms.web.forms.ui.group.DefaultFieldGroup;
 import com.evolveum.midpoint.forms.web.forms.ui.group.LabeledFieldGroup;
+import com.evolveum.midpoint.forms.xml.AbstractFieldType;
+import com.evolveum.midpoint.forms.xml.DisplayType;
+import com.evolveum.midpoint.forms.xml.FormItemType;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.basic.Label;
@@ -36,6 +40,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
 import java.io.Serializable;
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,28 +69,57 @@ public class UiRegistry {
 
     }
 
-    public static Class<? extends UiField> getInputFieldByType(String type) {
-        Validate.notEmpty(type, "Input field type must not be null.");
+    public static Class<? extends UiFieldGroup> getFieldGroup(String type, String clazz) {
+        if (StringUtils.isNotEmpty(type)) {
+            return FIELD_GROUP_TYPES.get(type);
+        }
 
-        return FIELD_TYPES.get(type);
+        if (StringUtils.isEmpty(clazz)) {
+            return FIELD_GROUP_TYPES.get(FIELD_GROUP_DEFAULT);
+        }
+
+        Class<? extends UiFieldGroup> field =  getItemByClass(clazz, UiFieldGroup.class);
+        if (field == null) {
+            LOGGER.warn("Unknown field group type/class {}/{} using defaults.", new Object[]{type, clazz});
+            return FIELD_GROUP_TYPES.get(FIELD_TEXT);
+        }
+
+        return field;
     }
 
-    public static Class<? extends UiField> getInputFieldByClass(String clazzName) {
+    public static Class<? extends UiField> getField(String type, String clazz) {
+        if (StringUtils.isNotEmpty(type)) {
+            return FIELD_TYPES.get(type);
+        }
+
+        if (StringUtils.isEmpty(clazz)) {
+            return FIELD_TYPES.get(FIELD_TEXT);
+        }
+
+        Class<? extends UiField> field =  getItemByClass(clazz, UiField.class);
+        if (field == null) {
+            LOGGER.warn("Unknown field type/class {}/{} using defaults.", new Object[]{type, clazz});
+            return FIELD_TYPES.get(FIELD_TEXT);
+        }
+
+        return field;
+    }
+
+    private static <T> Class<T> getItemByClass(String clazzName, Class<T> type) {
         Validate.notEmpty(clazzName, "Input field class name must not be null.");
 
         try {
             ClassLoader classLoader = UiRegistry.class.getClassLoader();
             Class<?> clazz = classLoader.loadClass(clazzName);
 
-            if (UiField.class.isAssignableFrom(clazz)) {
-                return (Class<? extends UiField>) clazz;
+            if (type.isAssignableFrom(clazz)) {
+                return (Class<T>) clazz;
             } else {
-                LOGGER.error("Class '{}' doesn't extends '{}' therefore can't be used.",
-                        new Object[]{clazzName, UiField.class.getName()});
+                LOGGER.warn("Class '{}' doesn't extends '{}' therefore can't be used.",
+                        new Object[]{clazzName, type.getName()});
             }
         } catch (Exception ex) {
-            //todo error handling
-            ex.printStackTrace();
+            LOGGER.warn("Couldn't get field '{}' by class '{}'", new Object[]{type, clazzName});
         }
 
         return null;
@@ -98,18 +132,38 @@ public class UiRegistry {
             itemModel = new PropertyModel<ItemToken>(itemModel, "referencedToken");
         }
 
+        DisplayType display = null;
+
         token = itemModel.getObject();
-        if (token instanceof FieldGroupToken) {
-
-        } else if (token instanceof FieldToken) {
-
-        } else {
-            //todo log some error
+        if (token instanceof AbstractFieldToken) {
+            AbstractFieldToken<AbstractFieldType> fieldToken = (AbstractFieldToken<AbstractFieldType>)token;
+            AbstractFieldType abstractField = fieldToken.getItem();
+            display = abstractField.getDisplay();
         }
 
+        try {
+            if (token instanceof FieldGroupToken) {
+                Class<? extends UiFieldGroup> clazz = getFieldGroup(display.getType(), display.getClazz());
+                Constructor constructor = clazz.getConstructor(String.class, IModel.class, IModel.class);
+                return (UiFieldGroup) constructor.newInstance(componentId, itemModel, formModel);
+            } else if (token instanceof FieldToken) {
+                Class<? extends UiField> clazz = getField(display.getType(), display.getClazz());
+                Constructor constructor = clazz.getConstructor(String.class, IModel.class, IModel.class);
+                return (UiField) constructor.newInstance(componentId, itemModel, formModel);
+            }
+        } catch (Exception ex) {
+            LOGGER.warn("Couldn't initialize component from token, reason: {}", new Object[]{ex.getMessage()});
+            LOGGER.debug("Couldn't initialize component from token.", ex);
+        }
 
-        AbstractFieldToken fieldToken = (AbstractFieldToken) token;
-        //todo remove sample and implement real stuff
-        return new Label(componentId, new Model<Serializable>(fieldToken));
+        LOGGER.warn("Using default for component initialization.");
+
+        if (token instanceof FieldGroupToken) {
+            return new DefaultFieldGroup(componentId, (IModel<FieldGroupToken>) itemModel, formModel);
+        } else if (token instanceof FieldToken) {
+            return new TextInputField(componentId, (IModel<FieldToken>) itemModel, formModel);
+        }
+
+        return null;
     }
 }

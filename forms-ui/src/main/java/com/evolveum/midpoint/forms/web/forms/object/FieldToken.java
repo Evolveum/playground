@@ -37,6 +37,8 @@ public class FieldToken extends AbstractFieldToken<FieldType> {
 
     @Override
     public void interpret(IModel<FormModel> formModel, FormToken form) throws InterpreterException {
+        super.interpret(formModel, form);
 
+        //todo implement
     }
 }

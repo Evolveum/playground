@@ -23,8 +23,15 @@ package com.evolveum.midpoint.forms.web.forms.ui.group;
 
 import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.web.forms.object.FieldGroupToken;
+import com.evolveum.midpoint.forms.web.forms.object.ItemToken;
 import com.evolveum.midpoint.forms.web.forms.ui.UiFieldGroup;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author lazyman
@@ -33,5 +40,28 @@ public class DefaultFieldGroup extends UiFieldGroup {
 
     public DefaultFieldGroup(String id, IModel<FieldGroupToken> fieldGroup, IModel<FormModel> formModel) {
         super(id, fieldGroup, formModel);
+
+        initLayout();
+    }
+
+    private void initLayout() {
+        ListView<ItemToken> group = new ListView<ItemToken>("group",
+                new AbstractReadOnlyModel<List<? extends ItemToken>>() {
+            @Override
+            public List<ItemToken> getObject() {
+                List<ItemToken> children = new ArrayList<ItemToken>();
+
+                //todo get children from field group
+
+                return children;
+            }
+        }) {
+
+            @Override
+            protected void populateItem(ListItem listItem) {
+                //todo implement children stuff
+            }
+        };
+        add(group);
     }
 }
