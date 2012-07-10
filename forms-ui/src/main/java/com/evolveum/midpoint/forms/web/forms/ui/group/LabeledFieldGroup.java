@@ -23,7 +23,7 @@ package com.evolveum.midpoint.forms.web.forms.ui.group;
 
 import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.web.forms.object.FieldGroupToken;
-import com.evolveum.midpoint.forms.web.forms.ui.FieldGroup;
+import com.evolveum.midpoint.forms.web.forms.ui.UiFieldGroup;
 import com.evolveum.midpoint.forms.xml.DisplayType;
 import com.evolveum.midpoint.forms.xml.FieldGroupType;
 import org.apache.wicket.markup.html.basic.Label;
@@ -33,7 +33,7 @@ import org.apache.wicket.model.IModel;
 /**
  * @author lazyman
  */
-public class LabeledFieldGroup extends FieldGroup {
+public class LabeledFieldGroup extends UiFieldGroup {
 
     public LabeledFieldGroup(String id, IModel<FieldGroupToken> fieldGroup, IModel<FormModel> formModel) {
         super(id, fieldGroup, formModel);

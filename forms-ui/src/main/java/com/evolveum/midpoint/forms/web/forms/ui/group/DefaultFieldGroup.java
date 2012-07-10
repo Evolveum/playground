@@ -23,13 +23,13 @@ package com.evolveum.midpoint.forms.web.forms.ui.group;
 
 import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.web.forms.object.FieldGroupToken;
-import com.evolveum.midpoint.forms.web.forms.ui.FieldGroup;
+import com.evolveum.midpoint.forms.web.forms.ui.UiFieldGroup;
 import org.apache.wicket.model.IModel;
 
 /**
  * @author lazyman
  */
-public class DefaultFieldGroup extends FieldGroup {
+public class DefaultFieldGroup extends UiFieldGroup {
 
     public DefaultFieldGroup(String id, IModel<FieldGroupToken> fieldGroup, IModel<FormModel> formModel) {
         super(id, fieldGroup, formModel);

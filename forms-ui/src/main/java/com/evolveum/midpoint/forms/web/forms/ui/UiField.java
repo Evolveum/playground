@@ -26,9 +26,9 @@ import org.apache.wicket.markup.html.panel.Panel;
 /**
  * @author lazyman
  */
-public class InputField extends Panel {
+public class UiField extends Panel {
 
-    public InputField(String id) {
+    public UiField(String id) {
         super(id);
     }
 }

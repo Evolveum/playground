@@ -24,15 +24,13 @@ package com.evolveum.midpoint.forms.web.forms;
 import com.evolveum.midpoint.forms.web.forms.interpreter.DefaultFormResolver;
 import com.evolveum.midpoint.forms.web.forms.interpreter.FormInterpreter;
 import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolver;
-import com.evolveum.midpoint.forms.web.forms.object.AbstractFieldToken;
-import com.evolveum.midpoint.forms.web.forms.object.FieldRefToken;
 import com.evolveum.midpoint.forms.web.forms.object.FormToken;
 import com.evolveum.midpoint.forms.web.forms.object.ItemToken;
+import com.evolveum.midpoint.forms.web.forms.ui.UiRegistry;
 import com.evolveum.midpoint.util.logging.LoggingUtils;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.Validate;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -40,7 +38,6 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,23 +107,10 @@ public class StructuredForm extends Panel {
 
             @Override
             protected void populateItem(ListItem<ItemToken> listItem) {
-                StructuredForm.this.populateItem(listItem);
+                //method for populating list with fields/field groups in main form (root)
+                listItem.add(UiRegistry.createUiItem("item", listItem.getModel(), model));
             }
         };
         add(items);
-    }
-
-    //method for populating list with fields/field groups in main form (root)
-    private void populateItem(ListItem<ItemToken> listItem) {
-        ItemToken token = listItem.getModelObject();
-        if (token instanceof FieldRefToken) {
-            FieldRefToken fieldRef = (FieldRefToken) token;
-
-            fieldRef.getReferencedToken();
-        }
-
-        AbstractFieldToken fieldToken = (AbstractFieldToken) token;
-        //todo remove sample and implement real stuff
-        listItem.add(new Label("item", new Model<Serializable>(fieldToken)));
     }
 }

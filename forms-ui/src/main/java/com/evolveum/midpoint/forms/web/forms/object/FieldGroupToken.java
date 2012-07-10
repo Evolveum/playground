@@ -23,13 +23,9 @@ package com.evolveum.midpoint.forms.web.forms.object;
 
 import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
-import com.evolveum.midpoint.forms.web.forms.ui.FieldGroup;
-import com.evolveum.midpoint.forms.web.forms.ui.group.DefaultFieldGroup;
 import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
-import com.evolveum.midpoint.forms.xml.DisplayType;
 import com.evolveum.midpoint.forms.xml.FieldGroupType;
 import com.evolveum.midpoint.forms.xml.FormItemType;
-import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
 
 import javax.xml.bind.JAXBElement;

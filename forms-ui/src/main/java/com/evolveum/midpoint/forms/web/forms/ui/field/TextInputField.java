@@ -21,13 +21,13 @@
 
 package com.evolveum.midpoint.forms.web.forms.ui.field;
 
-import com.evolveum.midpoint.forms.web.forms.ui.InputField;
+import com.evolveum.midpoint.forms.web.forms.ui.UiField;
 import org.apache.wicket.markup.html.form.TextField;
 
 /**
  * @author lazyman
  */
-public class TextInputField extends InputField {
+public class TextInputField extends UiField {
 
     public TextInputField(String id) {
         super(id);

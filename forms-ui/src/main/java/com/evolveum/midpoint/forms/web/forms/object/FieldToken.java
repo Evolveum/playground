@@ -23,9 +23,7 @@ package com.evolveum.midpoint.forms.web.forms.object;
 
 import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
-import com.evolveum.midpoint.forms.web.forms.ui.FieldGroup;
 import com.evolveum.midpoint.forms.xml.FieldType;
-import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
 
 /**

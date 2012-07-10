@@ -21,31 +21,39 @@
 
 package com.evolveum.midpoint.forms.web.forms.ui;
 
+import com.evolveum.midpoint.forms.web.forms.FormModel;
+import com.evolveum.midpoint.forms.web.forms.object.*;
 import com.evolveum.midpoint.forms.web.forms.ui.field.TextInputField;
 import com.evolveum.midpoint.forms.web.forms.ui.group.DefaultFieldGroup;
 import com.evolveum.midpoint.forms.web.forms.ui.group.LabeledFieldGroup;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.Validate;
+import org.apache.wicket.Component;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author lazyman
  */
-public class FormUiRegistry {
+public class UiRegistry {
 
     public static final String FIELD_TEXT = "text";
 
     public static final String FIELD_GROUP_DEFAULT = "default";
     public static final String FIELD_GROUP_LABELED = "labeled";
 
-    private static final Trace LOGGER = TraceManager.getTrace(FormUiRegistry.class);
-    private static final Map<String, Class<? extends InputField>> FIELD_TYPES =
-            new HashMap<String, Class<? extends InputField>>();
-    private static final Map<String, Class<? extends FieldGroup>> FIELD_GROUP_TYPES =
-            new HashMap<String, Class<? extends FieldGroup>>();
+    private static final Trace LOGGER = TraceManager.getTrace(UiRegistry.class);
+    private static final Map<String, Class<? extends UiField>> FIELD_TYPES =
+            new HashMap<String, Class<? extends UiField>>();
+    private static final Map<String, Class<? extends UiFieldGroup>> FIELD_GROUP_TYPES =
+            new HashMap<String, Class<? extends UiFieldGroup>>();
 
     static {
         FIELD_TYPES.put(FIELD_TEXT, TextInputField.class);
@@ -56,24 +64,24 @@ public class FormUiRegistry {
 
     }
 
-    public static Class<? extends InputField> getInputFieldByType(String type) {
+    public static Class<? extends UiField> getInputFieldByType(String type) {
         Validate.notEmpty(type, "Input field type must not be null.");
 
         return FIELD_TYPES.get(type);
     }
 
-    public static Class<? extends InputField> getInputFieldByClass(String clazzName) {
+    public static Class<? extends UiField> getInputFieldByClass(String clazzName) {
         Validate.notEmpty(clazzName, "Input field class name must not be null.");
 
         try {
-            ClassLoader classLoader = FormUiRegistry.class.getClassLoader();
+            ClassLoader classLoader = UiRegistry.class.getClassLoader();
             Class<?> clazz = classLoader.loadClass(clazzName);
 
-            if (InputField.class.isAssignableFrom(clazz)) {
-                return (Class<? extends InputField>) clazz;
+            if (UiField.class.isAssignableFrom(clazz)) {
+                return (Class<? extends UiField>) clazz;
             } else {
                 LOGGER.error("Class '{}' doesn't extends '{}' therefore can't be used.",
-                        new Object[]{clazzName, InputField.class.getName()});
+                        new Object[]{clazzName, UiField.class.getName()});
             }
         } catch (Exception ex) {
             //todo error handling
@@ -81,5 +89,27 @@ public class FormUiRegistry {
         }
 
         return null;
+    }
+
+    public static Component createUiItem(String componentId, IModel<? extends ItemToken> itemModel,
+                                         IModel<FormModel> formModel) {
+        ItemToken token = itemModel.getObject();
+        if (token instanceof FieldRefToken) {
+            itemModel = new PropertyModel<ItemToken>(itemModel, "referencedToken");
+        }
+
+        token = itemModel.getObject();
+        if (token instanceof FieldGroupToken) {
+
+        } else if (token instanceof FieldToken) {
+
+        } else {
+            //todo log some error
+        }
+
+
+        AbstractFieldToken fieldToken = (AbstractFieldToken) token;
+        //todo remove sample and implement real stuff
+        return new Label(componentId, new Model<Serializable>(fieldToken));
     }
 }

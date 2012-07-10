@@ -30,12 +30,12 @@ import org.apache.wicket.model.IModel;
 /**
  * @author lazyman
  */
-public class FieldGroup extends Panel {
+public class UiFieldGroup extends Panel {
 
     private IModel<FieldGroupToken> fieldGroup;
     private IModel<FormModel> formModel;
 
-    public FieldGroup(String id, IModel<FieldGroupToken> fieldGroup, IModel<FormModel> formModel) {
+    public UiFieldGroup(String id, IModel<FieldGroupToken> fieldGroup, IModel<FormModel> formModel) {
         super(id);
         Validate.notNull(fieldGroup, "Field group token model must not be null.");
         Validate.notNull(formModel, "Form model must not be null.");
