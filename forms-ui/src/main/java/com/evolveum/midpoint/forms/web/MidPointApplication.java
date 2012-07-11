@@ -36,6 +36,7 @@ public class MidPointApplication extends WebApplication {
     protected void init() {
         super.init();
 
+        getMarkupSettings().setStripWicketTags(true);
     }
 
     @Override

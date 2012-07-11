@@ -40,7 +40,14 @@ public class FieldRefToken extends ItemToken<FieldReferenceType> {
 
     @Override
     public void interpret(IModel<FormModel> formModel, FormToken form) throws InterpreterException {
+        //todo validate ref element
+
         //todo check recursion in here, resolve referenced token
+
+        referencedToken = form.getFormItem(getItem().getAlias());
+        if (referencedToken == null) {
+            //todo exception
+        }
     }
 
     public ItemToken getReferencedToken() {

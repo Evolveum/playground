@@ -164,6 +164,7 @@ public class UiRegistry {
             return new TextInputField(componentId, (IModel<FieldToken>) itemModel, formModel);
         }
 
-        return null;
+        //todo add some warn stuff here about that we couldn't create component
+        return new Label(componentId);
     }
 }

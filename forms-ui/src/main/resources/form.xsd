@@ -80,7 +80,7 @@
         </xsd:annotation>
         <xsd:complexContent>
             <xsd:extension base="tns:FormItemType">
-                <xsd:attribute name="include" type="xsd:string" use="required"/>
+                <xsd:attribute name="include" type="xsd:string" use="optional"/>
                 <xsd:attribute name="alias" type="xsd:string" use="required"/>
             </xsd:extension>
         </xsd:complexContent>

@@ -54,18 +54,12 @@ public class FieldGroupToken extends AbstractFieldToken<FieldGroupType> {
             throws InterpreterException {
         super.interpret(formModel, form);
 
-//        DisplayType display = item.getDisplay();
-//
-//        FieldGroup groupComponent;
-//        if (display == null) {
-//            groupComponent = new DefaultFieldGroup(componentId);
-//        } else {
-//
-//        }
-//
-//
-//        for (ItemToken token : items) {
-//            token.interpret(formModel, form);
-//        }
+        for (ItemToken token : items) {
+            token.interpret(formModel, form);
+        }
+    }
+
+    public List<ItemToken> getItems() {
+        return items;
     }
 }

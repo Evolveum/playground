@@ -38,7 +38,7 @@
     </field>
 
     <fieldGroup>
-        <display>
+        <display type="labeled">
             <label>xml.public.common.user.main</label>
         </display>
 
@@ -67,19 +67,29 @@
 
             </display>
         </field>
-        <field ref="user.familyName" newLine="false">
-
+        <field ref="user.familyName">
+            <display newLine="false">
+                <label>xml.public.common.user.familyName</label>
+            </display>
         </field>
         <field ref="user.fullName">
 
         </field>
     </fieldGroup>
+
     <fieldGroup>
-        <label>xml.public.common.user.settings</label>
+        <display type="labeled">
+            <label>xml.public.common.user.settings</label>
+        </display>
 
-
+        <fieldRef alias="vilko"/>
     </fieldGroup>
+
     <field ref="user.name"/>
-    <fieldRef alias="vilko"/>
-    <field ref="bla bla"/>
+
+    <field name="vilko" ref="bla bla">
+        <display>
+            <label>vilkoo</label>
+        </display>
+    </field>
 </form>

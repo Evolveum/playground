@@ -25,6 +25,8 @@ import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.web.forms.object.FieldGroupToken;
 import com.evolveum.midpoint.forms.web.forms.object.ItemToken;
 import com.evolveum.midpoint.forms.web.forms.ui.UiFieldGroup;
+import com.evolveum.midpoint.forms.web.forms.ui.UiRegistry;
+import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
@@ -49,19 +51,23 @@ public class DefaultFieldGroup extends UiFieldGroup {
                 new AbstractReadOnlyModel<List<? extends ItemToken>>() {
             @Override
             public List<ItemToken> getObject() {
-                List<ItemToken> children = new ArrayList<ItemToken>();
-
-                //todo get children from field group
-
-                return children;
+                return createChildrenList();
             }
         }) {
 
             @Override
             protected void populateItem(ListItem listItem) {
-                //todo implement children stuff
+                //method for populating list with fields/field groups
+                Component groupItem = UiRegistry.createUiItem("groupItem", listItem.getModel(), getFormModel());
+                groupItem.setRenderBodyOnly(true);
+                listItem.add(groupItem);
             }
         };
         add(group);
+    }
+
+    private List<ItemToken> createChildrenList() {
+        FieldGroupToken groupToken = getFieldGroup().getObject();
+        return groupToken.getItems();
     }
 }

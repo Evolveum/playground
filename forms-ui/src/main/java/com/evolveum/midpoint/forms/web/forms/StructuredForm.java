@@ -110,11 +110,7 @@ public class StructuredForm extends Panel {
             @Override
             protected void populateItem(ListItem<ItemToken> listItem) {
                 //method for populating list with fields/field groups in main form (root)
-                Component item = UiRegistry.createUiItem("item", listItem.getModel(), model);
-                if (item == null) {
-                    item = new Label("item");//todo add some warn stuff here
-                }
-                listItem.add(item);
+                listItem.add(UiRegistry.createUiItem("item", listItem.getModel(), model));
             }
         };
         add(items);

@@ -24,9 +24,7 @@ package com.evolveum.midpoint.forms.web.forms.object;
 import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
-import com.evolveum.midpoint.forms.xml.FormItemType;
-import com.evolveum.midpoint.forms.xml.FormType;
-import com.evolveum.midpoint.forms.xml.IncludeType;
+import com.evolveum.midpoint.forms.xml.*;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.StringUtils;
@@ -112,5 +110,34 @@ public class FormToken implements Token {
 
     public List<ItemToken> getItems() {
         return items;
+    }
+
+    public AbstractFieldToken getFormItem(String name) {
+        return getFormItem(name, items);
+    }
+
+    private AbstractFieldToken getFormItem(String name, List<ItemToken> items) {
+        for (ItemToken token : items) {
+            if (token instanceof FieldRefToken) {
+                continue;
+            }
+
+            AbstractFieldToken<AbstractFieldType> fieldToken = (AbstractFieldToken)token;
+            AbstractFieldType fieldType = fieldToken.getItem();
+            if (name.equals(fieldType.getName())) {
+                return fieldToken;
+            }
+
+            if (token instanceof FieldGroupToken) {
+                FieldGroupToken groupToken = (FieldGroupToken) token;
+
+                AbstractFieldToken result = getFormItem(name, groupToken.getItems());
+                if (result != null) {
+                    return  result;
+                }
+            }
+        }
+
+        return null;
     }
 }

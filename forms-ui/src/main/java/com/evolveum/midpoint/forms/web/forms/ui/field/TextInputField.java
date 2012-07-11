@@ -24,7 +24,10 @@ package com.evolveum.midpoint.forms.web.forms.ui.field;
 import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.web.forms.object.FieldToken;
 import com.evolveum.midpoint.forms.web.forms.ui.UiField;
+import com.evolveum.midpoint.forms.xml.DisplayType;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 
 /**
@@ -39,9 +42,24 @@ public class TextInputField extends UiField {
     }
 
     private void initLayout() {
+        Label label = new Label("label", new AbstractReadOnlyModel<String>() {
+
+            @Override
+            public String getObject() {
+                return getLabelText();
+            }
+        });
+        add(label);
+
         TextField text = new TextField("input");
         add(text);
 
         //todo impl text value, style, etc...
+    }
+
+    private String getLabelText() {
+        FieldToken field = getField().getObject();
+        DisplayType display = field.getItem().getDisplay();
+        return display.getLabel();
     }
 }
