@@ -40,7 +40,7 @@ public class IncludeToken implements Token {
     private IncludeType include;
 
     //included form type
-    private FormType formType;
+    private FormToken includedFormToken;
 
     public IncludeToken(IncludeType include) {
         Validate.notNull(include, "Include must not be null.");
@@ -75,18 +75,20 @@ public class IncludeToken implements Token {
         }
 
         try {
-            formType = StructuredFormUtils.loadForm(formFile);
+            FormType formType = StructuredFormUtils.loadForm(formFile);
+            includedFormToken = new FormToken(formType);
+            includedFormToken.interpret(formModel, includedFormToken);
         } catch (Exception ex) {
             throw new InterpreterException("Couldn't load structured form from file '" + formFile.getAbsolutePath()
                     + "' defined in <include> with alias '" + alias + "', reason: " + ex.getMessage(), ex);
         }
     }
 
-    String getAlias() {
+    public String getAlias() {
         return include.getAlias();
     }
 
-    FormType getForm() {
-        return formType;
+    public FormToken getIncludedFormToken() {
+        return includedFormToken;
     }
 }

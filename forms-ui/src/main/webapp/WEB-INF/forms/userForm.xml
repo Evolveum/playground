@@ -73,7 +73,9 @@
             </display>
         </field>
         <field ref="user.fullName">
-
+            <display newLine="false">
+                <label>xml.public.common.user.fullName</label>
+            </display>
         </field>
     </fieldGroup>
 

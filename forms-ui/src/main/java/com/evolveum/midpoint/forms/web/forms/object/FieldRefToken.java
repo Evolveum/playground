@@ -24,7 +24,7 @@ package com.evolveum.midpoint.forms.web.forms.object;
 import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.xml.FieldReferenceType;
-import org.apache.wicket.Component;
+import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.model.IModel;
 
 /**
@@ -40,13 +40,27 @@ public class FieldRefToken extends ItemToken<FieldReferenceType> {
 
     @Override
     public void interpret(IModel<FormModel> formModel, FormToken form) throws InterpreterException {
-        //todo validate ref element
+        FieldReferenceType reference = getItem();
+        if (StringUtils.isEmpty(reference.getAlias())) {
+            throw new InterpreterException("Field reference alias is empty or not defined.");
+        }
 
-        //todo check recursion in here, resolve referenced token
+        //todo check recursion in here
 
-        referencedToken = form.getFormItem(getItem().getAlias());
+        if (StringUtils.isNotEmpty(reference.getInclude())) {
+            IncludeToken include = form.getInclude(reference.getInclude());
+            if (include == null) {
+                throw new InterpreterException("Include with alias '" + reference.getInclude()
+                        + "' was not found in form.");
+            }
+            referencedToken = include.getIncludedFormToken().getFormItem(reference.getAlias());
+        } else {
+            referencedToken = form.getFormItem(reference.getAlias());
+        }
+
         if (referencedToken == null) {
-            //todo exception
+            throw new InterpreterException("Referenced field '" + reference.getAlias() + "' by include '"
+                    + reference.getAlias() + "' was not found in included form.");
         }
     }
 

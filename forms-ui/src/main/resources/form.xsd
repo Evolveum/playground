@@ -24,6 +24,7 @@
             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
             xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+            xmlns:t="http://prism.evolveum.com/xml/ns/public/types-2"
             elementFormDefault="qualified"
             jaxb:extensionBindingPrefixes="xjc"
             jaxb:version="2.0">
@@ -36,6 +37,15 @@
             </jaxb:globalBindings>
         </xsd:appinfo>
     </xsd:annotation>
+
+    <!--<xsd:import namespace="http://prism.evolveum.com/xml/ns/public/types-2"-->
+                <!--schemaLocation="http://prism.evolveum.com/xml/ns/public/types-2">-->
+        <!--<xsd:annotation>-->
+            <!--<xsd:documentation>-->
+                <!--Prism data types.-->
+            <!--</xsd:documentation>-->
+        <!--</xsd:annotation>-->
+    <!--</xsd:import>-->
 
     <xsd:element name="form" type="tns:FormType"/>
 
@@ -121,7 +131,7 @@
                     <xsd:element name="value" type="tns:ValueType"/>
                     <xsd:element name="validation" type="tns:ValidationType"/>
                 </xsd:sequence>
-                <xsd:attribute name="ref" type="xsd:string" use="required"/>
+                <xsd:attribute name="ref" type="xsd:string" use="required"/> <!-- todo change to t:XPathType -->
             </xsd:extension>
         </xsd:complexContent>
 
@@ -161,9 +171,9 @@
 
             <xsd:element name="property" type="tns:PropertyType" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
-        <!-- for default types like text field, label, combo box, etc. -->
+        <!-- for default included types like text field, label, combo box, etc. -->
         <xsd:attribute name="type" type="xsd:string" use="optional"/>
-        <!-- custom implementation of some interface -->
+        <!-- custom implementation of UiField/UiFieldGroup -->
         <xsd:attribute name="class" type="xsd:string" use="optional"/>
         <xsd:attribute name="newLine" type="xsd:boolean" use="optional" default="true"/>
     </xsd:complexType>
@@ -260,19 +270,36 @@
         </xsd:restriction>
     </xsd:simpleType>
 
+    <xsd:element name="fieldLoop" type="tns:FieldLoopType"/>
+
+    <xsd:complexType name="FieldLoopType">
+        <xsd:annotation>
+            <xsd:documentation>
+                <!--todo-->
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="tns:FormItemType">
+                <xsd:sequence>
+                    <xsd:element ref="tns:item" maxOccurs="unbounded"/>
+                </xsd:sequence>
+                <xsd:attribute name="ref" type="xsd:string"/> <!-- todo change to t:XPathType -->
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
     <!-- field and field group loops -->
     <!-- ajax validators - default existing stuff, users should be able to implement their own validators -->
     <!-- label width for fields only also global defined in field groups -->
     <!-- todo what else do we want in here? -->
 
-    <xsd:element name="qname" type="tns:QNameType"/>
-
-    <xsd:complexType name="QNameType">
-        <xsd:simpleContent>
-            <xsd:extension base="xsd:string">
-                <xsd:attribute name="prefix" type="xsd:string" use="required" />
-            </xsd:extension>
-        </xsd:simpleContent>
-    </xsd:complexType>
+    <!--<xsd:element name="qname" type="tns:QNameType"/>-->
+    <!--<xsd:complexType name="QNameType">-->
+        <!--<xsd:simpleContent>-->
+            <!--<xsd:extension base="xsd:string">-->
+                <!--<xsd:attribute name="prefix" type="xsd:string" use="required" />-->
+            <!--</xsd:extension>-->
+        <!--</xsd:simpleContent>-->
+    <!--</xsd:complexType>-->
 
 </xsd:schema>
