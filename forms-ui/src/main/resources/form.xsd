@@ -131,7 +131,7 @@
                     <xsd:element name="value" type="tns:ValueType"/>
                     <xsd:element name="validation" type="tns:ValidationType"/>
                 </xsd:sequence>
-                <xsd:attribute name="ref" type="xsd:string" use="required"/> <!-- todo change to t:XPathType -->
+                <xsd:attribute name="ref" type="xsd:string" use="required"/> <!-- todo change to t:XPathType ?? -->
             </xsd:extension>
         </xsd:complexContent>
 
@@ -283,7 +283,7 @@
                 <xsd:sequence>
                     <xsd:element ref="tns:item" maxOccurs="unbounded"/>
                 </xsd:sequence>
-                <xsd:attribute name="ref" type="xsd:string"/> <!-- todo change to t:XPathType -->
+                <xsd:attribute name="ref" type="xsd:string"/> <!-- todo change to t:XPathType ?? -->
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>

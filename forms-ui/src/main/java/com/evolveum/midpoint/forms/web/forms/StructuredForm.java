@@ -40,6 +40,8 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,8 +82,11 @@ public class StructuredForm extends Panel {
 
         //validate and updated form loaded from XML
         try {
-            FormResolver resolver = new DefaultFormResolver(
-                    "/home/lazyman/Work/evolveum/midpoint/playground/forms-ui/src/main/webapp/WEB-INF/forms/userForm.xml");
+            ClassLoader loader = StructuredForm.class.getClassLoader();
+            URL url = loader.getResource("sample/userForm.xml");
+            File file = new File(url.toURI());
+
+            FormResolver resolver = new DefaultFormResolver(file.getAbsolutePath());
             //todo user class resolver
             FormInterpreter interpreter = new FormInterpreter(this, model);
             FormToken formToken = interpreter.interpret(resolver);

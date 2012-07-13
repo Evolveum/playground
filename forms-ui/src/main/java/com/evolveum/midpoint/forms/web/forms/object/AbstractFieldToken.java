@@ -42,7 +42,6 @@ public abstract class AbstractFieldToken<T extends AbstractFieldType> extends It
 
     @Override
     public void interpret(IModel<FormModel> formModel, FormToken form) throws InterpreterException {
-        System.out.println("FIELD: " + getItem());
         AbstractFieldType abstractField = getItem();
         DisplayType display = abstractField.getDisplay();
         if (display == null) {

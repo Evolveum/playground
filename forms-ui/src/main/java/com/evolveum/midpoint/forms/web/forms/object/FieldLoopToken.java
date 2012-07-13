@@ -24,6 +24,7 @@ package com.evolveum.midpoint.forms.web.forms.object;
 import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.xml.FieldLoopType;
+import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.model.IModel;
 
 /**
@@ -37,6 +38,12 @@ public class FieldLoopToken extends ItemToken<FieldLoopType> {
 
     @Override
     public void interpret(IModel<FormModel> formModel, FormToken form) throws InterpreterException {
+        FieldLoopType loopType = getItem();
+        if (StringUtils.isEmpty(loopType.getRef())) {
+            throw new InterpreterException("Field loop type doesn't have ref attribute defined (or it's empty).");
+        }
+
+        //todo check if ref attribute points to list value
         //todo implement
     }
 }
