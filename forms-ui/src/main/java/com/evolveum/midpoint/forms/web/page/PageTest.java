@@ -19,32 +19,31 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web;
+package com.evolveum.midpoint.forms.web.page;
 
-import com.evolveum.midpoint.forms.web.page.PageHome;
-import com.evolveum.midpoint.forms.web.page.PageTest;
-import org.apache.wicket.Page;
-import org.apache.wicket.protocol.http.WebApplication;
-import org.springframework.stereotype.Component;
+import com.evolveum.midpoint.forms.web.forms.FormModel;
+import com.evolveum.midpoint.forms.web.forms.StructuredForm;
+import org.apache.wicket.devutils.debugbar.DebugBar;
+import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.model.LoadableDetachableModel;
 
 /**
  * @author lazyman
  */
-@Component("midpointApplication")
-public class MidPointApplication extends WebApplication {
+public class PageTest extends WebPage {
 
-    @Override
-    protected void init() {
-        super.init();
-
-        getMarkupSettings().setStripWicketTags(true);
-
-        mountPage("/home", PageHome.class);
-        mountPage("/test", PageTest.class);
+    public PageTest() {
+        initLayout();
     }
 
-    @Override
-    public Class<? extends Page> getHomePage() {
-        return PageHome.class;
+    private void initLayout() {
+        DebugBar debugPanel = new DebugBar("debugPanel");
+        add(debugPanel);
+
+        Form mainForm = new Form("mainForm");
+        add(mainForm);
+
+
     }
 }

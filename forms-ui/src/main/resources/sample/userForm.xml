@@ -28,7 +28,7 @@
     <item xsi:type="FieldType" ref="asdf"/>
 
     <field ref="c:user/c:name">
-        <display type="input">
+        <display type="text">
             <label>xml.public.common.user.name</label>
             <help>xml.public.common.user.name.help</help>
             <tooltip>xml.public.common.user.name.tooltip</tooltip>
@@ -43,7 +43,7 @@
         </display>
 
         <field ref="user.name">
-            <display type="input">
+            <display type="text">
                 <label>xml.public.common.user.name</label>
                 <help>xml.public.common.user.name.help</help>
                 <tooltip>xml.public.common.user.name.tooltip</tooltip>
@@ -61,7 +61,7 @@
             </visible>
         </field>
         <field ref="user.givenName">
-            <display type="input">
+            <display type="text">
                 <label>xml.public.common.user.givenName</label>
                 <help>xml.public.common.user.givenName.help</help>
 

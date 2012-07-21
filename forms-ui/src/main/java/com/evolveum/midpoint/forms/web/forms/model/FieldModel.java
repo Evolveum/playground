@@ -19,32 +19,22 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web;
+package com.evolveum.midpoint.forms.web.forms.model;
 
-import com.evolveum.midpoint.forms.web.page.PageHome;
-import com.evolveum.midpoint.forms.web.page.PageTest;
-import org.apache.wicket.Page;
-import org.apache.wicket.protocol.http.WebApplication;
-import org.springframework.stereotype.Component;
+import com.evolveum.midpoint.forms.web.forms.object.FieldToken;
+
+import java.util.List;
 
 /**
  * @author lazyman
  */
-@Component("midpointApplication")
-public class MidPointApplication extends WebApplication {
+public class FieldModel extends BaseFieldModel {
 
-    @Override
-    protected void init() {
-        super.init();
+    private List<ValueModel> valueModels;
+    private ValueStatus status;
+    private FieldToken token;
 
-        getMarkupSettings().setStripWicketTags(true);
-
-        mountPage("/home", PageHome.class);
-        mountPage("/test", PageTest.class);
-    }
-
-    @Override
-    public Class<? extends Page> getHomePage() {
-        return PageHome.class;
+    public FieldModel(BaseFieldModel parentModel) {
+        super(parentModel);
     }
 }

@@ -88,18 +88,18 @@ public class UiRegistry {
     }
 
     public static Class<? extends UiField> getField(String type, String clazz) {
+        Class<? extends UiField> field = null;
         if (StringUtils.isNotEmpty(type)) {
-            return FIELD_TYPES.get(type);
+            field = FIELD_TYPES.get(type);
         }
 
-        if (StringUtils.isEmpty(clazz)) {
-            return FIELD_TYPES.get(FIELD_TEXT);
+        if (field == null && !StringUtils.isEmpty(clazz)) {
+            field = getItemByClass(clazz, UiField.class);
         }
 
-        Class<? extends UiField> field =  getItemByClass(clazz, UiField.class);
         if (field == null) {
             LOGGER.warn("Unknown field type/class {}/{} using defaults.", new Object[]{type, clazz});
-            return FIELD_TYPES.get(FIELD_TEXT);
+            field = FIELD_TYPES.get(FIELD_TEXT);
         }
 
         return field;

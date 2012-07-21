@@ -1,0 +1,301 @@
+<!--
+  ~ Copyright (c) 2012 Evolveum
+  ~
+  ~ The contents of this file are subject to the terms
+  ~ of the Common Development and Distribution License
+  ~ (the License). You may not use this file except in
+  ~ compliance with the License.
+  ~
+  ~ You can obtain a copy of the License at
+  ~ http://www.opensource.org/licenses/cddl1 or
+  ~ CDDLv1.0.txt file in the source code distribution.
+  ~ See the License for the specific language governing
+  ~ permission and limitations under the License.
+  ~
+  ~ If applicable, add the following below the CDDL Header,
+  ~ with the fields enclosed by brackets [] replaced by
+  ~ your own identifying information:
+  ~
+  ~ Portions Copyrighted 2012 [name of copyright owner]
+  -->
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title></title>
+    <style>
+        div {
+            margin: 0;
+            padding: 0;
+        }
+
+        .group {
+            border: 1px solid #0f0;
+        }
+
+        .line {
+            border: 1px solid #000;
+        }
+
+        .field {
+            border: 1px solid #f00;
+
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .value {
+
+        }
+
+        .label {
+            display: inline-block;
+        }
+
+        .input {
+            display: inline-block;
+        }
+
+        .buttons {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+field jednoduchy
+<br/>
+
+<div class="field">
+    <div class="value">
+        <div class="label">
+            <span>Full name</span>
+        </div>
+        <div class="input">
+            <input type="text"/>
+        </div>
+        <div class="buttons">
+            <a href="#">+</a>
+            <a href="#">-</a>
+        </div>
+    </div>
+</div>
+<hr/>
+
+multivalue field
+<br/>
+
+<div class="field">
+    <div class="value">
+        <div class="label">
+            <span>Full name</span>
+        </div>
+        <div class="input">
+            <input type="text"/>
+        </div>
+        <div class="buttons">
+            <a href="#">+</a>
+            <a href="#">-</a>
+        </div>
+    </div>
+    <div class="value">
+        <div class="label">
+            <span>Full name</span>
+        </div>
+        <div class="input">
+            <input type="text"/>
+        </div>
+        <div class="buttons">
+            <a href="#">+</a>
+            <a href="#">-</a>
+        </div>
+    </div>
+</div>
+<hr/>
+
+two fields one line
+<br/>
+
+<div class="line">
+    <div class="field">
+        <div class="value">
+            <div class="label">
+                <span>Given name</span>
+            </div>
+            <div class="input">
+                <input type="text"/>
+            </div>
+            <div class="buttons">
+                <a href="#">+</a>
+                <a href="#">-</a>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <div class="value">
+            <div class="label">
+                <span>Family name</span>
+            </div>
+            <div class="input">
+                <input type="text"/>
+            </div>
+            <div class="buttons">
+                <a href="#">+</a>
+                <a href="#">-</a>
+            </div>
+        </div>
+    </div>
+</div>
+<hr/>
+
+two fields one line
+<br/>
+
+<div class="line">
+    <div class="field">
+        <div class="value">
+            <div class="label">
+                <span>Given name</span>
+            </div>
+            <div class="input">
+                <input type="text"/>
+            </div>
+            <div class="buttons">
+                <a href="#">+</a>
+                <a href="#">-</a>
+            </div>
+        </div>
+        <div class="value">
+            <div class="label">
+                <span>Given name</span>
+            </div>
+            <div class="input">
+                <input type="text"/>
+            </div>
+            <div class="buttons">
+                <a href="#">+</a>
+                <a href="#">-</a>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <div class="value">
+            <div class="label">
+                <span>Family name</span>
+            </div>
+            <div class="input">
+                <input type="text"/>
+            </div>
+            <div class="buttons">
+                <a href="#">+</a>
+                <a href="#">-</a>
+            </div>
+        </div>
+    </div>
+</div>
+<hr/>
+
+groupa
+<div class="group">
+    <span>Group name</span>
+
+    <div class="line">
+        <div class="field">
+            <div class="value">
+                <span>Given name</span>
+
+                <div class="input">
+                    <input type="text"/>
+                </div>
+                <div class="buttons">
+                    <a href="#">+</a>
+                    <a href="#">-</a>
+                </div>
+            </div>
+            <div class="value">
+                <span>Given name</span>
+
+                <div class="input">
+                    <input type="text"/>
+                </div>
+                <div class="buttons">
+                    <a href="#">+</a>
+                    <a href="#">-</a>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <div class="value">
+                <div class="label">
+                    <span>Family name</span>
+                </div>
+                <div class="input">
+                    <input type="text"/>
+                </div>
+                <div class="buttons">
+                    <a href="#">+</a>
+                    <a href="#">-</a>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <div class="value">
+                <div class="label">
+                    <span>Family name</span>
+                </div>
+                <div class="input">
+                    <input type="text"/>
+                </div>
+                <div class="buttons">
+                    <a href="#">+</a>
+                    <a href="#">-</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line">
+        <div class="field">
+            <div class="value">
+                <div class="label">
+                    <span>Given name</span>
+                </div>
+                <div class="input">
+                    <input type="text"/>
+                </div>
+                <div class="buttons">
+                    <a href="#">+</a>
+                    <a href="#">-</a>
+                </div>
+            </div>
+            <div class="value">
+                <div class="label">
+                    <span>Given name</span>
+                </div>
+                <div class="input">
+                    <input type="text"/>
+                </div>
+                <div class="buttons">
+                    <a href="#">+</a>
+                    <a href="#">-</a>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <div class="value">
+                <div class="label">
+                    <span>Family name</span>
+                </div>
+                <div class="input">
+                    <input type="text"/>
+                </div>
+                <div class="buttons">
+                    <a href="#">+</a>
+                    <a href="#">-</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -19,32 +19,19 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web;
+package com.evolveum.midpoint.forms.web.forms.model;
 
-import com.evolveum.midpoint.forms.web.page.PageHome;
-import com.evolveum.midpoint.forms.web.page.PageTest;
-import org.apache.wicket.Page;
-import org.apache.wicket.protocol.http.WebApplication;
-import org.springframework.stereotype.Component;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author lazyman
  */
-@Component("midpointApplication")
-public class MidPointApplication extends WebApplication {
+public class FieldLoopModel extends BaseFieldModel {
 
-    @Override
-    protected void init() {
-        super.init();
+    private List<BaseFieldModel> baseFieldModels = new ArrayList<BaseFieldModel>();
 
-        getMarkupSettings().setStripWicketTags(true);
-
-        mountPage("/home", PageHome.class);
-        mountPage("/test", PageTest.class);
-    }
-
-    @Override
-    public Class<? extends Page> getHomePage() {
-        return PageHome.class;
+    public FieldLoopModel(BaseFieldModel parentModel) {
+        super(parentModel);
     }
 }

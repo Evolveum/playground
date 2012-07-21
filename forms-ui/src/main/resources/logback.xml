@@ -31,4 +31,5 @@
     </root>
 
     <logger name="org.apache.wicket" level="WARN"/>
+    <logger name="com.evolveum.midpoint" level="DEBUG"/>
 </configuration>
