@@ -21,30 +21,28 @@
 
 package com.evolveum.midpoint.forms.web.forms.interpreter;
 
-import com.evolveum.midpoint.forms.web.forms.FormModel;
-import com.evolveum.midpoint.forms.web.forms.StructuredForm;
 import com.evolveum.midpoint.forms.web.forms.object.FormToken;
 import com.evolveum.midpoint.forms.xml.FormType;
-import org.apache.wicket.model.IModel;
+import com.evolveum.midpoint.prism.Item;
+
+import java.util.Map;
 
 /**
  * @author lazyman
  */
 public class FormInterpreter {
 
-    private StructuredForm form;
-    private IModel<FormModel> model;
+    private Map<String, Item> objects;
 
-    public FormInterpreter(StructuredForm form, IModel<FormModel> model) {
-        this.form = form;
-        this.model = model;
+    public FormInterpreter(Map<String, Item> objects) {
+        this.objects = objects;
     }
 
     public FormToken interpret(FormResolver resolver) throws InterpreterException {
-        FormType formType = resolver.loadForm(model);
+        FormType formType = resolver.loadForm(objects);
 
         FormToken formToken = new FormToken(formType);
-        formToken.interpret(null, formToken);
+        formToken.interpret(formToken, null);
 
         return formToken;
     }

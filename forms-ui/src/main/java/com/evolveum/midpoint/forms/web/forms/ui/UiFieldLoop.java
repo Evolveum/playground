@@ -21,7 +21,6 @@
 
 package com.evolveum.midpoint.forms.web.forms.ui;
 
-import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.web.forms.object.FieldLoopToken;
 import org.apache.commons.lang.Validate;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -33,14 +32,11 @@ import org.apache.wicket.model.IModel;
 public class UiFieldLoop extends Panel {
 
     private IModel<FieldLoopToken> fieldLoop;
-    private IModel<FormModel> formModel;
 
-    public UiFieldLoop(String id, IModel<FieldLoopToken> fieldLoop, IModel<FormModel> formModel) {
+    public UiFieldLoop(String id, IModel<FieldLoopToken> fieldLoop) {
         super(id);
         Validate.notNull(fieldLoop, "Field loop token model must not be null.");
-        Validate.notNull(formModel, "Form model must not be null.");
 
         this.fieldLoop = fieldLoop;
-        this.formModel = formModel;
     }
 }

@@ -21,13 +21,13 @@
 
 package com.evolveum.midpoint.forms.web.forms.interpreter;
 
-import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.FormType;
+import com.evolveum.midpoint.prism.Item;
 import org.apache.commons.lang.Validate;
-import org.apache.wicket.model.IModel;
 
 import java.io.File;
+import java.util.Map;
 
 /**
  * @author lazyman
@@ -42,7 +42,7 @@ public class DefaultFormResolver implements FormResolver {
     }
 
     @Override
-    public FormType loadForm(IModel<FormModel> formModel) {
+    public FormType loadForm(Map<String, Item> objects) {
         File file = new File(filePath);
         if (!file.exists() || !file.canRead()) {
             //todo exception handling

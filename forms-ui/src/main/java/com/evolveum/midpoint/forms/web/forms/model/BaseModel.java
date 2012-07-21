@@ -21,8 +21,6 @@
 
 package com.evolveum.midpoint.forms.web.forms.model;
 
-import org.apache.commons.lang.Validate;
-
 import java.io.Serializable;
 
 /**
@@ -33,8 +31,6 @@ public class BaseModel<T extends BaseModel> implements Serializable {
     private T parentModel;
 
     public BaseModel(T parentModel) {
-        Validate.notNull(parentModel, "Parent model must not be null.");
-
         this.parentModel = parentModel;
     }
 

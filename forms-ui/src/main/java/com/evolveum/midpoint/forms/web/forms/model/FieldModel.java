@@ -34,7 +34,7 @@ public class FieldModel extends BaseFieldModel {
     private ValueStatus status;
     private FieldToken token;
 
-    public FieldModel(BaseFieldModel parentModel) {
+    public FieldModel(BaseModel parentModel) {
         super(parentModel);
     }
 }

@@ -21,7 +21,6 @@
 
 package com.evolveum.midpoint.forms.web.forms.ui.group;
 
-import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.web.forms.object.FieldGroupToken;
 import com.evolveum.midpoint.forms.web.forms.object.ItemToken;
 import com.evolveum.midpoint.forms.web.forms.ui.UiFieldGroup;
@@ -32,7 +31,6 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,8 +38,8 @@ import java.util.List;
  */
 public class DefaultFieldGroup extends UiFieldGroup {
 
-    public DefaultFieldGroup(String id, IModel<FieldGroupToken> fieldGroup, IModel<FormModel> formModel) {
-        super(id, fieldGroup, formModel);
+    public DefaultFieldGroup(String id, IModel<FieldGroupToken> fieldGroup) {
+        super(id, fieldGroup);
 
         initLayout();
     }
@@ -49,16 +47,16 @@ public class DefaultFieldGroup extends UiFieldGroup {
     private void initLayout() {
         ListView<ItemToken> group = new ListView<ItemToken>("group",
                 new AbstractReadOnlyModel<List<? extends ItemToken>>() {
-            @Override
-            public List<ItemToken> getObject() {
-                return createChildrenList();
-            }
-        }) {
+                    @Override
+                    public List<ItemToken> getObject() {
+                        return createChildrenList();
+                    }
+                }) {
 
             @Override
             protected void populateItem(ListItem listItem) {
                 //method for populating list with fields/field groups
-                Component groupItem = UiRegistry.createUiItem("groupItem", listItem.getModel(), getFormModel());
+                Component groupItem = UiRegistry.createUiItem("groupItem", listItem.getModel());
                 groupItem.setRenderBodyOnly(true);
                 listItem.add(groupItem);
             }

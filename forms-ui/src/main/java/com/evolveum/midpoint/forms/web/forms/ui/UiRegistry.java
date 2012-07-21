@@ -21,14 +21,12 @@
 
 package com.evolveum.midpoint.forms.web.forms.ui;
 
-import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.web.forms.object.*;
 import com.evolveum.midpoint.forms.web.forms.ui.field.TextInputField;
 import com.evolveum.midpoint.forms.web.forms.ui.group.DefaultFieldGroup;
 import com.evolveum.midpoint.forms.web.forms.ui.group.LabeledFieldGroup;
 import com.evolveum.midpoint.forms.xml.AbstractFieldType;
 import com.evolveum.midpoint.forms.xml.DisplayType;
-import com.evolveum.midpoint.forms.xml.FormItemType;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.StringUtils;
@@ -36,10 +34,8 @@ import org.apache.commons.lang.Validate;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
-import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
@@ -78,7 +74,7 @@ public class UiRegistry {
             return FIELD_GROUP_TYPES.get(FIELD_GROUP_DEFAULT);
         }
 
-        Class<? extends UiFieldGroup> field =  getItemByClass(clazz, UiFieldGroup.class);
+        Class<? extends UiFieldGroup> field = getItemByClass(clazz, UiFieldGroup.class);
         if (field == null) {
             LOGGER.warn("Unknown field group type/class {}/{} using defaults.", new Object[]{type, clazz});
             return FIELD_GROUP_TYPES.get(FIELD_TEXT);
@@ -125,8 +121,7 @@ public class UiRegistry {
         return null;
     }
 
-    public static Component createUiItem(String componentId, IModel<? extends ItemToken> itemModel,
-                                         IModel<FormModel> formModel) {
+    public static Component createUiItem(String componentId, IModel<? extends ItemToken> itemModel) {
         ItemToken token = itemModel.getObject();
         if (token instanceof FieldRefToken) {
             itemModel = new PropertyModel<ItemToken>(itemModel, "referencedToken");
@@ -136,7 +131,7 @@ public class UiRegistry {
 
         token = itemModel.getObject();
         if (token instanceof AbstractFieldToken) {
-            AbstractFieldToken<AbstractFieldType> fieldToken = (AbstractFieldToken<AbstractFieldType>)token;
+            AbstractFieldToken<AbstractFieldType> fieldToken = (AbstractFieldToken<AbstractFieldType>) token;
             AbstractFieldType abstractField = fieldToken.getItem();
             display = abstractField.getDisplay();
         }
@@ -145,11 +140,11 @@ public class UiRegistry {
             if (token instanceof FieldGroupToken) {
                 Class<? extends UiFieldGroup> clazz = getFieldGroup(display.getType(), display.getClazz());
                 Constructor constructor = clazz.getConstructor(String.class, IModel.class, IModel.class);
-                return (UiFieldGroup) constructor.newInstance(componentId, itemModel, formModel);
+                return (UiFieldGroup) constructor.newInstance(componentId, itemModel);
             } else if (token instanceof FieldToken) {
                 Class<? extends UiField> clazz = getField(display.getType(), display.getClazz());
                 Constructor constructor = clazz.getConstructor(String.class, IModel.class, IModel.class);
-                return (UiField) constructor.newInstance(componentId, itemModel, formModel);
+                return (UiField) constructor.newInstance(componentId, itemModel);
             }
         } catch (Exception ex) {
             LOGGER.warn("Couldn't initialize component from token, reason: {}", new Object[]{ex.getMessage()});
@@ -159,9 +154,9 @@ public class UiRegistry {
         LOGGER.warn("Using default for component initialization.");
 
         if (token instanceof FieldGroupToken) {
-            return new DefaultFieldGroup(componentId, (IModel<FieldGroupToken>) itemModel, formModel);
+            return new DefaultFieldGroup(componentId, (IModel<FieldGroupToken>) itemModel);
         } else if (token instanceof FieldToken) {
-            return new TextInputField(componentId, (IModel<FieldToken>) itemModel, formModel);
+            return new TextInputField(componentId, (IModel<FieldToken>) itemModel);
         }
 
         //todo add some warn stuff here about that we couldn't create component

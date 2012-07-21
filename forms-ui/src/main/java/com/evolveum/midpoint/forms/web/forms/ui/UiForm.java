@@ -25,13 +25,16 @@ import com.evolveum.midpoint.forms.web.forms.model.BaseFieldModel;
 import com.evolveum.midpoint.forms.web.forms.model.FormModel;
 import org.apache.commons.lang.Validate;
 import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.PackageResourceReference;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -69,23 +72,25 @@ public class UiForm extends Panel {
     }
 
     private void initLayout() {
-        ListView line = new ListView("line", createLineModel()) {
+        ListView<LineModel> line = new ListView<LineModel>("line", createLineModel()) {
 
             @Override
             protected void populateItem(ListItem item) {
-                //To change body of implemented methods use File | Settings | File Templates.
+                item.add(new Label("lineBody", new Model<Serializable>("asdf")));
+                //todo create fields, field groups, field loops
             }
         };
         add(line);
     }
 
-    private IModel<List<BaseFieldModel>> createLineModel() {
-        return new AbstractReadOnlyModel<List<BaseFieldModel>>() {
+    private IModel<List<LineModel>> createLineModel() {
+        return new AbstractReadOnlyModel<List<LineModel>>() {
 
             @Override
-            public List<BaseFieldModel> getObject() {
+            public List<LineModel> getObject() {
                 FormModel formModel = model.getObject();
-                return formModel.getBaseFieldModels();
+
+                return LineModel.createLineModels(formModel, formModel.getBaseFieldModels());
             }
         };
     }

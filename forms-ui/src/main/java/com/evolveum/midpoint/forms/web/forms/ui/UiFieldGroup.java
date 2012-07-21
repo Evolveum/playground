@@ -21,7 +21,6 @@
 
 package com.evolveum.midpoint.forms.web.forms.ui;
 
-import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.web.forms.object.FieldGroupToken;
 import org.apache.commons.lang.Validate;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -33,22 +32,15 @@ import org.apache.wicket.model.IModel;
 public class UiFieldGroup extends Panel {
 
     private IModel<FieldGroupToken> fieldGroup;
-    private IModel<FormModel> formModel;
 
-    public UiFieldGroup(String id, IModel<FieldGroupToken> fieldGroup, IModel<FormModel> formModel) {
+    public UiFieldGroup(String id, IModel<FieldGroupToken> fieldGroup) {
         super(id);
         Validate.notNull(fieldGroup, "Field group token model must not be null.");
-        Validate.notNull(formModel, "Form model must not be null.");
 
         this.fieldGroup = fieldGroup;
-        this.formModel = formModel;
     }
 
     protected IModel<FieldGroupToken> getFieldGroup() {
         return fieldGroup;
-    }
-
-    protected IModel<FormModel> getFormModel() {
-        return formModel;
     }
 }

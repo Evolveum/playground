@@ -21,15 +21,16 @@
 
 package com.evolveum.midpoint.forms.web.forms.object;
 
-import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.web.forms.ui.UiRegistry;
 import com.evolveum.midpoint.forms.xml.AbstractFieldType;
 import com.evolveum.midpoint.forms.xml.DisplayType;
 import com.evolveum.midpoint.forms.xml.FieldGroupType;
 import com.evolveum.midpoint.forms.xml.FieldType;
+import com.evolveum.midpoint.prism.Item;
 import org.apache.commons.lang.StringUtils;
-import org.apache.wicket.model.IModel;
+
+import java.util.Map;
 
 /**
  * @author lazyman
@@ -41,7 +42,7 @@ public abstract class AbstractFieldToken<T extends AbstractFieldType> extends It
     }
 
     @Override
-    public void interpret(IModel<FormModel> formModel, FormToken form) throws InterpreterException {
+    public void interpret(FormToken form, Map<String, Item> objects) throws InterpreterException {
         AbstractFieldType abstractField = getItem();
         DisplayType display = abstractField.getDisplay();
         if (display == null) {

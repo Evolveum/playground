@@ -21,16 +21,16 @@
 
 package com.evolveum.midpoint.forms.web.forms.object;
 
-import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.FieldGroupType;
 import com.evolveum.midpoint.forms.xml.FormItemType;
-import org.apache.wicket.model.IModel;
+import com.evolveum.midpoint.prism.Item;
 
 import javax.xml.bind.JAXBElement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author lazyman
@@ -50,12 +50,12 @@ public class FieldGroupToken extends AbstractFieldToken<FieldGroupType> {
     }
 
     @Override
-    public void interpret(IModel<FormModel> formModel, FormToken form)
+    public void interpret(FormToken form, Map<String, Item> objects)
             throws InterpreterException {
-        super.interpret(formModel, form);
+        super.interpret(form, objects);
 
         for (ItemToken token : items) {
-            token.interpret(formModel, form);
+            token.interpret(form, objects);
         }
     }
 

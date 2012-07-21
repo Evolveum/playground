@@ -21,16 +21,16 @@
 
 package com.evolveum.midpoint.forms.web.forms.object;
 
-import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.FormType;
 import com.evolveum.midpoint.forms.xml.IncludeType;
+import com.evolveum.midpoint.prism.Item;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
-import org.apache.wicket.model.IModel;
 
 import java.io.File;
+import java.util.Map;
 
 /**
  * @author lazyman
@@ -48,7 +48,7 @@ public class IncludeToken implements Token {
     }
 
     @Override
-    public void interpret(IModel<FormModel> formModel, FormToken parent)
+    public void interpret(FormToken parent, Map<String, Item> objects)
             throws InterpreterException {
 
         String alias = include.getAlias();
@@ -77,7 +77,7 @@ public class IncludeToken implements Token {
         try {
             FormType formType = StructuredFormUtils.loadForm(formFile);
             includedFormToken = new FormToken(formType);
-            includedFormToken.interpret(formModel, includedFormToken);
+            includedFormToken.interpret(includedFormToken, objects);
         } catch (Exception ex) {
             throw new InterpreterException("Couldn't load structured form from file '" + formFile.getAbsolutePath()
                     + "' defined in <include> with alias '" + alias + "', reason: " + ex.getMessage(), ex);

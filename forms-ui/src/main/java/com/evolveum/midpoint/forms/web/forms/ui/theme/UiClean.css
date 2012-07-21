@@ -18,12 +18,16 @@
  *
  * Portions Copyrighted 2012 [name of copyright owner]
  */
-.UiGroup {
-    border: 1px solid #0f0;
+.UiForm {
+    border: 1px solid #000;
 }
 
 .UiLine {
-    border: 1px solid #000;
+    border: 1px solid #00f;
+}
+
+.UiFieldGroup {
+    border: 1px solid #0f0;
 }
 
 .UiField {
@@ -33,11 +37,17 @@
     vertical-align: top;
 }
 
-.UiValue {
+.UiFieldLoop {
+    border: 1px solid #0ff;
+}
 
+.UiValue {
+    border: 1px solid #ff0;
 }
 
 .UiInput {
+    border: 1px solid #f0f;
+
     display: inline-block;
 }
 

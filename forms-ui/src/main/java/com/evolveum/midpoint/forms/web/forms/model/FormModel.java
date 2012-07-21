@@ -34,7 +34,7 @@ import java.util.Map;
 /**
  * @author lazyman
  */
-public class FormModel implements Serializable {
+public class FormModel extends BaseModel<FormModel> {
 
     private FormToken formToken;
     private Map<String, Item> objects;
@@ -42,6 +42,7 @@ public class FormModel implements Serializable {
     private List<BaseFieldModel> baseFieldModels = new ArrayList<BaseFieldModel>();
 
     public FormModel(FormToken token, Map<String, Item> objects) {
+        super(null);
         Validate.notNull(token, "Form token must not be null.");
         Validate.notNull(objects, "Map with objects must not be null.");
 
@@ -54,6 +55,8 @@ public class FormModel implements Serializable {
     private void initialize() {
         for (ItemToken token : formToken.getItems()) {
 
+            //todo implement
+            baseFieldModels.add(new FieldModel(this));
         }
     }
 

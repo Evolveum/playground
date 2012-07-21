@@ -21,12 +21,23 @@
 
 package com.evolveum.midpoint.forms.web.page;
 
-import com.evolveum.midpoint.forms.web.forms.FormModel;
-import com.evolveum.midpoint.forms.web.forms.StructuredForm;
+import com.evolveum.midpoint.forms.web.forms.interpreter.DefaultFormResolver;
+import com.evolveum.midpoint.forms.web.forms.interpreter.FormInterpreter;
+import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolver;
+import com.evolveum.midpoint.forms.web.forms.model.FormModel;
+import com.evolveum.midpoint.forms.web.forms.object.FormToken;
+import com.evolveum.midpoint.forms.web.forms.ui.UiForm;
+import com.evolveum.midpoint.prism.Item;
 import org.apache.wicket.devutils.debugbar.DebugBar;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
+
+import java.io.File;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author lazyman
@@ -41,16 +52,36 @@ public class PageHome extends WebPage {
         DebugBar debugPanel = new DebugBar("debugPanel");
         add(debugPanel);
 
+        IModel<FormModel> model = new LoadableDetachableModel<FormModel>() {
+
+            @Override
+            protected com.evolveum.midpoint.forms.web.forms.model.FormModel load() {
+                FormModel formModel = null;
+                try {
+                    ClassLoader loader = PageHome.class.getClassLoader();
+                    URL url = loader.getResource("sample/userForm.xml");
+                    File file = new File(url.toURI());
+
+                    FormResolver resolver = new DefaultFormResolver(file.getAbsolutePath());
+                    //todo user class resolver
+                    Map<String, Item> MAP = new HashMap<String, Item>();
+
+                    FormInterpreter interpreter = new FormInterpreter(MAP);
+                    FormToken formToken = interpreter.interpret(resolver);
+
+
+                    formModel = new FormModel(formToken, MAP);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                return formModel;
+            }
+        };
+
         Form mainForm = new Form("mainForm");
         add(mainForm);
 
-        StructuredForm form = new StructuredForm("form", new LoadableDetachableModel<FormModel>() {
-
-            @Override
-            protected FormModel load() {
-                return null;  //To change body of implemented methods use File | Settings | File Templates.
-            }
-        });
-        mainForm.add(form);
+        UiForm uiForm = new UiForm("uiForm", model);
+        mainForm.add(uiForm);
     }
 }

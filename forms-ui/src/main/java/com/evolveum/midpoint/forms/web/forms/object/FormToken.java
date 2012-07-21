@@ -21,21 +21,20 @@
 
 package com.evolveum.midpoint.forms.web.forms.object;
 
-import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
-import com.evolveum.midpoint.forms.xml.*;
+import com.evolveum.midpoint.forms.xml.AbstractFieldType;
+import com.evolveum.midpoint.forms.xml.FormItemType;
+import com.evolveum.midpoint.forms.xml.FormType;
+import com.evolveum.midpoint.forms.xml.IncludeType;
+import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
-import org.apache.wicket.model.IModel;
 
 import javax.xml.bind.JAXBElement;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author lazyman
@@ -71,7 +70,7 @@ public class FormToken implements Token {
     }
 
     @Override
-    public void interpret(IModel<FormModel> formModel, FormToken form) throws InterpreterException {
+    public void interpret(FormToken form, Map<String, Item> objects) throws InterpreterException {
 
         //include alias uniqueness check
         Set<String> aliases = new HashSet<String>();
@@ -88,12 +87,12 @@ public class FormToken implements Token {
 
         //interpret includes
         for (IncludeToken include : includes) {
-            include.interpret(formModel, form);
+            include.interpret(form, objects);
         }
 
         //interpret field, fieldGroup, fieldRef
         for (ItemToken item : items) {
-            item.interpret(formModel, form);
+            item.interpret(form, objects);
         }
     }
 
@@ -122,7 +121,7 @@ public class FormToken implements Token {
                 continue;
             }
 
-            AbstractFieldToken<AbstractFieldType> fieldToken = (AbstractFieldToken)token;
+            AbstractFieldToken<AbstractFieldType> fieldToken = (AbstractFieldToken) token;
             AbstractFieldType fieldType = fieldToken.getItem();
             if (name.equals(fieldType.getName())) {
                 return fieldToken;
@@ -133,7 +132,7 @@ public class FormToken implements Token {
 
                 AbstractFieldToken result = getFormItem(name, groupToken.getItems());
                 if (result != null) {
-                    return  result;
+                    return result;
                 }
             }
         }

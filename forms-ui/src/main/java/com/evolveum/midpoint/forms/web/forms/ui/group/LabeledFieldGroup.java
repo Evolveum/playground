@@ -21,7 +21,6 @@
 
 package com.evolveum.midpoint.forms.web.forms.ui.group;
 
-import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.web.forms.object.FieldGroupToken;
 import com.evolveum.midpoint.forms.web.forms.object.FieldToken;
 import com.evolveum.midpoint.forms.web.forms.object.ItemToken;
@@ -30,15 +29,12 @@ import com.evolveum.midpoint.forms.web.forms.ui.UiRegistry;
 import com.evolveum.midpoint.forms.xml.DisplayType;
 import com.evolveum.midpoint.forms.xml.FieldGroupType;
 import org.apache.wicket.Component;
-import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,8 +42,8 @@ import java.util.List;
  */
 public class LabeledFieldGroup extends UiFieldGroup {
 
-    public LabeledFieldGroup(String id, IModel<FieldGroupToken> fieldGroup, IModel<FormModel> formModel) {
-        super(id, fieldGroup, formModel);
+    public LabeledFieldGroup(String id, IModel<FieldGroupToken> fieldGroup) {
+        super(id, fieldGroup);
 
         initLayout();
     }
@@ -80,12 +76,12 @@ public class LabeledFieldGroup extends UiFieldGroup {
             @Override
             protected void populateItem(ListItem<ItemToken> listItem) {
                 //method for populating list with fields/field groups
-                Component groupItem = UiRegistry.createUiItem("groupItem", listItem.getModel(), getFormModel());
+                Component groupItem = UiRegistry.createUiItem("groupItem", listItem.getModel());
                 groupItem.setRenderBodyOnly(true);
 
                 //todo move this if somewhere...
                 if (listItem.getModelObject() instanceof FieldToken) {
-                    FieldToken fieldToken = (FieldToken)listItem.getModelObject();
+                    FieldToken fieldToken = (FieldToken) listItem.getModelObject();
                     if (!fieldToken.getItem().getDisplay().isNewLine()) {
                         //todo fix new line style
 //                        listItem.add(new AttributeAppender("style", new Model<String>("display: inline-block;"), " "));

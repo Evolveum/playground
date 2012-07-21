@@ -21,14 +21,18 @@
 
 package com.evolveum.midpoint.forms.web.forms.model;
 
-import java.io.Serializable;
-
 /**
  * @author lazyman
  */
-public class BaseFieldModel<T extends BaseFieldModel> extends BaseModel<T> {
+public class BaseFieldModel<T extends BaseModel> extends BaseModel<T> {
 
     public BaseFieldModel(T parentModel) {
         super(parentModel);
+    }
+
+    public boolean isNewLine() {
+
+        //todo implement
+        return true;
     }
 }

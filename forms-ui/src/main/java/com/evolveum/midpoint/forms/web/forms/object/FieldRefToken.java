@@ -21,11 +21,12 @@
 
 package com.evolveum.midpoint.forms.web.forms.object;
 
-import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.xml.FieldReferenceType;
+import com.evolveum.midpoint.prism.Item;
 import org.apache.commons.lang.StringUtils;
-import org.apache.wicket.model.IModel;
+
+import java.util.Map;
 
 /**
  * @author lazyman
@@ -39,7 +40,7 @@ public class FieldRefToken extends ItemToken<FieldReferenceType> {
     }
 
     @Override
-    public void interpret(IModel<FormModel> formModel, FormToken form) throws InterpreterException {
+    public void interpret(FormToken form, Map<String, Item> objects) throws InterpreterException {
         FieldReferenceType reference = getItem();
         if (StringUtils.isEmpty(reference.getAlias())) {
             throw new InterpreterException("Field reference alias is empty or not defined.");

@@ -21,16 +21,16 @@
 
 package com.evolveum.midpoint.forms.web.forms.interpreter;
 
-import com.evolveum.midpoint.forms.web.forms.FormModel;
 import com.evolveum.midpoint.forms.xml.FormType;
-import org.apache.wicket.model.IModel;
+import com.evolveum.midpoint.prism.Item;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * @author lazyman
  */
 public interface FormResolver extends Serializable {
 
-    FormType loadForm(IModel<FormModel> formModel);
+    FormType loadForm(Map<String, Item> objects);
 }
