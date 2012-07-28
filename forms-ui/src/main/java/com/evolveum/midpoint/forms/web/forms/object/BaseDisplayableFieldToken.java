@@ -21,20 +21,21 @@
 
 package com.evolveum.midpoint.forms.web.forms.object;
 
-import com.evolveum.midpoint.forms.xml.FormItemType;
+import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
+import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
+import com.evolveum.midpoint.forms.xml.BaseDisplayableFieldType;
 
 /**
  * @author lazyman
  */
-public abstract class ItemToken<T extends FormItemType> implements Token {
+public abstract class BaseDisplayableFieldToken<T extends BaseDisplayableFieldType> extends BaseFieldToken<T> {
 
-    private T item;
-
-    public ItemToken(T item) {
-        this.item = item;
+    public BaseDisplayableFieldToken(Token parent, T field) {
+        super(parent, field);
     }
 
-    public T getItem() {
-        return item;
+    @Override
+    public void interpret(StructuredFormContext context) throws InterpreterException {
+        //todo implement
     }
 }

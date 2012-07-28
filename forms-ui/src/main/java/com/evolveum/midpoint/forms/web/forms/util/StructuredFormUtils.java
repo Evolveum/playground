@@ -21,10 +21,7 @@
 
 package com.evolveum.midpoint.forms.web.forms.util;
 
-import com.evolveum.midpoint.forms.web.forms.object.FieldGroupToken;
-import com.evolveum.midpoint.forms.web.forms.object.FieldRefToken;
-import com.evolveum.midpoint.forms.web.forms.object.FieldToken;
-import com.evolveum.midpoint.forms.web.forms.object.ItemToken;
+import com.evolveum.midpoint.forms.web.forms.object.*;
 import com.evolveum.midpoint.forms.xml.*;
 import com.evolveum.midpoint.util.exception.SystemException;
 import com.evolveum.midpoint.util.logging.Trace;
@@ -69,20 +66,14 @@ public class StructuredFormUtils {
         return unmarshaller;
     }
 
-    public static ItemToken createItemToken(BaseFieldType item, boolean allowGroup) {
-        ItemToken token;
+    public static BaseFieldToken createItemToken(Token parent, BaseFieldType item) {
+        BaseFieldToken token;
         if (item instanceof FieldType) {
-            token = new FieldToken((FieldType) item);
+            token = new FieldToken(parent, (FieldType) item);
         } else if (item instanceof FieldGroupType) {
-            FieldGroupType group = (FieldGroupType) item;
-            if (!allowGroup) {
-                LOGGER.warn("Unsupported field group position '" + group.getName()
-                        + "' (field group in field group is not supported).");
-                return null;
-            }
-            token = new FieldGroupToken(group);
+            token = new FieldGroupToken(parent, (FieldGroupType) item);
         } else if (item instanceof FieldReferenceType) {
-            token = new FieldRefToken((FieldReferenceType) item);
+            token = new FieldRefToken(parent, (FieldReferenceType) item);
         } else {
             throw new SystemException("Unsupported token type '" + item.getClass().getName() + "'.");
         }

@@ -58,7 +58,7 @@ public class BaseModel<M extends BaseModel, T extends Token> implements Serializ
         return objects;
     }
 
-    static BaseModel createBaseFieldModel(BaseModel parent, ItemToken token, Map<String, Item> objects) {
+    static BaseModel createBaseFieldModel(BaseModel parent, BaseFieldToken token, Map<String, Item> objects) {
         if (token instanceof FieldRefToken) {
             FieldRefToken ref = (FieldRefToken) token;
             token = ref.getReferencedToken();

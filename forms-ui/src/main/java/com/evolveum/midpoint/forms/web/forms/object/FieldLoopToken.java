@@ -21,28 +21,26 @@
 
 package com.evolveum.midpoint.forms.web.forms.object;
 
+import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.xml.FieldLoopType;
-import com.evolveum.midpoint.prism.Item;
 import org.apache.commons.lang.StringUtils;
-
-import java.util.Map;
 
 /**
  * @author lazyman
  */
-public class FieldLoopToken extends ItemToken<FieldLoopType> {
+public class FieldLoopToken extends BaseGroupFieldToken<FieldLoopType> {
 
-    public FieldLoopToken(FieldLoopType item) {
-        super(item);
+    public FieldLoopToken(Token parent, FieldLoopType item) {
+        super(parent, item);
     }
 
     @Override
-    public void interpret(FormToken form, Map<String, Item> objects) throws InterpreterException {
-        FieldLoopType loopType = getItem();
-        if (StringUtils.isEmpty(loopType.getRef())) {
-            throw new InterpreterException("Field loop type doesn't have ref attribute defined (or it's empty).");
-        }
+    public void interpret(StructuredFormContext context) throws InterpreterException {
+//        FieldLoopType loopType = getItem();
+//        if (StringUtils.isEmpty(loopType.getRef())) {
+//            throw new InterpreterException("Field loop type doesn't have ref attribute defined (or it's empty).");
+//        }
 
         //todo check if ref attribute points to list value
         //todo implement

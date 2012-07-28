@@ -21,24 +21,22 @@
 
 package com.evolveum.midpoint.forms.web.forms.object;
 
+import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.xml.FieldType;
-import com.evolveum.midpoint.prism.Item;
-
-import java.util.Map;
 
 /**
  * @author lazyman
  */
-public class FieldToken extends BaseFieldToken<FieldType> {
+public class FieldToken extends BaseDisplayableFieldToken<FieldType> {
 
-    public FieldToken(FieldType field) {
-        super(field);
+    public FieldToken(Token parent, FieldType field) {
+        super(parent, field);
     }
 
     @Override
-    public void interpret(FormToken form, Map<String, Item> objects) throws InterpreterException {
-        super.interpret(form, objects);
+    public void interpret(StructuredFormContext context) throws InterpreterException {
+        super.interpret(context);
 
         //todo implement
     }

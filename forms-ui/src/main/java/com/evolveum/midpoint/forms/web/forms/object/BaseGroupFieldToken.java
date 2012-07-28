@@ -23,31 +23,32 @@ package com.evolveum.midpoint.forms.web.forms.object;
 
 import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
-import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
-import com.evolveum.midpoint.forms.xml.BaseFieldType;
-import com.evolveum.midpoint.forms.xml.FieldGroupType;
+import com.evolveum.midpoint.forms.xml.BaseGroupFieldType;
 
-import javax.xml.bind.JAXBElement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author lazyman
  */
-public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
+public abstract class BaseGroupFieldToken<T extends BaseGroupFieldType> extends BaseDisplayableFieldToken<T> {
 
-    public FieldGroupToken(Token parent, FieldGroupType field) {
+    private List<BaseFieldToken> fields = new ArrayList<BaseFieldToken>();
+
+    public BaseGroupFieldToken(Token parent, T field) {
         super(parent, field);
+    }
 
-        //initialize field, fieldGroup, fieldRef tokens
-        for (JAXBElement<? extends BaseFieldType> element : field.getItem()) {
-            BaseFieldType item = element.getValue();
-            getFields().add(StructuredFormUtils.createItemToken(this, item));
-        }
+    public List<BaseFieldToken> getFields() {
+        return fields;
     }
 
     @Override
     public void interpret(StructuredFormContext context) throws InterpreterException {
         super.interpret(context);
 
-        //todo implement
+        for (BaseFieldToken token : getFields()) {
+            token.interpret(context);
+        }
     }
 }

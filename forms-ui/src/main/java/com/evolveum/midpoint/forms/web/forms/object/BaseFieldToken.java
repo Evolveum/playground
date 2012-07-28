@@ -21,50 +21,42 @@
 
 package com.evolveum.midpoint.forms.web.forms.object;
 
-import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
-import com.evolveum.midpoint.forms.web.forms.ui.UiRegistry;
-import com.evolveum.midpoint.forms.xml.AbstractFieldType;
-import com.evolveum.midpoint.forms.xml.DisplayType;
-import com.evolveum.midpoint.forms.xml.FieldGroupType;
-import com.evolveum.midpoint.forms.xml.FieldType;
-import com.evolveum.midpoint.prism.Item;
-import org.apache.commons.lang.StringUtils;
-
-import java.util.Map;
+import com.evolveum.midpoint.forms.xml.BaseFieldType;
+import org.apache.commons.lang.Validate;
 
 /**
  * @author lazyman
  */
-public abstract class BaseFieldToken<T extends AbstractFieldType> extends ItemToken<T> {
+public abstract class BaseFieldToken<T extends BaseFieldType> implements Token {
 
-    protected BaseFieldToken(T item) {
-        super(item);
+    private Token parent;
+    private T field;
+
+    public BaseFieldToken(Token parent, T field) {
+        Validate.notNull(parent, "Parent token must not be null.");
+        Validate.notNull(field, "Field type must not be null.");
+        this.parent = parent;
+        this.field = field;
     }
 
     @Override
-    public void interpret(FormToken form, Map<String, Item> objects) throws InterpreterException {
-        AbstractFieldType abstractField = getItem();
-        DisplayType display = abstractField.getDisplay();
-        if (display == null) {
-            display = new DisplayType();
-            abstractField.setDisplay(display);
+    public Token getParent() {
+        return parent;
+    }
+
+    public T getField() {
+        return field;
+    }
+
+    protected FormToken getFormToken() {
+        return getFormToken(this);
+    }
+
+    private FormToken getFormToken(Token token) {
+        if (token instanceof FormToken) {
+            return (FormToken)token;
         }
 
-        //if type and class is not defined, insert there default values
-        if (StringUtils.isEmpty(display.getType()) && StringUtils.isEmpty(display.getClazz())) {
-            if (abstractField instanceof FieldType) {
-                display.setType(UiRegistry.FIELD_TEXT);
-            } else if (abstractField instanceof FieldGroupType) {
-                display.setType(UiRegistry.FIELD_GROUP_DEFAULT);
-            }
-        }
-
-        if (abstractField.getEnabled() == null) {
-            //todo implement some default
-        }
-
-        if (abstractField.getVisible() == null) {
-            //todo implement some default
-        }
+        return getFormToken(token.getParent());
     }
 }

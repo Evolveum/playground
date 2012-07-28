@@ -21,27 +21,25 @@
 
 package com.evolveum.midpoint.forms.web.forms.object;
 
+import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.xml.FieldReferenceType;
-import com.evolveum.midpoint.prism.Item;
 import org.apache.commons.lang.StringUtils;
-
-import java.util.Map;
 
 /**
  * @author lazyman
  */
-public class FieldRefToken extends ItemToken<FieldReferenceType> {
+public class FieldRefToken extends BaseFieldToken<FieldReferenceType> {
 
-    private ItemToken referencedToken;
+    private BaseFieldToken referencedToken;
 
-    public FieldRefToken(FieldReferenceType ref) {
-        super(ref);
+    public FieldRefToken(Token parent, FieldReferenceType ref) {
+        super(parent, ref);
     }
 
     @Override
-    public void interpret(FormToken form, Map<String, Item> objects) throws InterpreterException {
-        FieldReferenceType reference = getItem();
+    public void interpret(StructuredFormContext context) throws InterpreterException {
+        FieldReferenceType reference = getField();
         if (StringUtils.isEmpty(reference.getAlias())) {
             throw new InterpreterException("Field reference alias is empty or not defined.");
         }
@@ -49,14 +47,14 @@ public class FieldRefToken extends ItemToken<FieldReferenceType> {
         //todo check recursion in here
 
         if (StringUtils.isNotEmpty(reference.getInclude())) {
-            IncludeToken include = form.getInclude(reference.getInclude());
+            IncludeToken include = getFormToken().getInclude(reference.getInclude());
             if (include == null) {
                 throw new InterpreterException("Include with alias '" + reference.getInclude()
                         + "' was not found in form.");
             }
             referencedToken = include.getIncludedFormToken().getFormItem(reference.getAlias());
         } else {
-            referencedToken = form.getFormItem(reference.getAlias());
+            referencedToken = getFormToken().getFormItem(reference.getAlias());
         }
 
         if (referencedToken == null) {
@@ -65,7 +63,7 @@ public class FieldRefToken extends ItemToken<FieldReferenceType> {
         }
     }
 
-    public ItemToken getReferencedToken() {
+    public BaseFieldToken getReferencedToken() {
         return referencedToken;
     }
 }

@@ -36,14 +36,22 @@ import java.io.File;
  */
 public class IncludeToken implements Token {
 
+    private FormToken parent;
     private IncludeType include;
 
     //included form type
     private FormToken includedFormToken;
 
-    public IncludeToken(IncludeType include) {
+    public IncludeToken(FormToken parent, IncludeType include) {
+        Validate.notNull(parent, "Parent form token must not be null.");
         Validate.notNull(include, "Include must not be null.");
+        this.parent = parent;
         this.include = include;
+    }
+
+    @Override
+    public Token getParent() {
+        return parent;
     }
 
     @Override

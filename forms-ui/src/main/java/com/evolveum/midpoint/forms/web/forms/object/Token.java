@@ -33,5 +33,7 @@ import java.util.Map;
  */
 public interface Token extends Serializable {
 
+    Token getParent();
+
     void interpret(StructuredFormContext context) throws InterpreterException;
 }

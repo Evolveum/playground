@@ -25,7 +25,7 @@ import com.evolveum.midpoint.forms.web.forms.object.*;
 import com.evolveum.midpoint.forms.web.forms.ui.field.TextInputField;
 import com.evolveum.midpoint.forms.web.forms.ui.group.DefaultFieldGroup;
 import com.evolveum.midpoint.forms.web.forms.ui.group.LabeledFieldGroup;
-import com.evolveum.midpoint.forms.xml.AbstractFieldType;
+import com.evolveum.midpoint.forms.xml.BaseDisplayableFieldType;
 import com.evolveum.midpoint.forms.xml.DisplayType;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
@@ -45,7 +45,7 @@ import java.util.Map;
  */
 public class UiRegistry {
 
-    public static final String FIELD_TEXT = "text";
+    public static final String FIELD_VALUE_TEXT = "text";
 
     public static final String FIELD_GROUP_DEFAULT = "default";
     public static final String FIELD_GROUP_LABELED = "labeled";
@@ -57,7 +57,7 @@ public class UiRegistry {
             new HashMap<String, Class<? extends UiFieldGroup>>();
 
     static {
-        FIELD_TYPES.put(FIELD_TEXT, TextInputField.class);
+        FIELD_TYPES.put(FIELD_VALUE_TEXT, TextInputField.class);
 
 
         FIELD_GROUP_TYPES.put(FIELD_GROUP_DEFAULT, DefaultFieldGroup.class);
@@ -77,7 +77,7 @@ public class UiRegistry {
         Class<? extends UiFieldGroup> field = getItemByClass(clazz, UiFieldGroup.class);
         if (field == null) {
             LOGGER.warn("Unknown field group type/class {}/{} using defaults.", new Object[]{type, clazz});
-            return FIELD_GROUP_TYPES.get(FIELD_TEXT);
+            return FIELD_GROUP_TYPES.get(FIELD_VALUE_TEXT);
         }
 
         return field;
@@ -95,7 +95,7 @@ public class UiRegistry {
 
         if (field == null) {
             LOGGER.warn("Unknown field type/class {}/{} using defaults.", new Object[]{type, clazz});
-            field = FIELD_TYPES.get(FIELD_TEXT);
+            field = FIELD_TYPES.get(FIELD_VALUE_TEXT);
         }
 
         return field;
@@ -121,29 +121,29 @@ public class UiRegistry {
         return null;
     }
 
-    public static Component createUiItem(String componentId, IModel<? extends ItemToken> itemModel) {
-        ItemToken token = itemModel.getObject();
+    public static Component createUiItem(String componentId, IModel<? extends BaseFieldToken> itemModel) {
+        BaseFieldToken token = itemModel.getObject();
         if (token instanceof FieldRefToken) {
-            itemModel = new PropertyModel<ItemToken>(itemModel, "referencedToken");
+            itemModel = new PropertyModel<BaseFieldToken>(itemModel, "referencedToken");
         }
 
         DisplayType display = null;
 
         token = itemModel.getObject();
-        if (token instanceof BaseFieldToken) {
-            BaseFieldToken<AbstractFieldType> fieldToken = (BaseFieldToken<AbstractFieldType>) token;
-            AbstractFieldType abstractField = fieldToken.getItem();
+        if (token instanceof BaseDisplayableFieldToken) {
+            BaseDisplayableFieldToken<BaseDisplayableFieldType> displayableToken = (BaseDisplayableFieldToken) token;
+            BaseDisplayableFieldType abstractField = displayableToken.getField();
             display = abstractField.getDisplay();
         }
 
         try {
             if (token instanceof FieldGroupToken) {
-                Class<? extends UiFieldGroup> clazz = getFieldGroup(display.getType(), display.getClazz());
-                Constructor constructor = clazz.getConstructor(String.class, IModel.class, IModel.class);
+                Class<? extends UiFieldGroup> clazz = getFieldGroup(display.getType(), display.getType());
+                Constructor constructor = clazz.getConstructor(String.class, IModel.class);
                 return (UiFieldGroup) constructor.newInstance(componentId, itemModel);
             } else if (token instanceof FieldToken) {
-                Class<? extends UiField> clazz = getField(display.getType(), display.getClazz());
-                Constructor constructor = clazz.getConstructor(String.class, IModel.class, IModel.class);
+                Class<? extends UiField> clazz = getField(display.getType(), display.getType());
+                Constructor constructor = clazz.getConstructor(String.class, IModel.class);
                 return (UiField) constructor.newInstance(componentId, itemModel);
             }
         } catch (Exception ex) {
