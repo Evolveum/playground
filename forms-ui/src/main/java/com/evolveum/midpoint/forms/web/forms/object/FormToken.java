@@ -21,20 +21,24 @@
 
 package com.evolveum.midpoint.forms.web.forms.object;
 
+import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.AbstractFieldType;
+import com.evolveum.midpoint.forms.xml.BaseFieldType;
 import com.evolveum.midpoint.forms.xml.FormItemType;
 import com.evolveum.midpoint.forms.xml.FormType;
 import com.evolveum.midpoint.forms.xml.IncludeType;
-import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 
 import javax.xml.bind.JAXBElement;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author lazyman
@@ -58,8 +62,8 @@ public class FormToken implements Token {
         }
 
         //initialize field, fieldGroup, fieldRef tokens
-        for (JAXBElement<? extends FormItemType> element : form.getItem()) {
-            FormItemType item = element.getValue();
+        for (JAXBElement<? extends BaseFieldType> element : form.getItem()) {
+            BaseFieldType item = element.getValue();
 
             ItemToken token = StructuredFormUtils.createItemToken(item, true);
             if (token == null) {
@@ -70,7 +74,7 @@ public class FormToken implements Token {
     }
 
     @Override
-    public void interpret(FormToken form, Map<String, Item> objects) throws InterpreterException {
+    public void interpret(StructuredFormContext context) throws InterpreterException {
 
         //include alias uniqueness check
         Set<String> aliases = new HashSet<String>();
@@ -87,12 +91,12 @@ public class FormToken implements Token {
 
         //interpret includes
         for (IncludeToken include : includes) {
-            include.interpret(form, objects);
+            include.interpret(context);
         }
 
         //interpret field, fieldGroup, fieldRef
         for (ItemToken item : items) {
-            item.interpret(form, objects);
+            item.interpret(context);
         }
     }
 
@@ -111,17 +115,17 @@ public class FormToken implements Token {
         return items;
     }
 
-    public AbstractFieldToken getFormItem(String name) {
+    public BaseFieldToken getFormItem(String name) {
         return getFormItem(name, items);
     }
 
-    private AbstractFieldToken getFormItem(String name, List<ItemToken> items) {
+    private BaseFieldToken getFormItem(String name, List<ItemToken> items) {
         for (ItemToken token : items) {
             if (token instanceof FieldRefToken) {
                 continue;
             }
 
-            AbstractFieldToken<AbstractFieldType> fieldToken = (AbstractFieldToken) token;
+            BaseFieldToken<base> fieldToken = (BaseFieldToken) token;
             AbstractFieldType fieldType = fieldToken.getItem();
             if (name.equals(fieldType.getName())) {
                 return fieldToken;
@@ -130,7 +134,7 @@ public class FormToken implements Token {
             if (token instanceof FieldGroupToken) {
                 FieldGroupToken groupToken = (FieldGroupToken) token;
 
-                AbstractFieldToken result = getFormItem(name, groupToken.getItems());
+                BaseFieldToken result = getFormItem(name, groupToken.getItems());
                 if (result != null) {
                     return result;
                 }

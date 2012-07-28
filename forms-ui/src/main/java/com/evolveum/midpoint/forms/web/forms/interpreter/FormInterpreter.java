@@ -21,29 +21,26 @@
 
 package com.evolveum.midpoint.forms.web.forms.interpreter;
 
+import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
+import com.evolveum.midpoint.forms.web.forms.model.FormModel;
 import com.evolveum.midpoint.forms.web.forms.object.FormToken;
 import com.evolveum.midpoint.forms.xml.FormType;
-import com.evolveum.midpoint.prism.Item;
-
-import java.util.Map;
 
 /**
  * @author lazyman
  */
 public class FormInterpreter {
 
-    private Map<String, Item> objects;
+    public FormModel interpret(FormType form, StructuredFormContext context) throws InterpreterException {
+        FormToken formToken = new FormToken(form);
+        formToken.interpret(context);
 
-    public FormInterpreter(Map<String, Item> objects) {
-        this.objects = objects;
-    }
+        FormModel model = new FormModel(formToken, context.getObjects());
+        //todo implement
 
-    public FormToken interpret(FormResolver resolver) throws InterpreterException {
-        FormType formType = resolver.loadForm(objects);
+        //create tokens, interpret form
+        //create model, initialize them
 
-        FormToken formToken = new FormToken(formType);
-        formToken.interpret(formToken, null);
-
-        return formToken;
+        return model;
     }
 }

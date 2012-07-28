@@ -18,8 +18,13 @@
  *
  * Portions Copyrighted 2012 [name of copyright owner]
  */
-.UiForm {
+.UiForm, .uiformerror {
     border: 1px solid #000;
+}
+
+.UiFormError {
+    /* todo implement */
+    color: #f00;
 }
 
 .UiLine {

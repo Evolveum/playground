@@ -21,8 +21,8 @@
 
 package com.evolveum.midpoint.forms.web.forms.model;
 
-import com.evolveum.midpoint.forms.web.forms.object.FieldGroupToken;
 import com.evolveum.midpoint.forms.web.forms.object.ItemToken;
+import com.evolveum.midpoint.forms.web.forms.object.Token;
 import com.evolveum.midpoint.prism.Item;
 
 import java.util.ArrayList;
@@ -32,19 +32,18 @@ import java.util.Map;
 /**
  * @author lazyman
  */
-public class FieldGroupModel extends BaseGroupModel<BaseModel, FieldGroupToken> {
+public class BaseGroupModel<M extends BaseModel, T extends Token> extends BaseModel<M, T> {
 
-    private List<BaseGroupModel> baseFieldModels = new ArrayList<BaseGroupModel>();
+    private List<BaseModel> baseFieldModels = new ArrayList<BaseModel>();
 
-    public FieldGroupModel(BaseModel parentModel, FieldGroupToken token, Map<String, Item> objects) {
+    public BaseGroupModel(M parentModel, T token, Map<String, Item> objects) {
         super(parentModel, token, objects);
-
         initialize();
     }
 
     private void initialize() {
         for (ItemToken token : getToken().getItems()) {
-            BaseGroupModel model = BaseModel.createBaseFieldModel(this, token, getObjects());
+            BaseModel model = BaseModel.createBaseFieldModel(this, token, getObjects());
             if (model == null) {
                 //todo log warning or something
                 continue;
@@ -53,7 +52,7 @@ public class FieldGroupModel extends BaseGroupModel<BaseModel, FieldGroupToken> 
         }
     }
 
-    public List<BaseGroupModel> getBaseFieldModels() {
+    public List<BaseModel> getBaseFieldModels() {
         return baseFieldModels;
     }
 }

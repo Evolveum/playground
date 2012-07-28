@@ -130,8 +130,8 @@ public class UiRegistry {
         DisplayType display = null;
 
         token = itemModel.getObject();
-        if (token instanceof AbstractFieldToken) {
-            AbstractFieldToken<AbstractFieldType> fieldToken = (AbstractFieldToken<AbstractFieldType>) token;
+        if (token instanceof BaseFieldToken) {
+            BaseFieldToken<AbstractFieldType> fieldToken = (BaseFieldToken<AbstractFieldType>) token;
             AbstractFieldType abstractField = fieldToken.getItem();
             display = abstractField.getDisplay();
         }

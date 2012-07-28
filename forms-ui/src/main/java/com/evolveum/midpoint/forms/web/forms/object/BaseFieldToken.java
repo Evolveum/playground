@@ -35,9 +35,9 @@ import java.util.Map;
 /**
  * @author lazyman
  */
-public abstract class AbstractFieldToken<T extends AbstractFieldType> extends ItemToken<T> {
+public abstract class BaseFieldToken<T extends AbstractFieldType> extends ItemToken<T> {
 
-    protected AbstractFieldToken(T item) {
+    protected BaseFieldToken(T item) {
         super(item);
     }
 

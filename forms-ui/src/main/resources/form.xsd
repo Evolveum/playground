@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--
   ~ Copyright (c) 2012 Evolveum
   ~
@@ -19,6 +20,7 @@
   ~
   ~ Portions Copyrighted 2012 [name of copyright owner]
   -->
+
 <xsd:schema targetNamespace="http://midpoint.evolveum.com/xml/ns/public/gui/form"
             xmlns:tns="http://midpoint.evolveum.com/xml/ns/public/gui/form"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
@@ -33,10 +35,20 @@
         <xsd:appinfo>
             <jaxb:globalBindings>
                 <xjc:typeSubstitution type="complex"/>
-                <xjc:serializable uid="201207061507"/>
+                <xjc:serializable uid="201207271342"/>
             </jaxb:globalBindings>
         </xsd:appinfo>
     </xsd:annotation>
+
+    <!--<xsd:import namespace="http://www.w3.org/2001/XMLSchema"-->
+                <!--schemaLocation="http://www.w3.org/2001/XMLSchema">-->
+        <!--<xsd:annotation>-->
+            <!--<xsd:documentation>-->
+                <!--Importing the schema of XSD schema definition explicitly. This causes that we can use "strict" matching-->
+                <!--for the xsd:schema elements used in runtime.-->
+            <!--</xsd:documentation>-->
+        <!--</xsd:annotation>-->
+    <!--</xsd:import>-->
 
     <!--<xsd:import namespace="http://prism.evolveum.com/xml/ns/public/types-2"-->
                 <!--schemaLocation="http://prism.evolveum.com/xml/ns/public/types-2">-->
@@ -51,16 +63,18 @@
 
     <xsd:complexType name="FormType">
         <xsd:sequence>
+            <xsd:element name="display" type="tns:DisplayType" minOccurs="0"/>
             <xsd:element name="include" type="tns:IncludeType" minOccurs="0" maxOccurs="unbounded"/>
             <xsd:element ref="tns:item" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
         <xsd:attribute name="name" type="xsd:string"/>
     </xsd:complexType>
 
-    <xsd:element name="item" type="tns:FormItemType"/>
+    <xsd:element name="item" type="tns:BaseFieldType"/>
     <xsd:element name="field" type="tns:FieldType" substitutionGroup="tns:item"/>
     <xsd:element name="fieldGroup" type="tns:FieldGroupType" substitutionGroup="tns:item"/>
     <xsd:element name="fieldRef" type="tns:FieldReferenceType" substitutionGroup="tns:item"/>
+    <xsd:element name="fieldLoop" type="tns:FieldLoopType" substitutionGroup="tns:item"/>
 
     <xsd:complexType name="IncludeType">
         <xsd:annotation>
@@ -73,11 +87,11 @@
         <xsd:attribute name="alias" type="xsd:string" use="required"/>
     </xsd:complexType>
 
-    <xsd:complexType name="FormItemType" abstract="true">
+    <xsd:complexType name="BaseFieldType" abstract="true">
         <xsd:annotation>
             <xsd:documentation>
                 This is just parent "marker" type for FieldType, FieldGroupType (represented by
-                AbstractFieldType) and FieldReferenceType
+                BaseDisplayableFieldType) and FieldReferenceType
             </xsd:documentation>
         </xsd:annotation>
     </xsd:complexType>
@@ -89,21 +103,37 @@
             </xsd:documentation>
         </xsd:annotation>
         <xsd:complexContent>
-            <xsd:extension base="tns:FormItemType">
+            <xsd:extension base="tns:BaseFieldType">
                 <xsd:attribute name="include" type="xsd:string" use="optional"/>
                 <xsd:attribute name="alias" type="xsd:string" use="required"/>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
 
-    <xsd:complexType name="AbstractFieldType" abstract="true">
+    <xsd:complexType name="FieldLoopType">
+        <xsd:annotation>
+            <xsd:documentation>
+                <!--todo-->
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="tns:BaseDisplayableFieldType">
+                <xsd:sequence>
+                    <xsd:element ref="tns:item" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+                <xsd:attribute name="ref" type="xsd:string"/> <!-- todo change to t:XPathType ?? -->
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="BaseDisplayableFieldType" abstract="true">
         <xsd:annotation>
             <xsd:documentation>
                 <!--todo documentation-->
             </xsd:documentation>
         </xsd:annotation>
         <xsd:complexContent>
-            <xsd:extension base="tns:FormItemType">
+            <xsd:extension base="tns:BaseFieldType">
                 <xsd:sequence>
                     <xsd:element name="display" type="tns:DisplayType"/>
                     <xsd:element name="enabled" type="tns:EnabledType"/>
@@ -116,7 +146,7 @@
 
     <xsd:complexType name="FieldGroupType">
         <xsd:complexContent>
-            <xsd:extension base="tns:AbstractFieldType">
+            <xsd:extension base="tns:BaseDisplayableFieldType">
                 <xsd:sequence>
                     <xsd:element ref="tns:item" minOccurs="0" maxOccurs="unbounded"/>
                 </xsd:sequence>
@@ -126,12 +156,13 @@
 
     <xsd:complexType name="FieldType">
         <xsd:complexContent>
-            <xsd:extension base="tns:AbstractFieldType">
+            <xsd:extension base="tns:BaseDisplayableFieldType">
                 <xsd:sequence>
                     <xsd:element name="value" type="tns:ValueType"/>
                     <xsd:element name="validation" type="tns:ValidationType"/>
                 </xsd:sequence>
-                <xsd:attribute name="ref" type="xsd:string" use="required"/> <!-- todo change to t:XPathType ?? -->
+                <xsd:attribute name="widget" type="xsd:string" use="optional"/>
+                <xsd:attribute name="ref" type="xsd:string" use="required"/> <!-- todo use t:XPathType -->
             </xsd:extension>
         </xsd:complexContent>
 
@@ -154,7 +185,7 @@
             </xsd:documentation>
         </xsd:annotation>
         <xsd:sequence>
-            <xsd:element name="type" type="xsd:QName"/>
+            <xsd:element name="type" type="xsd:QName" minOccurs="0"/>
         </xsd:sequence>
         <xsd:attribute name="maxOccurs" type="xsd:int" use="optional"/>
         <xsd:attribute name="minOccurs" type="xsd:int" use="optional"/>
@@ -162,25 +193,28 @@
 
     <xsd:complexType name="DisplayType">
         <xsd:sequence>
+            <!-- base properties -->
             <xsd:element name="label" type="xsd:string"/>
             <xsd:element name="tooltip" type="xsd:string" minOccurs="0"/>
             <xsd:element name="help" type="xsd:string" minOccurs="0"/>
-
+            <!-- style properties -->
             <xsd:element name="cssStyle" type="xsd:string" minOccurs="0"/>
             <xsd:element name="cssClass" type="xsd:string" minOccurs="0"/>
-
+            <!-- extended properties -->
             <xsd:element name="property" type="tns:PropertyType" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
-        <!-- for default included types like text field, label, combo box, etc. -->
+        <!-- for default included types like text, label, combo, etc. or class name for custom implementation -->
         <xsd:attribute name="type" type="xsd:string" use="optional"/>
-        <!-- custom implementation of UiField/UiFieldGroup -->
-        <xsd:attribute name="class" type="xsd:string" use="optional"/>
+        <!-- displayable form component position (if true -->
         <xsd:attribute name="newLine" type="xsd:boolean" use="optional" default="true"/>
     </xsd:complexType>
 
     <xsd:complexType name="PropertyType">
-        <xsd:attribute name="name" type="xsd:string"/>
-        <!-- todo value -->
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
     </xsd:complexType>
 
     <xsd:complexType name="ValidationType">
@@ -260,6 +294,13 @@
                     </xsd:appinfo>
                 </xsd:annotation>
             </xsd:enumeration>
+            <xsd:enumeration value="read">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        <jaxb:typesafeEnumMember name="READ"/>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:enumeration>
             <xsd:enumeration value="update">
                 <xsd:annotation>
                     <xsd:appinfo>
@@ -270,36 +311,8 @@
         </xsd:restriction>
     </xsd:simpleType>
 
-    <xsd:element name="fieldLoop" type="tns:FieldLoopType"/>
-
-    <xsd:complexType name="FieldLoopType">
-        <xsd:annotation>
-            <xsd:documentation>
-                <!--todo-->
-            </xsd:documentation>
-        </xsd:annotation>
-        <xsd:complexContent>
-            <xsd:extension base="tns:FormItemType">
-                <xsd:sequence>
-                    <xsd:element ref="tns:item" maxOccurs="unbounded"/>
-                </xsd:sequence>
-                <xsd:attribute name="ref" type="xsd:string"/> <!-- todo change to t:XPathType ?? -->
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
-
-    <!-- field and field group loops -->
     <!-- ajax validators - default existing stuff, users should be able to implement their own validators -->
     <!-- label width for fields only also global defined in field groups -->
     <!-- todo what else do we want in here? -->
-
-    <!--<xsd:element name="qname" type="tns:QNameType"/>-->
-    <!--<xsd:complexType name="QNameType">-->
-        <!--<xsd:simpleContent>-->
-            <!--<xsd:extension base="xsd:string">-->
-                <!--<xsd:attribute name="prefix" type="xsd:string" use="required" />-->
-            <!--</xsd:extension>-->
-        <!--</xsd:simpleContent>-->
-    <!--</xsd:complexType>-->
 
 </xsd:schema>

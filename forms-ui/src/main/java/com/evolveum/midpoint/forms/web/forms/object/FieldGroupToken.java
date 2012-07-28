@@ -35,7 +35,7 @@ import java.util.Map;
 /**
  * @author lazyman
  */
-public class FieldGroupToken extends AbstractFieldToken<FieldGroupType> {
+public class FieldGroupToken extends BaseFieldToken<FieldGroupType> {
 
     private List<ItemToken> items = new ArrayList<ItemToken>();
 

@@ -19,10 +19,9 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms.ui;
+package com.evolveum.midpoint.forms.web.forms.model;
 
-import com.evolveum.midpoint.forms.web.forms.model.BaseFieldModel;
-import com.evolveum.midpoint.forms.web.forms.model.BaseModel;
+import com.evolveum.midpoint.forms.web.forms.object.Token;
 import org.apache.commons.lang.Validate;
 
 import java.io.Serializable;
@@ -32,16 +31,16 @@ import java.util.List;
 /**
  * @author lazyman
  */
-public class LineModel<T extends BaseModel> implements Serializable {
+public class LineModel<M extends BaseModel, T extends Token> implements Serializable {
 
-    private BaseModel<T> parent;
-    private List<BaseFieldModel> baseFieldModels = new ArrayList<BaseFieldModel>();
+    private BaseModel<M, T> parent;
+    private List<BaseGroupModel> baseFieldModels = new ArrayList<BaseGroupModel>();
 
-    public LineModel(BaseModel<T> parent) {
+    public LineModel(BaseModel<M, T> parent) {
         this(parent, null);
     }
 
-    public LineModel(BaseModel<T> parent, List<BaseFieldModel> baseFieldModels) {
+    public LineModel(BaseModel<M, T> parent, List<BaseGroupModel> baseFieldModels) {
         Validate.notNull(parent, "Parent for line model must not be null.");
 
         this.parent = parent;
@@ -50,34 +49,37 @@ public class LineModel<T extends BaseModel> implements Serializable {
         }
     }
 
-    public List<BaseFieldModel> getBaseFieldModels() {
+    public List<BaseGroupModel> getBaseFieldModels() {
         return baseFieldModels;
     }
 
-    public BaseModel<T> getParent() {
+    public BaseModel<M, T> getParent() {
         return parent;
     }
 
-    void addBaseFieldModel(BaseFieldModel model) {
+    void addBaseFieldModel(BaseGroupModel model) {
         Validate.notNull(model, "Base field model must not be null.");
         baseFieldModels.add(model);
     }
 
-    public static <T extends BaseModel> List<LineModel> createLineModels(BaseModel<T> parent,
-                                                                         List<BaseFieldModel> baseFieldModels) {
+    public static <M extends BaseModel, T extends Token> List<LineModel> createLineModels(
+            BaseModel<M, T> parent, List<BaseGroupModel> baseFieldModels) {
+
         List<LineModel> models = new ArrayList<LineModel>();
 
-        LineModel lineModel = null;
-        for (BaseFieldModel model : baseFieldModels) {
-            if (lineModel == null) {
-                lineModel = new LineModel(parent);
-            }
-            if (model.isNewLine() && lineModel != null) {
+        LineModel lineModel = new LineModel(parent);
+        for (BaseGroupModel model : baseFieldModels) {
+            if (!(model instanceof FieldModel)) {
                 models.add(lineModel);
-
                 lineModel = new LineModel(parent);
+                continue;
             }
 
+            FieldModel fieldModel = (FieldModel) model;
+            if (fieldModel.isNewLine()) {
+                models.add(lineModel);
+                lineModel = new LineModel(parent);
+            }
             lineModel.addBaseFieldModel(model);
         }
 

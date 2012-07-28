@@ -21,6 +21,8 @@
 
 package com.evolveum.midpoint.forms.web.page;
 
+import com.evolveum.midpoint.forms.web.forms.StructuredForm;
+import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.DefaultFormResolver;
 import com.evolveum.midpoint.forms.web.forms.interpreter.FormInterpreter;
 import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolver;
@@ -28,6 +30,8 @@ import com.evolveum.midpoint.forms.web.forms.model.FormModel;
 import com.evolveum.midpoint.forms.web.forms.object.FormToken;
 import com.evolveum.midpoint.forms.web.forms.ui.UiForm;
 import com.evolveum.midpoint.prism.Item;
+import com.evolveum.midpoint.prism.PrismObject;
+import com.evolveum.midpoint.xml.ns._public.common.common_2.UserType;
 import org.apache.wicket.devutils.debugbar.DebugBar;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
@@ -52,36 +56,34 @@ public class PageHome extends WebPage {
         DebugBar debugPanel = new DebugBar("debugPanel");
         add(debugPanel);
 
-        IModel<FormModel> model = new LoadableDetachableModel<FormModel>() {
-
-            @Override
-            protected com.evolveum.midpoint.forms.web.forms.model.FormModel load() {
-                FormModel formModel = null;
-                try {
-                    ClassLoader loader = PageHome.class.getClassLoader();
-                    URL url = loader.getResource("sample/userForm.xml");
-                    File file = new File(url.toURI());
-
-                    FormResolver resolver = new DefaultFormResolver(file.getAbsolutePath());
-                    //todo user class resolver
-                    Map<String, Item> MAP = new HashMap<String, Item>();
-
-                    FormInterpreter interpreter = new FormInterpreter(MAP);
-                    FormToken formToken = interpreter.interpret(resolver);
-
-
-                    formModel = new FormModel(formToken, MAP);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-                return formModel;
-            }
-        };
-
         Form mainForm = new Form("mainForm");
         add(mainForm);
 
-        UiForm uiForm = new UiForm("uiForm", model);
+        IModel<StructuredFormContext> model = new LoadableDetachableModel<StructuredFormContext>() {
+
+            @Override
+            protected StructuredFormContext load() {
+                try {
+                    PrismObject<UserType> user = null;
+                    //todo load user
+
+                    Map<String, Item> objects = new HashMap<String, Item>();
+                    //todo fill in the map with sample objects
+
+                    ClassLoader loader = PageHome.class.getClassLoader();
+                    URL url = loader.getResource("sample/userForm.xml");
+                    File file = new File(url.toURI());
+                    FormResolver resolver = new DefaultFormResolver(file.getAbsolutePath());
+
+                    return new StructuredFormContext(user, objects, resolver);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    throw new RuntimeException("Unknown error.", ex);
+                }
+            }
+        };
+
+        StructuredForm uiForm = new StructuredForm("structuredForm", model);
         mainForm.add(uiForm);
     }
 }

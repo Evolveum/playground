@@ -30,7 +30,7 @@ import java.util.Map;
 /**
  * @author lazyman
  */
-public class FieldToken extends AbstractFieldToken<FieldType> {
+public class FieldToken extends BaseFieldToken<FieldType> {
 
     public FieldToken(FieldType field) {
         super(field);

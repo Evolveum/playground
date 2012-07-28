@@ -21,20 +21,35 @@
 
 package com.evolveum.midpoint.forms.web.forms.ui;
 
-import com.evolveum.midpoint.forms.web.forms.model.FieldGroupModel;
+import com.evolveum.midpoint.forms.web.forms.model.BaseModel;
+import org.apache.commons.lang.Validate;
+import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
 /**
  * @author lazyman
  */
-public class UiFieldGroup extends UiComponent<FieldGroupModel> {
+public abstract class UiComponent<T extends BaseModel> extends Panel {
 
-    public UiFieldGroup(String id, IModel<FieldGroupModel> model) {
-        super(id, model);
+    protected IModel<T> model;
+    private boolean initialized;
+
+    public UiComponent(String id, IModel<T> model) {
+        super(id);
+        Validate.notNull(model, "Model must not be null.");
+
+        this.model = model;
     }
 
     @Override
-    protected void initLayout() {
+    protected void onBeforeRender() {
+        super.onBeforeRender();
 
+        if (!initialized) {
+            initLayout();
+            initialized = true;
+        }
     }
+
+    protected abstract void initLayout();
 }

@@ -22,19 +22,20 @@
 package com.evolveum.midpoint.forms.web.forms.model;
 
 import com.evolveum.midpoint.forms.web.forms.object.FieldToken;
+import com.evolveum.midpoint.prism.Item;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author lazyman
  */
-public class FieldModel extends BaseFieldModel {
+public class FieldModel extends BaseModel {
 
     private List<ValueModel> valueModels;
     private ValueStatus status;
-    private FieldToken token;
 
-    public FieldModel(BaseModel parentModel) {
-        super(parentModel);
+    public FieldModel(BaseModel parentModel, FieldToken token, Map<String, Item> objects) {
+        super(parentModel, token, objects);
     }
 }

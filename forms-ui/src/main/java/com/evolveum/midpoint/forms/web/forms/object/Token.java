@@ -21,6 +21,7 @@
 
 package com.evolveum.midpoint.forms.web.forms.object;
 
+import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.prism.Item;
 
@@ -32,5 +33,5 @@ import java.util.Map;
  */
 public interface Token extends Serializable {
 
-    void interpret(FormToken form, Map<String, Item> objects) throws InterpreterException;
+    void interpret(StructuredFormContext context) throws InterpreterException;
 }

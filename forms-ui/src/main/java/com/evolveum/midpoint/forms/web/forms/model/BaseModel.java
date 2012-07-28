@@ -21,20 +21,57 @@
 
 package com.evolveum.midpoint.forms.web.forms.model;
 
+import com.evolveum.midpoint.forms.web.forms.object.*;
+import com.evolveum.midpoint.prism.Item;
+import org.apache.commons.lang.Validate;
+
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * @author lazyman
  */
-public class BaseModel<T extends BaseModel> implements Serializable {
+public class BaseModel<M extends BaseModel, T extends Token> implements Serializable {
 
-    private T parentModel;
+    private M parentModel;
+    private T token;
+    private Map<String, Item> objects;
 
-    public BaseModel(T parentModel) {
+    public BaseModel(M parentModel, T token, Map<String, Item> objects) {
+        Validate.notNull(token, "Token must not be null.");
+        Validate.notNull(objects, "Objects map must not be null.");
+
         this.parentModel = parentModel;
+        this.token = token;
+        this.objects = objects;
     }
 
-    public T getParentModel() {
+    public M getParentModel() {
         return parentModel;
+    }
+
+    public T getToken() {
+        return token;
+    }
+
+    public Map<String, Item> getObjects() {
+        return objects;
+    }
+
+    static BaseModel createBaseFieldModel(BaseModel parent, ItemToken token, Map<String, Item> objects) {
+        if (token instanceof FieldRefToken) {
+            FieldRefToken ref = (FieldRefToken) token;
+            token = ref.getReferencedToken();
+        }
+
+        if (token instanceof FieldToken) {
+            return new FieldModel(parent, (FieldToken) token, objects);
+        } else if (token instanceof FieldGroupToken) {
+            return new FieldGroupModel(parent, (FieldGroupToken) token, objects);
+        } else if (token instanceof FieldLoopToken) {
+            return new FieldLoopModel(parent, (FieldLoopToken) token, objects);
+        }
+
+        return null;
     }
 }

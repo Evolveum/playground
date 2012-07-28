@@ -21,14 +21,12 @@
 
 package com.evolveum.midpoint.forms.web.forms.ui;
 
-import com.evolveum.midpoint.forms.web.forms.model.BaseFieldModel;
 import com.evolveum.midpoint.forms.web.forms.model.FormModel;
-import org.apache.commons.lang.Validate;
+import com.evolveum.midpoint.forms.web.forms.model.LineModel;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -40,27 +38,12 @@ import java.util.List;
 /**
  * @author lazyman
  */
-public class UiForm extends Panel {
+public class UiForm extends UiComponent<FormModel> {
 
     private static final String THEME_FOLDER = "theme/";
-    private IModel<FormModel> model;
-    private boolean initialized;
 
     public UiForm(String id, IModel<FormModel> model) {
-        super(id);
-        Validate.notNull(model, "Form model must not be null.");
-
-        this.model = model;
-    }
-
-    @Override
-    protected void onBeforeRender() {
-        super.onBeforeRender();
-
-        if (!initialized) {
-            initLayout();
-            initialized = true;
-        }
+        super(id, model);
     }
 
     @Override
@@ -71,7 +54,8 @@ public class UiForm extends Panel {
         response.renderCSSReference(new PackageResourceReference(UiForm.class, THEME_FOLDER + theme + ".css"));
     }
 
-    private void initLayout() {
+    @Override
+    protected void initLayout() {
         ListView<LineModel> line = new ListView<LineModel>("line", createLineModel()) {
 
             @Override

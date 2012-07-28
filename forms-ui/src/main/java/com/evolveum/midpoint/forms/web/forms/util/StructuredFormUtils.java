@@ -69,7 +69,7 @@ public class StructuredFormUtils {
         return unmarshaller;
     }
 
-    public static ItemToken createItemToken(FormItemType item, boolean allowGroup) {
+    public static ItemToken createItemToken(BaseFieldType item, boolean allowGroup) {
         ItemToken token;
         if (item instanceof FieldType) {
             token = new FieldToken((FieldType) item);
