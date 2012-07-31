@@ -24,6 +24,10 @@ package com.evolveum.midpoint.forms.web.forms.model;
 import com.evolveum.midpoint.forms.web.forms.object.FormToken;
 import com.evolveum.midpoint.forms.web.forms.object.ItemToken;
 import com.evolveum.midpoint.prism.Item;
+import com.evolveum.midpoint.prism.Objectable;
+import com.evolveum.midpoint.prism.delta.ItemDelta;
+import com.evolveum.midpoint.prism.delta.ObjectDelta;
+import com.evolveum.midpoint.xml.ns._public.common.common_2.ObjectType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,5 +40,15 @@ public class FormModel extends BaseGroupModel<FormModel, FormToken> {
 
     public FormModel(FormToken token, Map<String, Item> objects) {
         super(null, token, objects);
+    }
+
+    public <T extends ObjectType> ObjectDelta<T> getObjectDelta(String object) {
+        //todo implement
+        return null;
+    }
+
+    public <T extends ItemDelta> T getItemDelta(String object, Class<T> deltaType) {
+        //todo implement
+        return null;
     }
 }

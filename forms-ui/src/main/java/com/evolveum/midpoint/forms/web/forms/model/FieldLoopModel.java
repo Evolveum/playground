@@ -33,9 +33,13 @@ import java.util.Map;
  */
 public class FieldLoopModel extends BaseGroupModel<BaseModel, FieldLoopToken> {
 
-    private List<BaseGroupModel> baseFieldModels = new ArrayList<BaseGroupModel>();
-
     public FieldLoopModel(BaseModel parentModel, FieldLoopToken token, Map<String, Item> objects) {
         super(parentModel, token, objects);
+
+        initialize();
+    }
+
+    private void initialize() {
+        //todo implement
     }
 }

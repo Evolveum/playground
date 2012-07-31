@@ -30,6 +30,7 @@ import com.evolveum.midpoint.forms.web.forms.model.FormModel;
 import com.evolveum.midpoint.forms.web.forms.object.FormToken;
 import com.evolveum.midpoint.forms.web.forms.ui.UiForm;
 import com.evolveum.midpoint.prism.Item;
+import com.evolveum.midpoint.prism.PrismContext;
 import com.evolveum.midpoint.prism.PrismObject;
 import com.evolveum.midpoint.xml.ns._public.common.common_2.UserType;
 import org.apache.wicket.devutils.debugbar.DebugBar;
@@ -48,6 +49,8 @@ import java.util.Map;
  */
 public class PageHome extends WebPage {
 
+    private PrismContext prismContext;
+
     public PageHome() {
         initLayout();
     }
@@ -64,16 +67,18 @@ public class PageHome extends WebPage {
             @Override
             protected StructuredFormContext load() {
                 try {
-                    PrismObject<UserType> user = null;
-                    //todo load user
+                    ClassLoader loader = PageHome.class.getClassLoader();
+                    URL url = loader.getResource("sample");
+                    File file = new File(url.toURI());
+
+                    File userFile = new File(file, "user.xml");
+                    PrismObject<UserType> user = prismContext.parseObject(userFile);
 
                     Map<String, Item> objects = new HashMap<String, Item>();
-                    //todo fill in the map with sample objects
+                    objects.put("user", user);
 
-                    ClassLoader loader = PageHome.class.getClassLoader();
-                    URL url = loader.getResource("sample/userForm.xml");
-                    File file = new File(url.toURI());
-                    FormResolver resolver = new DefaultFormResolver(file.getAbsolutePath());
+                    File formFile = new File(file, "userForm.xml");
+                    FormResolver resolver = new DefaultFormResolver(formFile.getAbsolutePath());
 
                     return new StructuredFormContext(user, objects, resolver);
                 } catch (Exception ex) {

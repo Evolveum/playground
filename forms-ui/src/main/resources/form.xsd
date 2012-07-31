@@ -99,7 +99,7 @@
         <xsd:complexContent>
             <xsd:extension base="tns:BaseFieldType">
                 <xsd:sequence>
-                    <xsd:element name="display" type="tns:DisplayType"/>
+                    <xsd:element name="display" type="tns:FieldDisplayType"/>
                     <xsd:element name="enabled" type="tns:EnabledType"/>
                     <xsd:element name="visible" type="tns:VisibleType"/>
                 </xsd:sequence>
@@ -151,6 +151,7 @@
                     <xsd:element name="value" type="tns:ValueType"/>
                     <xsd:element name="validation" type="tns:ValidationType"/>
                 </xsd:sequence>
+                <!-- for default included types like text, label, combo, etc. or class name for custom implementation -->
                 <xsd:attribute name="widget" type="xsd:string" use="optional"/>
                 <xsd:attribute name="ref" type="xsd:string" use="required"/>
             </xsd:extension>
@@ -184,7 +185,7 @@
     <xsd:complexType name="DisplayType">
         <xsd:sequence>
             <!-- base properties -->
-            <xsd:element name="label" type="xsd:string"/>
+            <xsd:element name="label" type="xsd:string" minOccurs="0"/>
             <xsd:element name="tooltip" type="xsd:string" minOccurs="0"/>
             <xsd:element name="help" type="xsd:string" minOccurs="0"/>
             <!-- style properties -->
@@ -193,10 +194,17 @@
             <!-- extended properties -->
             <xsd:element name="property" type="tns:PropertyType" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
-        <!-- for default included types like text, label, combo, etc. or class name for custom implementation -->
+                <!--todo document???-->
         <xsd:attribute name="type" type="xsd:string" use="optional"/>
-        <!-- displayable form component position (if true -->
-        <xsd:attribute name="newLine" type="xsd:boolean" use="optional" default="true"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="FieldDisplayType">
+        <xsd:complexContent>
+            <xsd:extension base="tns:DisplayType">
+                <!-- displayable form component position (if true, field/group/loop will be placed on new line) -->
+                <xsd:attribute name="newLine" type="xsd:boolean" use="optional" default="true"/>
+            </xsd:extension>
+        </xsd:complexContent>
     </xsd:complexType>
 
     <xsd:complexType name="PropertyType">

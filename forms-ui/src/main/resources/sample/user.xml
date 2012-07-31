@@ -56,7 +56,7 @@
             <attributes>
                 <icfs:uid xsi:type="xsd:string"
                           xmlns:icfs="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/resource-schema-2"
-                          xmlns:xsd="http://www.w3.org/2001/XMLSchema">ffff-f0c7-41c9-b258-2a3351aa8876</icfs:uid>
+                          xmlns:xsd="http://www.w3.org/2001/XMLSchema">ffff-f0c7-41c9-b258-2a3351aa8877</icfs:uid>
             </attributes>
             <activation>
                 <enabled>false</enabled>
