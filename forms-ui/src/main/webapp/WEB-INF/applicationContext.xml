@@ -47,4 +47,15 @@
     <context:spring-configured/>
     <context:component-scan base-package="com.evolveum.midpoint.forms.web"/>
 
+    <bean name="midpointConfiguration" class="com.evolveum.midpoint.init.StartupConfiguration" init-method="init" />
+
+    <bean id="midPointPrismContextFactory" class="com.evolveum.midpoint.init.ConfigurablePrismContextFactory">
+        <property name="configuration">
+            <ref bean="midpointConfiguration"/>
+        </property>
+    </bean>
+
+    <bean id="prismContext" class="com.evolveum.midpoint.prism.PrismContext"
+          factory-bean="midPointPrismContextFactory" factory-method="createInitializedPrismContext" />
+
 </beans>

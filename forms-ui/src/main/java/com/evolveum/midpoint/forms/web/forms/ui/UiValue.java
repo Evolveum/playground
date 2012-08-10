@@ -22,19 +22,16 @@
 package com.evolveum.midpoint.forms.web.forms.ui;
 
 import com.evolveum.midpoint.forms.web.forms.model.ValueModel;
+import org.apache.wicket.Component;
+import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
 /**
  * @author lazyman
  */
-public class UiValue extends UiComponent<ValueModel> {
+public class UiValue extends Panel {
 
-    public UiValue(String id, IModel<ValueModel> valueModelIModel) {
-        super(id, valueModelIModel);
-    }
-
-    @Override
-    protected void initLayout() {
-        //todo implement
+    public UiValue(String id, IModel<ValueModel> model) {
+        super(id, model);
     }
 }

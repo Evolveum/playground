@@ -25,6 +25,8 @@ import com.evolveum.midpoint.forms.web.forms.interpreter.FormInterpreter;
 import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolver;
 import com.evolveum.midpoint.forms.web.forms.model.FormModel;
 import com.evolveum.midpoint.forms.web.forms.ui.UiForm;
+import com.evolveum.midpoint.forms.web.forms.ui.UiRegistry;
+import com.evolveum.midpoint.forms.xml.DisplayType;
 import com.evolveum.midpoint.forms.xml.FormType;
 import org.apache.commons.lang.Validate;
 import org.apache.wicket.AttributeModifier;
@@ -61,7 +63,6 @@ public class StructuredForm extends Panel {
             return;
         }
 
-
         final StringBuilder builder = new StringBuilder();
 
         Component uiForm = null;
@@ -78,9 +79,9 @@ public class StructuredForm extends Panel {
             FormInterpreter interpreter = new FormInterpreter();
             FormModel formModel = interpreter.interpret(form, context);
 
-            ClassLoader classLoader = StructuredForm.class.getClassLoader();
-            //todo get class from form model (from FormType->type through UiRegistry, or something like that)
-            Class<?> formClass = classLoader.loadClass(null);
+            DisplayType formDisplay = form.getDisplay();
+            String formType = formDisplay != null ? formDisplay.getType() : null;
+            Class<?> formClass = UiRegistry.getForm(formType);
             if (formClass == null || (UiForm.class.isAssignableFrom(formClass))) {
                 //todo write some error about bad FormType-> type attribute...
             }

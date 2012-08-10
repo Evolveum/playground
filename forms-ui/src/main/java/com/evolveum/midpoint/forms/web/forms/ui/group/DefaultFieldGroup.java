@@ -21,51 +21,41 @@
 
 package com.evolveum.midpoint.forms.web.forms.ui.group;
 
-import com.evolveum.midpoint.forms.web.forms.object.FieldGroupToken;
-import com.evolveum.midpoint.forms.web.forms.object.ItemToken;
+import com.evolveum.midpoint.forms.web.forms.model.FieldGroupModel;
 import com.evolveum.midpoint.forms.web.forms.ui.UiFieldGroup;
-import com.evolveum.midpoint.forms.web.forms.ui.UiRegistry;
-import org.apache.wicket.Component;
-import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
-
-import java.util.List;
 
 /**
  * @author lazyman
  */
 public class DefaultFieldGroup extends UiFieldGroup {
 
-    public DefaultFieldGroup(String id, IModel<FieldGroupToken> fieldGroup) {
+    public DefaultFieldGroup(String id, IModel<FieldGroupModel> fieldGroup) {
         super(id, fieldGroup);
-
-        initLayout();
     }
 
-    private void initLayout() {
-        ListView<ItemToken> group = new ListView<ItemToken>("group",
-                new AbstractReadOnlyModel<List<? extends ItemToken>>() {
-                    @Override
-                    public List<ItemToken> getObject() {
-                        return createChildrenList();
-                    }
-                }) {
-
-            @Override
-            protected void populateItem(ListItem listItem) {
-                //method for populating list with fields/field groups
-                Component groupItem = UiRegistry.createUiItem("groupItem", listItem.getModel());
-                groupItem.setRenderBodyOnly(true);
-                listItem.add(groupItem);
-            }
-        };
-        add(group);
-    }
-
-    private List<ItemToken> createChildrenList() {
-        FieldGroupToken groupToken = getFieldGroup().getObject();
-        return groupToken.getItems();
-    }
+//    private void initLayout() {
+//        ListView<ItemToken> group = new ListView<ItemToken>("group",
+//                new AbstractReadOnlyModel<List<? extends ItemToken>>() {
+//                    @Override
+//                    public List<ItemToken> getObject() {
+//                        return createChildrenList();
+//                    }
+//                }) {
+//
+//            @Override
+//            protected void populateItem(ListItem listItem) {
+//                //method for populating list with fields/field groups
+//                Component groupItem = UiRegistry.createUiItem("groupItem", listItem.getModel());
+//                groupItem.setRenderBodyOnly(true);
+//                listItem.add(groupItem);
+//            }
+//        };
+//        add(group);
+//    }
+//
+//    private List<ItemToken> createChildrenList() {
+//        FieldGroupToken groupToken = getFieldGroup().getObject();
+//        return groupToken.getItems();
+//    }
 }

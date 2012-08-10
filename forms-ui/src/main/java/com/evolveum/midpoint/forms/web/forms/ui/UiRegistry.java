@@ -62,7 +62,14 @@ public class UiRegistry {
 
         FIELD_GROUP_TYPES.put(FIELD_GROUP_DEFAULT, DefaultFieldGroup.class);
         FIELD_GROUP_TYPES.put(FIELD_GROUP_LABELED, LabeledFieldGroup.class);
+    }
 
+    public static Class<? extends UiForm> getForm(String type) {
+        if (StringUtils.isEmpty(type)) {
+            return UiForm.class;
+        }
+
+        return getItemByClass(type, UiForm.class);
     }
 
     public static Class<? extends UiFieldGroup> getFieldGroup(String type, String clazz) {
@@ -154,7 +161,7 @@ public class UiRegistry {
         LOGGER.warn("Using default for component initialization.");
 
         if (token instanceof FieldGroupToken) {
-            return new DefaultFieldGroup(componentId, (IModel<FieldGroupToken>) itemModel);
+//            return new DefaultFieldGroup(componentId, (IModel<FieldGroupToken>) itemModel);
         } else if (token instanceof FieldToken) {
             return new TextInputField(componentId, (IModel<FieldToken>) itemModel);
         }

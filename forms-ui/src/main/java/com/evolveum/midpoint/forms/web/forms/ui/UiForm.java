@@ -31,6 +31,7 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 
 import java.io.Serializable;
 import java.util.List;
@@ -50,12 +51,15 @@ public class UiForm extends UiComponent<FormModel> {
     public void renderHead(IHeaderResponse response) {
         super.renderHead(response);
 
-        String theme = "UiClean"; //todo get theme from form model -> form token -> form type
-        response.renderCSSReference(new PackageResourceReference(UiForm.class, THEME_FOLDER + theme + ".css"));
+        //todo get theme from form model -> form token -> form type
+        String theme = "UiClean";
+        ResourceReference ref = new PackageResourceReference(UiForm.class, THEME_FOLDER + theme + ".css");
+        response.renderCSSReference(ref);
     }
 
     @Override
     protected void initLayout() {
+//        add(new LineListView<LineModel>());
         ListView<LineModel> line = new ListView<LineModel>("line", createLineModel()) {
 
             @Override
@@ -74,7 +78,7 @@ public class UiForm extends UiComponent<FormModel> {
             public List<LineModel> getObject() {
                 FormModel formModel = model.getObject();
 
-                return LineModel.createLineModels(formModel, formModel.getBaseFieldModels());
+                return formModel.getLines();
             }
         };
     }

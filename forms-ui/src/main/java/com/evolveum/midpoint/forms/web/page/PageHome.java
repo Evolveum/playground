@@ -21,6 +21,7 @@
 
 package com.evolveum.midpoint.forms.web.page;
 
+import com.evolveum.midpoint.forms.web.MidPointApplication;
 import com.evolveum.midpoint.forms.web.forms.StructuredForm;
 import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.DefaultFormResolver;
@@ -49,8 +50,6 @@ import java.util.Map;
  */
 public class PageHome extends WebPage {
 
-    private PrismContext prismContext;
-
     public PageHome() {
         initLayout();
     }
@@ -72,7 +71,9 @@ public class PageHome extends WebPage {
                     File file = new File(url.toURI());
 
                     File userFile = new File(file, "user.xml");
-                    PrismObject<UserType> user = prismContext.parseObject(userFile);
+
+                    MidPointApplication app = (MidPointApplication)getApplication();
+                    PrismObject<UserType> user = app.getPrismContext().parseObject(userFile);
 
                     Map<String, Item> objects = new HashMap<String, Item>();
                     objects.put("user", user);

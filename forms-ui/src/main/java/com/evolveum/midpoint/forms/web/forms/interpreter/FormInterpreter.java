@@ -35,12 +35,6 @@ public class FormInterpreter {
         FormToken formToken = new FormToken(form);
         formToken.interpret(context);
 
-        FormModel model = new FormModel(formToken, context.getObjects());
-        //todo implement
-
-        //create tokens, interpret form
-        //create model, initialize them
-
-        return model;
+        return new FormModel(formToken, context.getObjects());
     }
 }

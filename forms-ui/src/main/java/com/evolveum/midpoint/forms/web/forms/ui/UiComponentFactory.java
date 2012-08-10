@@ -19,31 +19,24 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms.model;
+package com.evolveum.midpoint.forms.web.forms.ui;
 
-import com.evolveum.midpoint.forms.web.forms.object.FieldToken;
-import com.evolveum.midpoint.prism.Item;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.model.IModel;
 
 /**
  * @author lazyman
  */
-public class FieldModel extends BaseModel<BaseModel, FieldToken> {
+public final class UiComponentFactory {
 
-    private List<ValueModel> values;
-    private ValueStatus status;
-
-    public FieldModel(BaseModel parentModel, FieldToken token, Map<String, Item> objects) {
-        super(parentModel, token, objects);
+    private UiComponentFactory() {
     }
 
-    public List<ValueModel> getValueModels() {
-        if (values == null) {
-            values = new ArrayList<ValueModel>();
-        }
-        return values;
+    public Label createErrorLabel(String id, IModel<String> model) {
+        Label label = new Label(id, model);
+        label.add(new AttributeModifier("class", "UiFormError"));
+
+        return label;
     }
 }

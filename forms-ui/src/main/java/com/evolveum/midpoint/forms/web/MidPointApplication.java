@@ -23,8 +23,10 @@ package com.evolveum.midpoint.forms.web;
 
 import com.evolveum.midpoint.forms.web.page.PageHome;
 import com.evolveum.midpoint.forms.web.page.PageTest;
+import com.evolveum.midpoint.prism.PrismContext;
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -32,6 +34,9 @@ import org.springframework.stereotype.Component;
  */
 @Component("midpointApplication")
 public class MidPointApplication extends WebApplication {
+
+    @Autowired
+    transient PrismContext prismContext;
 
     @Override
     protected void init() {
@@ -46,5 +51,9 @@ public class MidPointApplication extends WebApplication {
     @Override
     public Class<? extends Page> getHomePage() {
         return PageHome.class;
+    }
+
+    public PrismContext getPrismContext() {
+        return prismContext;
     }
 }

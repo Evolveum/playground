@@ -19,48 +19,47 @@
   ~
   ~ Portions Copyrighted 2012 [name of copyright owner]
   -->
-<objects xmlns="http://midpoint.evolveum.com/xml/ns/public/common/common-2"
-         xmlns:c="http://midpoint.evolveum.com/xml/ns/public/common/common-2"
-         xmlns:t="http://prism.evolveum.com/xml/ns/public/types-2">
-    <user oid="f00d-0">
-        <name>get account user</name>
-        <fullName>
-            <t:orig>Hector Barbossa</t:orig>
-            <t:norm>hector barbossa</t:norm>
-        </fullName>
-        <givenName>
-            <t:orig>Hector</t:orig>
-            <t:norm>hector</t:norm>
-        </givenName>
-        <familyName>
-            <t:orig>Barbossa</t:orig>
-            <t:norm>barbossa</t:norm>
-        </familyName>
-        <account oid="f00d-acc1">
-            <name>get account 1</name>
-            <resourceRef oid="ef2bc95b-76e0-48e2-86d6-3d4f02d3e1a2" type="ResourceType"/>
-            <objectClass xmlns:ri="http://midpoint.evolveum.com/xml/ns/public/resource/instance/ef2bc95b-76e0-48e2-86d6-3d4f02d3e1a2">ri:AccountObjectClass</objectClass>
-            <attributes>
-                <icfs:uid xsi:type="xsd:string"
-                          xmlns:icfs="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/resource-schema-2"
-                          xmlns:xsd="http://www.w3.org/2001/XMLSchema">8daaeeae-f0c7-41c9-b258-2a3351aa8876</icfs:uid>
-            </attributes>
-            <activation>
-                <enabled>true</enabled>
-            </activation>
-        </account>
-        <account oid="f00d-acc2">
-            <name>get account 2</name>
-            <resourceRef oid="ef2bc95b-76e0-48e2-86d6-3d4f02d3e1a2" type="ResourceType"/>
-            <objectClass xmlns:ri="http://midpoint.evolveum.com/xml/ns/public/resource/instance/ef2bc95b-76e0-48e2-86d6-3d4f02d3e1a2">ri:AccountObjectClass</objectClass>
-            <attributes>
-                <icfs:uid xsi:type="xsd:string"
-                          xmlns:icfs="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/resource-schema-2"
-                          xmlns:xsd="http://www.w3.org/2001/XMLSchema">ffff-f0c7-41c9-b258-2a3351aa8877</icfs:uid>
-            </attributes>
-            <activation>
-                <enabled>false</enabled>
-            </activation>
-        </account>
-    </user>
-</objects>
+<user oid="f00d-0" xmlns="http://midpoint.evolveum.com/xml/ns/public/common/common-2"
+          xmlns:c="http://midpoint.evolveum.com/xml/ns/public/common/common-2"
+          xmlns:t="http://prism.evolveum.com/xml/ns/public/types-2"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <name>get account user</name>
+    <fullName>
+        <t:orig>Hector Barbossa</t:orig>
+        <t:norm>hector barbossa</t:norm>
+    </fullName>
+    <givenName>
+        <t:orig>Hector</t:orig>
+        <t:norm>hector</t:norm>
+    </givenName>
+    <familyName>
+        <t:orig>Barbossa</t:orig>
+        <t:norm>barbossa</t:norm>
+    </familyName>
+    <account oid="f00d-acc1">
+        <name>get account 1</name>
+        <resourceRef oid="ef2bc95b-76e0-48e2-86d6-3d4f02d3e1a2" type="ResourceType"/>
+        <objectClass xmlns:ri="http://midpoint.evolveum.com/xml/ns/public/resource/instance/ef2bc95b-76e0-48e2-86d6-3d4f02d3e1a2">ri:AccountObjectClass</objectClass>
+        <attributes>
+            <icfs:uid xsi:type="xsd:string"
+                      xmlns:icfs="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/resource-schema-2"
+                      xmlns:xsd="http://www.w3.org/2001/XMLSchema">8daaeeae-f0c7-41c9-b258-2a3351aa8876</icfs:uid>
+        </attributes>
+        <activation>
+            <enabled>true</enabled>
+        </activation>
+    </account>
+    <account oid="f00d-acc2">
+        <name>get account 2</name>
+        <resourceRef oid="ef2bc95b-76e0-48e2-86d6-3d4f02d3e1a2" type="ResourceType"/>
+        <objectClass xmlns:ri="http://midpoint.evolveum.com/xml/ns/public/resource/instance/ef2bc95b-76e0-48e2-86d6-3d4f02d3e1a2">ri:AccountObjectClass</objectClass>
+        <attributes>
+            <icfs:uid xsi:type="xsd:string"
+                      xmlns:icfs="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/resource-schema-2"
+                      xmlns:xsd="http://www.w3.org/2001/XMLSchema">ffff-f0c7-41c9-b258-2a3351aa8877</icfs:uid>
+        </attributes>
+        <activation>
+            <enabled>false</enabled>
+        </activation>
+    </account>
+</user>

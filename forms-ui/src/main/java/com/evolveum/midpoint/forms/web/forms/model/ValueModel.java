@@ -21,20 +21,33 @@
 
 package com.evolveum.midpoint.forms.web.forms.model;
 
+import com.evolveum.midpoint.forms.web.forms.object.FieldToken;
 import com.evolveum.midpoint.prism.PrismPropertyValue;
+import com.evolveum.midpoint.prism.PropertyPath;
+import com.evolveum.midpoint.prism.delta.PropertyDelta;
+import org.apache.commons.lang.Validate;
 
 /**
  * @author lazyman
  */
-public class ValueModel<T> extends BaseModel<FieldModel> {
+public class ValueModel<T> {
 
+    private FieldModel field;
+    //whatever...? todo
+    private PropertyPath path;
     //value for editing
     private PrismPropertyValue<T> value;
     private PrismPropertyValue<T> oldValue;
     //value status
     private ValueStatus status;
 
-    public ValueModel(FieldModel parentModel) {
-        super(parentModel);
+    public ValueModel(FieldModel fieldModel) {
+        Validate.notNull(fieldModel, "Field model must not be null.");
+        this.field = fieldModel;
+    }
+
+    public PropertyDelta<T> createPropertyDelta() {
+        //todo implement
+        return null;
     }
 }

@@ -58,7 +58,8 @@ public class TextInputField extends UiField {
 
     private String getLabelText() {
         FieldToken field = getField().getObject();
-        DisplayType display = field.getItem().getDisplay();
-        return display.getLabel();
+//        DisplayType display = field.getItem().getDisplay();
+//        return display.getLabel();
+        return "asdf";
     }
 }

@@ -126,20 +126,26 @@
     <xsd:complexType name="FieldLoopType">
         <xsd:annotation>
             <xsd:documentation>
-                <!--todo-->
+                Ref attribute MUST point to multivalue PrismContainer or List of Item objects.
             </xsd:documentation>
         </xsd:annotation>
         <xsd:complexContent>
             <xsd:extension base="tns:BaseGroupFieldType">
-                <xsd:attribute name="ref" type="xsd:string"/>
+                <xsd:attribute name="ref" type="xsd:string" use="required"/>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
 
     <xsd:complexType name="FieldGroupType">
+        <xsd:annotation>
+            <xsd:documentation>
+                If ref attribute is used it MUST point to PrismContainer. Children of this group will
+                be computed from it's PrismContainer child items.
+            </xsd:documentation>
+        </xsd:annotation>
         <xsd:complexContent>
             <xsd:extension base="tns:BaseGroupFieldType">
-
+                <xsd:attribute name="ref" type="xsd:string" use="optional"/>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>

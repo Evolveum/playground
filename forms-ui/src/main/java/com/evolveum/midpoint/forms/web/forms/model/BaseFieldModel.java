@@ -21,29 +21,17 @@
 
 package com.evolveum.midpoint.forms.web.forms.model;
 
-import com.evolveum.midpoint.forms.web.forms.object.FieldToken;
+import com.evolveum.midpoint.forms.web.forms.object.BaseDisplayableFieldToken;
 import com.evolveum.midpoint.prism.Item;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
  * @author lazyman
  */
-public class FieldModel extends BaseModel<BaseModel, FieldToken> {
+public class BaseFieldModel extends BaseModel<BaseModel, BaseDisplayableFieldToken> {
 
-    private List<ValueModel> values;
-    private ValueStatus status;
-
-    public FieldModel(BaseModel parentModel, FieldToken token, Map<String, Item> objects) {
+    public BaseFieldModel(BaseModel parentModel, BaseDisplayableFieldToken token, Map<String, Item> objects) {
         super(parentModel, token, objects);
-    }
-
-    public List<ValueModel> getValueModels() {
-        if (values == null) {
-            values = new ArrayList<ValueModel>();
-        }
-        return values;
     }
 }

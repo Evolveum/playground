@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Model for one line in form/group.
+ *
  * @author lazyman
  */
 public class LineModel<M extends BaseModel, T extends Token> implements Serializable {
@@ -69,17 +71,17 @@ public class LineModel<M extends BaseModel, T extends Token> implements Serializ
 
         LineModel lineModel = new LineModel(parent);
         for (BaseGroupModel model : baseFieldModels) {
-            if (!(model instanceof FieldModel)) {
-                models.add(lineModel);
-                lineModel = new LineModel(parent);
-                continue;
-            }
-
-            FieldModel fieldModel = (FieldModel) model;
-            if (fieldModel.isNewLine()) {
-                models.add(lineModel);
-                lineModel = new LineModel(parent);
-            }
+//            if (!(model instanceof FieldModel)) {
+//                models.add(lineModel);
+//                lineModel = new LineModel(parent);
+//                continue;
+//            }
+//
+//            FieldModel fieldModel = (FieldModel) model;
+//            if (fieldModel.isNewLine()) {
+//                models.add(lineModel);
+//                lineModel = new LineModel(parent);
+//            }
             lineModel.addBaseFieldModel(model);
         }
 
