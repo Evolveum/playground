@@ -38,15 +38,15 @@ import java.util.List;
  */
 public class LineListView<T extends BaseFieldModel> extends ListView<T> {
 
-    public static final String LINE_BODY = "lineBody";
+    public static final String LINE_BODY = "line";
 
     public LineListView(String id, IModel<List<T>> model) {
         super(id, model);
     }
 
     @Override
-    protected void populateItem(ListItem<T> item) {
-        T object = item.getModelObject();
+    protected void populateItem(ListItem<T> listItem) {
+        T object = listItem.getModelObject();
         Component component;
 //        if (object instanceof FieldModel) {
 //            component = new UiField(LINE_BODY, (IModel) item.getModel());
@@ -58,6 +58,6 @@ public class LineListView<T extends BaseFieldModel> extends ListView<T> {
             //todo error handling
             component = new Label(LINE_BODY, "Unknown component type....");
 //        }
-        item.add(component);
+        listItem.add(component);
     }
 }

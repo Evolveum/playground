@@ -23,6 +23,7 @@ package com.evolveum.midpoint.forms.web.forms.ui;
 
 import com.evolveum.midpoint.forms.web.forms.model.FormModel;
 import com.evolveum.midpoint.forms.web.forms.model.LineModel;
+import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -52,22 +53,19 @@ public class UiForm extends UiComponent<FormModel> {
         super.renderHead(response);
 
         //todo get theme from form model -> form token -> form type
-        String theme = "UiClean";
+        String theme = null;
+
+        if (StringUtils.isEmpty(theme)) {
+            theme = "UiClean";
+        }
+
         ResourceReference ref = new PackageResourceReference(UiForm.class, THEME_FOLDER + theme + ".css");
         response.renderCSSReference(ref);
     }
 
     @Override
     protected void initLayout() {
-//        add(new LineListView<LineModel>());
-        ListView<LineModel> line = new ListView<LineModel>("line", createLineModel()) {
-
-            @Override
-            protected void populateItem(ListItem item) {
-                item.add(new Label("lineBody", new Model<Serializable>("asdf")));
-                //todo create fields, field groups, field loops
-            }
-        };
+        LineListView line = new LineListView("lines", createLineModel());
         add(line);
     }
 

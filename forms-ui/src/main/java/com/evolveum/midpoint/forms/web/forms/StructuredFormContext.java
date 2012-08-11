@@ -63,4 +63,18 @@ public class StructuredFormContext implements Serializable {
     public PrismObject<UserType> getUser() {
         return user;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("StructuredFormContext{user: ");
+        builder.append(user != null ? user.toDebugName() : null);
+        builder.append(", objects: ");
+        builder.append(objects != null ? objects.toString() : null);
+        builder.append(", resolver: ");
+        builder.append(resolver != null ? resolver.getClass().getName() : null);
+        builder.append("}");
+
+        return builder.toString();
+    }
 }

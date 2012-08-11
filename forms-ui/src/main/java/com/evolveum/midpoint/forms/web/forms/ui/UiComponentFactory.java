@@ -33,7 +33,7 @@ public final class UiComponentFactory {
     private UiComponentFactory() {
     }
 
-    public Label createErrorLabel(String id, IModel<String> model) {
+    public static Label createErrorLabel(String id, IModel<String> model) {
         Label label = new Label(id, model);
         label.add(new AttributeModifier("class", "UiFormError"));
 

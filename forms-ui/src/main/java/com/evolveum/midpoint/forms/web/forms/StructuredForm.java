@@ -24,14 +24,16 @@ package com.evolveum.midpoint.forms.web.forms;
 import com.evolveum.midpoint.forms.web.forms.interpreter.FormInterpreter;
 import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolver;
 import com.evolveum.midpoint.forms.web.forms.model.FormModel;
+import com.evolveum.midpoint.forms.web.forms.ui.UiComponentFactory;
 import com.evolveum.midpoint.forms.web.forms.ui.UiForm;
 import com.evolveum.midpoint.forms.web.forms.ui.UiRegistry;
 import com.evolveum.midpoint.forms.xml.DisplayType;
 import com.evolveum.midpoint.forms.xml.FormType;
+import com.evolveum.midpoint.util.logging.Trace;
+import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.Validate;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
@@ -44,6 +46,7 @@ import java.lang.reflect.Constructor;
  */
 public class StructuredForm extends Panel {
 
+    private static final Trace LOGGER = TraceManager.getTrace(StructuredForm.class);
     private static final String COMPONENT_ID_FORM = "form";
     private IModel<StructuredFormContext> model;
     private boolean initialized;
@@ -63,14 +66,21 @@ public class StructuredForm extends Panel {
             return;
         }
 
+        initLayout();
+        initialized = true;
+    }
+
+    private void initLayout() {
         final StringBuilder builder = new StringBuilder();
 
         Component uiForm = null;
         try {
-            //todo remove runtime exceptions, show error
             StructuredFormContext context = model.getObject();
+            LOGGER.debug("Available form context {}.", new Object[]{context.toString()});
+            //todo remove validate
             Validate.notNull(context, "Structured form context must not be null.");
             FormResolver resolver = context.getResolver();
+            //todo remove validate
             Validate.notNull(resolver, "Form resolver in form context must not be null.");
 
             FormType form = resolver.loadForm(context.getUser(), context.getObjects());
@@ -86,6 +96,7 @@ public class StructuredForm extends Panel {
                 //todo write some error about bad FormType-> type attribute...
             }
 
+            LOGGER.debug("Using {} as form type.", new Object[]{formClass.getName()});
             Constructor<UiForm> constructor = (Constructor<UiForm>) formClass.getConstructor(String.class, IModel.class);
             uiForm = constructor.newInstance(COMPONENT_ID_FORM, new Model<FormModel>(formModel));
         } catch (Exception ex) {
@@ -94,7 +105,7 @@ public class StructuredForm extends Panel {
         }
 
         if (uiForm == null) {
-            uiForm = new Label(COMPONENT_ID_FORM, new AbstractReadOnlyModel<String>() {
+            uiForm = UiComponentFactory.createErrorLabel(COMPONENT_ID_FORM, new AbstractReadOnlyModel<String>() {
 
                 @Override
                 public String getObject() {

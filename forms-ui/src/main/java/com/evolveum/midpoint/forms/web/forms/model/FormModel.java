@@ -21,6 +21,7 @@
 
 package com.evolveum.midpoint.forms.web.forms.model;
 
+import com.evolveum.midpoint.forms.web.forms.object.BaseFieldToken;
 import com.evolveum.midpoint.forms.web.forms.object.FormToken;
 import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.prism.delta.ItemDelta;
@@ -36,7 +37,7 @@ import java.util.Map;
  */
 public class FormModel extends BaseModel<FormModel, FormToken> {
 
-    private List<BaseFieldModel> items = new ArrayList<BaseFieldModel>();
+    private List<BaseFieldModel> items;
 
     public FormModel(FormToken token, Map<String, Item> objects) {
         super(null, token, objects);
@@ -50,6 +51,21 @@ public class FormModel extends BaseModel<FormModel, FormToken> {
     public <T extends ItemDelta> T getItemDelta(String object, Class<T> deltaType) {
         //todo implement
         return null;
+    }
+
+    public List<BaseFieldModel> getItems() {
+        if (items != null) {
+            return items;
+        }
+
+        items = new ArrayList<BaseFieldModel>();
+        FormToken formToken = getToken();
+        for (BaseFieldToken token : formToken.getFields()) {
+            //todo implement;
+
+        }
+
+        return items;
     }
 
     public List<LineModel> getLines() {
