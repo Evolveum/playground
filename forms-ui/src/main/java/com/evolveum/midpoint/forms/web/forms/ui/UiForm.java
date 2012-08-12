@@ -21,9 +21,9 @@
 
 package com.evolveum.midpoint.forms.web.forms.ui;
 
-import com.evolveum.midpoint.forms.web.forms.model.FormModel;
-import com.evolveum.midpoint.forms.web.forms.model.LineModel;
+import com.evolveum.midpoint.forms.web.forms.model.*;
 import org.apache.commons.lang.StringUtils;
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -31,6 +31,7 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 
@@ -65,7 +66,36 @@ public class UiForm extends UiComponent<FormModel> {
 
     @Override
     protected void initLayout() {
-        LineListView line = new LineListView("lines", createLineModel());
+//        LineListView line = new LineListView("line", createLineModel());
+//        add(line);
+        ListView<LineModel> line = new ListView<LineModel>("line", createLineModel()) {
+
+            @Override
+            protected void populateItem(ListItem<LineModel> listItem) {
+                ListView<DisplayableModel> field = new ListView<DisplayableModel>("field",
+                        new PropertyModel<List<? extends DisplayableModel>>(listItem.getModel(), "fields")) {
+
+                    @Override
+                    protected void populateItem(ListItem<DisplayableModel> listItem) {
+                        DisplayableModel displayable =  listItem.getModelObject();
+                        if (displayable instanceof FieldModel) {
+                            listItem.add(new AttributeModifier("class", "UiField"));
+//                            component = new UiField(LINE_BODY, (IModel) item.getModel());
+                        } else if (displayable instanceof FieldGroupModel) {
+                            listItem.add(new AttributeModifier("class", "UiFieldGroup"));
+//                            component = new UiFieldGroup(LINE_BODY, (IModel) item.getModel());
+                        } else if (displayable instanceof FieldLoopModel) {
+                            listItem.add(new AttributeModifier("class", "UiFieldLoop"));
+//                            component = new UiFieldLoop(LINE_BODY, (IModel) item.getModel());
+                        } else {
+                            //todo error handling
+
+                        }
+                    }
+                };
+                listItem.add(field);
+            }
+        };
         add(line);
     }
 

@@ -57,21 +57,4 @@ public class BaseModel<M extends BaseModel, T extends Token> implements Serializ
     public Map<String, Item> getObjects() {
         return objects;
     }
-
-    static BaseModel createBaseFieldModel(BaseModel parent, BaseFieldToken token, Map<String, Item> objects) {
-        if (token instanceof FieldRefToken) {
-            FieldRefToken ref = (FieldRefToken) token;
-            token = ref.getReferencedToken();
-        }
-
-        if (token instanceof FieldToken) {
-            return new FieldModel(parent, (FieldToken) token, objects);
-        } else if (token instanceof FieldGroupToken) {
-            return new FieldGroupModel(parent, (FieldGroupToken) token, objects);
-        } else if (token instanceof FieldLoopToken) {
-            return new FieldLoopModel(parent, (FieldLoopToken) token, objects);
-        }
-
-        return null;
-    }
 }

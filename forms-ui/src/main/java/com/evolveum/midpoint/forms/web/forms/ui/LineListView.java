@@ -21,32 +21,40 @@
 
 package com.evolveum.midpoint.forms.web.forms.ui;
 
-import com.evolveum.midpoint.forms.web.forms.model.BaseFieldModel;
-import com.evolveum.midpoint.forms.web.forms.model.FieldGroupModel;
-import com.evolveum.midpoint.forms.web.forms.model.FieldLoopModel;
-import com.evolveum.midpoint.forms.web.forms.model.FieldModel;
+import com.evolveum.midpoint.forms.web.forms.model.DisplayableModel;
+import com.evolveum.midpoint.forms.web.forms.model.LineModel;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.PropertyModel;
 
 import java.util.List;
 
 /**
  * @author lazyman
  */
-public class LineListView<T extends BaseFieldModel> extends ListView<T> {
+public class LineListView extends ListView<LineModel> {
 
-    public static final String LINE_BODY = "line";
-
-    public LineListView(String id, IModel<List<T>> model) {
+    public LineListView(String id, IModel<List<LineModel>> model) {
         super(id, model);
     }
 
     @Override
-    protected void populateItem(ListItem<T> listItem) {
-        T object = listItem.getModelObject();
+    protected void populateItem(ListItem<LineModel> listItem) {
+        ListView<DisplayableModel> line = new ListView<DisplayableModel>("line",
+                new PropertyModel<List<? extends DisplayableModel>>(listItem.getModel(), "baseFieldModels")) {
+
+            @Override
+            protected void populateItem(ListItem<DisplayableModel> listItem) {
+                populateFields(listItem);
+            }
+        };
+        listItem.add(line);
+    }
+
+    private void populateFields(ListItem<DisplayableModel> listItem) {
         Component component;
 //        if (object instanceof FieldModel) {
 //            component = new UiField(LINE_BODY, (IModel) item.getModel());
@@ -55,8 +63,8 @@ public class LineListView<T extends BaseFieldModel> extends ListView<T> {
 //        } else if (object instanceof FieldLoopModel) {
 //            component = new UiFieldLoop(LINE_BODY, (IModel) item.getModel());
 //        } else {
-            //todo error handling
-            component = new Label(LINE_BODY, "Unknown component type....");
+        //todo error handling
+        component = new Label("field", "Unknown component type....");
 //        }
         listItem.add(component);
     }

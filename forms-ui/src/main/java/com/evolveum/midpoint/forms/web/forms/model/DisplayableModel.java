@@ -21,31 +21,12 @@
 
 package com.evolveum.midpoint.forms.web.forms.model;
 
-import com.evolveum.midpoint.forms.web.forms.object.FieldLoopToken;
 import com.evolveum.midpoint.forms.xml.DisplayType;
-import com.evolveum.midpoint.prism.Item;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author lazyman
  */
-public class FieldLoopModel extends BaseModel<BaseGroupModel, FieldLoopToken> implements DisplayableModel {
+public interface DisplayableModel<T extends DisplayType> {
 
-    public FieldLoopModel(BaseGroupModel parentModel, FieldLoopToken token, Map<String, Item> objects) {
-        super(parentModel, token, objects);
-
-        initialize();
-    }
-
-    private void initialize() {
-        //todo implement
-    }
-
-    @Override
-    public DisplayType getDisplay() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
+    T getDisplay();
 }

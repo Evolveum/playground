@@ -34,47 +34,48 @@ import java.util.List;
  *
  * @author lazyman
  */
-public class LineModel<M extends BaseModel, T extends BaseDisplayableFieldToken> implements Serializable {
+public class LineModel<M extends BaseGroupModel, T extends BaseDisplayableFieldToken>
+        implements Serializable {
 
-    private BaseModel<M, T> parent;
-    private List<BaseFieldModel> baseFieldModels = new ArrayList<BaseFieldModel>();
+    private BaseGroupModel<M, T> parent;
+    private List<DisplayableModel> fields = new ArrayList<DisplayableModel>();
 
-    public LineModel(BaseModel<M, T> parent) {
+    public LineModel(BaseGroupModel<M, T> parent) {
         this(parent, null);
     }
 
-    public LineModel(BaseModel<M, T> parent, List<BaseFieldModel> baseFieldModels) {
+    public LineModel(BaseGroupModel<M, T> parent, List<DisplayableModel> fields) {
         Validate.notNull(parent, "Parent for line model must not be null.");
 
         this.parent = parent;
-        if (baseFieldModels != null) {
-            this.baseFieldModels = baseFieldModels;
+        if (fields != null) {
+            this.fields = fields;
         }
     }
 
-    public List<BaseFieldModel> getBaseFieldModels() {
-        return baseFieldModels;
+    public List<DisplayableModel> getFields() {
+        return fields;
     }
 
     public BaseModel<M, T> getParent() {
         return parent;
     }
 
-    void addBaseFieldModel(BaseFieldModel model) {
-        Validate.notNull(model, "Base field model must not be null.");
-        baseFieldModels.add(model);
+    void addBaseFieldModel(DisplayableModel model) {
+        Validate.notNull(model, "Displayable field model must not be null.");
+        fields.add(model);
     }
 
     public static <M extends BaseModel, T extends Token> List<LineModel> createLineModels(
-            BaseModel<M, T> parent, List<BaseFieldModel> baseFieldModels) {
+            BaseModel<M, T> parent, List<BaseFieldModel> fields) {
 
         List<LineModel> models = new ArrayList<LineModel>();
 
-        LineModel lineModel;
-        for (BaseFieldModel model : baseFieldModels) {
+//        LineModel lineModel;
+//        for (BaseFieldModel model : baseFieldModels) {
 //            if (!(model instanceof FieldModel)) {
-                lineModel = new LineModel(parent);
-                models.add(lineModel);
+//            lineModel = new LineModel(parent);
+//            models.add(lineModel);
 //                continue;
 //            }
 //
@@ -83,8 +84,8 @@ public class LineModel<M extends BaseModel, T extends BaseDisplayableFieldToken>
 //                models.add(lineModel);
 //                lineModel = new LineModel(parent);
 //            }
-            lineModel.addBaseFieldModel(model);
-        }
+//            lineModel.addBaseFieldModel(model);
+//        }
 
         return models;
     }
