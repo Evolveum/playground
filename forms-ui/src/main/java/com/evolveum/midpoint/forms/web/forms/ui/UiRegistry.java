@@ -22,7 +22,6 @@
 package com.evolveum.midpoint.forms.web.forms.ui;
 
 import com.evolveum.midpoint.forms.web.forms.object.*;
-import com.evolveum.midpoint.forms.web.forms.ui.field.TextInputField;
 import com.evolveum.midpoint.forms.web.forms.ui.group.DefaultFieldGroup;
 import com.evolveum.midpoint.forms.web.forms.ui.group.LabeledFieldGroup;
 import com.evolveum.midpoint.forms.xml.BaseDisplayableFieldType;
@@ -57,7 +56,7 @@ public class UiRegistry {
             new HashMap<String, Class<? extends UiFieldGroup>>();
 
     static {
-        FIELD_TYPES.put(FIELD_VALUE_TEXT, TextInputField.class);
+//        FIELD_TYPES.put(FIELD_VALUE_TEXT, TextInputField.class);
 
 
         FIELD_GROUP_TYPES.put(FIELD_GROUP_DEFAULT, DefaultFieldGroup.class);
@@ -163,7 +162,7 @@ public class UiRegistry {
         if (token instanceof FieldGroupToken) {
 //            return new DefaultFieldGroup(componentId, (IModel<FieldGroupToken>) itemModel);
         } else if (token instanceof FieldToken) {
-            return new TextInputField(componentId, (IModel<FieldToken>) itemModel);
+//            return new TextInputField(componentId, (IModel<FieldToken>) itemModel);
         }
 
         //todo add some warn stuff here about that we couldn't create component

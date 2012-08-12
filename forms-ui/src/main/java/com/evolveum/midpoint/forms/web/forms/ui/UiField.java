@@ -21,26 +21,39 @@
 
 package com.evolveum.midpoint.forms.web.forms.ui;
 
-import com.evolveum.midpoint.forms.web.forms.object.FieldToken;
-import org.apache.commons.lang.Validate;
-import org.apache.wicket.markup.html.panel.Panel;
+import com.evolveum.midpoint.forms.web.forms.model.FieldModel;
+import com.evolveum.midpoint.forms.web.forms.model.ValueModel;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.PropertyModel;
+import sun.rmi.runtime.NewThreadAction;
+
+import java.util.List;
 
 /**
  * @author lazyman
  */
-public class UiField extends Panel {
+public class UiField extends UiComponent<FieldModel> {
 
-    private IModel<FieldToken> field;
-
-    public UiField(String id, IModel<FieldToken> field) {
-        super(id);
-        Validate.notNull(field, "Field token model must not be null.");
-
-        this.field = field;
+    public UiField(String id, IModel<FieldModel> field) {
+        super(id, field);
     }
 
-    protected IModel<FieldToken> getField() {
-        return field;
+    @Override
+    protected void initLayout() {
+        ListView<ValueModel> values = new ListView<ValueModel>("value",
+                new PropertyModel<List<? extends ValueModel>>(model, "values")) {
+
+            @Override
+            protected void populateItem(ListItem<ValueModel> item) {
+                UiValue value = new UiValue("valueBody", item.getModel());
+                value.setRenderBodyOnly(true);
+
+                //todo properly add values
+                item.add(value);
+            }
+        };
+        add(values);
     }
 }

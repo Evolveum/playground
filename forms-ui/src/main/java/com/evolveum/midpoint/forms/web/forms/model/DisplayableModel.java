@@ -29,4 +29,6 @@ import com.evolveum.midpoint.forms.xml.DisplayType;
 public interface DisplayableModel<T extends DisplayType> {
 
     T getDisplay();
+
+    T getDefaultDisplay();
 }

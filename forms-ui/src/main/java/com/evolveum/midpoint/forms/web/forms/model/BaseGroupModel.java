@@ -24,6 +24,8 @@ package com.evolveum.midpoint.forms.web.forms.model;
 import com.evolveum.midpoint.forms.web.forms.object.*;
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
 import com.evolveum.midpoint.prism.Item;
+import com.evolveum.midpoint.util.logging.Trace;
+import com.evolveum.midpoint.util.logging.TraceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,7 @@ import java.util.Map;
 public class BaseGroupModel<M extends BaseGroupModel, T extends Token>
         extends BaseModel<M, T> {
 
+    private static final Trace LOGGER = TraceManager.getTrace(BaseGroupModel.class);
     private List<DisplayableModel> fields;
 
     public BaseGroupModel(M parentModel, T token, Map<String, Item> objects) {
@@ -56,7 +59,6 @@ public class BaseGroupModel<M extends BaseGroupModel, T extends Token>
         for (BaseFieldToken fieldToken : fields) {
             DisplayableModel model = createDisplayableFieldModel(this, fieldToken, getObjects());
             if (model == null) {
-                //todo log warning or something
                 continue;
             }
             getFields().add(model);
@@ -83,6 +85,9 @@ public class BaseGroupModel<M extends BaseGroupModel, T extends Token>
             return new FieldGroupModel(parent, (FieldGroupToken) token, objects);
         } else if (token instanceof FieldLoopToken) {
             return new FieldLoopModel(parent, (FieldLoopToken) token, objects);
+        } else {
+            LOGGER.warn("Unknown token instance '{}', model wont be created.",
+                    new Object[]{token});
         }
 
         return null;
@@ -99,7 +104,7 @@ public class BaseGroupModel<M extends BaseGroupModel, T extends Token>
                 lines.add(line);
             }
 
-            if (line == null)  {
+            if (line == null) {
                 line = new LineModel(this);
                 lines.add(line);
             }

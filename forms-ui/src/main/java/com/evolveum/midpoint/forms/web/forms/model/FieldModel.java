@@ -42,9 +42,11 @@ public class FieldModel extends BaseModel<BaseModel, FieldToken> implements Disp
         super(parentModel, token, objects);
     }
 
-    public List<ValueModel> getValueModels() {
+    public List<ValueModel> getValues() {
         if (values == null) {
             values = new ArrayList<ValueModel>();
+
+            values.add(new ValueModel(this));
         }
         return values;
     }
@@ -53,5 +55,10 @@ public class FieldModel extends BaseModel<BaseModel, FieldToken> implements Disp
     public FieldDisplayType getDisplay() {
         FieldToken token = getToken();
         return token.getField().getDisplay();
+    }
+
+    @Override
+    public FieldDisplayType getDefaultDisplay() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

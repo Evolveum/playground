@@ -49,4 +49,9 @@ public class FieldLoopModel extends BaseModel<BaseGroupModel, FieldLoopToken> im
     public FieldDisplayType getDisplay() {
         return null;
     }
+
+    @Override
+    public FieldDisplayType getDefaultDisplay() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

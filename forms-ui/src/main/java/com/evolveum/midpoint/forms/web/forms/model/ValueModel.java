@@ -27,10 +27,12 @@ import com.evolveum.midpoint.prism.PropertyPath;
 import com.evolveum.midpoint.prism.delta.PropertyDelta;
 import org.apache.commons.lang.Validate;
 
+import java.io.Serializable;
+
 /**
  * @author lazyman
  */
-public class ValueModel<T> {
+public class ValueModel<T> implements Serializable {
 
     private FieldModel field;
     //whatever...? todo

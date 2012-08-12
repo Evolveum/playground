@@ -48,4 +48,9 @@ public class FieldGroupModel extends BaseGroupModel<BaseGroupModel, FieldGroupTo
         FieldGroupToken token = getToken();
         return token.getField().getDisplay();
     }
+
+    @Override
+    public FieldDisplayType getDefaultDisplay() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }
