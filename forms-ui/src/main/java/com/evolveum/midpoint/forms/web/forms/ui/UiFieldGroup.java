@@ -22,7 +22,11 @@
 package com.evolveum.midpoint.forms.web.forms.ui;
 
 import com.evolveum.midpoint.forms.web.forms.model.FieldGroupModel;
+import com.evolveum.midpoint.forms.web.forms.model.LineModel;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
+
+import java.util.List;
 
 /**
  * @author lazyman
@@ -35,6 +39,18 @@ public class UiFieldGroup extends UiComponent<FieldGroupModel> {
 
     @Override
     protected void initLayout() {
+        LineListView line = new LineListView("lines", createLineModel());
+        add(line);
+    }
 
+    private IModel<List<LineModel>> createLineModel() {
+        return new AbstractReadOnlyModel<List<LineModel>>() {
+
+            @Override
+            public List<LineModel> getObject() {
+                FieldGroupModel groupModel = model.getObject();
+                return groupModel.getLines();
+            }
+        };
     }
 }

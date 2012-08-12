@@ -65,28 +65,4 @@ public class LineModel<M extends BaseGroupModel, T extends BaseDisplayableFieldT
         Validate.notNull(model, "Displayable field model must not be null.");
         fields.add(model);
     }
-
-    public static <M extends BaseModel, T extends Token> List<LineModel> createLineModels(
-            BaseModel<M, T> parent, List<BaseFieldModel> fields) {
-
-        List<LineModel> models = new ArrayList<LineModel>();
-
-//        LineModel lineModel;
-//        for (BaseFieldModel model : baseFieldModels) {
-//            if (!(model instanceof FieldModel)) {
-//            lineModel = new LineModel(parent);
-//            models.add(lineModel);
-//                continue;
-//            }
-//
-//            FieldModel fieldModel = (FieldModel) model;
-//            if (fieldModel.isNewLine()) {
-//                models.add(lineModel);
-//                lineModel = new LineModel(parent);
-//            }
-//            lineModel.addBaseFieldModel(model);
-//        }
-
-        return models;
-    }
 }

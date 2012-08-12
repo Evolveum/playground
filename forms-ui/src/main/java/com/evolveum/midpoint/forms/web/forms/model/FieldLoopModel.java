@@ -23,6 +23,7 @@ package com.evolveum.midpoint.forms.web.forms.model;
 
 import com.evolveum.midpoint.forms.web.forms.object.FieldLoopToken;
 import com.evolveum.midpoint.forms.xml.DisplayType;
+import com.evolveum.midpoint.forms.xml.FieldDisplayType;
 import com.evolveum.midpoint.prism.Item;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ import java.util.Map;
 /**
  * @author lazyman
  */
-public class FieldLoopModel extends BaseModel<BaseGroupModel, FieldLoopToken> implements DisplayableModel {
+public class FieldLoopModel extends BaseModel<BaseGroupModel, FieldLoopToken> implements DisplayableModel<FieldDisplayType> {
 
     public FieldLoopModel(BaseGroupModel parentModel, FieldLoopToken token, Map<String, Item> objects) {
         super(parentModel, token, objects);
@@ -45,7 +46,7 @@ public class FieldLoopModel extends BaseModel<BaseGroupModel, FieldLoopToken> im
     }
 
     @Override
-    public DisplayType getDisplay() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public FieldDisplayType getDisplay() {
+        return null;
     }
 }

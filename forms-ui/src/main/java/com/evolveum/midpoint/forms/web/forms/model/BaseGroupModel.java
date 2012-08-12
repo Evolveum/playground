@@ -22,6 +22,7 @@
 package com.evolveum.midpoint.forms.web.forms.model;
 
 import com.evolveum.midpoint.forms.web.forms.object.*;
+import com.evolveum.midpoint.forms.xml.FieldDisplayType;
 import com.evolveum.midpoint.prism.Item;
 
 import java.util.ArrayList;
@@ -90,12 +91,20 @@ public class BaseGroupModel<M extends BaseGroupModel, T extends Token>
     public List<LineModel> getLines() {
         List<LineModel> lines = new ArrayList<LineModel>();
 
-        LineModel line;
-        for (DisplayableModel displayable : getFields()) {
-            line = new LineModel(this);
+        LineModel line = null;
+        for (DisplayableModel<FieldDisplayType> displayable : getFields()) {
+            FieldDisplayType display = displayable.getDisplay();
+            if (display == null || display.isNewLine()) {
+                line = new LineModel(this);
+                lines.add(line);
+            }
+
+            if (line == null)  {
+                line = new LineModel(this);
+                lines.add(line);
+            }
+
             line.addBaseFieldModel(displayable);
-            //todo implement properly
-            lines.add(line);
         }
 
         return lines;

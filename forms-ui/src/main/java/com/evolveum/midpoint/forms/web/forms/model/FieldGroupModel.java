@@ -22,7 +22,7 @@
 package com.evolveum.midpoint.forms.web.forms.model;
 
 import com.evolveum.midpoint.forms.web.forms.object.FieldGroupToken;
-import com.evolveum.midpoint.forms.xml.DisplayType;
+import com.evolveum.midpoint.forms.xml.FieldDisplayType;
 import com.evolveum.midpoint.prism.Item;
 
 import java.util.Map;
@@ -30,7 +30,8 @@ import java.util.Map;
 /**
  * @author lazyman
  */
-public class FieldGroupModel extends BaseGroupModel<BaseGroupModel, FieldGroupToken>  implements DisplayableModel {
+public class FieldGroupModel extends BaseGroupModel<BaseGroupModel, FieldGroupToken>
+        implements DisplayableModel<FieldDisplayType> {
 
     public FieldGroupModel(BaseGroupModel parentModel, FieldGroupToken token, Map<String, Item> objects) {
         super(parentModel, token, objects);
@@ -43,7 +44,8 @@ public class FieldGroupModel extends BaseGroupModel<BaseGroupModel, FieldGroupTo
     }
 
     @Override
-    public DisplayType getDisplay() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public FieldDisplayType getDisplay() {
+        FieldGroupToken token = getToken();
+        return token.getField().getDisplay();
     }
 }

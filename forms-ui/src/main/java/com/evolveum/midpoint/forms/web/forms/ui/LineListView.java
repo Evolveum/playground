@@ -21,13 +21,13 @@
 
 package com.evolveum.midpoint.forms.web.forms.ui;
 
-import com.evolveum.midpoint.forms.web.forms.model.DisplayableModel;
-import com.evolveum.midpoint.forms.web.forms.model.LineModel;
+import com.evolveum.midpoint.forms.web.forms.model.*;
 import org.apache.wicket.Component;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
 import java.util.List;
@@ -35,37 +35,51 @@ import java.util.List;
 /**
  * @author lazyman
  */
-public class LineListView extends ListView<LineModel> {
+public class LineListView extends Panel {
 
     public LineListView(String id, IModel<List<LineModel>> model) {
-        super(id, model);
+        super(id);
+        setRenderBodyOnly(true);
+
+        initLayout(model);
     }
 
-    @Override
-    protected void populateItem(ListItem<LineModel> listItem) {
-        ListView<DisplayableModel> line = new ListView<DisplayableModel>("line",
-                new PropertyModel<List<? extends DisplayableModel>>(listItem.getModel(), "baseFieldModels")) {
+    private void initLayout(IModel<List<LineModel>> model) {
+        ListView<LineModel> line = new ListView<LineModel>("line", model) {
+
+            @Override
+            protected void populateItem(ListItem<LineModel> components) {
+                populateLineItem(components);
+            }
+        };
+        add(line);
+    }
+
+    private void populateLineItem(ListItem<LineModel> listItem) {
+        ListView<DisplayableModel> fields = new ListView<DisplayableModel>("fields",
+                new PropertyModel<List<? extends DisplayableModel>>(listItem.getModel(), "fields")) {
 
             @Override
             protected void populateItem(ListItem<DisplayableModel> listItem) {
-                populateFields(listItem);
+                listItem.setRenderBodyOnly(true);
+
+                DisplayableModel displayable = listItem.getModelObject();
+                Component field;
+                if (displayable instanceof FieldModel) {
+                    field = new UiField("field", (IModel) listItem.getModel());
+                } else if (displayable instanceof FieldGroupModel) {
+                    field = new UiFieldGroup("field", (IModel) listItem.getModel());
+                } else if (displayable instanceof FieldLoopModel) {
+                    field = new UiFieldLoop("field", (IModel) listItem.getModel());
+                } else {
+                    field = UiComponentFactory.createErrorLabel("field", new Model<String>("error"));
+
+                }
+
+                field.setRenderBodyOnly(true);
+                listItem.add(field);
             }
         };
-        listItem.add(line);
-    }
-
-    private void populateFields(ListItem<DisplayableModel> listItem) {
-        Component component;
-//        if (object instanceof FieldModel) {
-//            component = new UiField(LINE_BODY, (IModel) item.getModel());
-//        } else if (object instanceof FieldGroupModel) {
-//            component = new UiFieldGroup(LINE_BODY, (IModel) item.getModel());
-//        } else if (object instanceof FieldLoopModel) {
-//            component = new UiFieldLoop(LINE_BODY, (IModel) item.getModel());
-//        } else {
-        //todo error handling
-        component = new Label("field", "Unknown component type....");
-//        }
-        listItem.add(component);
+        listItem.add(fields);
     }
 }

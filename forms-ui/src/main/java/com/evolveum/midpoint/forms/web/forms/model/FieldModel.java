@@ -23,6 +23,7 @@ package com.evolveum.midpoint.forms.web.forms.model;
 
 import com.evolveum.midpoint.forms.web.forms.object.FieldToken;
 import com.evolveum.midpoint.forms.xml.DisplayType;
+import com.evolveum.midpoint.forms.xml.FieldDisplayType;
 import com.evolveum.midpoint.prism.Item;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ import java.util.Map;
 /**
  * @author lazyman
  */
-public class FieldModel extends BaseModel<BaseModel, FieldToken> implements DisplayableModel {
+public class FieldModel extends BaseModel<BaseModel, FieldToken> implements DisplayableModel<FieldDisplayType> {
 
     private List<ValueModel> values;
     private ValueStatus status;
@@ -49,7 +50,8 @@ public class FieldModel extends BaseModel<BaseModel, FieldToken> implements Disp
     }
 
     @Override
-    public DisplayType getDisplay() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public FieldDisplayType getDisplay() {
+        FieldToken token = getToken();
+        return token.getField().getDisplay();
     }
 }
