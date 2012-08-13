@@ -29,6 +29,8 @@
             <label>xml.public.common.user.name</label>
             <help>xml.public.common.user.name.help</help>
             <tooltip>xml.public.common.user.name.tooltip</tooltip>
+            <cssStyle>font-weight: bold; color: blue;</cssStyle>
+            <cssClass>freakinAwesomeClass</cssClass>
 
             <property name="size">20</property>
         </display>

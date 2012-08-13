@@ -23,11 +23,15 @@ package com.evolveum.midpoint.forms.web.forms.ui;
 
 import com.evolveum.midpoint.forms.web.forms.model.FieldModel;
 import com.evolveum.midpoint.forms.web.forms.model.ValueModel;
+import com.evolveum.midpoint.forms.xml.FieldDisplayType;
+import org.apache.commons.lang.StringUtils;
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.behavior.AttributeAppender;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
-import sun.rmi.runtime.NewThreadAction;
 
 import java.util.List;
 
@@ -42,6 +46,18 @@ public class UiField extends UiComponent<FieldModel> {
 
     @Override
     protected void initLayout() {
+        WebMarkupContainer main = new WebMarkupContainer("main");
+        add(main);
+
+        FieldModel fieldModel = model.getObject();
+        FieldDisplayType display = fieldModel.getDefaultDisplay();
+        if (StringUtils.isNotEmpty(display.getCssClass())) {
+            main.add(new AttributeAppender("class", UiFactory.createReadOnlyModel(display.getCssClass()), " "));
+        }
+        if (StringUtils.isNotEmpty(display.getCssStyle())) {
+            main.add(new AttributeModifier("style", display.getCssStyle()));
+        }
+
         ListView<ValueModel> values = new ListView<ValueModel>("value",
                 new PropertyModel<List<? extends ValueModel>>(model, "values")) {
 
@@ -54,6 +70,6 @@ public class UiField extends UiComponent<FieldModel> {
                 item.add(value);
             }
         };
-        add(values);
+        main.add(values);
     }
 }

@@ -21,6 +21,7 @@
 
 package com.evolveum.midpoint.forms.web.forms.ui.widget;
 
+import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 
@@ -29,9 +30,22 @@ import org.apache.wicket.model.IModel;
  */
 public class TextWidget<T> extends UiWidget {
 
+    private static final String ID_INPUT = "input";
+
     public TextWidget(String id, IModel<T> model) {
+        this(id, model, String.class);
+    }
+
+    public TextWidget(String id, IModel<T> model, Class clazz) {
         super(id);
 
-        add(new TextField("input", model));
+        final TextField<T> text = new TextField<T>(ID_INPUT, model);
+        text.setType(clazz);
+        add(text);
+    }
+
+    @Override
+    public FormComponent getBaseFormComponent() {
+        return (FormComponent) get(ID_INPUT);
     }
 }

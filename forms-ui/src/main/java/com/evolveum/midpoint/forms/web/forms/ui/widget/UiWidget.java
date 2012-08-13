@@ -21,14 +21,24 @@
 
 package com.evolveum.midpoint.forms.web.forms.ui.widget;
 
+import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.Panel;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author lazyman
  */
-public class UiWidget extends Panel {
+public abstract class UiWidget extends Panel {
 
     public UiWidget(String id) {
         super(id);
     }
+
+    public List<FormComponent> getFormComponents() {
+        return Arrays.asList(getBaseFormComponent());
+    }
+
+    public abstract FormComponent getBaseFormComponent();
 }

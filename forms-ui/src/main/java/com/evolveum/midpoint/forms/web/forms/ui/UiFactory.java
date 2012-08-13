@@ -23,14 +23,15 @@ package com.evolveum.midpoint.forms.web.forms.ui;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 
 /**
  * @author lazyman
  */
-public final class UiComponentFactory {
+public final class UiFactory {
 
-    private UiComponentFactory() {
+    private UiFactory() {
     }
 
     public static Label createErrorLabel(String id, IModel<String> model) {
@@ -38,5 +39,15 @@ public final class UiComponentFactory {
         label.add(new AttributeModifier("class", "UiFormError"));
 
         return label;
+    }
+
+    public static <T> IModel<T> createReadOnlyModel(final T object) {
+        return new AbstractReadOnlyModel<T>() {
+
+            @Override
+            public T getObject() {
+                return object;
+            }
+        };
     }
 }

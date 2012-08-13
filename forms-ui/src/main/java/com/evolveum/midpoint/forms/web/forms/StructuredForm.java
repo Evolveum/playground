@@ -24,7 +24,7 @@ package com.evolveum.midpoint.forms.web.forms;
 import com.evolveum.midpoint.forms.web.forms.interpreter.FormInterpreter;
 import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolver;
 import com.evolveum.midpoint.forms.web.forms.model.FormModel;
-import com.evolveum.midpoint.forms.web.forms.ui.UiComponentFactory;
+import com.evolveum.midpoint.forms.web.forms.ui.UiFactory;
 import com.evolveum.midpoint.forms.web.forms.ui.UiForm;
 import com.evolveum.midpoint.forms.web.forms.ui.UiRegistry;
 import com.evolveum.midpoint.forms.xml.DisplayType;
@@ -105,7 +105,7 @@ public class StructuredForm extends Panel {
         }
 
         if (uiForm == null) {
-            uiForm = UiComponentFactory.createErrorLabel(COMPONENT_ID_FORM, new AbstractReadOnlyModel<String>() {
+            uiForm = UiFactory.createErrorLabel(COMPONENT_ID_FORM, new AbstractReadOnlyModel<String>() {
 
                 @Override
                 public String getObject() {

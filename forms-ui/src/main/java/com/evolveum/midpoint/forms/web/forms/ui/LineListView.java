@@ -72,7 +72,7 @@ public class LineListView extends Panel {
                 } else if (displayable instanceof FieldLoopModel) {
                     field = new UiFieldLoop("field", (IModel) listItem.getModel());
                 } else {
-                    field = UiComponentFactory.createErrorLabel("field", new Model<String>("error"));
+                    field = UiFactory.createErrorLabel("field", new Model<String>("error"));
 
                 }
 

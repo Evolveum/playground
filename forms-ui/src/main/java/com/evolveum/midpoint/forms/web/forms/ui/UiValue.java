@@ -23,6 +23,7 @@ package com.evolveum.midpoint.forms.web.forms.ui;
 
 import com.evolveum.midpoint.forms.web.forms.model.ValueModel;
 import com.evolveum.midpoint.forms.web.forms.ui.widget.TextWidget;
+import com.evolveum.midpoint.forms.web.forms.ui.widget.UiWidget;
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
 import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.AttributeModifier;
@@ -31,9 +32,10 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
+
+import java.lang.reflect.Constructor;
 
 /**
  * @author lazyman
@@ -61,7 +63,7 @@ public class UiValue extends Panel {
     protected void initLayout() {
         FieldDisplayType display = model.getObject().getDefaultDisplay();
 
-        //todo help, css
+        //todo help
         Label label = new Label("label", new StringResourceModel(display.getLabel(), null, display.getLabel()));
         if (StringUtils.isNotEmpty(display.getTooltip())) {
             label.add(new AttributeModifier("title",
@@ -70,13 +72,27 @@ public class UiValue extends Panel {
         add(label);
 
         //todo fix widget loading, also model
-        add(new TextWidget("widget", new PropertyModel(model, "value.value")));
+        UiWidget widget = initWidget();
+        add(widget);
 
         FeedbackPanel feedback = new FeedbackPanel("feedback");
-        //todo filter feedback
-        //feedback.setFilter(new ComponentFeedbackMessageFilter(input.getBaseFormComponent()));
+        feedback.setFilter(new ComponentFeedbackMessageFilter(widget.getBaseFormComponent()));
         feedback.setOutputMarkupId(true);
         add(feedback);
 
+    }
+
+    private UiWidget initWidget() {
+//        try {
+//            Class<? extends UiWidget> clazz = UiRegistry.getWidget();
+//            Constructor<? extends UiWidget> constructor = clazz.getConstructor(String.class, IModel.class);
+//            todo fix property model for polystring, password, etc..
+//            return constructor.newInstance("widget", new PropertyModel(model, "value.value"));
+//        } catch (Exception ex) {
+//            //todo log exception
+//            ex.printStackTrace();
+//        }
+
+        return new TextWidget("widget", new PropertyModel(model, "value.value"));
     }
 }
