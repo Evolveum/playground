@@ -21,12 +21,16 @@
 
 package com.evolveum.midpoint.forms.web.forms.model;
 
+import com.evolveum.midpoint.forms.web.forms.object.FieldToken;
+import com.evolveum.midpoint.forms.xml.FieldDisplayType;
+import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.prism.PrismPropertyValue;
 import com.evolveum.midpoint.prism.PropertyPath;
 import com.evolveum.midpoint.prism.delta.PropertyDelta;
 import org.apache.commons.lang.Validate;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * @author lazyman
@@ -42,13 +46,22 @@ public class ValueModel<T> implements Serializable {
     //value status
     private ModelStatus status;
 
-    public ValueModel(FieldModel fieldModel) {
+    public ValueModel(FieldModel fieldModel, PrismPropertyValue<T> value) {
         Validate.notNull(fieldModel, "Field model must not be null.");
         this.field = fieldModel;
+        this.value = value;
+
+        initialize();
     }
 
-    public PropertyDelta<T> createPropertyDelta() {
-        //todo implement
-        return null;
+    private void initialize() {
+        Map<String, Item> objects = field.getObjects();
+
+        FieldToken token = field.getToken();
+        token.getField().getRef();
+    }
+
+    public FieldDisplayType getDefaultDisplay() {
+        return field.getDefaultDisplay();
     }
 }

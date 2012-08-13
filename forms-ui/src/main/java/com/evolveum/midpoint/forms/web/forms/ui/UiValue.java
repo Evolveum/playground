@@ -23,11 +23,17 @@ package com.evolveum.midpoint.forms.web.forms.ui;
 
 import com.evolveum.midpoint.forms.web.forms.model.ValueModel;
 import com.evolveum.midpoint.forms.web.forms.ui.widget.TextWidget;
-import org.apache.wicket.Component;
+import com.evolveum.midpoint.forms.xml.FieldDisplayType;
+import org.apache.commons.lang.StringUtils;
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.model.StringResourceModel;
 
 /**
  * @author lazyman
@@ -53,11 +59,24 @@ public class UiValue extends Panel {
     }
 
     protected void initLayout() {
-        model.getObject();
+        FieldDisplayType display = model.getObject().getDefaultDisplay();
 
-        IModel<String> label = new Model<String>("fullName");
-        add(new Label("label", label));
+        //todo help, css
+        Label label = new Label("label", new StringResourceModel(display.getLabel(), null, display.getLabel()));
+        if (StringUtils.isNotEmpty(display.getTooltip())) {
+            label.add(new AttributeModifier("title",
+                    new StringResourceModel(display.getTooltip(), null, display.getTooltip())));
+        }
+        add(label);
 
-        add(new TextWidget("widget", new Model<String>()));
+        //todo fix widget loading, also model
+        add(new TextWidget("widget", new PropertyModel(model, "value.value")));
+
+        FeedbackPanel feedback = new FeedbackPanel("feedback");
+        //todo filter feedback
+        //feedback.setFilter(new ComponentFeedbackMessageFilter(input.getBaseFormComponent()));
+        feedback.setOutputMarkupId(true);
+        add(feedback);
+
     }
 }

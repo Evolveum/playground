@@ -24,6 +24,10 @@ package com.evolveum.midpoint.forms.web.forms.object;
 import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.xml.FieldType;
+import com.evolveum.midpoint.forms.xml.ReferenceType;
+import com.evolveum.midpoint.prism.Item;
+
+import java.util.Map;
 
 /**
  * @author lazyman
@@ -37,6 +41,14 @@ public class FieldToken extends BaseDisplayableFieldToken<FieldType> {
     @Override
     public void interpret(StructuredFormContext context) throws InterpreterException {
         super.interpret(context);
+
+        Map<String, Item> objects = context.getObjects();
+//        ReferenceType ref = getField().getRef();
+//        Item item = objects.get(ref.getKey());
+//
+//        if (item == null) {
+//            //todo warn, ref is broken
+//        }
 
         //todo implement
     }
