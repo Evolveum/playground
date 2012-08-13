@@ -21,7 +21,6 @@
 
 package com.evolveum.midpoint.forms.web.forms.model;
 
-import com.evolveum.midpoint.forms.web.forms.object.FieldToken;
 import com.evolveum.midpoint.prism.PrismPropertyValue;
 import com.evolveum.midpoint.prism.PropertyPath;
 import com.evolveum.midpoint.prism.delta.PropertyDelta;
@@ -41,7 +40,7 @@ public class ValueModel<T> implements Serializable {
     private PrismPropertyValue<T> value;
     private PrismPropertyValue<T> oldValue;
     //value status
-    private ValueStatus status;
+    private ModelStatus status;
 
     public ValueModel(FieldModel fieldModel) {
         Validate.notNull(fieldModel, "Field model must not be null.");

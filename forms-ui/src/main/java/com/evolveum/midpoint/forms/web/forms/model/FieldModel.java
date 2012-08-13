@@ -22,9 +22,9 @@
 package com.evolveum.midpoint.forms.web.forms.model;
 
 import com.evolveum.midpoint.forms.web.forms.object.FieldToken;
-import com.evolveum.midpoint.forms.xml.DisplayType;
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
 import com.evolveum.midpoint.prism.Item;
+import com.evolveum.midpoint.prism.PrismPropertyDefinition;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,9 @@ import java.util.Map;
 public class FieldModel extends BaseModel<BaseModel, FieldToken> implements DisplayableModel<FieldDisplayType> {
 
     private List<ValueModel> values;
-    private ValueStatus status;
+    private ModelStatus status;
+
+    private PrismPropertyDefinition definition;
 
     public FieldModel(BaseModel parentModel, FieldToken token, Map<String, Item> objects) {
         super(parentModel, token, objects);

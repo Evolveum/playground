@@ -18,45 +18,17 @@
  *
  * Portions Copyrighted 2012 [name of copyright owner]
  */
-.UiForm {
-    border: 1px solid #000;
-}
 
-.UiFormError {
-    /* todo implement */
-    color: #f00;
-}
+package com.evolveum.midpoint.forms.web.forms.ui.widget;
 
-.UiLine {
-    border: 1px solid #00f;
-}
+import org.apache.wicket.markup.html.panel.Panel;
 
-.UiFieldGroup {
-    border: 1px solid #0f0;
-}
+/**
+ * @author lazyman
+ */
+public class UiWidget extends Panel {
 
-.UiField {
-    border: 1px solid #f00;
-
-    display: inline-block;
-    vertical-align: top;
-}
-
-.UiFieldLoop {
-    border: 1px solid #0ff;
-}
-
-.UiValue {
-    border: 1px solid #ff0;
-}
-
-.UiValue .label, .UiValue .input, .UiValue .buttons {
-    border: 1px solid #f0f;
-    padding: 0px;
-
-    display: inline-block;
-}
-
-.UiButtons {
-    display: inline-block;
+    public UiWidget(String id) {
+        super(id);
+    }
 }

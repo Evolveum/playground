@@ -18,45 +18,13 @@
  *
  * Portions Copyrighted 2012 [name of copyright owner]
  */
-.UiForm {
-    border: 1px solid #000;
-}
 
-.UiFormError {
-    /* todo implement */
-    color: #f00;
-}
+package com.evolveum.midpoint.forms.web.forms.model;
 
-.UiLine {
-    border: 1px solid #00f;
-}
+/**
+ * @author lazyman
+ */
+public enum ModelStatus {
 
-.UiFieldGroup {
-    border: 1px solid #0f0;
-}
-
-.UiField {
-    border: 1px solid #f00;
-
-    display: inline-block;
-    vertical-align: top;
-}
-
-.UiFieldLoop {
-    border: 1px solid #0ff;
-}
-
-.UiValue {
-    border: 1px solid #ff0;
-}
-
-.UiValue .label, .UiValue .input, .UiValue .buttons {
-    border: 1px solid #f0f;
-    padding: 0px;
-
-    display: inline-block;
-}
-
-.UiButtons {
-    display: inline-block;
+    ADDED, DELETED, EXISTING;
 }

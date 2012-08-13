@@ -22,8 +22,6 @@
 package com.evolveum.midpoint.forms.web.forms.ui;
 
 import com.evolveum.midpoint.forms.web.forms.object.*;
-import com.evolveum.midpoint.forms.web.forms.ui.group.DefaultFieldGroup;
-import com.evolveum.midpoint.forms.web.forms.ui.group.LabeledFieldGroup;
 import com.evolveum.midpoint.forms.xml.BaseDisplayableFieldType;
 import com.evolveum.midpoint.forms.xml.DisplayType;
 import com.evolveum.midpoint.util.logging.Trace;
@@ -59,8 +57,8 @@ public class UiRegistry {
 //        FIELD_TYPES.put(FIELD_VALUE_TEXT, TextInputField.class);
 
 
-        FIELD_GROUP_TYPES.put(FIELD_GROUP_DEFAULT, DefaultFieldGroup.class);
-        FIELD_GROUP_TYPES.put(FIELD_GROUP_LABELED, LabeledFieldGroup.class);
+//        FIELD_GROUP_TYPES.put(FIELD_GROUP_DEFAULT, DefaultFieldGroup.class);
+//        FIELD_GROUP_TYPES.put(FIELD_GROUP_LABELED, LabeledFieldGroup.class);
     }
 
     public static Class<? extends UiForm> getForm(String type) {

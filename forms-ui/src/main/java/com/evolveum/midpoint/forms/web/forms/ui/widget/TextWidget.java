@@ -19,12 +19,19 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms.model;
+package com.evolveum.midpoint.forms.web.forms.ui.widget;
+
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.model.IModel;
 
 /**
  * @author lazyman
  */
-public enum ValueStatus {
+public class TextWidget<T> extends UiWidget {
 
-    ADDED, DELETED, EXISTING;
+    public TextWidget(String id, IModel<T> model) {
+        super(id);
+
+        add(new TextField("input", model));
+    }
 }

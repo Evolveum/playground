@@ -23,11 +23,8 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       name="User Detail Form">
 
-    <!--<qname prefix="c">...common-2</qname>-->
-
-    <item xsi:type="FieldType" ref="asdf"/>
-
-    <field ref="c:user/c:name">
+    <field>
+        <ref key="user">c:name</ref>
         <display type="text">
             <label>xml.public.common.user.name</label>
             <help>xml.public.common.user.name.help</help>
@@ -36,6 +33,9 @@
             <property name="size">20</property>
         </display>
     </field>
+
+    <!--
+    <item xsi:type="FieldType" ref="asdf"/>
 
     <fieldGroup>
         <display type="labeled">
@@ -94,4 +94,5 @@
             <label>vilkoo</label>
         </display>
     </field>
+    -->
 </form>
