@@ -24,6 +24,11 @@ package com.evolveum.midpoint.forms.web.forms.object;
 import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.xml.BaseDisplayableFieldType;
+import com.evolveum.midpoint.prism.Item;
+import org.apache.commons.lang.StringUtils;
+import org.w3c.dom.Element;
+
+import java.util.Map;
 
 /**
  * @author lazyman
@@ -37,5 +42,24 @@ public abstract class BaseDisplayableFieldToken<T extends BaseDisplayableFieldTy
     @Override
     public void interpret(StructuredFormContext context) throws InterpreterException {
         //todo implement
+    }
+
+    protected ReferenceType validateReference(Element refElement, boolean canBeNull)
+            throws InterpreterException {
+        if (refElement == null && !canBeNull) {
+            throw new InterpreterException("Reference element is not defined for displayable field.");
+        }
+
+        if (refElement == null) {
+            return null;
+        }
+
+        ReferenceType ref = new ReferenceType(refElement);
+        String key = ref.getKey();
+        if (StringUtils.isEmpty(key)) {
+            throw new InterpreterException("Reference doesn't have key attribute defined (or it's empty).");
+        }
+
+        return ref;
     }
 }

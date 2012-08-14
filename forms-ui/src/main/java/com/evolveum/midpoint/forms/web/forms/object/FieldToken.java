@@ -24,8 +24,9 @@ package com.evolveum.midpoint.forms.web.forms.object;
 import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.xml.FieldType;
-import com.evolveum.midpoint.forms.xml.ReferenceType;
-import com.evolveum.midpoint.prism.Item;
+import com.evolveum.midpoint.prism.*;
+import com.evolveum.midpoint.schema.holder.XPathHolder;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.Map;
 
@@ -33,6 +34,9 @@ import java.util.Map;
  * @author lazyman
  */
 public class FieldToken extends BaseDisplayableFieldToken<FieldType> {
+
+    private PrismProperty property;
+    private PrismPropertyDefinition definition;
 
     public FieldToken(Token parent, FieldType field) {
         super(parent, field);
@@ -42,13 +46,51 @@ public class FieldToken extends BaseDisplayableFieldToken<FieldType> {
     public void interpret(StructuredFormContext context) throws InterpreterException {
         super.interpret(context);
 
+        FieldType field = getField();
+        ReferenceType ref = validateReference(field.getRef(), false);
+        String key = ref.getKey();
+
         Map<String, Item> objects = context.getObjects();
-//        ReferenceType ref = getField().getRef();
-//        Item item = objects.get(ref.getKey());
-//
-//        if (item == null) {
-//            //todo warn, ref is broken
-//        }
+        Item item = objects.get(key);
+        if (item == null) {
+            throw new InterpreterException("Item with key '" + key + "' was not found in context.");
+        }
+
+        if (StringUtils.isEmpty(ref.getValue()) && !(item instanceof PrismProperty)) {
+            throw new InterpreterException("Reference doesn't have path defined, but item with key '"
+                    + key + "' is not instance of PrismProperty.");
+        }
+
+        PrismProperty referencedProperty;
+        if (StringUtils.isEmpty(ref.getValue())) {
+            referencedProperty = (PrismProperty) item;
+            if (referencedProperty == null) {
+                throw new InterpreterException("Referenced item doesn't exists.");
+            }
+
+            //todo what to do with that?
+        } else {
+            //resolve property based on parent container and path defined in reference
+            if (!(item instanceof PrismContainer)) {
+                throw new InterpreterException("Item with key '" + key + "' is not instance of PrismContainer.");
+            }
+
+            PrismContainer container = (PrismContainer) item;
+            XPathHolder holder = new XPathHolder(ref.getElement());
+            PropertyPath path = holder.toPropertyPath();
+            item = container.findItem(path);
+            if (!(item instanceof PrismProperty)) {
+                throw new InterpreterException("Referenced item " + ref + " is not instance of PrismProperty.");
+            }
+            referencedProperty = (PrismProperty) item;
+            if (referencedProperty == null) {
+                //find definition, create new property
+            } else {
+                //????
+            }
+            //todo what to do with that?
+        }
+
 
         //todo implement
     }

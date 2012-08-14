@@ -48,4 +48,16 @@ public class ReferenceType {
     public Element getElement() {
         return element;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Ref{key=");
+        builder.append(getKey());
+        builder.append(",path=");
+        builder.append(getValue());
+        builder.append("}");
+
+        return builder.toString();
+    }
 }

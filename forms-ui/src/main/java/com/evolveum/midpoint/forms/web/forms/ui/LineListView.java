@@ -37,6 +37,8 @@ import java.util.List;
  */
 public class LineListView extends Panel {
 
+    private static final String ID_FIELD = "field";
+
     public LineListView(String id, IModel<List<LineModel>> model) {
         super(id);
         setRenderBodyOnly(true);
@@ -66,13 +68,13 @@ public class LineListView extends Panel {
                 DisplayableModel displayable = listItem.getModelObject();
                 Component field;
                 if (displayable instanceof FieldModel) {
-                    field = new UiField("field", (IModel) listItem.getModel());
+                    field = new UiField(ID_FIELD, (IModel) listItem.getModel());
                 } else if (displayable instanceof FieldGroupModel) {
-                    field = new UiFieldGroup("field", (IModel) listItem.getModel());
+                    field = new UiFieldGroup(ID_FIELD, (IModel) listItem.getModel());
                 } else if (displayable instanceof FieldLoopModel) {
-                    field = new UiFieldLoop("field", (IModel) listItem.getModel());
+                    field = new UiFieldLoop(ID_FIELD, (IModel) listItem.getModel());
                 } else {
-                    field = UiFactory.createErrorLabel("field", new Model<String>("error"));
+                    field = UiFactory.createErrorLabel(ID_FIELD, new Model<String>("error"));
 
                 }
 

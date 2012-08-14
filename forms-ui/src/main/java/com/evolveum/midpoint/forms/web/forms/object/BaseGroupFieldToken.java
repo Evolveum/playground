@@ -46,9 +46,5 @@ public abstract class BaseGroupFieldToken<T extends BaseGroupFieldType> extends 
     @Override
     public void interpret(StructuredFormContext context) throws InterpreterException {
         super.interpret(context);
-
-        for (BaseFieldToken token : getFields()) {
-            token.interpret(context);
-        }
     }
 }

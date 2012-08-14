@@ -37,6 +37,8 @@ public class FieldLoopToken extends BaseGroupFieldToken<FieldLoopType> {
 
     @Override
     public void interpret(StructuredFormContext context) throws InterpreterException {
+        super.interpret(context);
+
 //        FieldLoopType loopType = getItem();
 //        if (StringUtils.isEmpty(loopType.getRef())) {
 //            throw new InterpreterException("Field loop type doesn't have ref attribute defined (or it's empty).");
