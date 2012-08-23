@@ -23,6 +23,7 @@ package com.evolveum.midpoint.forms.web.forms.ui;
 
 import com.evolveum.midpoint.forms.web.forms.model.*;
 import org.apache.wicket.Component;
+import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -51,6 +52,12 @@ public class LineListView extends Panel {
 
             @Override
             protected void populateItem(ListItem<LineModel> components) {
+                //todo fix even/odd line counting...
+                if (components.getIndex() % 2 == 0) {
+                    components.add(new AttributeAppender("class", new Model("even"), " "));
+                } else {
+                    components.add(new AttributeAppender("class", new Model("odd"), " "));
+                }
                 populateLineItem(components);
             }
         };

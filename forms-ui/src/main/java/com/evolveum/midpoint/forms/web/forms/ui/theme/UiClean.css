@@ -23,36 +23,43 @@
 }
 
 .UiFormError {
-    /* todo implement */
     color: #f00;
 }
 
 .UiLine {
-    border: 1px solid #00f;
+    /*border: 1px solid #00f;*/
+}
+
+.UiLine.odd {
+    /*background-color: #99ccff;*/
+}
+
+.UiLine.even {
+
 }
 
 .UiFieldGroup {
-    border: 1px solid #0f0;
+    /*border: 1px solid #0f0;*/
 }
 
 .UiField {
-    border: 1px solid #f00;
+    /*border: 1px solid #f00;*/
 
     display: inline-block;
     vertical-align: top;
 }
 
 .UiFieldLoop {
-    border: 1px solid #0ff;
+    /*border: 1px solid #0ff;*/
 }
 
 .UiValue {
-    border: 1px solid #ff0;
+    /*border: 1px solid #ff0;*/
 }
 
 .UiValue .label, .UiValue .input, .UiValue .buttons {
-    border: 1px solid #f0f;
-    padding: 0px;
+    /*border: 1px solid #f0f;*/
+    /*padding: 0px;*/
 
     display: inline-block;
 }

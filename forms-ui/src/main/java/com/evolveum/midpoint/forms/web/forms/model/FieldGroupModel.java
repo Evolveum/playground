@@ -51,6 +51,7 @@ public class FieldGroupModel extends BaseGroupModel<BaseGroupModel, FieldGroupTo
 
     @Override
     public FieldDisplayType getDefaultDisplay() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        //todo implement
+        return getDisplay();
     }
 }

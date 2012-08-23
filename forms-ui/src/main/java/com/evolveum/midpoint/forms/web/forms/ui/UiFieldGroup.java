@@ -23,8 +23,10 @@ package com.evolveum.midpoint.forms.web.forms.ui;
 
 import com.evolveum.midpoint.forms.web.forms.model.FieldGroupModel;
 import com.evolveum.midpoint.forms.web.forms.model.LineModel;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.PropertyModel;
 
 import java.util.List;
 
@@ -39,6 +41,9 @@ public class UiFieldGroup extends UiComponent<FieldGroupModel> {
 
     @Override
     protected void initLayout() {
+        Label groupTitle = new Label("groupTitle", new PropertyModel<String>(model, "defaultDisplay.label"));
+        add(groupTitle);
+
         LineListView line = new LineListView("lines", createLineModel());
         add(line);
     }

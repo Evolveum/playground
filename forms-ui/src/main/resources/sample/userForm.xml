@@ -44,85 +44,22 @@
         <field>
             <ref key="user">c:givenName</ref>
             <display>
-                <label>xml.public.common.user.givenName</label>
+                <label>Given name</label>
             </display>
         </field>
         <field>
             <ref key="user">c:familyName</ref>
             <display newLine="false">
-                <label>xml.public.common.user.familyName</label>
+                <label>Family name</label>
             </display>
         </field>
 
         <field>
             <ref key="user">c:fullName</ref>
             <display>
-                <label>xml.public.common.user.name</label>
+                <label>Full name</label>
                 <cssStyle>font-size: 20px;</cssStyle>
             </display>
         </field>
     </fieldGroup>
-
-
-    <!--
-    <item xsi:type="FieldType" ref="asdf"/>
-
-    <fieldGroup>
-        <display type="labeled">
-            <label>xml.public.common.user.main</label>
-        </display>
-
-        <field ref="user.name">
-            <display type="text">
-                <label>xml.public.common.user.name</label>
-                <help>xml.public.common.user.name.help</help>
-                <tooltip>xml.public.common.user.name.tooltip</tooltip>
-
-                <property name="size">20</property>
-            </display>
-            <enabled>
-                <create/>
-                <read/>
-            </enabled>
-            <visible>
-                <create/>
-                <read/>
-                <update/>
-            </visible>
-        </field>
-        <field ref="user.givenName">
-            <display type="text">
-                <label>xml.public.common.user.givenName</label>
-                <help>xml.public.common.user.givenName.help</help>
-
-            </display>
-        </field>
-        <field ref="user.familyName">
-            <display newLine="false">
-                <label>xml.public.common.user.familyName</label>
-            </display>
-        </field>
-        <field ref="user.fullName">
-            <display newLine="false">
-                <label>xml.public.common.user.fullName</label>
-            </display>
-        </field>
-    </fieldGroup>
-
-    <fieldGroup>
-        <display type="labeled">
-            <label>xml.public.common.user.settings</label>
-        </display>
-
-        <fieldRef alias="vilko"/>
-    </fieldGroup>
-
-    <field ref="user.name"/>
-
-    <field name="vilko" ref="bla bla">
-        <display>
-            <label>vilkoo</label>
-        </display>
-    </field>
-    -->
 </form>
