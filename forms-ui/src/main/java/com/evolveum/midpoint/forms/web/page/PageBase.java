@@ -46,36 +46,13 @@ public abstract class PageBase extends WebPage {
     private static final Trace LOGGER = TraceManager.getTrace(PageBase.class);
 
     public PageBase() {
-        Injector.get().inject(this);
+//        Injector.get().inject(this);
 
         initLayout();
-
     }
 
-    @Override
-    protected void onAfterRender() {
-        super.onAfterRender();
-
-        //we try to remove messages (and operation results) that were stored in session, but only
-        //if all session messages were already rendered.
-        boolean allRendered = true;
-        FeedbackMessages messages = getSession().getFeedbackMessages();
-        Iterator<FeedbackMessage> iterator = messages.iterator();
-        while (iterator.hasNext()) {
-            FeedbackMessage message = iterator.next();
-            if (!message.isRendered()) {
-                allRendered = false;
-                break;
-            }
-        }
-
-        if (allRendered) {
-            getSession().getFeedbackMessages().clear();
-        }
-    }
-
-    private void initLayout() {
-        Label title = new Label("title", createPageTitleModel());
+    protected void initLayout() {
+        Label title = new Label("pageHeadTitle", createPageTitleModel());
         title.setRenderBodyOnly(true);
         add(title);
 

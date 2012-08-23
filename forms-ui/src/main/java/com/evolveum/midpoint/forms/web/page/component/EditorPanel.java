@@ -22,7 +22,7 @@
 package com.evolveum.midpoint.forms.web.page.component;
 
 import com.evolveum.midpoint.forms.component.ace.AceEditor;
-import com.evolveum.midpoint.forms.web.model.Editor;
+import com.evolveum.midpoint.forms.web.page.dto.Editor;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;

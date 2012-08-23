@@ -19,7 +19,7 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.model;
+package com.evolveum.midpoint.forms.web.page.dto;
 
 import java.io.Serializable;
 

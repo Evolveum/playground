@@ -25,8 +25,18 @@
 <html xmlns:wicket="http://wicket.apache.org" lang="en" class="no-js">
 <head>
     <title>
-        <span wicket:id="title"/>
+        <span wicket:id="pageHeadTitle"/>
     </title>
+    <style>
+            /*div {padding: 3px; margin: 3px;}*/
+        .clear {
+            height: 300px;
+        }
+    </style>
+
+    <link href="style.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="formui.js"></script>
 </head>
 <body style="margin: 0;">
 
@@ -39,6 +49,8 @@
         <wicket:child/>
     </div>
 </div>
+
+<span><wicket:message key="pageBase.rightsReserved" /></span>
 
 <div wicket:id="debugPanel"/>
 </body>

@@ -19,28 +19,28 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.page;
+package com.evolveum.midpoint.forms.web.page.component;
 
-import org.apache.wicket.devutils.debugbar.DebugBar;
-import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.markup.html.form.Form;
+import com.evolveum.midpoint.forms.web.page.dto.Editor;
+import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.PropertyModel;
 
 /**
  * @author lazyman
  */
-public class PageTest extends WebPage {
+public class EditorTab extends AbstractTab {
 
-    public PageTest() {
-        initLayout();
+    private IModel<Editor> model;
+
+    public EditorTab(IModel<Editor> model) {
+        super(new PropertyModel<String>(model, "fileName"));
+        this.model = model;
     }
 
-    private void initLayout() {
-        DebugBar debugPanel = new DebugBar("debugPanel");
-        add(debugPanel);
-
-        Form mainForm = new Form("mainForm");
-        add(mainForm);
-
-
+    @Override
+    public WebMarkupContainer getPanel(String panelId) {
+        return new EditorPanel(panelId, model);
     }
 }

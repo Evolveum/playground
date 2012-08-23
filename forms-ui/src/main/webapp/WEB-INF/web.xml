@@ -29,8 +29,8 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            /WEB-INF/applicationContext.xml
-            /WEB-INF/application-context-security.xml
+            /WEB-INF/ctx-webapp.xml
+            /WEB-INF/ctx-security.xml
         </param-value>
     </context-param>
 

@@ -22,7 +22,6 @@
 package com.evolveum.midpoint.forms.web;
 
 import com.evolveum.midpoint.forms.web.page.PageHome;
-import com.evolveum.midpoint.forms.web.page.PageTest;
 import com.evolveum.midpoint.prism.PrismContext;
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -45,7 +44,6 @@ public class MidPointApplication extends WebApplication {
         getMarkupSettings().setStripWicketTags(true);
 
         mountPage("/home", PageHome.class);
-        mountPage("/test", PageTest.class);
     }
 
     @Override

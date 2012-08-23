@@ -23,22 +23,8 @@
         "http://www.w3.org/TR/html4/strict.dtd">
 
 <html xmlns:wicket="http://wicket.apache.org" lang="en" class="no-js">
-<head>
-    <title>Page Home</title>
-    <style>
-            /*div {padding: 3px; margin: 3px;}*/
-        .clear {
-            height: 300px;
-        }
-    </style>
-
-    <link href="style.css" type="text/css" rel="stylesheet">
-    <script type="text/javascript" src="jquery.js"></script>
-    <script type="text/javascript" src="formui.js"></script>
-</head>
 <body>
-<div wicket:id="debugPanel"/>
-
+<wicket:extend>
 <form wicket:id="mainForm">
     <hr/>
     <div wicket:id="structuredForm"/>
@@ -57,9 +43,7 @@
     <hr/>
     form
     <hr/>
-
-
 </form>
-
+</wicket:extend>
 </body>
 </html>

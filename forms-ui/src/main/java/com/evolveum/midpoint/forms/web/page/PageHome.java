@@ -21,34 +21,21 @@
 
 package com.evolveum.midpoint.forms.web.page;
 
-import com.evolveum.midpoint.forms.component.ace.AceEditor;
 import com.evolveum.midpoint.forms.web.MidPointApplication;
 import com.evolveum.midpoint.forms.web.forms.StructuredForm;
 import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.DefaultFormResolver;
-import com.evolveum.midpoint.forms.web.forms.interpreter.FormInterpreter;
 import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolver;
-import com.evolveum.midpoint.forms.web.forms.model.FormModel;
-import com.evolveum.midpoint.forms.web.forms.object.FormToken;
-import com.evolveum.midpoint.forms.web.forms.ui.UiForm;
-import com.evolveum.midpoint.forms.web.model.Editor;
-import com.evolveum.midpoint.forms.web.page.component.EditorPanel;
+import com.evolveum.midpoint.forms.web.page.component.EditorTab;
+import com.evolveum.midpoint.forms.web.page.dto.Editor;
 import com.evolveum.midpoint.prism.Item;
-import com.evolveum.midpoint.prism.PrismContext;
 import com.evolveum.midpoint.prism.PrismObject;
 import com.evolveum.midpoint.xml.ns._public.common.common_2.UserType;
-import org.apache.wicket.Component;
-import org.apache.wicket.devutils.debugbar.DebugBar;
 import org.apache.wicket.extensions.ajax.markup.html.tabs.AjaxTabbedPanel;
-import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
-import org.apache.wicket.extensions.markup.html.tabs.TabbedPanel;
-import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
 
 import java.io.File;
 import java.net.URL;
@@ -60,15 +47,11 @@ import java.util.Map;
 /**
  * @author lazyman
  */
-public class PageHome extends WebPage {
+public class PageHome extends PageBase {
 
-    public PageHome() {
-        initLayout();
-    }
-
-    private void initLayout() {
-        DebugBar debugPanel = new DebugBar("debugPanel");
-        add(debugPanel);
+    @Override
+    protected void initLayout() {
+        super.initLayout();
 
         Form mainForm = new Form("mainForm");
         add(mainForm);
@@ -84,7 +67,7 @@ public class PageHome extends WebPage {
 
                     File userFile = new File(file, "user.xml");
 
-                    MidPointApplication app = (MidPointApplication)getApplication();
+                    MidPointApplication app = (MidPointApplication) getApplication();
                     PrismObject<UserType> user = app.getPrismContext().parseObject(userFile);
 
                     Map<String, Item> objects = new HashMap<String, Item>();
@@ -115,20 +98,5 @@ public class PageHome extends WebPage {
 
         AjaxTabbedPanel<EditorTab> tabpanel = new AjaxTabbedPanel("tabpanel", tabs);
         mainForm.add(tabpanel);
-    }
-
-    public static class EditorTab extends AbstractTab {
-
-        private IModel<Editor> model;
-
-        public EditorTab(IModel<Editor> model) {
-            super(new PropertyModel<String>(model, "fileName"));
-            this.model = model;
-        }
-
-        @Override
-        public WebMarkupContainer getPanel(String panelId) {
-            return new EditorPanel(panelId, model);
-        }
     }
 }

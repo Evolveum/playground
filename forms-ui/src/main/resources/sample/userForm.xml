@@ -36,6 +36,34 @@
         </display>
     </field>
 
+    <fieldGroup>
+        <display>
+            <label>Basic data</label>
+        </display>
+
+        <field>
+            <ref key="user">c:givenName</ref>
+            <display>
+                <label>xml.public.common.user.givenName</label>
+            </display>
+        </field>
+        <field>
+            <ref key="user">c:familyName</ref>
+            <display newLine="false">
+                <label>xml.public.common.user.familyName</label>
+            </display>
+        </field>
+
+        <field>
+            <ref key="user">c:fullName</ref>
+            <display>
+                <label>xml.public.common.user.name</label>
+                <cssStyle>font-size: 20px;</cssStyle>
+            </display>
+        </field>
+    </fieldGroup>
+
+
     <!--
     <item xsi:type="FieldType" ref="asdf"/>
 
