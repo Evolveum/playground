@@ -21,6 +21,7 @@
 
 package com.evolveum.midpoint.forms.web.page;
 
+import com.evolveum.midpoint.forms.component.ace.AceEditor;
 import com.evolveum.midpoint.forms.web.MidPointApplication;
 import com.evolveum.midpoint.forms.web.forms.StructuredForm;
 import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
@@ -30,19 +31,30 @@ import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolver;
 import com.evolveum.midpoint.forms.web.forms.model.FormModel;
 import com.evolveum.midpoint.forms.web.forms.object.FormToken;
 import com.evolveum.midpoint.forms.web.forms.ui.UiForm;
+import com.evolveum.midpoint.forms.web.model.Editor;
+import com.evolveum.midpoint.forms.web.page.component.EditorPanel;
 import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.prism.PrismContext;
 import com.evolveum.midpoint.prism.PrismObject;
 import com.evolveum.midpoint.xml.ns._public.common.common_2.UserType;
+import org.apache.wicket.Component;
 import org.apache.wicket.devutils.debugbar.DebugBar;
+import org.apache.wicket.extensions.ajax.markup.html.tabs.AjaxTabbedPanel;
+import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
+import org.apache.wicket.extensions.markup.html.tabs.TabbedPanel;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -91,5 +103,32 @@ public class PageHome extends WebPage {
 
         StructuredForm uiForm = new StructuredForm("structuredForm", model);
         mainForm.add(uiForm);
+
+        List<EditorTab> tabs = new ArrayList<EditorTab>();
+        Editor editor = new Editor();
+        editor.setFileName("mainForm.xml");
+        tabs.add(new EditorTab(new Model<Editor>(editor)));
+
+        editor = new Editor();
+        editor.setFileName("otherForm");
+        tabs.add(new EditorTab(new Model<Editor>(editor)));
+
+        AjaxTabbedPanel<EditorTab> tabpanel = new AjaxTabbedPanel("tabpanel", tabs);
+        mainForm.add(tabpanel);
+    }
+
+    public static class EditorTab extends AbstractTab {
+
+        private IModel<Editor> model;
+
+        public EditorTab(IModel<Editor> model) {
+            super(new PropertyModel<String>(model, "fileName"));
+            this.model = model;
+        }
+
+        @Override
+        public WebMarkupContainer getPanel(String panelId) {
+            return new EditorPanel(panelId, model);
+        }
     }
 }

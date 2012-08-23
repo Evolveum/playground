@@ -26,17 +26,39 @@
 <head>
     <title>Page Home</title>
     <style>
-        div {padding: 3px; margin: 3px;}
+            /*div {padding: 3px; margin: 3px;}*/
+        .clear {
+            height: 300px;
+        }
     </style>
+
+    <link href="style.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="formui.js"></script>
 </head>
 <body>
 <div wicket:id="debugPanel"/>
 
-welcome
 <form wicket:id="mainForm">
     <hr/>
-    <div wicket:id="structuredForm" />
+    <div wicket:id="structuredForm"/>
     <hr/>
+
+    <a name="editor"><h2>Editor</h2></a>
+    <div wicket:id="tabpanel" class="tabpanel" style="border: 1px solid #000;"/>
+    <a href="#form">Go to form</a>
+
+    <div class="clear">&nbsp;</div>
+    <a name="variables"><h2>Variables</h2></a>
+    <div>variables...</div>
+
+    <div class="clear">&nbsp;</div>
+    <a name="form"><h2>Form</h2></a>
+    <hr/>
+    form
+    <hr/>
+
+
 </form>
 
 </body>
