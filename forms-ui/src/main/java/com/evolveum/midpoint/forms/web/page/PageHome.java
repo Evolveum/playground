@@ -21,6 +21,8 @@
 
 package com.evolveum.midpoint.forms.web.page;
 
+import com.evolveum.midpoint.forms.component.button.AjaxLinkButton;
+import com.evolveum.midpoint.forms.component.util.LoadableModel;
 import com.evolveum.midpoint.forms.web.MidPointApplication;
 import com.evolveum.midpoint.forms.web.forms.StructuredForm;
 import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
@@ -28,9 +30,11 @@ import com.evolveum.midpoint.forms.web.forms.interpreter.DefaultFormResolver;
 import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolver;
 import com.evolveum.midpoint.forms.web.page.component.EditorTab;
 import com.evolveum.midpoint.forms.web.page.dto.Editor;
+import com.evolveum.midpoint.forms.web.page.dto.Project;
 import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.prism.PrismObject;
 import com.evolveum.midpoint.xml.ns._public.common.common_2.UserType;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.tabs.AjaxTabbedPanel;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
@@ -48,6 +52,18 @@ import java.util.Map;
  * @author lazyman
  */
 public class PageHome extends PageBase {
+
+    private IModel<Project> model;
+
+    public PageHome() {
+        model = new LoadableModel<Project>(false) {
+
+            @Override
+            protected Project load() {
+                return new Project();
+            }
+        };
+    }
 
     @Override
     protected void initLayout() {
@@ -87,16 +103,45 @@ public class PageHome extends PageBase {
         StructuredForm uiForm = new StructuredForm("structuredForm", model);
         mainForm.add(uiForm);
 
-        List<EditorTab> tabs = new ArrayList<EditorTab>();
-        Editor editor = new Editor();
-        editor.setFileName("mainForm.xml");
-        tabs.add(new EditorTab(new Model<Editor>(editor)));
+        initEditorLayout(mainForm);
+    }
 
-        editor = new Editor();
-        editor.setFileName("otherForm");
-        tabs.add(new EditorTab(new Model<Editor>(editor)));
+    private void initEditorLayout(Form mainForm) {
+        AjaxTabbedPanel<EditorTab> tabpanel = new AjaxTabbedPanel("tabpanel", new ArrayList());
+        Editor editor = new Editor("Unknown 1");
+        model.getObject().getEditors().add(editor);
+        tabpanel.getTabs().add(new EditorTab(new Model<Editor>(editor)));
 
-        AjaxTabbedPanel<EditorTab> tabpanel = new AjaxTabbedPanel("tabpanel", tabs);
+        tabpanel.setOutputMarkupId(true);
         mainForm.add(tabpanel);
+
+        initEditorButtons(mainForm);
+    }
+
+    private AjaxTabbedPanel getEditorTabPanel() {
+        return (AjaxTabbedPanel) get("mainForm:tabpanel");
+    }
+
+    private void initEditorButtons(Form mainForm) {
+        AjaxLinkButton schedule = new AjaxLinkButton("addEditor",
+                createStringResource("pageHome.button.addEditor")) {
+
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                addEditorPerformed(target);
+            }
+        };
+        mainForm.add(schedule);
+    }
+
+    private void addEditorPerformed(AjaxRequestTarget target) {
+        List<Editor> editors = model.getObject().getEditors();
+        Editor editor = new Editor("Unknown " + (editors.size() + 1));
+        editors.add(editor);
+
+        AjaxTabbedPanel panel = getEditorTabPanel();
+        panel.getTabs().add(new EditorTab(new Model<Editor>(editor)));
+
+        target.add(getEditorTabPanel());
     }
 }

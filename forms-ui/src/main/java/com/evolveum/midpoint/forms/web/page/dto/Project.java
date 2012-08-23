@@ -22,42 +22,20 @@
 package com.evolveum.midpoint.forms.web.page.dto;
 
 import java.io.Serializable;
-
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author lazyman
  */
-public class Editor implements Serializable {
+public class Project implements Serializable {
 
-    private String fileName;
-    private String xml;
+    private List<Editor> editors;
 
-    public Editor() {
-        this(null);
-    }
-
-    public Editor(String fileName) {
-        this(fileName, null);
-    }
-
-    public Editor(String fileName, String xml) {
-        this.fileName = fileName;
-        this.xml = xml;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public String getXml() {
-        return xml;
-    }
-
-    public void setXml(String xml) {
-        this.xml = xml;
+    public List<Editor> getEditors() {
+        if (editors == null) {
+            editors = new ArrayList<Editor>();
+        }
+        return editors;
     }
 }

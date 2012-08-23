@@ -44,11 +44,22 @@ import java.util.Iterator;
 public abstract class PageBase extends WebPage {
 
     private static final Trace LOGGER = TraceManager.getTrace(PageBase.class);
+    private boolean initialized;
 
     public PageBase() {
 //        Injector.get().inject(this);
+    }
+
+    @Override
+    protected void onBeforeRender() {
+        super.onBeforeRender();
+
+        if (initialized) {
+            return;
+        }
 
         initLayout();
+        initialized = true;
     }
 
     protected void initLayout() {
