@@ -72,16 +72,13 @@ public abstract class PageBase extends WebPage {
 
         add(new Label("pageTitle", createPageTitleModel()));
 
-        WebMarkupContainer feedbackContainer = new WebMarkupContainer("feedbackContainer");
-        feedbackContainer.setOutputMarkupId(true);
-        add(feedbackContainer);
-
         FeedbackPanel feedback = new FeedbackPanel("feedback");
-        feedbackContainer.add(feedback);
+        feedback.setOutputMarkupId(true);
+        add(feedback);
     }
 
     public WebMarkupContainer getFeedbackPanel() {
-        return (WebMarkupContainer) get("feedbackContainer");
+        return (WebMarkupContainer) get("feedback");
     }
 
     private void validateInjection(Object object, String message) {

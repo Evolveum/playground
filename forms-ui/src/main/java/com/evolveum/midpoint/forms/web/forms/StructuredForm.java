@@ -71,7 +71,7 @@ public class StructuredForm extends Panel {
     }
 
     private void initLayout() {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder errorMessage = new StringBuilder();
 
         Component uiForm = null;
         try {
@@ -104,6 +104,7 @@ public class StructuredForm extends Panel {
         } catch (Exception ex) {
             //todo remove sysout !!!, print error to label and logs...
             ex.printStackTrace();
+            createMessage(ex, errorMessage);
         }
 
         if (uiForm == null) {
@@ -111,11 +112,24 @@ public class StructuredForm extends Panel {
 
                 @Override
                 public String getObject() {
-                    return getString(StructuredForm.class.getSimpleName() + ".formError") + builder.toString();
+                    return getString(StructuredForm.class.getSimpleName() + ".formError")
+                            + " " + errorMessage.toString();
                 }
             });
             uiForm.add(new AttributeModifier("class", "UiFormError"));
         }
         add(uiForm);
+    }
+
+    private String createMessage(Throwable ex, StringBuilder builder) {
+        builder.append(ex.getMessage());
+
+        if (ex.getCause() != null) {
+            builder.append("Cause by: ");
+            builder.append(createMessage(ex.getCause(), builder));
+            builder.append(" ");
+        }
+
+        return builder.toString();
     }
 }

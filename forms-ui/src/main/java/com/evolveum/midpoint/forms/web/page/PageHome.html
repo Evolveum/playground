@@ -27,35 +27,34 @@
 <wicket:extend>
     <a wicket:id="loadSample"/>
 
-    <!-- *** EDITOR **************************************************** -->
+     <!--*** EDITOR **************************************************** -->
     <h2><a name="editor">Editor</a></h2>
-
     <form wicket:id="editorForm">
         <div style="margin-bottom: 15px; border-bottom: 1px solid #000; padding: 3px;">
             <a wicket:id="addEditor"/>
             <a wicket:id="reloadForm"/>
+
+            <a href="#variables">Variables</a>
+            <a href="#form">Structured form</a>
         </div>
 
         <div wicket:id="tabpanel" class="tabpanel" style="border: 1px solid #000;"/>
-        <a href="#form">Go to form</a>
     </form>
-    <div class="clear">&nbsp;</div>
 
     <!-- *** VARIABLES ************************************************* -->
     <h2><a name="variables">Variables</a></h2>
-
     <form wicket:id="variablesForm">
         <div>variables...</div>
     </form>
-    <div class="clear">&nbsp;</div>
 
-    <!-- *** FORM***** ************************************************* -->
+    <!-- *** CSS AND JAVASCRIPT****************************************** -->
+    <!-- todo implement later -->
+
+    <!-- *** FORM ******************************************************* -->
     <h2><a name="form">Form</a></h2>
-
     <form wicket:id="structuredFormForm" style="padding: 10px;">
         <div wicket:id="structuredForm"/>
     </form>
-    <div class="clear">&nbsp;</div>
 </wicket:extend>
 </body>
 </html>

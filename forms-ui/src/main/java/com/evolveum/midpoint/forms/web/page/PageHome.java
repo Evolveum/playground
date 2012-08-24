@@ -179,7 +179,7 @@ public class PageHome extends PageBase {
         Project project = projectModel.getObject();
         List<Editor> editors = project.getEditors();
         if (editors.isEmpty()) {
-            Editor editor = new Editor(DEFAULT_FORM_NAME + (editors.size() + 1));
+            Editor editor = new Editor(DEFAULT_FORM_NAME + " " + (editors.size() + 1));
             editor.setMain(true);
             editors.add(editor);
         }
@@ -250,6 +250,7 @@ public class PageHome extends PageBase {
         form.addOrReplace(new StructuredForm("structuredForm", structuredFormModel));
 
         target.add(form);
+        target.add(getFeedbackPanel());
     }
 
     private StructuredFormContext loadStructuredFormContextModel() {
@@ -272,8 +273,24 @@ public class PageHome extends PageBase {
             PrismObject<UserType> owner = null;
             return new StructuredFormContext(owner, objects, resolver);
         } catch (Exception ex) {
+            //this feedback won be shown because of it's added to feedback too late...
+            error(createMessage(ex, new StringBuilder()));
+
             ex.printStackTrace();
-            throw new RuntimeException("Unknown error.", ex);
         }
+
+        return null;
+    }
+
+    private String createMessage(Throwable ex, StringBuilder builder) {
+        builder.append(ex.getMessage());
+
+        if (ex.getCause() != null) {
+            builder.append("Cause by: ");
+            builder.append(createMessage(ex.getCause(), builder));
+            builder.append(" ");
+        }
+
+        return builder.toString();
     }
 }
