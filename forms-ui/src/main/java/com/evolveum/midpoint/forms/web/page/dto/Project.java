@@ -31,11 +31,19 @@ import java.util.List;
 public class Project implements Serializable {
 
     private List<Editor> editors;
+    private List<Variable> variables;
 
     public List<Editor> getEditors() {
         if (editors == null) {
             editors = new ArrayList<Editor>();
         }
         return editors;
+    }
+
+    public List<Variable> getVariables() {
+        if (variables == null) {
+            variables = new ArrayList<Variable>();
+        }
+        return variables;
     }
 }

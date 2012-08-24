@@ -41,7 +41,7 @@ public class EditorPanel extends BasePanel<Editor> {
 
     @Override
     protected void initLayout() {
-        TextField text = new TextField("fileName", new PropertyModel(getModel(), "fileName"));
+        TextField text = new TextField("formIdentifier", new PropertyModel(getModel(), "formIdentifier"));
         add(text);
 
         AceEditor editor = new AceEditor("editor", new PropertyModel(getModel(), "xml"));     //todo not working

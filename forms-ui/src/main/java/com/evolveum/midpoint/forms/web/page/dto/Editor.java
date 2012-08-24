@@ -29,28 +29,29 @@ import java.io.Serializable;
  */
 public class Editor implements Serializable {
 
-    private String fileName;
+    private boolean main;
+    private String formIdentifier;
     private String xml;
 
     public Editor() {
         this(null);
     }
 
-    public Editor(String fileName) {
-        this(fileName, null);
+    public Editor(String formIdentifier) {
+        this(formIdentifier, null);
     }
 
-    public Editor(String fileName, String xml) {
-        this.fileName = fileName;
+    public Editor(String formIdentifier, String xml) {
+        this.formIdentifier = formIdentifier;
         this.xml = xml;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getFormIdentifier() {
+        return formIdentifier;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setFormIdentifier(String formIdentifier) {
+        this.formIdentifier = formIdentifier;
     }
 
     public String getXml() {
@@ -59,5 +60,13 @@ public class Editor implements Serializable {
 
     public void setXml(String xml) {
         this.xml = xml;
+    }
+
+    public boolean isMain() {
+        return main;
+    }
+
+    public void setMain(boolean main) {
+        this.main = main;
     }
 }

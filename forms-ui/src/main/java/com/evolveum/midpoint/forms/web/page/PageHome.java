@@ -22,6 +22,7 @@
 package com.evolveum.midpoint.forms.web.page;
 
 import com.evolveum.midpoint.forms.component.button.AjaxLinkButton;
+import com.evolveum.midpoint.forms.component.button.AjaxSubmitLinkButton;
 import com.evolveum.midpoint.forms.component.util.LoadableModel;
 import com.evolveum.midpoint.forms.web.MidPointApplication;
 import com.evolveum.midpoint.forms.web.forms.StructuredForm;
@@ -30,18 +31,24 @@ import com.evolveum.midpoint.forms.web.forms.interpreter.DefaultFormResolver;
 import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolver;
 import com.evolveum.midpoint.forms.web.page.component.EditorTab;
 import com.evolveum.midpoint.forms.web.page.dto.Editor;
+import com.evolveum.midpoint.forms.web.page.dto.EditorFormResolver;
 import com.evolveum.midpoint.forms.web.page.dto.Project;
+import com.evolveum.midpoint.forms.web.page.dto.Variable;
 import com.evolveum.midpoint.prism.Item;
+import com.evolveum.midpoint.prism.PrismContext;
 import com.evolveum.midpoint.prism.PrismObject;
 import com.evolveum.midpoint.xml.ns._public.common.common_2.UserType;
+import org.apache.commons.io.IOUtils;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.tabs.AjaxTabbedPanel;
+import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 
 import java.io.File;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,14 +60,23 @@ import java.util.Map;
  */
 public class PageHome extends PageBase {
 
-    private LoadableModel<Project> model;
+    private static final String DEFAULT_FORM_NAME = "Unknown";
+    private LoadableModel<Project> projectModel;
+    private LoadableModel<StructuredFormContext> structuredFormModel;
 
     public PageHome() {
-        model = new LoadableModel<Project>(false) {
+        projectModel = new LoadableModel<Project>(false) {
 
             @Override
             protected Project load() {
                 return new Project();
+            }
+        };
+        structuredFormModel = new LoadableModel<StructuredFormContext>(false) {
+
+            @Override
+            protected StructuredFormContext load() {
+                return loadStructuredFormContextModel();
             }
         };
     }
@@ -103,7 +119,7 @@ public class PageHome extends PageBase {
         StructuredForm uiForm = new StructuredForm("sampleStructuredForm", model);
         mainForm.add(uiForm);
 
-        initButtons(mainForm);
+        initButtons();
 
         initEditorLayout();
         initVariablesLayout();
@@ -117,13 +133,14 @@ public class PageHome extends PageBase {
 
     private void initFormLayout() {
         Form formForm = new Form("formForm");
+        formForm.setOutputMarkupId(true);
         add(formForm);
 
-        StructuredForm uiForm = new StructuredForm("structuredForm", new Model<StructuredFormContext>());
+        StructuredForm uiForm = new StructuredForm("structuredForm", structuredFormModel);
         formForm.add(uiForm);
     }
 
-    private void initButtons(Form mainForm) {
+    private void initButtons() {
         AjaxLinkButton loadSample = new AjaxLinkButton("loadSample",
                 createStringResource("pageHome.button.loadSample")) {
 
@@ -137,21 +154,20 @@ public class PageHome extends PageBase {
 
     private void initEditorLayout() {
         Form editorForm = new Form("editorForm");
+        editorForm.setOutputMarkupId(true);
         add(editorForm);
 
-        AjaxTabbedPanel<EditorTab> tabpanel = new AjaxTabbedPanel("tabpanel", new ArrayList());
-        Editor editor = new Editor("Unknown 1");
-        model.getObject().getEditors().add(editor);
-        tabpanel.getTabs().add(new EditorTab(new Model<Editor>(editor)));
-
+        List<ITab> tabs = loadTabs();
+        AjaxTabbedPanel<EditorTab> tabpanel = new AjaxTabbedPanel("tabpanel", tabs);
         tabpanel.setOutputMarkupId(true);
         editorForm.add(tabpanel);
+        reloadTabs(null);
 
         initEditorButtons(editorForm);
     }
 
     private AjaxTabbedPanel getEditorTabPanel() {
-        return (AjaxTabbedPanel) get("mainForm:tabpanel");
+        return (AjaxTabbedPanel) get("editorForm:tabpanel");
     }
 
     private void initEditorButtons(Form editorForm) {
@@ -164,11 +180,26 @@ public class PageHome extends PageBase {
             }
         };
         editorForm.add(addEditor);
+
+        AjaxSubmitLinkButton reloadForm = new AjaxSubmitLinkButton("reloadForm",
+                createStringResource("pageHome.button.reloadForm")) {
+
+            @Override
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+                reloadFormPeformed(target);
+            }
+
+            @Override
+            protected void onError(AjaxRequestTarget target, Form<?> form) {
+                target.add(getFeedbackPanel());
+            }
+        };
+        editorForm.add(reloadForm);
     }
 
     private void addEditorPerformed(AjaxRequestTarget target) {
-        List<Editor> editors = model.getObject().getEditors();
-        Editor editor = new Editor("Unknown " + (editors.size() + 1));
+        List<Editor> editors = projectModel.getObject().getEditors();
+        Editor editor = new Editor(DEFAULT_FORM_NAME + (editors.size() + 1));
         editors.add(editor);
 
         AjaxTabbedPanel panel = getEditorTabPanel();
@@ -177,8 +208,104 @@ public class PageHome extends PageBase {
         target.add(getEditorTabPanel());
     }
 
+    private List<ITab> loadTabs() {
+        List<ITab> tabs = new ArrayList<ITab>();
+
+        Project project = projectModel.getObject();
+        List<Editor> editors = project.getEditors();
+        if (editors.isEmpty()) {
+            Editor editor = new Editor(DEFAULT_FORM_NAME + (editors.size() + 1));
+            editor.setMain(true);
+            editors.add(editor);
+        }
+
+        for (Editor editor : editors) {
+            tabs.add(new EditorTab(new Model<Editor>(editor)));
+        }
+
+        return tabs;
+    }
+
+    private void reloadTabs(AjaxRequestTarget target) {
+        AjaxTabbedPanel panel = getEditorTabPanel();
+        List<ITab> tabs = panel.getTabs();
+        tabs.clear();
+        tabs.addAll(loadTabs());
+
+        if (target != null) {
+            target.add(get("editorForm"));
+//            target.add(panel);
+        }
+    }
+
     private void loadSamplePerformed(AjaxRequestTarget target) {
-        model.reset();
+        projectModel.reset();
+
+        Project project = projectModel.getObject();
+        Editor editor = new Editor();
+        editor.setFormIdentifier(DEFAULT_FORM_NAME);
+        editor.setMain(true);
+        editor.setXml(loadFileContent("userForm.xml"));
+        project.getEditors().add(editor);
+
+        Variable variable = new Variable();
+        variable.setName("user");
+        variable.setXml(loadFileContent("user.xml"));
+        project.getVariables().add(variable);
+
+        reloadTabs(target);
+        reloadFormPeformed(target);
+
         //todo implement
+    }
+
+    private String loadFileContent(String fileName) {
+        String content = null;
+
+        InputStream stream = null;
+        try {
+            ClassLoader loader = PageHome.class.getClassLoader();
+            stream = loader.getResourceAsStream("sample/" + fileName);
+
+            content = IOUtils.toString(stream, "utf-8");
+            stream.close();
+        } catch (Exception ex) {
+            throw new RuntimeException("Unknown error.", ex);
+        } finally {
+            IOUtils.closeQuietly(stream);
+        }
+
+        return content;
+    }
+
+    private void reloadFormPeformed(AjaxRequestTarget target) {
+        structuredFormModel.reset();
+
+        target.add(get("formForm"));
+    }
+
+    private StructuredFormContext loadStructuredFormContextModel() {
+        try {
+            Project project = projectModel.getObject();
+
+            List<Editor> editors = project.getEditors();
+            FormResolver resolver = new EditorFormResolver(editors);
+
+            MidPointApplication app = (MidPointApplication) getApplication();
+            PrismContext prismContext = app.getPrismContext();
+
+            Map<String, Item> objects = new HashMap<String, Item>();
+            List<Variable> variables = project.getVariables();
+            for (Variable variable : variables) {
+                Item item =prismContext.parseObject(variable.getXml());
+                objects.put(variable.getName(), item);
+            }
+
+            PrismObject<UserType> owner = null;
+            return new StructuredFormContext(owner, objects, resolver);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw new RuntimeException("Unknown error.", ex);
+        }
     }
 }

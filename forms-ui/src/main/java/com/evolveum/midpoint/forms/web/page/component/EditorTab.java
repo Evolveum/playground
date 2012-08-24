@@ -35,12 +35,15 @@ public class EditorTab extends AbstractTab {
     private IModel<Editor> model;
 
     public EditorTab(IModel<Editor> model) {
-        super(new PropertyModel<String>(model, "fileName"));
+        super(new PropertyModel<String>(model, "formIdentifier"));
         this.model = model;
     }
 
     @Override
     public WebMarkupContainer getPanel(String panelId) {
-        return new EditorPanel(panelId, model);
+        EditorPanel panel = new EditorPanel(panelId, model);
+        panel.setOutputMarkupId(true);
+
+        return panel;
     }
 }

@@ -41,7 +41,7 @@ public class StructuredFormContext implements Serializable {
     private FormResolver resolver;
 
     public StructuredFormContext(PrismObject<UserType> user, Map<String, Item> objects, FormResolver resolver) {
-        Validate.notNull(user, "PrismObject user must not be null.");
+//        Validate.notNull(user, "PrismObject user must not be null.");
         Validate.notNull(resolver, "Form resolver must not be null.");
 
         this.objects = objects;
