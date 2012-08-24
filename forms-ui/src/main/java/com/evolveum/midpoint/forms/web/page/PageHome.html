@@ -25,31 +25,42 @@
 <html xmlns:wicket="http://wicket.apache.org" lang="en" class="no-js">
 <body>
 <wicket:extend>
-<form wicket:id="mainForm">
-    <hr/>
-    <div wicket:id="structuredForm"/>
-    <hr/>
+    <form wicket:id="mainForm">
+        <hr/>
+        <div wicket:id="sampleStructuredForm"/>
+        <hr/>
+    </form>
 
-    <!-- EDITOR ************************************************* -->
+    <a wicket:id="loadSample"/>
+
+    <!-- *** EDITOR **************************************************** -->
     <h2><a name="editor">Editor</a></h2>
 
-    <div style="margin-bottom: 15px; border-bottom: 1px solid #000; padding: 3px;">
-        <a wicket:id="addEditor" />
-    </div>
+    <form wicket:id="editorForm">
+        <div style="margin-bottom: 15px; border-bottom: 1px solid #000; padding: 3px;">
+            <a wicket:id="addEditor"/>
+        </div>
 
-    <div wicket:id="tabpanel" class="tabpanel" style="border: 1px solid #000;"/>
-    <a href="#form">Go to form</a>
-
+        <div wicket:id="tabpanel" class="tabpanel" style="border: 1px solid #000;"/>
+        <a href="#form">Go to form</a>
+    </form>
     <div class="clear">&nbsp;</div>
-    <a name="variables"><h2>Variables</h2></a>
-    <div>variables...</div>
 
+    <!-- *** VARIABLES ************************************************* -->
+    <h2><a name="variables">Variables</a></h2>
+
+    <form wicket:id="variablesForm">
+        <div>variables...</div>
+    </form>
     <div class="clear">&nbsp;</div>
+
+    <!-- *** FORM***** ************************************************* -->
     <a name="form"><h2>Form</h2></a>
-    <hr/>
-    form
-    <hr/>
-</form>
+
+    <form wicket:id="formForm" style="padding: 10px; boder: 1px solid #000;">
+        <div wicket:id="structuredForm"/>
+    </form>
+
 </wicket:extend>
 </body>
 </html>

@@ -23,6 +23,9 @@ package com.evolveum.midpoint.forms.web.page.component;
 
 import com.evolveum.midpoint.forms.component.ace.AceEditor;
 import com.evolveum.midpoint.forms.web.page.dto.Editor;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
+import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
@@ -41,7 +44,14 @@ public class EditorPanel extends BasePanel<Editor> {
         TextField text = new TextField("fileName", new PropertyModel(getModel(), "fileName"));
         add(text);
 
-        AceEditor editor = new AceEditor("editor", new PropertyModel(getModel(), "xml"));
+        AceEditor editor = new AceEditor("editor", new PropertyModel(getModel(), "xml"));     //todo not working
+//        TextArea editor = new TextArea("editor", new PropertyModel(getModel(), "xml"));
+        editor.add(new AjaxFormComponentUpdatingBehavior("onblur") {
+
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+            }
+        });
         add(editor);
     }
 }

@@ -53,7 +53,7 @@ import java.util.Map;
  */
 public class PageHome extends PageBase {
 
-    private IModel<Project> model;
+    private LoadableModel<Project> model;
 
     public PageHome() {
         model = new LoadableModel<Project>(false) {
@@ -100,30 +100,62 @@ public class PageHome extends PageBase {
             }
         };
 
-        StructuredForm uiForm = new StructuredForm("structuredForm", model);
+        StructuredForm uiForm = new StructuredForm("sampleStructuredForm", model);
         mainForm.add(uiForm);
 
-        initEditorLayout(mainForm);
+        initButtons(mainForm);
+
+        initEditorLayout();
+        initVariablesLayout();
+        initFormLayout();
     }
 
-    private void initEditorLayout(Form mainForm) {
+    private void initVariablesLayout() {
+        Form variablesForm = new Form("variablesForm");
+        add(variablesForm);
+    }
+
+    private void initFormLayout() {
+        Form formForm = new Form("formForm");
+        add(formForm);
+
+        StructuredForm uiForm = new StructuredForm("structuredForm", new Model<StructuredFormContext>());
+        formForm.add(uiForm);
+    }
+
+    private void initButtons(Form mainForm) {
+        AjaxLinkButton loadSample = new AjaxLinkButton("loadSample",
+                createStringResource("pageHome.button.loadSample")) {
+
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                loadSamplePerformed(target);
+            }
+        };
+        add(loadSample);
+    }
+
+    private void initEditorLayout() {
+        Form editorForm = new Form("editorForm");
+        add(editorForm);
+
         AjaxTabbedPanel<EditorTab> tabpanel = new AjaxTabbedPanel("tabpanel", new ArrayList());
         Editor editor = new Editor("Unknown 1");
         model.getObject().getEditors().add(editor);
         tabpanel.getTabs().add(new EditorTab(new Model<Editor>(editor)));
 
         tabpanel.setOutputMarkupId(true);
-        mainForm.add(tabpanel);
+        editorForm.add(tabpanel);
 
-        initEditorButtons(mainForm);
+        initEditorButtons(editorForm);
     }
 
     private AjaxTabbedPanel getEditorTabPanel() {
         return (AjaxTabbedPanel) get("mainForm:tabpanel");
     }
 
-    private void initEditorButtons(Form mainForm) {
-        AjaxLinkButton schedule = new AjaxLinkButton("addEditor",
+    private void initEditorButtons(Form editorForm) {
+        AjaxLinkButton addEditor = new AjaxLinkButton("addEditor",
                 createStringResource("pageHome.button.addEditor")) {
 
             @Override
@@ -131,7 +163,7 @@ public class PageHome extends PageBase {
                 addEditorPerformed(target);
             }
         };
-        mainForm.add(schedule);
+        editorForm.add(addEditor);
     }
 
     private void addEditorPerformed(AjaxRequestTarget target) {
@@ -143,5 +175,10 @@ public class PageHome extends PageBase {
         panel.getTabs().add(new EditorTab(new Model<Editor>(editor)));
 
         target.add(getEditorTabPanel());
+    }
+
+    private void loadSamplePerformed(AjaxRequestTarget target) {
+        model.reset();
+        //todo implement
     }
 }
