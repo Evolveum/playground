@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ Copyright (c) 2012 Evolveum
   ~
@@ -18,13 +19,18 @@
   ~
   ~ Portions Copyrighted 2012 [name of copyright owner]
   -->
+<form xmlns="http://midpoint.evolveum.com/xml/ns/public/gui/form"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      name="Other Form">
 
-<!DOCTYPE html>
-<html xmlns:wicket="http://wicket.apache.org">
-<wicket:panel>
-    <div class="UiFieldGroup" wicket:id="main">
-        <span wicket:id="groupTitle" />
-        <div wicket:id="lines"/>
-    </div>
-</wicket:panel>
-</html>
+    <field name="otherFormName">
+        <ref key="user">c:name</ref>
+        <display type="text">
+            <label>xml.public.common.user.name</label>
+            <help>xml.public.common.user.name.help</help>
+            <tooltip>xml.public.common.user.name.tooltip</tooltip>
+
+            <property name="size">40</property>
+        </display>
+    </field>
+</form>

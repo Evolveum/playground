@@ -106,12 +106,22 @@ public class PageHome extends PageBase {
     }
 
     private void initButtons() {
-        AjaxLinkButton loadSample = new AjaxLinkButton("loadSample",
-                createStringResource("pageHome.button.loadSample")) {
+        AjaxLinkButton loadSample = new AjaxLinkButton("loadSample1",
+                createStringResource("pageHome.button.loadSample1")) {
 
             @Override
             public void onClick(AjaxRequestTarget target) {
-                loadSamplePerformed(target);
+                loadSample1Performed(target);
+            }
+        };
+        add(loadSample);
+
+        loadSample = new AjaxLinkButton("loadSample2",
+                createStringResource("pageHome.button.loadSample2")) {
+
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                loadSample2Performed(target);
             }
         };
         add(loadSample);
@@ -205,19 +215,40 @@ public class PageHome extends PageBase {
         }
     }
 
-    private void loadSamplePerformed(AjaxRequestTarget target) {
+    private void loadSample1Performed(AjaxRequestTarget target) {
         projectModel.reset();
 
         Project project = projectModel.getObject();
         Editor editor = new Editor();
         editor.setFormIdentifier(DEFAULT_FORM_NAME);
         editor.setMain(true);
-        editor.setXml(loadFileContent("userForm.xml"));
+        editor.setXml(loadFileContent("1/userForm.xml"));
         project.getEditors().add(editor);
 
         Variable variable = new Variable();
         variable.setName("user");
-        variable.setXml(loadFileContent("user.xml"));
+        variable.setXml(loadFileContent("1/user.xml"));
+        project.getVariables().add(variable);
+
+        reloadTabs(target);
+        reloadFormPeformed(target);
+    }
+
+    private void loadSample2Performed(AjaxRequestTarget target) {
+        projectModel.reset();
+
+        Project project = projectModel.getObject();
+        Editor editor = new Editor("main.xml", loadFileContent("2/main.xml"));
+        editor.setMain(true);
+        project.getEditors().add(editor);
+
+        editor = new Editor("other.xml", loadFileContent("2/other.xml"));
+        project.getEditors().add(editor);
+
+
+        Variable variable = new Variable();
+        variable.setName("user");
+        variable.setXml(loadFileContent("2/user.xml"));
         project.getVariables().add(variable);
 
         reloadTabs(target);

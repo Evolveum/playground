@@ -22,7 +22,13 @@
 package com.evolveum.midpoint.forms.web.forms.ui;
 
 import com.evolveum.midpoint.forms.web.forms.model.FieldGroupModel;
+import com.evolveum.midpoint.forms.web.forms.model.FieldModel;
 import com.evolveum.midpoint.forms.web.forms.model.LineModel;
+import com.evolveum.midpoint.forms.xml.FieldDisplayType;
+import org.apache.commons.lang.StringUtils;
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.behavior.AttributeAppender;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
@@ -41,11 +47,23 @@ public class UiFieldGroup extends UiComponent<FieldGroupModel> {
 
     @Override
     protected void initLayout() {
+        WebMarkupContainer main = new WebMarkupContainer("main");
+        add(main);
+
+        FieldGroupModel groupModel = model.getObject();
+        FieldDisplayType display = groupModel.getDefaultDisplay();
+        if (StringUtils.isNotEmpty(display.getCssClass())) {
+            main.add(new AttributeAppender("class", UiFactory.createReadOnlyModel(display.getCssClass()), " "));
+        }
+        if (StringUtils.isNotEmpty(display.getCssStyle())) {
+            main.add(new AttributeModifier("style", display.getCssStyle()));
+        }
+
         Label groupTitle = new Label("groupTitle", new PropertyModel<String>(model, "defaultDisplay.label"));
-        add(groupTitle);
+        main.add(groupTitle);
 
         LineListView line = new LineListView("lines", createLineModel());
-        add(line);
+        main.add(line);
     }
 
     private IModel<List<LineModel>> createLineModel() {
