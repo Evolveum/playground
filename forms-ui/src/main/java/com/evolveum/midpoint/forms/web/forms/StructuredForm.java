@@ -84,6 +84,8 @@ public class StructuredForm extends Panel {
             Validate.notNull(resolver, "Form resolver in form context must not be null.");
 
             FormType form = resolver.loadForm(context.getUser(), context.getObjects());
+            //todo remove validate
+            Validate.notNull(form, "Main form must not be null (was not found).");
             //check ci nie je form null...
 
             FormInterpreter interpreter = new FormInterpreter();

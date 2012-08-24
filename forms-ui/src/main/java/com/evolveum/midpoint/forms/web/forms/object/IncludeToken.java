@@ -22,6 +22,7 @@
 package com.evolveum.midpoint.forms.web.forms.object;
 
 import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
+import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolver;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.FormType;
@@ -69,24 +70,13 @@ public class IncludeToken implements Token {
             throw new InterpreterException("Include with alias '" + alias + "' doesn't have file path defined.");
         }
 
-        File formFile = new File(filePath);
-        if (!formFile.isAbsolute()) {
-            File midpointHome = new File(".");    //todo fix parent path, should be ${midpoint.home}/forms
-
-            formFile = new File(midpointHome, filePath);
-        }
-
-        if (!formFile.exists() || !formFile.canRead()) {
-            throw new InterpreterException("Include with alias '" + alias + "' with path '"
-                    + formFile.getAbsolutePath() + "' points to file which doesn't exist or can't be read.");
-        }
-
         try {
-            FormType formType = StructuredFormUtils.loadForm(formFile);
+            FormResolver resolver = context.getResolver();
+            FormType formType = resolver.loadForm(filePath, context.getUser(),  context.getObjects());
             includedFormToken = new FormToken(formType);
             includedFormToken.interpret(context);
         } catch (Exception ex) {
-            throw new InterpreterException("Couldn't load structured form from file '" + formFile.getAbsolutePath()
+            throw new InterpreterException("Couldn't load structured form from file '" + filePath
                     + "' defined in <include> with alias '" + alias + "', reason: " + ex.getMessage(), ex);
         }
     }

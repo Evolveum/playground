@@ -27,7 +27,6 @@ import com.evolveum.midpoint.forms.component.util.LoadableModel;
 import com.evolveum.midpoint.forms.web.MidPointApplication;
 import com.evolveum.midpoint.forms.web.forms.StructuredForm;
 import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
-import com.evolveum.midpoint.forms.web.forms.interpreter.DefaultFormResolver;
 import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolver;
 import com.evolveum.midpoint.forms.web.page.component.EditorTab;
 import com.evolveum.midpoint.forms.web.page.dto.Editor;
@@ -43,13 +42,9 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.tabs.AjaxTabbedPanel;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 
-import java.io.File;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,6 +56,10 @@ import java.util.Map;
 public class PageHome extends PageBase {
 
     private static final String DEFAULT_FORM_NAME = "Unknown";
+    private static final String FORM_ID_EDITOR = "editorForm";
+    private static final String FORM_ID_VARIABLES = "variablesForm";
+    private static final String FORM_ID_STRUCTURED_FORM = "structuredFormForm";
+
     private LoadableModel<Project> projectModel;
     private LoadableModel<StructuredFormContext> structuredFormModel;
 
@@ -85,40 +84,6 @@ public class PageHome extends PageBase {
     protected void initLayout() {
         super.initLayout();
 
-        Form mainForm = new Form("mainForm");
-        add(mainForm);
-
-        IModel<StructuredFormContext> model = new LoadableDetachableModel<StructuredFormContext>() {
-
-            @Override
-            protected StructuredFormContext load() {
-                try {
-                    ClassLoader loader = PageHome.class.getClassLoader();
-                    URL url = loader.getResource("sample");
-                    File file = new File(url.toURI());
-
-                    File userFile = new File(file, "user.xml");
-
-                    MidPointApplication app = (MidPointApplication) getApplication();
-                    PrismObject<UserType> user = app.getPrismContext().parseObject(userFile);
-
-                    Map<String, Item> objects = new HashMap<String, Item>();
-                    objects.put("user", user);
-
-                    File formFile = new File(file, "userForm.xml");
-                    FormResolver resolver = new DefaultFormResolver(formFile.getAbsolutePath());
-
-                    return new StructuredFormContext(user, objects, resolver);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    throw new RuntimeException("Unknown error.", ex);
-                }
-            }
-        };
-
-        StructuredForm uiForm = new StructuredForm("sampleStructuredForm", model);
-        mainForm.add(uiForm);
-
         initButtons();
 
         initEditorLayout();
@@ -127,12 +92,12 @@ public class PageHome extends PageBase {
     }
 
     private void initVariablesLayout() {
-        Form variablesForm = new Form("variablesForm");
+        Form variablesForm = new Form(FORM_ID_VARIABLES);
         add(variablesForm);
     }
 
     private void initFormLayout() {
-        Form formForm = new Form("formForm");
+        Form formForm = new Form(FORM_ID_STRUCTURED_FORM);
         formForm.setOutputMarkupId(true);
         add(formForm);
 
@@ -153,7 +118,7 @@ public class PageHome extends PageBase {
     }
 
     private void initEditorLayout() {
-        Form editorForm = new Form("editorForm");
+        Form editorForm = new Form(FORM_ID_EDITOR);
         editorForm.setOutputMarkupId(true);
         add(editorForm);
 
@@ -167,7 +132,7 @@ public class PageHome extends PageBase {
     }
 
     private AjaxTabbedPanel getEditorTabPanel() {
-        return (AjaxTabbedPanel) get("editorForm:tabpanel");
+        return (AjaxTabbedPanel) get(FORM_ID_EDITOR + ":tabpanel");
     }
 
     private void initEditorButtons(Form editorForm) {
@@ -228,13 +193,15 @@ public class PageHome extends PageBase {
 
     private void reloadTabs(AjaxRequestTarget target) {
         AjaxTabbedPanel panel = getEditorTabPanel();
+
         List<ITab> tabs = panel.getTabs();
         tabs.clear();
         tabs.addAll(loadTabs());
 
+        panel.setSelectedTab(0);
+
         if (target != null) {
-            target.add(get("editorForm"));
-//            target.add(panel);
+            target.add(get(FORM_ID_EDITOR));
         }
     }
 
@@ -255,8 +222,6 @@ public class PageHome extends PageBase {
 
         reloadTabs(target);
         reloadFormPeformed(target);
-
-        //todo implement
     }
 
     private String loadFileContent(String fileName) {
@@ -281,7 +246,10 @@ public class PageHome extends PageBase {
     private void reloadFormPeformed(AjaxRequestTarget target) {
         structuredFormModel.reset();
 
-        target.add(get("formForm"));
+        Form form = (Form) get(FORM_ID_STRUCTURED_FORM);
+        form.addOrReplace(new StructuredForm("structuredForm", structuredFormModel));
+
+        target.add(form);
     }
 
     private StructuredFormContext loadStructuredFormContextModel() {
@@ -297,7 +265,7 @@ public class PageHome extends PageBase {
             Map<String, Item> objects = new HashMap<String, Item>();
             List<Variable> variables = project.getVariables();
             for (Variable variable : variables) {
-                Item item =prismContext.parseObject(variable.getXml());
+                Item item = prismContext.parseObject(variable.getXml());
                 objects.put(variable.getName(), item);
             }
 
