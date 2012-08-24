@@ -44,8 +44,7 @@ public class EditorPanel extends BasePanel<Editor> {
         TextField text = new TextField("formIdentifier", new PropertyModel(getModel(), "formIdentifier"));
         add(text);
 
-        AceEditor editor = new AceEditor("editor", new PropertyModel(getModel(), "xml"));     //todo not working
-//        TextArea editor = new TextArea("editor", new PropertyModel(getModel(), "xml"));
+        AceEditor editor = new AceEditor("editor", new PropertyModel(getModel(), "xml"));
         editor.add(new AjaxFormComponentUpdatingBehavior("onblur") {
 
             @Override

@@ -122,12 +122,12 @@ public class StructuredForm extends Panel {
     }
 
     private String createMessage(Throwable ex, StringBuilder builder) {
+        builder.append("Caused by: \"");
         builder.append(ex.getMessage());
+        builder.append("\" ");
 
         if (ex.getCause() != null) {
-            builder.append("Cause by: ");
-            builder.append(createMessage(ex.getCause(), builder));
-            builder.append(" ");
+            createMessage(ex.getCause(), builder);
         }
 
         return builder.toString();

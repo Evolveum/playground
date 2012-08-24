@@ -75,7 +75,7 @@ public class AceEditor<T> extends TextArea<T> {
         script.append(editorId).append(".on('blur', function() { ");
         script.append("$('#").append(getMarkupId()).append("').val(").append(editorId)
                 .append(".getSession().getValue()); ");
-        script.append("$('#").append(getMarkupId()).append("').trigger('onBlur'); });");
+        script.append("$('#").append(getMarkupId()).append("').trigger('onblur'); });");
 
         script.append(" }");
 

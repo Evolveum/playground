@@ -35,12 +35,10 @@
             <property name="size">20</property>
         </display>
     </field>
-
     <fieldGroup>
         <display>
             <label>Basic data</label>
         </display>
-
         <field>
             <ref key="user">c:givenName</ref>
             <display>
@@ -53,7 +51,6 @@
                 <label>Family name</label>
             </display>
         </field>
-
         <field>
             <ref key="user">c:fullName</ref>
             <display>
