@@ -76,9 +76,10 @@ public class StructuredForm extends Panel {
         Component uiForm = null;
         try {
             StructuredFormContext context = model.getObject();
-            LOGGER.debug("Available form context {}.", new Object[]{context.toString()});
             //todo remove validate
             Validate.notNull(context, "Structured form context must not be null.");
+            LOGGER.debug("Available form context {}.", new Object[]{context.toString()});
+
             FormResolver resolver = context.getResolver();
             //todo remove validate
             Validate.notNull(resolver, "Form resolver in form context must not be null.");

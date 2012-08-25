@@ -38,6 +38,13 @@
         </display>
     </field>
 
+    <field>
+        <ref key="user">c:activation/c:enabled</ref>
+        <display type="checkbox">
+            <label>Enabled</label>
+        </display>
+    </field>
+
     <fieldGroup>
         <display>
             <label>Basic data aaa asdf</label>

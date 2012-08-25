@@ -21,6 +21,7 @@
 
 package com.evolveum.midpoint.forms.web.forms.ui;
 
+import com.evolveum.midpoint.forms.web.forms.ui.widget.CheckBoxWidget;
 import com.evolveum.midpoint.forms.web.forms.ui.widget.TextWidget;
 import com.evolveum.midpoint.forms.web.forms.ui.widget.UiWidget;
 import com.evolveum.midpoint.util.logging.Trace;
@@ -37,6 +38,7 @@ import java.util.Map;
 public class UiRegistry {
 
     public static final String WIDGET_DEFAULT = "text";
+    public static final String WIDGET_CHECKBOX = "checkbox";
 
     private static final Trace LOGGER = TraceManager.getTrace(UiRegistry.class);
     private static final Map<String, Class<? extends UiWidget>> WIDGETS =
@@ -44,6 +46,7 @@ public class UiRegistry {
 
     static {
         WIDGETS.put(WIDGET_DEFAULT, TextWidget.class);
+        WIDGETS.put(WIDGET_CHECKBOX, CheckBoxWidget.class);
     }
 
     public static Class<? extends UiForm> getForm(String type) {
@@ -54,45 +57,9 @@ public class UiRegistry {
         return getItemByClass(type, UiForm.class);
     }
 
-//    public static Class<? extends UiFieldGroup> getFieldGroup(String type, String clazz) {
-//        if (StringUtils.isNotEmpty(type)) {
-//            return FIELD_GROUP_TYPES.get(type);
-//        }
-//
-//        if (StringUtils.isEmpty(clazz)) {
-//            return FIELD_GROUP_TYPES.get(FIELD_GROUP_DEFAULT);
-//        }
-//
-//        Class<? extends UiFieldGroup> field = getItemByClass(clazz, UiFieldGroup.class);
-//        if (field == null) {
-//            LOGGER.warn("Unknown field group type/class {}/{} using defaults.", new Object[]{type, clazz});
-//            return FIELD_GROUP_TYPES.get(FIELD_VALUE_TEXT);
-//        }
-//
-//        return field;
-//    }
-//
-//    public static Class<? extends UiField> getField(String type, String clazz) {
-//        Class<? extends UiField> field = null;
-//        if (StringUtils.isNotEmpty(type)) {
-//            field = FIELD_TYPES.get(type);
-//        }
-//
-//        if (field == null && !StringUtils.isEmpty(clazz)) {
-//            field = getItemByClass(clazz, UiField.class);
-//        }
-//
-//        if (field == null) {
-//            LOGGER.warn("Unknown field type/class {}/{} using defaults.", new Object[]{type, clazz});
-//            field = FIELD_TYPES.get(FIELD_VALUE_TEXT);
-//        }
-//
-//        return field;
-//    }
-
     public static Class<? extends UiWidget> getWidget(String type) {
         if (StringUtils.isEmpty(type)) {
-            return WIDGETS.get(WIDGET_DEFAULT);
+            type = WIDGET_DEFAULT;
         }
 
         Class<? extends UiWidget> clazz = WIDGETS.get(type);
@@ -100,7 +67,7 @@ public class UiRegistry {
             clazz = getItemByClass(type, UiWidget.class);
         }
 
-        return clazz;
+        return clazz != null ? clazz : WIDGETS.get(WIDGET_DEFAULT);
     }
 
     private static <T> Class<T> getItemByClass(String clazzName, Class<T> type) {
@@ -122,46 +89,4 @@ public class UiRegistry {
 
         return null;
     }
-
-//    public static Component createUiItem(String componentId, IModel<? extends BaseFieldToken> itemModel) {
-//        BaseFieldToken token = itemModel.getObject();
-//        if (token instanceof FieldRefToken) {
-//            itemModel = new PropertyModel<BaseFieldToken>(itemModel, "referencedToken");
-//        }
-//
-//        DisplayType display = null;
-//
-//        token = itemModel.getObject();
-//        if (token instanceof BaseDisplayableFieldToken) {
-//            BaseDisplayableFieldToken<BaseDisplayableFieldType> displayableToken = (BaseDisplayableFieldToken) token;
-//            BaseDisplayableFieldType abstractField = displayableToken.getField();
-//            display = abstractField.getDisplay();
-//        }
-//
-//        try {
-//            if (token instanceof FieldGroupToken) {
-//                Class<? extends UiFieldGroup> clazz = getFieldGroup(display.getType(), display.getType());
-//                Constructor constructor = clazz.getConstructor(String.class, IModel.class);
-//                return (UiFieldGroup) constructor.newInstance(componentId, itemModel);
-//            } else if (token instanceof FieldToken) {
-//                Class<? extends UiField> clazz = getField(display.getType(), display.getType());
-//                Constructor constructor = clazz.getConstructor(String.class, IModel.class);
-//                return (UiField) constructor.newInstance(componentId, itemModel);
-//            }
-//        } catch (Exception ex) {
-//            LOGGER.warn("Couldn't initialize component from token, reason: {}", new Object[]{ex.getMessage()});
-//            LOGGER.debug("Couldn't initialize component from token.", ex);
-//        }
-//
-//        LOGGER.warn("Using default for component initialization.");
-//
-//        if (token instanceof FieldGroupToken) {
-////            return new DefaultFieldGroup(componentId, (IModel<FieldGroupToken>) itemModel);
-//        } else if (token instanceof FieldToken) {
-////            return new TextInputField(componentId, (IModel<FieldToken>) itemModel);
-//        }
-//
-//        //todo add some warn stuff here about that we couldn't create component
-//        return new Label(componentId);
-//    }
 }

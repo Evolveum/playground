@@ -25,6 +25,7 @@ import com.evolveum.midpoint.forms.web.forms.model.ValueModel;
 import com.evolveum.midpoint.forms.web.forms.ui.widget.TextWidget;
 import com.evolveum.midpoint.forms.web.forms.ui.widget.UiWidget;
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
+import com.evolveum.midpoint.forms.xml.PropertyType;
 import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
@@ -36,6 +37,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 
 import java.lang.reflect.Constructor;
+import java.util.List;
 
 /**
  * @author lazyman
@@ -71,8 +73,7 @@ public class UiValue extends Panel {
         }
         add(label);
 
-        //todo fix widget loading, also model
-        UiWidget widget = initWidget();
+        UiWidget widget = initWidget(display.getType(), display.getProperty());
         add(widget);
 
         FeedbackPanel feedback = new FeedbackPanel("feedback");
@@ -82,17 +83,22 @@ public class UiValue extends Panel {
 
     }
 
-    private UiWidget initWidget() {
-//        try {
-//            Class<? extends UiWidget> clazz = UiRegistry.getWidget();
-//            Constructor<? extends UiWidget> constructor = clazz.getConstructor(String.class, IModel.class);
-//            todo fix property model for polystring, password, etc..
-//            return constructor.newInstance("widget", new PropertyModel(model, "value.value"));
-//        } catch (Exception ex) {
-//            //todo log exception
-//            ex.printStackTrace();
-//        }
+    private UiWidget initWidget(String type, List<PropertyType> properties) {
+        try {
+            Class<? extends UiWidget> clazz = UiRegistry.getWidget(type);
+            Constructor<? extends UiWidget> constructor = clazz.getConstructor(String.class, IModel.class);
+
+            return constructor.newInstance("widget", createValueModel());
+        } catch (Exception ex) {
+            //todo log exception
+            ex.printStackTrace();
+        }
 
         return new TextWidget("widget", new PropertyModel(model, "value.value"));
+    }
+
+    private IModel createValueModel() {
+        //todo fix property model for polystring, password, etc..
+        return new PropertyModel(model, "value.value");
     }
 }
