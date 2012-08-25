@@ -27,31 +27,33 @@ import java.io.Serializable;
 /**
  * @author lazyman
  */
-public class Editor implements Serializable {
+public class EditorDto implements Serializable {
 
-    private boolean main;
-    private String formIdentifier;
+    public static final String F_NAME = "name";
+    public static final String F_XML = "xml";
+
+    private String name;
     private String xml;
 
-    public Editor() {
+    public EditorDto() {
         this(null);
     }
 
-    public Editor(String formIdentifier) {
-        this(formIdentifier, null);
+    public EditorDto(String name) {
+        this(name, null);
     }
 
-    public Editor(String formIdentifier, String xml) {
-        this.formIdentifier = formIdentifier;
+    public EditorDto(String name, String xml) {
+        this.name = name;
         this.xml = xml;
     }
 
-    public String getFormIdentifier() {
-        return formIdentifier;
+    public String getName() {
+        return name;
     }
 
-    public void setFormIdentifier(String formIdentifier) {
-        this.formIdentifier = formIdentifier;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getXml() {
@@ -60,13 +62,5 @@ public class Editor implements Serializable {
 
     public void setXml(String xml) {
         this.xml = xml;
-    }
-
-    public boolean isMain() {
-        return main;
-    }
-
-    public void setMain(boolean main) {
-        this.main = main;
     }
 }

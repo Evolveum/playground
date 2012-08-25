@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <!--
   ~ Copyright (c) 2012 Evolveum
   ~
@@ -18,16 +19,14 @@
   ~
   ~ Portions Copyrighted 2012 [name of copyright owner]
   -->
-
-<!DOCTYPE html>
-<html xmlns:wicket="http://wicket.apache.org">
-<wicket:panel>
-    <div>Name</div>
-    <input type="text" wicket:id="name"/>
-
-    <div>Form XML</div>
-    <div id="aceEditorContainer">
-        <textarea wicket:id="editor"></textarea>
-    </div>
+<wicket:panel xmlns:wicket="http://wicket.apache.org">
+<div wicket:id="tabs-container" class="tab-row">
+<ul>
+	<li wicket:id="tabs">
+		<a href="#" wicket:id="link"><span wicket:id="title">[[tab title]]</span></a>
+        <!--<a wicket:id="close" style="background-image: url('bullet_delete.png');" />-->
+	</li>
+</ul>
+</div>
+<div wicket:id="panel" class="tab-panel">[panel]</div>
 </wicket:panel>
-</html>

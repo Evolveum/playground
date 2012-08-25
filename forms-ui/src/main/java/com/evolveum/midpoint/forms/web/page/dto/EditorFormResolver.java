@@ -40,17 +40,17 @@ import java.util.Map;
  */
 public class EditorFormResolver implements FormResolver {
 
-    private List<Editor> editors;
+    private List<FormDto> editors;
 
-    public EditorFormResolver(List<Editor> editors) {
+    public EditorFormResolver(List<FormDto> editors) {
         Validate.notNull(editors, "Editor list must not be null.");
         this.editors = editors;
     }
 
     @Override
     public FormType loadForm(String identifier, PrismObject<UserType> user, Map<String, Item> objects) {
-        for (Editor editor : editors) {
-            if (identifier.equals(editor.getFormIdentifier())) {
+        for (EditorDto editor : editors) {
+            if (identifier.equals(editor.getName())) {
                 return loadForm(editor.getXml());
             }
         }
@@ -60,9 +60,9 @@ public class EditorFormResolver implements FormResolver {
 
     @Override
     public FormType loadForm(PrismObject<UserType> user, Map<String, Item> objects) {
-        for (Editor editor : editors) {
+        for (FormDto editor : editors) {
             if (editor.isMain()) {
-                return loadForm(editor.getFormIdentifier(), user, objects);
+                return loadForm(editor.getName(), user, objects);
             }
         }
 

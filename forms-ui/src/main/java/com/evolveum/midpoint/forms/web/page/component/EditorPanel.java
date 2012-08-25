@@ -22,10 +22,9 @@
 package com.evolveum.midpoint.forms.web.page.component;
 
 import com.evolveum.midpoint.forms.component.ace.AceEditor;
-import com.evolveum.midpoint.forms.web.page.dto.Editor;
+import com.evolveum.midpoint.forms.web.page.dto.EditorDto;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
-import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
@@ -33,18 +32,18 @@ import org.apache.wicket.model.PropertyModel;
 /**
  * @author lazyman
  */
-public class EditorPanel extends BasePanel<Editor> {
+public class EditorPanel extends BasePanel<EditorDto> {
 
-    public EditorPanel(String id, IModel<Editor> model) {
+    public EditorPanel(String id, IModel<EditorDto> model) {
         super(id, model);
     }
 
     @Override
     protected void initLayout() {
-        TextField text = new TextField("formIdentifier", new PropertyModel(getModel(), "formIdentifier"));
+        TextField text = new TextField("name", new PropertyModel(getModel(), EditorDto.F_NAME));
         add(text);
 
-        AceEditor editor = new AceEditor("editor", new PropertyModel(getModel(), "xml"));
+        AceEditor editor = new AceEditor("editor", new PropertyModel(getModel(), EditorDto.F_XML));
         editor.add(new AjaxFormComponentUpdatingBehavior("onblur") {
 
             @Override

@@ -23,16 +23,14 @@ package com.evolveum.midpoint.forms.web.page;
 
 import com.evolveum.midpoint.forms.component.button.AjaxLinkButton;
 import com.evolveum.midpoint.forms.component.button.AjaxSubmitLinkButton;
+import com.evolveum.midpoint.forms.component.tab.FormTabbedPanel;
 import com.evolveum.midpoint.forms.component.util.LoadableModel;
 import com.evolveum.midpoint.forms.web.MidPointApplication;
 import com.evolveum.midpoint.forms.web.forms.StructuredForm;
 import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolver;
 import com.evolveum.midpoint.forms.web.page.component.EditorTab;
-import com.evolveum.midpoint.forms.web.page.dto.Editor;
-import com.evolveum.midpoint.forms.web.page.dto.EditorFormResolver;
-import com.evolveum.midpoint.forms.web.page.dto.Project;
-import com.evolveum.midpoint.forms.web.page.dto.Variable;
+import com.evolveum.midpoint.forms.web.page.dto.*;
 import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.prism.PrismContext;
 import com.evolveum.midpoint.prism.PrismObject;
@@ -42,8 +40,12 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.tabs.AjaxTabbedPanel;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.tree.LinkTree;
 import org.apache.wicket.model.Model;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeModel;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,9 +57,9 @@ import java.util.Map;
  */
 public class PageHome extends PageBase {
 
-    private static final String DEFAULT_FORM_NAME = "Unknown";
+    private static final String DEFAULT_FORM_NAME = "Form";
+    private static final String DEFAULT_VARIABLE_NAME = "Variable";
     private static final String FORM_ID_EDITOR = "editorForm";
-    private static final String FORM_ID_VARIABLES = "variablesForm";
     private static final String FORM_ID_STRUCTURED_FORM = "structuredFormForm";
 
     private LoadableModel<Project> projectModel;
@@ -84,16 +86,49 @@ public class PageHome extends PageBase {
     protected void initLayout() {
         super.initLayout();
 
+        initTree();
+
         initButtons();
 
         initEditorLayout();
-        initVariablesLayout();
         initFormLayout();
     }
 
-    private void initVariablesLayout() {
-        Form variablesForm = new Form(FORM_ID_VARIABLES);
-        add(variablesForm);
+    private void initTree() {
+        LinkTree tree = new LinkTree("tree", new LoadableModel<TreeModel>() {
+
+            @Override
+            public TreeModel load() {
+                return createTreeModel();
+            }
+        }) {
+            @Override
+            protected void onJunctionLinkClicked(AjaxRequestTarget target, Object node) {
+                super.onJunctionLinkClicked(target, node);    //To change body of overridden methods use File | Settings | File Templates.
+            }
+        };
+        tree.getTreeState().expandAll();
+        tree.setOutputMarkupId(true);
+        add(tree);
+    }
+
+    private TreeModel createTreeModel() {
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Project");
+        DefaultMutableTreeNode forms = new DefaultMutableTreeNode("Forms");
+        root.add(forms);
+        DefaultMutableTreeNode variables = new DefaultMutableTreeNode("Variables");
+        root.add(variables);
+
+        Project project = projectModel.getObject();
+        for (FormDto form : project.getForms()) {
+            forms.add(new DefaultMutableTreeNode(form.getName()));
+        }
+
+        for (VariableDto variable : project.getVariables()) {
+            variables.add(new DefaultMutableTreeNode(variable.getName()));
+        }
+
+        return new DefaultTreeModel(root);
     }
 
     private void initFormLayout() {
@@ -132,8 +167,8 @@ public class PageHome extends PageBase {
         editorForm.setOutputMarkupId(true);
         add(editorForm);
 
-        List<ITab> tabs = loadTabs();
-        AjaxTabbedPanel<EditorTab> tabpanel = new AjaxTabbedPanel("tabpanel", tabs);
+        List<EditorTab> tabs = loadEditorTabs();
+        FormTabbedPanel tabpanel = new FormTabbedPanel("tabpanel", tabs);
         tabpanel.setOutputMarkupId(true);
         editorForm.add(tabpanel);
         reloadTabs(null);
@@ -173,30 +208,40 @@ public class PageHome extends PageBase {
     }
 
     private void addEditorPerformed(AjaxRequestTarget target) {
-        List<Editor> editors = projectModel.getObject().getEditors();
-        Editor editor = new Editor(DEFAULT_FORM_NAME + (editors.size() + 1));
+        List<FormDto> editors = projectModel.getObject().getForms();
+        FormDto editor = new FormDto(DEFAULT_FORM_NAME + " " + (editors.size() + 1));
         editors.add(editor);
 
         AjaxTabbedPanel panel = getEditorTabPanel();
-        panel.getTabs().add(new EditorTab(new Model<Editor>(editor)));
+        panel.getTabs().add(new EditorTab(new Model<EditorDto>(editor)));
 
         target.add(getEditorTabPanel());
+        target.add(get("tree"));
     }
 
-    private List<ITab> loadTabs() {
-        List<ITab> tabs = new ArrayList<ITab>();
+    private List<EditorTab> loadEditorTabs() {
+        List<EditorTab> tabs = new ArrayList<EditorTab>();
 
         Project project = projectModel.getObject();
-        List<Editor> editors = project.getEditors();
-        if (editors.isEmpty()) {
-            Editor editor = new Editor(DEFAULT_FORM_NAME + " " + (editors.size() + 1));
-            editor.setMain(true);
-            editors.add(editor);
+        List<FormDto> forms = project.getForms();
+        if (forms.isEmpty()) {
+            FormDto form = new FormDto(DEFAULT_FORM_NAME + " " + (forms.size() + 1));
+            form.setMain(true);
+            forms.add(form);
+        }
+        for (EditorDto editor : forms) {
+            tabs.add(new EditorTab(new Model<EditorDto>(editor)));
         }
 
-        for (Editor editor : editors) {
-            tabs.add(new EditorTab(new Model<Editor>(editor)));
+        List<VariableDto> variables = project.getVariables();
+        if (variables.isEmpty()) {
+            VariableDto variable = new VariableDto(DEFAULT_VARIABLE_NAME + " " + (variables.size() + 1));
+            variables.add(variable);
         }
+        for (EditorDto editor : variables) {
+            tabs.add(new EditorTab(new Model<EditorDto>(editor)));
+        }
+
 
         return tabs;
     }
@@ -206,7 +251,7 @@ public class PageHome extends PageBase {
 
         List<ITab> tabs = panel.getTabs();
         tabs.clear();
-        tabs.addAll(loadTabs());
+        tabs.addAll(loadEditorTabs());
 
         panel.setSelectedTab(0);
 
@@ -219,15 +264,11 @@ public class PageHome extends PageBase {
         projectModel.reset();
 
         Project project = projectModel.getObject();
-        Editor editor = new Editor();
-        editor.setFormIdentifier(DEFAULT_FORM_NAME);
+        FormDto editor = new FormDto(DEFAULT_FORM_NAME, loadFileContent("1/userForm.xml"));
         editor.setMain(true);
-        editor.setXml(loadFileContent("1/userForm.xml"));
-        project.getEditors().add(editor);
+        project.getForms().add(editor);
 
-        Variable variable = new Variable();
-        variable.setName("user");
-        variable.setXml(loadFileContent("1/user.xml"));
+        VariableDto variable = new VariableDto("user", loadFileContent("1/user.xml"));
         project.getVariables().add(variable);
 
         reloadTabs(target);
@@ -238,17 +279,15 @@ public class PageHome extends PageBase {
         projectModel.reset();
 
         Project project = projectModel.getObject();
-        Editor editor = new Editor("main.xml", loadFileContent("2/main.xml"));
-        editor.setMain(true);
-        project.getEditors().add(editor);
+        FormDto form = new FormDto("main.xml", loadFileContent("2/main.xml"));
+        form.setMain(true);
+        project.getForms().add(form);
 
-        editor = new Editor("other.xml", loadFileContent("2/other.xml"));
-        project.getEditors().add(editor);
+        form = new FormDto("other.xml", loadFileContent("2/other.xml"));
+        project.getForms().add(form);
 
 
-        Variable variable = new Variable();
-        variable.setName("user");
-        variable.setXml(loadFileContent("2/user.xml"));
+        VariableDto variable = new VariableDto("user", loadFileContent("2/user.xml"));
         project.getVariables().add(variable);
 
         reloadTabs(target);
@@ -288,15 +327,15 @@ public class PageHome extends PageBase {
         try {
             Project project = projectModel.getObject();
 
-            List<Editor> editors = project.getEditors();
-            FormResolver resolver = new EditorFormResolver(editors);
+            List<FormDto> forms = project.getForms();
+            FormResolver resolver = new EditorFormResolver(forms);
 
             MidPointApplication app = (MidPointApplication) getApplication();
             PrismContext prismContext = app.getPrismContext();
 
             Map<String, Item> objects = new HashMap<String, Item>();
-            List<Variable> variables = project.getVariables();
-            for (Variable variable : variables) {
+            List<VariableDto> variables = project.getVariables();
+            for (VariableDto variable : variables) {
                 Item item = prismContext.parseObject(variable.getXml());
                 objects.put(variable.getName(), item);
             }

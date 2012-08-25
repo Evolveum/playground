@@ -22,17 +22,27 @@
 package com.evolveum.midpoint.forms.web;
 
 import com.evolveum.midpoint.forms.web.page.PageHome;
+import com.evolveum.midpoint.forms.web.resource.img.ImgResources;
 import com.evolveum.midpoint.prism.PrismContext;
+import com.evolveum.midpoint.util.logging.LoggingUtils;
+import com.evolveum.midpoint.util.logging.Trace;
+import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.resource.SharedResourceReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.io.File;
+import java.io.FilenameFilter;
 
 /**
  * @author lazyman
  */
 @Component("midpointApplication")
 public class MidPointApplication extends WebApplication {
+
+    private static final Trace LOGGER = TraceManager.getTrace(MidPointApplication.class);
 
     @Autowired
     transient PrismContext prismContext;
@@ -42,6 +52,8 @@ public class MidPointApplication extends WebApplication {
         super.init();
 
         getMarkupSettings().setStripWicketTags(true);
+
+        mountFiles(ImgResources.BASE_PATH, ImgResources.class);
 
         mountPage("/home", PageHome.class);
     }
@@ -53,5 +65,44 @@ public class MidPointApplication extends WebApplication {
 
     public PrismContext getPrismContext() {
         return prismContext;
+    }
+
+    private void mountFiles(String path, Class<?> clazz) {
+        try {
+            String absPath = getServletContext().getRealPath("WEB-INF/classes") + "/"
+                    + clazz.getPackage().getName().replace('.', '/');
+
+            File folder = new File(absPath);
+            mountFiles(path, clazz, folder);
+        } catch (Exception ex) {
+            LoggingUtils.logException(LOGGER, "Couldn't mount files", ex);
+        }
+    }
+
+    private void mountFiles(String path, Class<?> clazz, File folder) {
+        File[] files = folder.listFiles(new ResourceFileFilter());
+        for (File file : files) {
+            if (!file.exists()) {
+                LOGGER.warn("Couldn't mount resource {}.", new Object[]{file.getPath()});
+                continue;
+            }
+            if (file.isDirectory()) {
+                mountFiles(path + "/" + file.getName(), clazz, file);
+            } else {
+                mountResource(path + "/" + file.getName(), new SharedResourceReference(clazz, file.getName()));
+            }
+        }
+    }
+
+    private static class ResourceFileFilter implements FilenameFilter {
+
+        @Override
+        public boolean accept(File parent, String name) {
+            if (name.endsWith("png")) {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

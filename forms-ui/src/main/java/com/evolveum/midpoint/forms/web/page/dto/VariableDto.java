@@ -21,29 +21,16 @@
 
 package com.evolveum.midpoint.forms.web.page.dto;
 
-import java.io.Serializable;
-
 /**
  * @author lazyman
  */
-public class Variable implements Serializable {
+public class VariableDto extends EditorDto {
 
-    private String name;
-    private String xml;
-
-    public String getName() {
-        return name;
+    public VariableDto(String name) {
+        super(name);
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getXml() {
-        return xml;
-    }
-
-    public void setXml(String xml) {
-        this.xml = xml;
+    public VariableDto(String name, String xml) {
+        super(name, xml);
     }
 }

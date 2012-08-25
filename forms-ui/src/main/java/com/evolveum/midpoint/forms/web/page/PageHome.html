@@ -25,6 +25,7 @@
 <html xmlns:wicket="http://wicket.apache.org" lang="en" class="no-js">
 <body>
 <wicket:extend>
+
     <a wicket:id="loadSample1"/>
     <a wicket:id="loadSample2"/>
 
@@ -42,12 +43,6 @@
         <div wicket:id="tabpanel" class="tabpanel" style="border: 1px solid #000;"/>
     </form>
 
-    <!-- *** VARIABLES ************************************************** -->
-    <h2><a name="variables">Variables</a></h2>
-    <form wicket:id="variablesForm">
-        <div>variables...</div>
-    </form>
-
     <!-- *** CSS AND JAVASCRIPT****************************************** -->
     <!-- todo implement later -->
 
@@ -56,6 +51,11 @@
     <form wicket:id="structuredFormForm" style="padding: 10px;">
         <div wicket:id="structuredForm"/>
     </form>
+
+    <hr style="margin-top: 30px;"/>
+    ...other experiments...
+    <div wicket:id="tree" />
+
 </wicket:extend>
 </body>
 </html>

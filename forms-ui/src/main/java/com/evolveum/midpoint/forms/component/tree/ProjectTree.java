@@ -19,31 +19,19 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.page.dto;
+package com.evolveum.midpoint.forms.component.tree;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import org.apache.wicket.markup.html.tree.LinkTree;
+import org.apache.wicket.model.IModel;
+
+import javax.swing.tree.TreeModel;
 
 /**
  * @author lazyman
  */
-public class Project implements Serializable {
+public class ProjectTree extends LinkTree {
 
-    private List<FormDto> forms;
-    private List<VariableDto> variables;
-
-    public List<FormDto> getForms() {
-        if (forms == null) {
-            forms = new ArrayList<FormDto>();
-        }
-        return forms;
-    }
-
-    public List<VariableDto> getVariables() {
-        if (variables == null) {
-            variables = new ArrayList<VariableDto>();
-        }
-        return variables;
+    public ProjectTree(String id, IModel<? extends TreeModel> model) {
+        super(id, model);
     }
 }

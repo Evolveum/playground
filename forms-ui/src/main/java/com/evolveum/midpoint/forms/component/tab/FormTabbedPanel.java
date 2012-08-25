@@ -19,35 +19,28 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.page.component;
+package com.evolveum.midpoint.forms.component.tab;
 
-import com.evolveum.midpoint.forms.web.page.dto.EditorDto;
-import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
-import org.apache.wicket.markup.html.WebMarkupContainer;
+import com.evolveum.midpoint.forms.web.page.component.EditorTab;
+import org.apache.wicket.Component;
+import org.apache.wicket.extensions.ajax.markup.html.tabs.AjaxTabbedPanel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.PropertyModel;
+
+import java.util.List;
 
 /**
  * @author lazyman
  */
-public class EditorTab extends AbstractTab {
+public class FormTabbedPanel extends AjaxTabbedPanel<EditorTab> {
 
-    private IModel<EditorDto> model;
-
-    public EditorTab(IModel<EditorDto> model) {
-        super(new PropertyModel<String>(model,  EditorDto.F_NAME));
-        this.model = model;
+    public FormTabbedPanel(String id, List<EditorTab> tabs) {
+        super(id, tabs);
     }
 
     @Override
-    public WebMarkupContainer getPanel(String panelId) {
-        EditorPanel panel = new EditorPanel(panelId, model);
-        panel.setOutputMarkupId(true);
+    protected Component newTitle(String titleId, IModel<?> titleModel, int index) {
+        EditorTab tab = getTabs().get(index);
 
-        return panel;
-    }
-
-    public IModel<EditorDto> getModel() {
-        return model;
+        return new IconPanel(titleId, (IModel) titleModel, tab.getModel());
     }
 }

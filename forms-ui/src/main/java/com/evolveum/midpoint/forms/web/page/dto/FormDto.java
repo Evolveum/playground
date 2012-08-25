@@ -19,22 +19,28 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.page.component;
-
-import com.evolveum.midpoint.forms.web.page.dto.Variable;
-import org.apache.wicket.model.IModel;
+package com.evolveum.midpoint.forms.web.page.dto;
 
 /**
  * @author lazyman
  */
-public class VariablePanel extends BasePanel<Variable> {
+public class FormDto extends EditorDto {
 
-    public VariablePanel(String id, IModel<Variable> variableIModel) {
-        super(id, variableIModel);
+    private boolean main;
+
+    public FormDto(String name) {
+        super(name);
     }
 
-    @Override
-    protected void initLayout() {
+    public FormDto(String name, String xml) {
+        super(name, xml);
+    }
 
+    public boolean isMain() {
+        return main;
+    }
+
+    public void setMain(boolean main) {
+        this.main = main;
     }
 }

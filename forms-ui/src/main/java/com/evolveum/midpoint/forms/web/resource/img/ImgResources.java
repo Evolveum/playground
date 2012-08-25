@@ -19,31 +19,12 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.page.dto;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+package com.evolveum.midpoint.forms.web.resource.img;
 
 /**
  * @author lazyman
  */
-public class Project implements Serializable {
+public class ImgResources {
 
-    private List<FormDto> forms;
-    private List<VariableDto> variables;
-
-    public List<FormDto> getForms() {
-        if (forms == null) {
-            forms = new ArrayList<FormDto>();
-        }
-        return forms;
-    }
-
-    public List<VariableDto> getVariables() {
-        if (variables == null) {
-            variables = new ArrayList<VariableDto>();
-        }
-        return variables;
-    }
+    public static final String BASE_PATH = "/img";
 }
