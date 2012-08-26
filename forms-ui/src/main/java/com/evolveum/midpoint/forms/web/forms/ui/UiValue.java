@@ -88,7 +88,10 @@ public class UiValue extends Panel {
             Class<? extends UiWidget> clazz = UiRegistry.getWidget(type);
             Constructor<? extends UiWidget> constructor = clazz.getConstructor(String.class, IModel.class);
 
-            return constructor.newInstance("widget", createValueModel());
+            UiWidget widget = constructor.newInstance("widget", createValueModel());
+            widget.setProperties(properties);
+
+            return widget;
         } catch (Exception ex) {
             //todo log exception
             ex.printStackTrace();

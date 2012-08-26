@@ -33,14 +33,17 @@ public class CheckBoxWidget extends UiWidget {
     private static final String ID_INPUT = "input";
 
     public CheckBoxWidget(String id, IModel<Boolean> model) {
-        super(id);
-
-        CheckBox text = new CheckBox(ID_INPUT, model);
-        add(text);
+        super(id, model);
     }
 
     @Override
     public FormComponent getBaseFormComponent() {
         return (FormComponent) get(ID_INPUT);
+    }
+
+    @Override
+    protected void initLayout() {
+        CheckBox text = new CheckBox(ID_INPUT, getModel());
+        add(text);
     }
 }

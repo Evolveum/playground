@@ -21,31 +21,76 @@
 
 package com.evolveum.midpoint.forms.web.forms.ui.widget;
 
+import com.evolveum.midpoint.forms.xml.PropertyType;
+import com.evolveum.midpoint.util.logging.Trace;
+import com.evolveum.midpoint.util.logging.TraceManager;
+import org.apache.commons.lang.StringUtils;
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
+
+import java.util.List;
 
 /**
  * @author lazyman
  */
 public class TextWidget<T> extends UiWidget {
 
+    private static final Trace LOGGER = TraceManager.getTrace(TextWidget.class);
     private static final String ID_INPUT = "input";
+    private static final String PROPERTY_SIZE = "size";
+    private static final String PROPERTY_CLASS = "class";
 
     public TextWidget(String id, IModel<T> model) {
-        this(id, model, String.class);
+        super(id, model);
     }
 
-    public TextWidget(String id, IModel<T> model, Class clazz) {
-        super(id);
-
-        final TextField<T> text = new TextField<T>(ID_INPUT, model);
-        text.setType(clazz);
+    @Override
+    protected void initLayout() {
+        final TextField<T> text = new TextField<T>(ID_INPUT, getModel());
         add(text);
+
+
+        List<PropertyType> properties = getProperties();
+        for (PropertyType property : properties) {
+            try {
+                if (PROPERTY_SIZE.equals(property.getName())) {
+                    addSize(text, property);
+                } else if (PROPERTY_CLASS.equals(property.getName())) {
+                    addClass(text, property);
+                }
+            } catch (Exception ex) {
+                LOGGER.warn("Couldn't use property {} with value {}, reason: {}.",
+                        new Object[]{property.getName(), property.getValue(), ex.getMessage()});
+                LOGGER.debug("Couldn't use property, exception occurred.", ex);
+            }
+        }
     }
 
     @Override
     public FormComponent getBaseFormComponent() {
         return (FormComponent) get(ID_INPUT);
+    }
+
+    private void addClass(TextField text, PropertyType property) throws ClassNotFoundException {
+        String value = property.getValue();
+        if (StringUtils.isEmpty(value)) {
+            return;
+        }
+
+        ClassLoader classLoader = TextWidget.class.getClassLoader();
+        Class type = classLoader.loadClass(value);
+        text.setType(type);
+    }
+
+    private void addSize(TextField text, PropertyType property) {
+        String value = property.getValue();
+        if (StringUtils.isEmpty(value) || !value.matches("[0]*[1-9]+[0-9]*")) {
+            return;
+        }
+
+        int size = Integer.parseInt(value);
+        text.add(new AttributeModifier("size", size));
     }
 }

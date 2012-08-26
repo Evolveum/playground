@@ -61,6 +61,7 @@ public class PageHome extends PageBase {
     private static final String DEFAULT_VARIABLE_NAME = "Variable";
     private static final String FORM_ID_EDITOR = "editorForm";
     private static final String FORM_ID_STRUCTURED_FORM = "structuredFormForm";
+    private static final String ID_TABBED_PANEL = "tabpanel";
 
     private LoadableModel<Project> projectModel;
     private LoadableModel<StructuredFormContext> structuredFormModel;
@@ -168,7 +169,7 @@ public class PageHome extends PageBase {
         add(editorForm);
 
         List<EditorTab> tabs = loadEditorTabs();
-        FormTabbedPanel tabpanel = new FormTabbedPanel("tabpanel", tabs);
+        FormTabbedPanel tabpanel = new FormTabbedPanel(ID_TABBED_PANEL, tabs);
         tabpanel.setOutputMarkupId(true);
         editorForm.add(tabpanel);
         reloadTabs(null);
@@ -177,7 +178,7 @@ public class PageHome extends PageBase {
     }
 
     private AjaxTabbedPanel getEditorTabPanel() {
-        return (AjaxTabbedPanel) get(FORM_ID_EDITOR + ":tabpanel");
+        return (AjaxTabbedPanel) get(FORM_ID_EDITOR + ":" + ID_TABBED_PANEL);
     }
 
     private void initEditorButtons(Form editorForm) {
@@ -196,7 +197,7 @@ public class PageHome extends PageBase {
 
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                reloadFormPeformed(target);
+                reloadFormPerformed(target);
             }
 
             @Override
@@ -272,7 +273,7 @@ public class PageHome extends PageBase {
         project.getVariables().add(variable);
 
         reloadTabs(target);
-        reloadFormPeformed(target);
+        reloadFormPerformed(target);
     }
 
     private void loadSample2Performed(AjaxRequestTarget target) {
@@ -291,7 +292,7 @@ public class PageHome extends PageBase {
         project.getVariables().add(variable);
 
         reloadTabs(target);
-        reloadFormPeformed(target);
+        reloadFormPerformed(target);
     }
 
     private String loadFileContent(String fileName) {
@@ -313,7 +314,7 @@ public class PageHome extends PageBase {
         return content;
     }
 
-    private void reloadFormPeformed(AjaxRequestTarget target) {
+    private void reloadFormPerformed(AjaxRequestTarget target) {
         structuredFormModel.reset();
 
         Form form = (Form) get(FORM_ID_STRUCTURED_FORM);

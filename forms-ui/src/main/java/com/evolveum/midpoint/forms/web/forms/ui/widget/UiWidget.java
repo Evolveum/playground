@@ -21,24 +21,65 @@
 
 package com.evolveum.midpoint.forms.web.forms.ui.widget;
 
+import com.evolveum.midpoint.forms.xml.PropertyType;
+import org.apache.commons.lang.Validate;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.IModel;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
  * @author lazyman
  */
-public abstract class UiWidget extends Panel {
+public abstract class UiWidget<T> extends Panel {
 
-    public UiWidget(String id) {
+    private boolean initialized;
+
+    private IModel<T> model;
+    private List<PropertyType> properties;
+
+    public UiWidget(String id, IModel<T> model) {
         super(id);
+
+        Validate.notNull(model, "Model must not be null.");
+        this.model = model;
+    }
+
+    @Override
+    protected void onBeforeRender() {
+        super.onBeforeRender();
+
+        if (initialized) {
+            return;
+        }
+
+        initLayout();
+        initialized = true;
+    }
+
+    public IModel<T> getModel() {
+        return model;
+    }
+
+    public List<PropertyType> getProperties() {
+        if (properties == null) {
+            properties = new ArrayList<PropertyType>();
+        }
+        return properties;
+    }
+
+    public void setProperties(List<PropertyType> properties) {
+        this.properties = properties;
     }
 
     public List<FormComponent> getFormComponents() {
         return Arrays.asList(getBaseFormComponent());
     }
+
+    protected abstract void initLayout();
 
     public abstract FormComponent getBaseFormComponent();
 }

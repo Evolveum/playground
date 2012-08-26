@@ -32,7 +32,7 @@
             <cssStyle>font-weight: bold; color: blue;</cssStyle>
             <cssClass>freakinAwesomeClass</cssClass>
 
-            <property name="size">20</property>
+            <property name="size">40</property>
         </display>
     </field>
     <fieldGroup>
