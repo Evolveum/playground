@@ -45,6 +45,20 @@
         </display>
     </field>
 
+    <field>
+        <ref key="user">c:activation/c:validFrom</ref>
+        <display type="date">
+            <label>Valid from</label>
+        </display>
+    </field>
+
+    <field>
+        <ref key="user">c:credentials/c:password/c:protectedString</ref>
+        <display type="password">
+            <label>Password</label>
+        </display>
+    </field>
+
     <fieldGroup>
         <display>
             <label>Basic data aaa asdf</label>

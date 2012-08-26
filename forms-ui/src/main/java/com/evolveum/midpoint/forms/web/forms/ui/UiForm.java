@@ -51,7 +51,7 @@ public class UiForm extends UiComponent<FormModel> {
         String theme = null;
 
         if (StringUtils.isEmpty(theme)) {
-            theme = "UiClean";
+            theme = "UiCleanDevel";
         }
 
         ResourceReference ref = new PackageResourceReference(UiForm.class, THEME_FOLDER + theme + ".css");

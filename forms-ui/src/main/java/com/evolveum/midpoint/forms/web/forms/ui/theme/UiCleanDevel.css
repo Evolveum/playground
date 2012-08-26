@@ -19,6 +19,7 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 .UiForm {
+    border: 1px solid #000;
 }
 
 .UiFormError {
@@ -26,18 +27,24 @@
 }
 
 .UiLine {
+    border-bottom: 1px solid #000000;
+    margin: 5px 5px 2px;
+    padding: 5px;
 }
 
 .UiLine.odd {
+    background-color: #99ccff;
 }
 
 .UiLine.even {
+
 }
 
 .UiFieldGroup {
 }
 
 .UiFieldGroup span.title {
+
 }
 
 .UiField {
@@ -46,16 +53,22 @@
 }
 
 .UiFieldLoop {
+    /*border: 1px solid #0ff;*/
 }
 
 .UiValue {
+    /*border: 1px solid #ff0;*/
 }
 
 .UiValue div.label, .UiValue div.input, .UiValue div.buttons {
+    /*border: 1px solid #f0f;*/
+    /*padding: 0px;*/
+
     display: inline-block;
 }
 
 .UiValue div.feedback {
+
 }
 
 .UiButtons {

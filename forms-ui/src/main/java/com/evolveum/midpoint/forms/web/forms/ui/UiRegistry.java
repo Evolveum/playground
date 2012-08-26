@@ -21,9 +21,7 @@
 
 package com.evolveum.midpoint.forms.web.forms.ui;
 
-import com.evolveum.midpoint.forms.web.forms.ui.widget.CheckBoxWidget;
-import com.evolveum.midpoint.forms.web.forms.ui.widget.TextWidget;
-import com.evolveum.midpoint.forms.web.forms.ui.widget.UiWidget;
+import com.evolveum.midpoint.forms.web.forms.ui.widget.*;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.StringUtils;
@@ -39,6 +37,8 @@ public class UiRegistry {
 
     public static final String WIDGET_DEFAULT = "text";
     public static final String WIDGET_CHECKBOX = "checkbox";
+    public static final String WIDGET_DATE = "date";
+    public static final String WIDGET_PASSWORD = "password";
 
     private static final Trace LOGGER = TraceManager.getTrace(UiRegistry.class);
     private static final Map<String, Class<? extends UiWidget>> WIDGETS =
@@ -47,6 +47,8 @@ public class UiRegistry {
     static {
         WIDGETS.put(WIDGET_DEFAULT, TextWidget.class);
         WIDGETS.put(WIDGET_CHECKBOX, CheckBoxWidget.class);
+        WIDGETS.put(WIDGET_DATE, DateWidget.class);
+        WIDGETS.put(WIDGET_PASSWORD, PasswordWidget.class);
     }
 
     public static Class<? extends UiForm> getForm(String type) {
@@ -54,7 +56,8 @@ public class UiRegistry {
             return UiForm.class;
         }
 
-        return getItemByClass(type, UiForm.class);
+        Class<UiForm> form = getItemByClass(type, UiForm.class);
+        return form != null ? form : UiForm.class;
     }
 
     public static Class<? extends UiWidget> getWidget(String type) {
