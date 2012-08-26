@@ -336,6 +336,9 @@ public class PageHome extends PageBase {
             Map<String, Item> objects = new HashMap<String, Item>();
             List<VariableDto> variables = project.getVariables();
             for (VariableDto variable : variables) {
+                if (!variable.isValid()) {
+                    continue;
+                }
                 Item item = prismContext.parseObject(variable.getXml());
                 objects.put(variable.getName(), item);
             }

@@ -23,12 +23,15 @@ package com.evolveum.midpoint.forms.web.forms;
 
 import com.evolveum.midpoint.forms.web.forms.interpreter.FormInterpreter;
 import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolver;
+import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolverException;
+import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.web.forms.model.FormModel;
 import com.evolveum.midpoint.forms.web.forms.ui.UiFactory;
 import com.evolveum.midpoint.forms.web.forms.ui.UiForm;
 import com.evolveum.midpoint.forms.web.forms.ui.UiRegistry;
 import com.evolveum.midpoint.forms.xml.DisplayType;
 import com.evolveum.midpoint.forms.xml.FormType;
+import com.evolveum.midpoint.util.logging.LoggingUtils;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.Validate;
@@ -40,6 +43,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * @author lazyman
@@ -71,55 +75,72 @@ public class StructuredForm extends Panel {
     }
 
     private void initLayout() {
-        final StringBuilder errorMessage = new StringBuilder();
+        StringBuilder errorMessage = new StringBuilder();
 
         Component uiForm = null;
         try {
-            StructuredFormContext context = model.getObject();
-            //todo remove validate
-            Validate.notNull(context, "Structured form context must not be null.");
-            LOGGER.debug("Available form context {}.", new Object[]{context.toString()});
-
-            FormResolver resolver = context.getResolver();
-            //todo remove validate
-            Validate.notNull(resolver, "Form resolver in form context must not be null.");
-
-            FormType form = resolver.loadForm(context.getUser(), context.getObjects());
-            //todo remove validate
-            Validate.notNull(form, "Main form must not be null (was not found).");
-            //check ci nie je form null...
-
-            FormInterpreter interpreter = new FormInterpreter();
-            FormModel formModel = interpreter.interpret(form, context);
-
-            DisplayType formDisplay = form.getDisplay();
-            String formType = formDisplay != null ? formDisplay.getType() : null;
-            Class<?> formClass = UiRegistry.getForm(formType);
-            if (formClass == null || (UiForm.class.isAssignableFrom(formClass))) {
-                //todo write some error about bad FormType-> type attribute...
-            }
-
-            LOGGER.debug("Using {} as form type.", new Object[]{formClass.getName()});
-            Constructor<UiForm> constructor = (Constructor<UiForm>) formClass.getConstructor(String.class, IModel.class);
-            uiForm = constructor.newInstance(COMPONENT_ID_FORM, new Model<FormModel>(formModel));
+            uiForm = initForm();
         } catch (Exception ex) {
             //todo remove sysout !!!, print error to label and logs...
-            ex.printStackTrace();
             createMessage(ex, errorMessage);
+            LoggingUtils.logException(LOGGER, "Couldn't create form", ex);
         }
 
         if (uiForm == null) {
-            uiForm = UiFactory.createErrorLabel(COMPONENT_ID_FORM, new AbstractReadOnlyModel<String>() {
-
-                @Override
-                public String getObject() {
-                    return getString(StructuredForm.class.getSimpleName() + ".formError")
-                            + " " + errorMessage.toString();
-                }
-            });
-            uiForm.add(new AttributeModifier("class", "UiFormError"));
+            uiForm = createErrorLabel(getString(StructuredForm.class.getSimpleName() + ".formError")
+                    + " " + errorMessage.toString());
         }
+
         add(uiForm);
+    }
+
+    private Component initForm() throws FormResolverException, InterpreterException, NoSuchMethodException,
+            IllegalAccessException, InstantiationException, InvocationTargetException {
+
+        StructuredFormContext context = model.getObject();
+        LOGGER.trace("Available form context {}.", new Object[]{(context != null ? context.toString() : null)});
+        if (context == null) {
+            return createErrorLabel("Structured form context must not be null."); //todo i18n
+        }
+
+        FormResolver resolver = context.getResolver();
+        if (resolver == null) {
+            return createErrorLabel("Form resolver in form context must not be null."); //todo i18n
+        }
+
+        FormType form = resolver.loadForm(context.getUser(), context.getObjects());
+        if (form == null) {
+            return createErrorLabel("Main form must not be null (was not found)."); //todo i18n
+        }
+
+        FormInterpreter interpreter = new FormInterpreter();
+        FormModel formModel = interpreter.interpret(form, context);
+
+        DisplayType formDisplay = form.getDisplay();
+        String formType = formDisplay != null ? formDisplay.getType() : null;
+        LOGGER.debug("Using {} as form type.", new Object[]{formType});
+
+        Class<?> formClass = UiRegistry.getForm(formType);
+        if (formClass == null) {
+            return createErrorLabel("Form class '" + formType + "' was not found."); //todo i18n
+        }
+
+        Constructor<UiForm> constructor = (Constructor<UiForm>) formClass.getConstructor(String.class, IModel.class);
+        return constructor.newInstance(COMPONENT_ID_FORM, new Model<FormModel>(formModel));
+    }
+
+    private Component createErrorLabel(final String message) {
+        Component label = UiFactory.createErrorLabel(COMPONENT_ID_FORM, new AbstractReadOnlyModel<String>() {
+
+            @Override
+            public String getObject() {
+                return message;
+            }
+        });
+
+        label.add(new AttributeModifier("style", "color: #f00;"));
+
+        return label;
     }
 
     private String createMessage(Throwable ex, StringBuilder builder) {

@@ -22,6 +22,7 @@
 package com.evolveum.midpoint.forms.web.page.dto;
 
 import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolver;
+import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolverException;
 import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.FormType;
 import com.evolveum.midpoint.prism.Item;
@@ -48,10 +49,16 @@ public class EditorFormResolver implements FormResolver {
     }
 
     @Override
-    public FormType loadForm(String identifier, PrismObject<UserType> user, Map<String, Item> objects) {
-        for (EditorDto editor : editors) {
-            if (identifier.equals(editor.getName())) {
-                return loadForm(editor.getXml());
+    public FormType loadForm(String identifier, PrismObject<UserType> user, Map<String, Item> objects)
+            throws FormResolverException {
+
+        for (FormDto form : editors) {
+            if (!form.isValid()) {
+                continue;
+            }
+
+            if (identifier.equals(form.getName())) {
+                return loadForm(form);
             }
         }
 
@@ -59,27 +66,31 @@ public class EditorFormResolver implements FormResolver {
     }
 
     @Override
-    public FormType loadForm(PrismObject<UserType> user, Map<String, Item> objects) {
-        for (FormDto editor : editors) {
-            if (editor.isMain()) {
-                return loadForm(editor.getName(), user, objects);
+    public FormType loadForm(PrismObject<UserType> user, Map<String, Item> objects) throws FormResolverException {
+        for (FormDto form : editors) {
+            if (!form.isValid()) {
+                continue;
+            }
+
+            if (form.isMain()) {
+                return loadForm(form.getName(), user, objects);
             }
         }
 
         return null;
     }
 
-    private FormType loadForm(String xml) {
-        if (StringUtils.isEmpty(xml)) {
+    private FormType loadForm(FormDto dto) throws FormResolverException {
+        if (StringUtils.isEmpty(dto.getXml())) {
             return null;
         }
 
         try {
-            InputStream is = new ByteArrayInputStream(xml.getBytes("utf-8"));
+            InputStream is = new ByteArrayInputStream(dto.getXml().getBytes("utf-8"));
             return StructuredFormUtils.loadForm(is);
         } catch (Exception ex) {
-            //todo exception handling
-            throw new RuntimeException("Couldn't parse file.", ex);
+            throw new FormResolverException("Couldn't load form '"
+                    + dto.getName() + "(main=" + dto.isMain() + ")'.", ex);
         }
     }
 }

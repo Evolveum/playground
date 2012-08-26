@@ -21,20 +21,16 @@
 
 package com.evolveum.midpoint.forms.web.forms.interpreter;
 
-import com.evolveum.midpoint.forms.xml.FormType;
-import com.evolveum.midpoint.prism.Item;
-import com.evolveum.midpoint.prism.PrismObject;
-import com.evolveum.midpoint.xml.ns._public.common.common_2.UserType;
-
-import java.io.Serializable;
-import java.util.Map;
-
 /**
  * @author lazyman
  */
-public interface FormResolver extends Serializable {
+public class FormResolverException extends Exception {
 
-    FormType loadForm(PrismObject<UserType> user, Map<String, Item> objects) throws FormResolverException;
+    public FormResolverException(String s) {
+        super(s);
+    }
 
-    FormType loadForm(String identifier, PrismObject<UserType> user, Map<String, Item> objects) throws FormResolverException;
+    public FormResolverException(String s, Throwable throwable) {
+        super(s, throwable);
+    }
 }

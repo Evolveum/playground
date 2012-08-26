@@ -21,6 +21,8 @@
 
 package com.evolveum.midpoint.forms.web.page.dto;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.io.Serializable;
 
 
@@ -62,5 +64,9 @@ public class EditorDto implements Serializable {
 
     public void setXml(String xml) {
         this.xml = xml;
+    }
+
+    public boolean isValid() {
+        return StringUtils.isNotEmpty(name) && StringUtils.isNotEmpty(xml);
     }
 }
