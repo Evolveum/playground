@@ -30,6 +30,7 @@ import com.evolveum.midpoint.schema.holder.XPathHolder;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.Validate;
 import org.w3c.dom.Element;
 
 import java.util.Map;
@@ -45,6 +46,14 @@ public class FieldToken extends BaseDisplayableFieldToken<FieldType> {
 
     public FieldToken(Token parent, FieldType field) {
         super(parent, field);
+    }
+
+    public FieldToken(Token parent, PrismProperty property, PrismPropertyDefinition definition) {
+        super(parent, new FieldType());
+
+        Validate.notNull(definition, "Prism property definition must not be null.");
+        this.property = property;
+        this.definition = definition;
     }
 
     @Override
@@ -93,6 +102,10 @@ public class FieldToken extends BaseDisplayableFieldToken<FieldType> {
                 definition = property.getDefinition();
             }
         }
+
+        if (definition == null) {
+            throw new InterpreterException("Definition for field '" + ref + "' was not found.");
+        }
     }
 
     @Override
@@ -101,6 +114,10 @@ public class FieldToken extends BaseDisplayableFieldToken<FieldType> {
         ReferenceType ref = element != null ? new ReferenceType(element) : null;
 
         return "FieldToken{name=" + getField().getName() + ", ref=" + ref + '}';
+    }
+
+    public String getWidget() {
+        return getField().getWidget();
     }
 
     public PrismPropertyDefinition getDefinition() {

@@ -25,9 +25,9 @@
 
     <include file="other.xml" alias="other" />
 
-    <field>
+    <field widget="text">
         <ref key="user">c:name</ref>
-        <display type="text">
+        <display>
             <label>xml.public.common.user.name</label>
             <help>xml.public.common.user.name.help</help>
             <tooltip>xml.public.common.user.name.tooltip</tooltip>
@@ -38,23 +38,23 @@
         </display>
     </field>
 
-    <field>
+    <field widget="checkbox">
         <ref key="user">c:activation/c:enabled</ref>
-        <display type="checkbox">
+        <display>
             <label>Enabled</label>
         </display>
     </field>
 
-    <field>
+    <field name="activation" widget="date">
         <ref key="user">c:activation/c:validFrom</ref>
-        <display type="date">
+        <display>
             <label>Valid from</label>
         </display>
     </field>
 
-    <field>
+    <field widget="password">
         <ref key="user">c:credentials/c:password/c:protectedString</ref>
-        <display type="password">
+        <display>
             <label>Password</label>
         </display>
     </field>

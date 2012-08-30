@@ -94,6 +94,6 @@ public class FieldModel extends BaseModel<BaseModel, FieldToken> implements Disp
 //        definition.getMaxOccurs();
 //        definition.getMinOccurs();
 
-        return getDisplay();
+        return defaultDisplay;
     }
 }

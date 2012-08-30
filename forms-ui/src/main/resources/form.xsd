@@ -217,7 +217,7 @@
             <!-- extended properties -->
             <xsd:element name="property" type="tns:PropertyType" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
-        <!--todo document???-->
+        <!-- UiField, UiFieldGroup, UiField loop by default -->
         <xsd:attribute name="type" type="xsd:string" use="optional"/>
     </xsd:complexType>
 

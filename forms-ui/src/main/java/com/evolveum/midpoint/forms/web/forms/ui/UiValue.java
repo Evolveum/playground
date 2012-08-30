@@ -22,6 +22,7 @@
 package com.evolveum.midpoint.forms.web.forms.ui;
 
 import com.evolveum.midpoint.forms.web.forms.model.ValueModel;
+import com.evolveum.midpoint.forms.web.forms.object.FieldToken;
 import com.evolveum.midpoint.forms.web.forms.ui.widget.TextWidget;
 import com.evolveum.midpoint.forms.web.forms.ui.widget.UiWidget;
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
@@ -63,7 +64,8 @@ public class UiValue extends Panel {
     }
 
     protected void initLayout() {
-        FieldDisplayType display = model.getObject().getDefaultDisplay();
+        ValueModel valueModel = model.getObject();
+        FieldDisplayType display = valueModel.getDefaultDisplay();
 
         //todo help
         Label label = new Label("label", new StringResourceModel(display.getLabel(), null, display.getLabel()));
@@ -73,7 +75,8 @@ public class UiValue extends Panel {
         }
         add(label);
 
-        UiWidget widget = initWidget(display.getType(), display.getProperty());
+        FieldToken fieldToken = valueModel.getField().getToken();
+        UiWidget widget = initWidget(fieldToken.getWidget(), display.getProperty());
         add(widget);
 
         FeedbackPanel feedback = new FeedbackPanel("feedback");

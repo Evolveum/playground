@@ -61,6 +61,10 @@ public class ValueModel<T> implements Serializable {
         token.getField().getRef();
     }
 
+    public FieldModel getField() {
+        return field;
+    }
+
     public FieldDisplayType getDefaultDisplay() {
         return field.getDefaultDisplay();
     }

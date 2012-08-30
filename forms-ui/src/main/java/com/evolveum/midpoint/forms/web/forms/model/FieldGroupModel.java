@@ -22,8 +22,11 @@
 package com.evolveum.midpoint.forms.web.forms.model;
 
 import com.evolveum.midpoint.forms.web.forms.object.FieldGroupToken;
+import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
 import com.evolveum.midpoint.prism.Item;
+import com.evolveum.midpoint.prism.PrismPropertyDefinition;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.Map;
 
@@ -52,6 +55,11 @@ public class FieldGroupModel extends BaseGroupModel<BaseGroupModel, FieldGroupTo
     @Override
     public FieldDisplayType getDefaultDisplay() {
         //todo implement
-        return getDisplay();
+        FieldDisplayType real = getDisplay();
+
+        FieldDisplayType defaultDisplay = new FieldDisplayType();
+        StructuredFormUtils.cloneFieldDisplay(real, defaultDisplay);
+
+        return defaultDisplay;
     }
 }

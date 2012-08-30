@@ -23,9 +23,9 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       name="Other Form">
 
-    <field name="otherFormName">
+    <field name="otherFormName" widget="text">
         <ref key="user">c:name</ref>
-        <display type="text">
+        <display>
             <label>xml.public.common.user.name</label>
             <help>xml.public.common.user.name.help</help>
             <tooltip>xml.public.common.user.name.tooltip</tooltip>

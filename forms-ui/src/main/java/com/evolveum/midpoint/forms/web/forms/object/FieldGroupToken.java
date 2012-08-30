@@ -27,11 +27,12 @@ import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.BaseFieldType;
 import com.evolveum.midpoint.forms.xml.FieldGroupType;
-import com.evolveum.midpoint.forms.xml.FieldType;
 import com.evolveum.midpoint.prism.*;
+import com.evolveum.midpoint.schema.holder.XPathHolder;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.Validate;
+import org.w3c.dom.Element;
 
 import javax.xml.bind.JAXBElement;
 import java.util.Collection;
@@ -43,33 +44,53 @@ import java.util.Map;
 public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
 
     private static final Trace LOGGER = TraceManager.getTrace(FieldGroupToken.class);
+    private PrismContainer container;
+    private PrismContainerDefinition definition;
 
     public FieldGroupToken(Token parent, FieldGroupType field) {
         super(parent, field);
+
+        for (JAXBElement<? extends BaseFieldType> element : field.getItem()) {
+            BaseFieldType item = element.getValue();
+            getFields().add(StructuredFormUtils.createItemToken(this, item));
+        }
+    }
+
+    private FieldGroupToken(Token parent, PrismContainer container, PrismContainerDefinition definition) {
+        super(parent, new FieldGroupType());
+
+        Validate.notNull(definition, "Prism container definition must no be null.");
+        this.container = container;
+        this.definition = definition;
     }
 
     @Override
     public void interpret(InterpreterContext interpreterContext, StructuredFormContext context) throws InterpreterException {
         super.interpret(interpreterContext, context);
-        LOGGER.debug("interpret");
+        LOGGER.debug("interpret {}", new Object[]{this});
 
         FieldGroupType group = getField();
         if (group.getRef() != null) {
-            interpretReferencedGroup(context, group);
+            interpretReferencedGroup(context);
         } else {
-            for (JAXBElement<? extends BaseFieldType> element : group.getItem()) {
-                BaseFieldType item = element.getValue();
-                getFields().add(StructuredFormUtils.createItemToken(this, item));
+            for (BaseFieldToken token : getFields()) {
+                token.interpret(interpreterContext, context);
             }
-        }
-
-        for (BaseFieldToken token : getFields()) {
-            token.interpret(interpreterContext, context);
         }
     }
 
-    private void interpretReferencedGroup(StructuredFormContext context, FieldGroupType group) throws InterpreterException {
-        LOGGER.debug("Found ref in field group (name={}), ignoring children.", new Object[]{group.getName()});
+    @Override
+    public String toString() {
+        Element element = getField().getRef();
+        ReferenceType ref = element != null ? new ReferenceType(element) : null;
+
+        return "FieldGroupToken{name=" + getField().getName() + ", ref=" + ref + '}';
+    }
+
+    private void interpretReferencedGroup(StructuredFormContext context) throws InterpreterException {
+        FieldGroupType group = getField();
+
+        LOGGER.debug("Found ref in field group, ignoring children.");
         ReferenceType ref = validateReference(group.getRef(), false);
         String key = ref.getKey();
 
@@ -86,23 +107,35 @@ public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
                     + PrismContainer.class.getSimpleName() + ".");
         }
 
-        PrismContainer container = (PrismContainer)item;
-        PrismContainerDefinition definition = container.getDefinition();
-        Collection<ItemDefinition> definitions = definition.getDefinitions();
+        PrismContainer parent = (PrismContainer) item;
+        XPathHolder holder = new XPathHolder(ref.getElement());
+        PropertyPath path = holder.toPropertyPath();
 
+        this.container = parent.findContainer(path);
+        if (container == null) {
+            PrismContainerDefinition parentDef = parent.getDefinition();
+            this.definition = parentDef.findContainerDefinition(path);
+        }
+
+        if (definition == null) {
+            throw new InterpreterException("Prism container definition was not found for referenced item '" +
+                    this + "'.");
+        }
+
+        Collection<ItemDefinition> definitions = definition.getDefinitions();
         for (ItemDefinition itemDefinition : definitions) {
             if (itemDefinition instanceof PrismPropertyDefinition) {
-                FieldType field = new FieldType();
-                //todo add ref to field
-                getFields().add(new FieldToken(this, field));
-            } else if (itemDefinition instanceof PrismContainerDefinition) {
-                FieldGroupType field = new FieldGroupType();
-                //todo add ref to field
+                PrismProperty property = container != null ? container.findProperty(itemDefinition.getName()) : null;
 
-                getFields().add(new FieldGroupToken(this, field));
+                getFields().add(new FieldToken(this, property, (PrismPropertyDefinition) itemDefinition));
+            } else if (itemDefinition instanceof PrismContainerDefinition) {
+                PrismContainer prismContainer = container != null ?
+                        container.findContainer(itemDefinition.getName()) : null;
+
+                getFields().add(new FieldGroupToken(this, prismContainer, (PrismContainerDefinition) itemDefinition));
             } else if (itemDefinition instanceof PrismReferenceDefinition) {
-                LOGGER.warn("Ignoring reference {} (not implemented yet).", new Object[]{itemDefinition.getName()});
                 //todo implement later
+                LOGGER.warn("Ignoring reference {} (not implemented yet).", new Object[]{itemDefinition.getName()});
             }
         }
     }

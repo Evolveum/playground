@@ -23,9 +23,9 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       name="User Detail Form">
 
-    <field>
+    <field widget="text">
         <ref key="user">c:name</ref>
-        <display type="text">
+        <display>
             <label>xml.public.common.user.name</label>
             <help>xml.public.common.user.name.help</help>
             <tooltip>xml.public.common.user.name.tooltip</tooltip>
@@ -35,6 +35,12 @@
             <property name="size">40</property>
         </display>
     </field>
+    <fieldGroup>
+        <display>
+            <cssStyle>background-color: #ccc;</cssStyle>
+        </display>
+        <ref key="user">c:activation</ref>
+    </fieldGroup>
     <fieldGroup>
         <display>
             <label>Basic data</label>

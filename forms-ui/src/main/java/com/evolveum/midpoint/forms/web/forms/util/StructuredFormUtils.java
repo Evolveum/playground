@@ -93,7 +93,7 @@ public class StructuredFormUtils {
         newDisplay.setTooltip(oldDisplay.getTooltip());
         newDisplay.setType(oldDisplay.getType());
 
-        for (PropertyType property : newDisplay.getProperty()) {
+        for (PropertyType property : oldDisplay.getProperty()) {
             PropertyType newProperty = new PropertyType();
             newProperty.setName(property.getName());
             newProperty.setValue(property.getValue());
