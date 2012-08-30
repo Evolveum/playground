@@ -80,4 +80,34 @@ public class StructuredFormUtils {
 
         return token;
     }
+
+    public static void cloneDisplay(DisplayType oldDisplay, DisplayType newDisplay) {
+        if (oldDisplay == null) {
+            return;
+        }
+
+        newDisplay.setCssClass(oldDisplay.getCssClass());
+        newDisplay.setCssStyle(oldDisplay.getCssStyle());
+        newDisplay.setHelp(oldDisplay.getHelp());
+        newDisplay.setLabel(oldDisplay.getLabel());
+        newDisplay.setTooltip(oldDisplay.getTooltip());
+        newDisplay.setType(oldDisplay.getType());
+
+        for (PropertyType property : newDisplay.getProperty()) {
+            PropertyType newProperty = new PropertyType();
+            newProperty.setName(property.getName());
+            newProperty.setValue(property.getValue());
+
+            newDisplay.getProperty().add(newProperty);
+        }
+    }
+
+    public static void cloneFieldDisplay(FieldDisplayType oldDisplay, FieldDisplayType newDisplay) {
+        if (oldDisplay == null) {
+            return;
+        }
+
+        cloneDisplay(oldDisplay, newDisplay);
+        newDisplay.setNewLine(oldDisplay.isNewLine());
+    }
 }

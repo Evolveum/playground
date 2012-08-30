@@ -22,6 +22,7 @@
 package com.evolveum.midpoint.forms.web.forms.object;
 
 import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
+import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.BaseDisplayableFieldType;
@@ -78,8 +79,8 @@ public class FormToken implements Token {
     }
 
     @Override
-    public void interpret(StructuredFormContext context) throws InterpreterException {
-
+    public void interpret(InterpreterContext interpreterContext, StructuredFormContext context) throws InterpreterException {
+        LOGGER.debug("interpret");
         //include alias uniqueness check
         Set<String> aliases = new HashSet<String>();
         for (IncludeType include : this.form.getInclude()) {
@@ -95,12 +96,12 @@ public class FormToken implements Token {
 
         //interpret includes
         for (IncludeToken include : includes) {
-            include.interpret(context);
+            include.interpret(interpreterContext, context);
         }
 
         //interpret field, fieldGroup, fieldRef
         for (BaseFieldToken item : fields) {
-            item.interpret(context);
+            item.interpret(interpreterContext, context);
         }
     }
 
@@ -146,5 +147,9 @@ public class FormToken implements Token {
         }
 
         return null;
+    }
+
+    public String getFormName() {
+        return form.getName();
     }
 }

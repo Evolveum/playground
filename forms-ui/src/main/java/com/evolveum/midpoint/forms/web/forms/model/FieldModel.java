@@ -22,13 +22,13 @@
 package com.evolveum.midpoint.forms.web.forms.model;
 
 import com.evolveum.midpoint.forms.web.forms.object.FieldToken;
-import com.evolveum.midpoint.forms.web.forms.object.ReferenceType;
+import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
-import com.evolveum.midpoint.prism.*;
-import com.evolveum.midpoint.schema.holder.XPathHolder;
-import com.evolveum.prism.xml.ns._public.types_2.XPathType;
+import com.evolveum.midpoint.prism.Item;
+import com.evolveum.midpoint.prism.PrismProperty;
+import com.evolveum.midpoint.prism.PrismPropertyDefinition;
+import com.evolveum.midpoint.prism.PrismPropertyValue;
 import org.apache.commons.lang.StringUtils;
-import org.w3c.dom.Element;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +40,6 @@ import java.util.Map;
 public class FieldModel extends BaseModel<BaseModel, FieldToken> implements DisplayableModel<FieldDisplayType> {
 
     private List<ValueModel> values;
-    private ModelStatus status;
 
     public FieldModel(BaseModel parentModel, FieldToken token, Map<String, Item> objects) {
         super(parentModel, token, objects);
@@ -49,30 +48,15 @@ public class FieldModel extends BaseModel<BaseModel, FieldToken> implements Disp
     }
 
     private void initialize() {
-        Map<String, Item> objects = getObjects();
         FieldToken token = getToken();
-
-        Element element = token.getField().getRef();
-        ReferenceType ref = new ReferenceType(element);
-        Item item = objects.get(ref.getKey());
-
-        if ((item instanceof PrismContainer) && StringUtils.isNotEmpty(ref.getValue())) {
-            XPathType xpathType = new XPathType();
-            xpathType.setContent(ref.getValue());
-
-            XPathHolder holder = new XPathHolder(element);
-            PropertyPath path = holder.toPropertyPath();
-
-            PrismContainer container = (PrismContainer)item;
-            item = container.findItem(path);
+        PrismProperty property = token.getProperty();
+        if (property == null) {
+            property = token.getDefinition().instantiate();
+            //todo set status to ADD
+        } else {
+            //todo set status to MODIFY
         }
 
-        if (item == null || !(item instanceof PrismProperty)) {
-            //todo something :)))
-            return;
-        }
-
-        PrismProperty property = (PrismProperty) item;
         List<PrismPropertyValue> values = property.getValues();
         for (PrismPropertyValue value : values) {
             getValues().add(new ValueModel(this, value));
@@ -94,7 +78,22 @@ public class FieldModel extends BaseModel<BaseModel, FieldToken> implements Disp
 
     @Override
     public FieldDisplayType getDefaultDisplay() {
-        //todo implement defaults computing
+        FieldDisplayType real = getDisplay();
+
+        FieldDisplayType defaultDisplay = new FieldDisplayType();
+        StructuredFormUtils.cloneFieldDisplay(real, defaultDisplay);
+
+        PrismPropertyDefinition definition = getToken().getDefinition();
+        if (StringUtils.isEmpty(defaultDisplay.getHelp())) {
+            defaultDisplay.setHelp(definition.getHelp());
+        }
+        if (StringUtils.isEmpty(defaultDisplay.getLabel())) {
+            defaultDisplay.setLabel(definition.getDisplayName());
+        }
+        //todo min/max occurs
+//        definition.getMaxOccurs();
+//        definition.getMinOccurs();
+
         return getDisplay();
     }
 }

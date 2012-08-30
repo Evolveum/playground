@@ -22,6 +22,7 @@
 package com.evolveum.midpoint.forms.web.forms.object;
 
 import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
+import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.BaseFieldType;
@@ -48,8 +49,9 @@ public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
     }
 
     @Override
-    public void interpret(StructuredFormContext context) throws InterpreterException {
-        super.interpret(context);
+    public void interpret(InterpreterContext interpreterContext, StructuredFormContext context) throws InterpreterException {
+        super.interpret(interpreterContext, context);
+        LOGGER.debug("interpret");
 
         FieldGroupType group = getField();
         if (group.getRef() != null) {
@@ -62,7 +64,7 @@ public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
         }
 
         for (BaseFieldToken token : getFields()) {
-            token.interpret(context);
+            token.interpret(interpreterContext, context);
         }
     }
 

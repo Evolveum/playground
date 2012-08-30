@@ -19,31 +19,23 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.page.dto;
+package com.evolveum.midpoint.forms.web.forms.interpreter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author lazyman
  */
-public class FormDto extends EditorDto {
+public class InterpreterContext {
 
-    @Deprecated
-    private boolean main;
+    private Set<String> includePaths = new HashSet<String>();
 
-    public FormDto(String name) {
-        super(name);
+    public void addIncludePath(String path) {
+        includePaths.add(path);
     }
 
-    public FormDto(String name, String xml) {
-        super(name, xml);
-    }
-
-    @Deprecated
-    public boolean isMain() {
-        return main;
-    }
-
-    @Deprecated
-    public void setMain(boolean main) {
-        this.main = main;
+    public boolean containsIncludePath(String path) {
+        return includePaths.contains(path);
     }
 }

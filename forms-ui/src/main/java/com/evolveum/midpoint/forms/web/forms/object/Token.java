@@ -22,6 +22,7 @@
 package com.evolveum.midpoint.forms.web.forms.object;
 
 import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
+import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.prism.Item;
 
@@ -35,5 +36,5 @@ public interface Token extends Serializable {
 
     Token getParent();
 
-    void interpret(StructuredFormContext context) throws InterpreterException;
+    void interpret(InterpreterContext interpreterContext, StructuredFormContext context) throws InterpreterException;
 }

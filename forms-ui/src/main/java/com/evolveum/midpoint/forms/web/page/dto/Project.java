@@ -30,6 +30,7 @@ import java.util.List;
  */
 public class Project implements Serializable {
 
+    private String mainForm;
     private List<FormDto> forms;
     private List<VariableDto> variables;
 
@@ -45,5 +46,13 @@ public class Project implements Serializable {
             variables = new ArrayList<VariableDto>();
         }
         return variables;
+    }
+
+    public String getMainForm() {
+        return mainForm;
+    }
+
+    public void setMainForm(String mainForm) {
+        this.mainForm = mainForm;
     }
 }

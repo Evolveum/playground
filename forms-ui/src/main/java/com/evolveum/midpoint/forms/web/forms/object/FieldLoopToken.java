@@ -22,8 +22,11 @@
 package com.evolveum.midpoint.forms.web.forms.object;
 
 import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
+import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.xml.FieldLoopType;
+import com.evolveum.midpoint.util.logging.Trace;
+import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -31,13 +34,16 @@ import org.apache.commons.lang.StringUtils;
  */
 public class FieldLoopToken extends BaseGroupFieldToken<FieldLoopType> {
 
+    private static final Trace LOGGER = TraceManager.getTrace(FieldToken.class);
+
     public FieldLoopToken(Token parent, FieldLoopType item) {
         super(parent, item);
     }
 
     @Override
-    public void interpret(StructuredFormContext context) throws InterpreterException {
-        super.interpret(context);
+    public void interpret(InterpreterContext interpreterContext, StructuredFormContext context) throws InterpreterException {
+        super.interpret(interpreterContext, context);
+        LOGGER.debug("interpret");
 
 //        FieldLoopType loopType = getItem();
 //        if (StringUtils.isEmpty(loopType.getRef())) {

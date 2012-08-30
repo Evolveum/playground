@@ -26,7 +26,6 @@ import com.evolveum.midpoint.forms.xml.FormType;
 import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.prism.PrismObject;
 import com.evolveum.midpoint.xml.ns._public.common.common_2.UserType;
-import org.apache.commons.lang.Validate;
 
 import java.io.File;
 import java.util.Map;
@@ -35,13 +34,6 @@ import java.util.Map;
  * @author lazyman
  */
 public class DefaultFormResolver implements FormResolver {
-
-    private String filePath;
-
-    public DefaultFormResolver(String filePath) {
-        Validate.notEmpty(filePath, "Path to form xml file must not be empty.");
-        this.filePath = filePath;
-    }
 
     @Override
     public FormType loadForm(String identificator, PrismObject<UserType> user, Map<String, Item> objects) {
@@ -57,10 +49,5 @@ public class DefaultFormResolver implements FormResolver {
             //todo exception handling
             throw new RuntimeException("Couldn't parse file.", ex);
         }
-    }
-
-    @Override
-    public FormType loadForm(PrismObject<UserType> user, Map<String, Item> objects) {
-        return loadForm(filePath, user, objects);
     }
 }

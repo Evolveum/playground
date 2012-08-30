@@ -34,7 +34,5 @@ import java.util.Map;
  */
 public interface FormResolver extends Serializable {
 
-    FormType loadForm(PrismObject<UserType> user, Map<String, Item> objects) throws FormResolverException;
-
     FormType loadForm(String identifier, PrismObject<UserType> user, Map<String, Item> objects) throws FormResolverException;
 }

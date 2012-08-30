@@ -51,6 +51,7 @@ public class EditorFormResolver implements FormResolver {
     @Override
     public FormType loadForm(String identifier, PrismObject<UserType> user, Map<String, Item> objects)
             throws FormResolverException {
+        Validate.notNull(identifier, "Form identifier must not be null.");
 
         for (FormDto form : editors) {
             if (!form.isValid()) {
@@ -59,21 +60,6 @@ public class EditorFormResolver implements FormResolver {
 
             if (identifier.equals(form.getName())) {
                 return loadForm(form);
-            }
-        }
-
-        return null;
-    }
-
-    @Override
-    public FormType loadForm(PrismObject<UserType> user, Map<String, Item> objects) throws FormResolverException {
-        for (FormDto form : editors) {
-            if (!form.isValid()) {
-                continue;
-            }
-
-            if (form.isMain()) {
-                return loadForm(form.getName(), user, objects);
             }
         }
 

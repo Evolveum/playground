@@ -21,10 +21,7 @@
 
 package com.evolveum.midpoint.forms.web.forms;
 
-import com.evolveum.midpoint.forms.web.forms.interpreter.FormInterpreter;
-import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolver;
-import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolverException;
-import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
+import com.evolveum.midpoint.forms.web.forms.interpreter.*;
 import com.evolveum.midpoint.forms.web.forms.model.FormModel;
 import com.evolveum.midpoint.forms.web.forms.ui.UiFactory;
 import com.evolveum.midpoint.forms.web.forms.ui.UiForm;
@@ -81,7 +78,6 @@ public class StructuredForm extends Panel {
         try {
             uiForm = initForm();
         } catch (Exception ex) {
-            //todo remove sysout !!!, print error to label and logs...
             createMessage(ex, errorMessage);
             LoggingUtils.logException(LOGGER, "Couldn't create form", ex);
         }
@@ -108,13 +104,15 @@ public class StructuredForm extends Panel {
             return createErrorLabel("Form resolver in form context must not be null."); //todo i18n
         }
 
-        FormType form = resolver.loadForm(context.getUser(), context.getObjects());
+        FormType form = resolver.loadForm(context.getMainFormPath(), context.getUser(), context.getObjects());
         if (form == null) {
             return createErrorLabel("Main form must not be null (was not found)."); //todo i18n
         }
 
         FormInterpreter interpreter = new FormInterpreter();
-        FormModel formModel = interpreter.interpret(form, context);
+        InterpreterContext iContext = new InterpreterContext();
+        iContext.addIncludePath(context.getMainFormPath());
+        FormModel formModel = interpreter.interpret(form, iContext, context);
 
         DisplayType formDisplay = form.getDisplay();
         String formType = formDisplay != null ? formDisplay.getType() : null;

@@ -23,20 +23,21 @@ package com.evolveum.midpoint.forms.web.forms.object;
 
 import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolver;
+import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
-import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.FormType;
 import com.evolveum.midpoint.forms.xml.IncludeType;
+import com.evolveum.midpoint.util.logging.Trace;
+import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
-
-import java.io.File;
 
 /**
  * @author lazyman
  */
 public class IncludeToken implements Token {
 
+    private static final Trace LOGGER = TraceManager.getTrace(IncludeToken.class);
     private FormToken parent;
     private IncludeType include;
 
@@ -56,8 +57,9 @@ public class IncludeToken implements Token {
     }
 
     @Override
-    public void interpret(StructuredFormContext context)
+    public void interpret(InterpreterContext interpreterContext, StructuredFormContext context)
             throws InterpreterException {
+        LOGGER.debug("interpret {}", new Object[]{this});
 
         String alias = include.getAlias();
         if (StringUtils.isEmpty(alias)) {
@@ -70,19 +72,34 @@ public class IncludeToken implements Token {
             throw new InterpreterException("Include with alias '" + alias + "' doesn't have file path defined.");
         }
 
+        if (interpreterContext.containsIncludePath(getPath())) {
+            throw new InterpreterException("Form '" + parent.getFormName()
+                    + "' contains recursive include wih path '" + getPath() + "'.");
+        } else {
+            interpreterContext.addIncludePath(getPath());
+        }
+
         try {
             FormResolver resolver = context.getResolver();
-            FormType formType = resolver.loadForm(filePath, context.getUser(),  context.getObjects());
+            FormType formType = resolver.loadForm(filePath, context.getUser(), context.getObjects());
             includedFormToken = new FormToken(formType);
-            includedFormToken.interpret(context);
         } catch (Exception ex) {
             throw new InterpreterException("Couldn't load structured form from file '" + filePath
                     + "' defined in <include> with alias '" + alias + "', reason: " + ex.getMessage(), ex);
         }
     }
 
+    @Override
+    public String toString() {
+        return "IncludeToken{" + "alias=" + getAlias() + ", path=" + getPath() + '}';
+    }
+
     public String getAlias() {
         return include.getAlias();
+    }
+
+    public String getPath() {
+        return include.getFile();
     }
 
     public FormToken getIncludedFormToken() {

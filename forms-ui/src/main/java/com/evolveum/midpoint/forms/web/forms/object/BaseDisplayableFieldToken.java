@@ -22,9 +22,12 @@
 package com.evolveum.midpoint.forms.web.forms.object;
 
 import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
+import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.xml.BaseDisplayableFieldType;
 import com.evolveum.midpoint.prism.Item;
+import com.evolveum.midpoint.util.logging.Trace;
+import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Element;
 
@@ -35,12 +38,14 @@ import java.util.Map;
  */
 public abstract class BaseDisplayableFieldToken<T extends BaseDisplayableFieldType> extends BaseFieldToken<T> {
 
+    private static final Trace LOGGER = TraceManager.getTrace(BaseDisplayableFieldToken.class);
+
     public BaseDisplayableFieldToken(Token parent, T field) {
         super(parent, field);
     }
 
     @Override
-    public void interpret(StructuredFormContext context) throws InterpreterException {
+    public void interpret(InterpreterContext interpreterContext, StructuredFormContext context) throws InterpreterException {
         //todo implement
     }
 

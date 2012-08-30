@@ -25,15 +25,21 @@ import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
 import com.evolveum.midpoint.forms.web.forms.model.FormModel;
 import com.evolveum.midpoint.forms.web.forms.object.FormToken;
 import com.evolveum.midpoint.forms.xml.FormType;
+import com.evolveum.midpoint.util.logging.Trace;
+import com.evolveum.midpoint.util.logging.TraceManager;
 
 /**
  * @author lazyman
  */
 public class FormInterpreter {
 
-    public FormModel interpret(FormType form, StructuredFormContext context) throws InterpreterException {
+    private static final Trace LOGGER = TraceManager.getTrace(FormInterpreter.class);
+
+    public FormModel interpret(FormType form, InterpreterContext iContext, StructuredFormContext context) throws InterpreterException {
+        LOGGER.debug("interpret::begin");
         FormToken formToken = new FormToken(form);
-        formToken.interpret(context);
+        formToken.interpret(iContext, context);
+        LOGGER.debug("interpret:end");
 
         return new FormModel(formToken, context.getObjects());
     }

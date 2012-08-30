@@ -142,6 +142,16 @@ public class PageHome extends PageBase {
     }
 
     private void initButtons() {
+        AjaxLinkButton clear = new AjaxLinkButton("clear",
+                createStringResource("pageHome.button.clear")) {
+
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                clearPerformed(target);
+            }
+        };
+        add(clear);
+
         AjaxLinkButton loadSample = new AjaxLinkButton("loadSample1",
                 createStringResource("pageHome.button.loadSample1")) {
 
@@ -264,7 +274,7 @@ public class PageHome extends PageBase {
         List<FormDto> forms = project.getForms();
         if (forms.isEmpty()) {
             FormDto form = new FormDto(DEFAULT_FORM_NAME + " " + (forms.size() + 1));
-            form.setMain(true);
+            project.setMainForm(form.getName());
             forms.add(form);
         }
         for (EditorDto editor : forms) {
@@ -298,12 +308,19 @@ public class PageHome extends PageBase {
         }
     }
 
+    private void clearPerformed(AjaxRequestTarget target) {
+        projectModel.reset();
+
+        reloadTabs(target);
+        reloadFormPerformed(target);
+    }
+
     private void loadSample1Performed(AjaxRequestTarget target) {
         projectModel.reset();
 
         Project project = projectModel.getObject();
-        FormDto editor = new FormDto(DEFAULT_FORM_NAME, loadFileContent("1/userForm.xml"));
-        editor.setMain(true);
+        project.setMainForm("main");
+        FormDto editor = new FormDto("main", loadFileContent("1/userForm.xml"));
         project.getForms().add(editor);
 
         VariableDto variable = new VariableDto("user", loadFileContent("1/user.xml"));
@@ -317,13 +334,12 @@ public class PageHome extends PageBase {
         projectModel.reset();
 
         Project project = projectModel.getObject();
+        project.setMainForm("main.xml");
         FormDto form = new FormDto("main.xml", loadFileContent("2/main.xml"));
-        form.setMain(true);
         project.getForms().add(form);
 
         form = new FormDto("other.xml", loadFileContent("2/other.xml"));
         project.getForms().add(form);
-
 
         VariableDto variable = new VariableDto("user", loadFileContent("2/user.xml"));
         project.getVariables().add(variable);
@@ -382,7 +398,7 @@ public class PageHome extends PageBase {
             }
 
             PrismObject<UserType> owner = null;
-            return new StructuredFormContext(owner, objects, resolver);
+            return new StructuredFormContext(project.getMainForm(), owner, objects, resolver);
         } catch (Exception ex) {
             //this feedback won be shown because of it's added to feedback too late...
             error(createMessage(ex, new StringBuilder()));

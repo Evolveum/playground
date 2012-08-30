@@ -36,20 +36,27 @@ import java.util.Map;
  */
 public class StructuredFormContext implements Serializable {
 
+    private String mainForm;
     private PrismObject<UserType> user;
     private Map<String, Item> objects;
     private FormResolver resolver;
 
-    public StructuredFormContext(PrismObject<UserType> user, Map<String, Item> objects, FormResolver resolver) {
+    public StructuredFormContext(String mainForm, PrismObject<UserType> user, Map<String, Item> objects, FormResolver resolver) {
+        Validate.notEmpty(mainForm, "Main form path must not be null.");
 //        Validate.notNull(user, "PrismObject user must not be null.");
         Validate.notNull(resolver, "Form resolver must not be null.");
 
+        this.mainForm = mainForm;
         this.objects = objects;
         if (this.objects == null) {
             this.objects = new HashMap<String, Item>();
         }
         this.resolver = resolver;
         this.user = user;
+    }
+
+    public String getMainFormPath() {
+        return mainForm;
     }
 
     public Map<String, Item> getObjects() {

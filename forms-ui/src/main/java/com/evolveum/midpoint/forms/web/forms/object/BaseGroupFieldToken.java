@@ -22,8 +22,11 @@
 package com.evolveum.midpoint.forms.web.forms.object;
 
 import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
+import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.xml.BaseGroupFieldType;
+import com.evolveum.midpoint.util.logging.Trace;
+import com.evolveum.midpoint.util.logging.TraceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +36,7 @@ import java.util.List;
  */
 public abstract class BaseGroupFieldToken<T extends BaseGroupFieldType> extends BaseDisplayableFieldToken<T> {
 
+    private static final Trace LOGGER = TraceManager.getTrace(BaseGroupFieldToken.class);
     private List<BaseFieldToken> fields = new ArrayList<BaseFieldToken>();
 
     public BaseGroupFieldToken(Token parent, T field) {
@@ -44,7 +48,7 @@ public abstract class BaseGroupFieldToken<T extends BaseGroupFieldType> extends 
     }
 
     @Override
-    public void interpret(StructuredFormContext context) throws InterpreterException {
-        super.interpret(context);
+    public void interpret(InterpreterContext interpreterContext, StructuredFormContext context) throws InterpreterException {
+        super.interpret(interpreterContext, context);
     }
 }

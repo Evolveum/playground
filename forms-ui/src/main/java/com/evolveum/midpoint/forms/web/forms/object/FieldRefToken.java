@@ -22,8 +22,11 @@
 package com.evolveum.midpoint.forms.web.forms.object;
 
 import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
+import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.xml.FieldReferenceType;
+import com.evolveum.midpoint.util.logging.Trace;
+import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -31,6 +34,7 @@ import org.apache.commons.lang.StringUtils;
  */
 public class FieldRefToken extends BaseFieldToken<FieldReferenceType> {
 
+    private static final Trace LOGGER = TraceManager.getTrace(FieldRefToken.class);
     private BaseFieldToken referencedToken;
 
     public FieldRefToken(Token parent, FieldReferenceType ref) {
@@ -38,13 +42,13 @@ public class FieldRefToken extends BaseFieldToken<FieldReferenceType> {
     }
 
     @Override
-    public void interpret(StructuredFormContext context) throws InterpreterException {
+    public void interpret(InterpreterContext interpreterContext, StructuredFormContext context) throws InterpreterException {
+        LOGGER.debug("interpret {}", new Object[]{this});
+
         FieldReferenceType reference = getField();
         if (StringUtils.isEmpty(reference.getAlias())) {
             throw new InterpreterException("Field reference alias is empty or not defined.");
         }
-
-        //todo check recursion in here
 
         if (StringUtils.isNotEmpty(reference.getInclude())) {
             IncludeToken include = getFormToken().getInclude(reference.getInclude());
@@ -52,7 +56,13 @@ public class FieldRefToken extends BaseFieldToken<FieldReferenceType> {
                 throw new InterpreterException("Include with alias '" + reference.getInclude()
                         + "' was not found in form.");
             }
-            referencedToken = include.getIncludedFormToken().getFormItem(reference.getAlias());
+            FormToken includedForm = include.getIncludedFormToken();
+            if (includedForm == null) {
+                include.interpret(interpreterContext, context);
+                includedForm = include.getIncludedFormToken();
+            }
+
+            referencedToken = includedForm.getFormItem(reference.getAlias());
         } else {
             referencedToken = getFormToken().getFormItem(reference.getAlias());
         }
@@ -61,9 +71,16 @@ public class FieldRefToken extends BaseFieldToken<FieldReferenceType> {
             throw new InterpreterException("Referenced field '" + reference.getAlias() + "' by include '"
                     + reference.getAlias() + "' was not found in included form.");
         }
+
+        referencedToken.interpret(interpreterContext, context);
     }
 
     public BaseFieldToken getReferencedToken() {
         return referencedToken;
+    }
+
+    @Override
+    public String toString() {
+        return "FieldRefToken{include=" + getField().getInclude() + ", alias=" + getField().getAlias() + '}';
     }
 }

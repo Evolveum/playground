@@ -22,11 +22,15 @@
 package com.evolveum.midpoint.forms.web.forms.object;
 
 import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
+import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.xml.FieldType;
 import com.evolveum.midpoint.prism.*;
 import com.evolveum.midpoint.schema.holder.XPathHolder;
+import com.evolveum.midpoint.util.logging.Trace;
+import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.StringUtils;
+import org.w3c.dom.Element;
 
 import java.util.Map;
 
@@ -35,6 +39,7 @@ import java.util.Map;
  */
 public class FieldToken extends BaseDisplayableFieldToken<FieldType> {
 
+    private static final Trace LOGGER = TraceManager.getTrace(FieldToken.class);
     private PrismProperty property;
     private PrismPropertyDefinition definition;
 
@@ -43,8 +48,9 @@ public class FieldToken extends BaseDisplayableFieldToken<FieldType> {
     }
 
     @Override
-    public void interpret(StructuredFormContext context) throws InterpreterException {
-        super.interpret(context);
+    public void interpret(InterpreterContext interpreterContext, StructuredFormContext context) throws InterpreterException {
+        super.interpret(interpreterContext, context);
+        LOGGER.debug("interpret {}", new Object[]{this});
 
         FieldType field = getField();
         ReferenceType ref = validateReference(field.getRef(), false);
@@ -52,23 +58,20 @@ public class FieldToken extends BaseDisplayableFieldToken<FieldType> {
 
         Map<String, Item> objects = context.getObjects();
         Item item = objects.get(key);
+        //if item is not found in context, we can't create form
         if (item == null) {
             throw new InterpreterException("Item with key '" + key + "' was not found in context.");
         }
 
+        //if path is null then item in map must be prism property
         if (StringUtils.isEmpty(ref.getValue()) && !(item instanceof PrismProperty)) {
             throw new InterpreterException("Reference doesn't have path defined, but item with key '"
                     + key + "' is not instance of PrismProperty.");
         }
 
-        PrismProperty referencedProperty;
         if (StringUtils.isEmpty(ref.getValue())) {
-            referencedProperty = (PrismProperty) item;
-            if (referencedProperty == null) {
-                throw new InterpreterException("Referenced item doesn't exists.");
-            }
-
-            //todo what to do with that?
+            property = (PrismProperty) item;
+            definition = property.getDefinition();
         } else {
             //resolve property based on parent container and path defined in reference
             if (!(item instanceof PrismContainer)) {
@@ -82,16 +85,29 @@ public class FieldToken extends BaseDisplayableFieldToken<FieldType> {
             if (!(item instanceof PrismProperty)) {
                 throw new InterpreterException("Referenced item " + ref + " is not instance of PrismProperty.");
             }
-            referencedProperty = (PrismProperty) item;
-            if (referencedProperty == null) {
-                //find definition, create new property
+            property = (PrismProperty) item;
+            if (property == null) {
+                PrismContainerDefinition containerDefinition = container.getDefinition();
+                definition = containerDefinition.findPropertyDefinition(path);
             } else {
-                //????
+                definition = property.getDefinition();
             }
-            //todo what to do with that?
         }
+    }
 
+    @Override
+    public String toString() {
+        Element element = getField().getRef();
+        ReferenceType ref = element != null ? new ReferenceType(element) : null;
 
-        //todo implement
+        return "FieldToken{name=" + getField().getName() + ", ref=" + ref + '}';
+    }
+
+    public PrismPropertyDefinition getDefinition() {
+        return definition;
+    }
+
+    public PrismProperty getProperty() {
+        return property;
     }
 }
