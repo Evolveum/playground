@@ -37,10 +37,10 @@ import java.util.List;
  */
 public class TextWidget<T> extends UiWidget {
 
+    public static final String PROPERTY_SIZE = "size";
+    public static final String PROPERTY_CLASS = "class";
     private static final Trace LOGGER = TraceManager.getTrace(TextWidget.class);
     private static final String ID_INPUT = "input";
-    private static final String PROPERTY_SIZE = "size";
-    private static final String PROPERTY_CLASS = "class";
 
     public TextWidget(String id, IModel<T> model) {
         super(id, model);

@@ -22,6 +22,8 @@
 package com.evolveum.midpoint.forms.web.forms.ui.widget;
 
 import com.evolveum.midpoint.util.MiscUtil;
+import com.evolveum.midpoint.util.logging.Trace;
+import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.wicket.datetime.markup.html.form.DateTextField;
 import org.apache.wicket.extensions.yui.calendar.DatePicker;
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -36,6 +38,7 @@ import java.util.Date;
  */
 public class DateWidget extends UiWidget {
 
+    private static final Trace LOGGER = TraceManager.getTrace(DateWidget.class);
     private static final String ID_INPUT = "input";
 
     public DateWidget(String id, IModel iModel) {

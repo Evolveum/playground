@@ -62,6 +62,7 @@ public class PageHome extends PageBase {
     private static final String FORM_ID_EDITOR = "editorForm";
     private static final String FORM_ID_STRUCTURED_FORM = "structuredFormForm";
     private static final String ID_TABBED_PANEL = "tabpanel";
+    private static final String ID_TREE = "tree";
 
     private LoadableModel<Project> projectModel;
     private LoadableModel<StructuredFormContext> structuredFormModel;
@@ -86,7 +87,6 @@ public class PageHome extends PageBase {
     @Override
     protected void initLayout() {
         super.initLayout();
-
         initTree();
 
         initButtons();
@@ -96,7 +96,7 @@ public class PageHome extends PageBase {
     }
 
     private void initTree() {
-        LinkTree tree = new LinkTree("tree", new LoadableModel<TreeModel>() {
+        LinkTree tree = new LinkTree(ID_TREE, new LoadableModel<TreeModel>() {
 
             @Override
             public TreeModel load() {
@@ -182,15 +182,35 @@ public class PageHome extends PageBase {
     }
 
     private void initEditorButtons(Form editorForm) {
-        AjaxLinkButton addEditor = new AjaxLinkButton("addEditor",
-                createStringResource("pageHome.button.addEditor")) {
+        AjaxLinkButton addEditor = new AjaxLinkButton("addForm",
+                createStringResource("pageHome.button.addForm")) {
 
             @Override
             public void onClick(AjaxRequestTarget target) {
-                addEditorPerformed(target);
+                addFormPerformed(target);
             }
         };
         editorForm.add(addEditor);
+
+        AjaxLinkButton addVariable = new AjaxLinkButton("addVariable",
+                createStringResource("pageHome.button.addVariable")) {
+
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                addVariablePerformed(target);
+            }
+        };
+        editorForm.add(addVariable);
+
+        AjaxLinkButton deleteTab = new AjaxLinkButton("deleteTab",
+                createStringResource("pageHome.button.deleteTab")) {
+
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                deleteTabPerformed(target);
+            }
+        };
+        editorForm.add(deleteTab);
 
         AjaxSubmitLinkButton reloadForm = new AjaxSubmitLinkButton("reloadForm",
                 createStringResource("pageHome.button.reloadForm")) {
@@ -208,16 +228,33 @@ public class PageHome extends PageBase {
         editorForm.add(reloadForm);
     }
 
-    private void addEditorPerformed(AjaxRequestTarget target) {
+    private void addFormPerformed(AjaxRequestTarget target) {
         List<FormDto> editors = projectModel.getObject().getForms();
         FormDto editor = new FormDto(DEFAULT_FORM_NAME + " " + (editors.size() + 1));
         editors.add(editor);
 
+        addEditorTab(target, editor);
+    }
+
+    private void addVariablePerformed(AjaxRequestTarget target) {
+        List<VariableDto> editors = projectModel.getObject().getVariables();
+        VariableDto editor = new VariableDto(DEFAULT_VARIABLE_NAME + " " + (editors.size() + 1));
+        editors.add(editor);
+
+        addEditorTab(target, editor);
+    }
+
+    private void addEditorTab(AjaxRequestTarget target, EditorDto dto) {
         AjaxTabbedPanel panel = getEditorTabPanel();
-        panel.getTabs().add(new EditorTab(new Model<EditorDto>(editor)));
+        panel.getTabs().add(new EditorTab(new Model<EditorDto>(dto)));
 
         target.add(getEditorTabPanel());
-        target.add(get("tree"));
+        target.add(get(ID_TREE));
+    }
+
+    private void deleteTabPerformed(AjaxRequestTarget target) {
+        warn("not implemented yet.");
+        target.add(getFeedbackPanel());
     }
 
     private List<EditorTab> loadEditorTabs() {

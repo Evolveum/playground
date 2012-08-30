@@ -21,14 +21,16 @@
 
 package com.evolveum.midpoint.forms.web.forms.ui.widget;
 
+import com.evolveum.midpoint.forms.xml.PropertyType;
+import com.evolveum.midpoint.util.logging.Trace;
+import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.Validate;
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.PasswordTextField;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.validation.IValidatable;
-import org.apache.wicket.validation.validator.AbstractValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,8 @@ import java.util.List;
  */
 public class PasswordWidget extends UiWidget {
 
+    public static final String PROPERTY_SIZE = "size";
+    private static final Trace LOGGER = TraceManager.getTrace(PasswordWidget.class);
     private static final String ID_PASSWORD_ONE = "password1";
     private static final String ID_PASSWORD_TWO = "password2";
 
@@ -58,6 +62,20 @@ public class PasswordWidget extends UiWidget {
         add(password2);
 
         password1.add(new PasswordWidgetValidator(password1, password2));
+
+        List<PropertyType> properties = getProperties();
+        for (PropertyType property : properties) {
+            try {
+                if (PROPERTY_SIZE.equals(property.getName())) {
+                    addSize(password1, property);
+                    addSize(password2, property);
+                }
+            } catch (Exception ex) {
+                LOGGER.warn("Couldn't use property {} with value {}, reason: {}.",
+                        new Object[]{property.getName(), property.getValue(), ex.getMessage()});
+                LOGGER.debug("Couldn't use property, exception occurred.", ex);
+            }
+        }
     }
 
     @Override
@@ -72,5 +90,15 @@ public class PasswordWidget extends UiWidget {
     @Override
     public FormComponent getBaseFormComponent() {
         return (FormComponent) get(ID_PASSWORD_ONE);
+    }
+
+    private void addSize(TextField text, PropertyType property) {
+        String value = property.getValue();
+        if (StringUtils.isEmpty(value) || !value.matches("[0]*[1-9]+[0-9]*")) {
+            return;
+        }
+
+        int size = Integer.parseInt(value);
+        text.add(new AttributeModifier("size", size));
     }
 }
