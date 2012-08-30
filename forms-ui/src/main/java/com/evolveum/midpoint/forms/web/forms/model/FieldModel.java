@@ -61,6 +61,10 @@ public class FieldModel extends BaseModel<BaseModel, FieldToken> implements Disp
         for (PrismPropertyValue value : values) {
             getValues().add(new ValueModel(this, value));
         }
+
+        if (getValues().isEmpty()) {
+            getValues().add(new ValueModel(this, new PrismPropertyValue(null)));    //todo set status ADD
+        }
     }
 
     public List<ValueModel> getValues() {
@@ -88,7 +92,9 @@ public class FieldModel extends BaseModel<BaseModel, FieldToken> implements Disp
             defaultDisplay.setHelp(definition.getHelp());
         }
         if (StringUtils.isEmpty(defaultDisplay.getLabel())) {
-            defaultDisplay.setLabel(definition.getDisplayName());
+            String name = StringUtils.isNotEmpty(definition.getDisplayName()) ? definition.getDisplayName() :
+                    definition.getName().getLocalPart();
+            defaultDisplay.setLabel(name);
         }
         //todo min/max occurs
 //        definition.getMaxOccurs();

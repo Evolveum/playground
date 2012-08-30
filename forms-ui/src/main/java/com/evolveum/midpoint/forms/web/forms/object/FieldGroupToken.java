@@ -31,6 +31,7 @@ import com.evolveum.midpoint.prism.*;
 import com.evolveum.midpoint.schema.holder.XPathHolder;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.w3c.dom.Element;
 
@@ -108,13 +109,17 @@ public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
         }
 
         PrismContainer parent = (PrismContainer) item;
-        XPathHolder holder = new XPathHolder(ref.getElement());
-        PropertyPath path = holder.toPropertyPath();
+        if (StringUtils.isNotEmpty(ref.getValue())) {
+            XPathHolder holder = new XPathHolder(ref.getElement());
+            PropertyPath path = holder.toPropertyPath();
 
-        this.container = parent.findContainer(path);
-        if (container == null) {
+            this.container = parent.findContainer(path);
+
             PrismContainerDefinition parentDef = parent.getDefinition();
             this.definition = parentDef.findContainerDefinition(path);
+        } else {
+            this.container = parent;
+            this.definition = parent.getDefinition();
         }
 
         if (definition == null) {
@@ -138,5 +143,9 @@ public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
                 LOGGER.warn("Ignoring reference {} (not implemented yet).", new Object[]{itemDefinition.getName()});
             }
         }
+    }
+
+    public PrismContainerDefinition getDefinition() {
+        return definition;
     }
 }

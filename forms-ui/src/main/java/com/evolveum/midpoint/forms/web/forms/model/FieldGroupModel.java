@@ -25,7 +25,7 @@ import com.evolveum.midpoint.forms.web.forms.object.FieldGroupToken;
 import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
 import com.evolveum.midpoint.prism.Item;
-import com.evolveum.midpoint.prism.PrismPropertyDefinition;
+import com.evolveum.midpoint.prism.PrismContainerDefinition;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Map;
@@ -54,11 +54,24 @@ public class FieldGroupModel extends BaseGroupModel<BaseGroupModel, FieldGroupTo
 
     @Override
     public FieldDisplayType getDefaultDisplay() {
-        //todo implement
         FieldDisplayType real = getDisplay();
 
         FieldDisplayType defaultDisplay = new FieldDisplayType();
         StructuredFormUtils.cloneFieldDisplay(real, defaultDisplay);
+
+        PrismContainerDefinition definition = getToken().getDefinition();
+        if (definition == null) {
+            return defaultDisplay;
+        }
+
+        if (StringUtils.isEmpty(defaultDisplay.getHelp())) {
+            defaultDisplay.setHelp(definition.getHelp());
+        }
+        if (StringUtils.isEmpty(defaultDisplay.getLabel())) {
+            String name = StringUtils.isNotEmpty(definition.getDisplayName()) ? definition.getDisplayName() :
+                    definition.getName().getLocalPart();
+            defaultDisplay.setLabel(name);
+        }
 
         return defaultDisplay;
     }
