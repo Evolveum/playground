@@ -28,5 +28,17 @@
             <cssStyle>background-color: #ccc;</cssStyle>
         </display>
         <ref key="user"/>
+
+        <exclusions>
+            <exclusion>c:fetchResult</exclusion>
+            <exclusion>c:fetchResult</exclusion>
+            <exclusion>c:credentials/c:password/c:failedLogins</exclusion>
+            <exclusion>c:credentials/c:password/c:lastSuccessfulLogin</exclusion>
+            <exclusion>c:credentials/c:password/c:previousSuccessfulLogin</exclusion>
+            <exclusion>c:credentials/c:password/c:lastFailedLogin</exclusion>
+            <exclusion>c:credentials/c:allowedIdmAdminGuiAccess</exclusion>
+            <exclusion>c:assignment</exclusion>
+            <exclusion>c:account</exclusion>
+        </exclusions>
     </fieldGroup>
 </form>

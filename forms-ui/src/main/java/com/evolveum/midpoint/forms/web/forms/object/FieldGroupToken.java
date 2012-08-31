@@ -24,6 +24,7 @@ package com.evolveum.midpoint.forms.web.forms.object;
 import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
+import com.evolveum.midpoint.forms.web.forms.util.ItemDefinitionComparator;
 import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.BaseFieldType;
 import com.evolveum.midpoint.forms.xml.FieldGroupType;
@@ -36,8 +37,7 @@ import org.apache.commons.lang.Validate;
 import org.w3c.dom.Element;
 
 import javax.xml.bind.JAXBElement;
-import java.util.Collection;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author lazyman
@@ -57,12 +57,15 @@ public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
         }
     }
 
-    private FieldGroupToken(Token parent, PrismContainer container, PrismContainerDefinition definition) {
+    private FieldGroupToken(Token parent, PrismContainer container, PrismContainerDefinition definition,
+                            Set<ItemDefinition> exclusions) {
         super(parent, new FieldGroupType());
 
         Validate.notNull(definition, "Prism container definition must no be null.");
         this.container = container;
         this.definition = definition;
+
+        createChildren(container, definition, exclusions);
     }
 
     @Override
@@ -127,8 +130,49 @@ public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
                     this + "'.");
         }
 
-        Collection<ItemDefinition> definitions = definition.getDefinitions();
+        Set<ItemDefinition> exclusions = createExclusions(definition);
+        createChildren(container, definition, exclusions);
+    }
+
+    private Set<ItemDefinition> createExclusions(PrismContainerDefinition definition) {
+        Set<ItemDefinition> exclusions = new HashSet<ItemDefinition>();
+
+        List<Element> elements;
+        if (getField().getExclusions() != null) {
+            elements = getField().getExclusions().getExclusion();
+        } else {
+            return exclusions;
+        }
+
+        for (Element element : elements) {
+            PropertyPath path = new XPathHolder(element).toPropertyPath();
+            ItemDefinition def = definition.findItemDefinition(path);
+            if (def != null) {
+                exclusions.add(def);
+            }
+        }
+
+        return exclusions;
+    }
+
+    private void createChildren(PrismContainer container, PrismContainerDefinition definition, Set<ItemDefinition> exclusions) {
+
+        List<ItemDefinition> definitions;
+        if (definition.getDefinitions() != null) {
+            definitions = new ArrayList<ItemDefinition>();
+            definitions.addAll(definition.getDefinitions());
+
+            Collections.sort(definitions, new ItemDefinitionComparator());
+        } else {
+            return;
+        }
+
         for (ItemDefinition itemDefinition : definitions) {
+            if (exclusions.contains(itemDefinition)) {
+                LOGGER.trace("Ignoring {} based on group exclusions.", new Object[]{itemDefinition.dump()});
+                continue;
+            }
+
             if (itemDefinition instanceof PrismPropertyDefinition) {
                 PrismProperty property = container != null ? container.findProperty(itemDefinition.getName()) : null;
 
@@ -137,7 +181,8 @@ public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
                 PrismContainer prismContainer = container != null ?
                         container.findContainer(itemDefinition.getName()) : null;
 
-                getFields().add(new FieldGroupToken(this, prismContainer, (PrismContainerDefinition) itemDefinition));
+                getFields().add(new FieldGroupToken(this, prismContainer,
+                        (PrismContainerDefinition) itemDefinition, exclusions));
             } else if (itemDefinition instanceof PrismReferenceDefinition) {
                 //todo implement later
                 LOGGER.warn("Ignoring reference {} (not implemented yet).", new Object[]{itemDefinition.getName()});

@@ -35,9 +35,9 @@ import org.apache.commons.lang.Validate;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.StringResourceModel;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -96,17 +96,17 @@ public class StructuredForm extends Panel {
         StructuredFormContext context = model.getObject();
         LOGGER.trace("Available form context {}.", new Object[]{(context != null ? context.toString() : null)});
         if (context == null) {
-            return createErrorLabel("Structured form context must not be null."); //todo i18n
+            return createErrorLabel("StructuredForm.message.nullContext");
         }
 
         FormResolver resolver = context.getResolver();
         if (resolver == null) {
-            return createErrorLabel("Form resolver in form context must not be null."); //todo i18n
+            return createErrorLabel("StructuredForm.message.nullResolver");
         }
 
         FormType form = resolver.loadForm(context.getMainFormPath(), context.getUser(), context.getObjects());
         if (form == null) {
-            return createErrorLabel("Main form must not be null (was not found)."); //todo i18n
+            return createErrorLabel("StructuredForm.message.nullForm");
         }
 
         FormInterpreter interpreter = new FormInterpreter();
@@ -120,22 +120,16 @@ public class StructuredForm extends Panel {
 
         Class<?> formClass = UiRegistry.getForm(formType);
         if (formClass == null) {
-            return createErrorLabel("Form class '" + formType + "' was not found."); //todo i18n
+            return createErrorLabel("StructuredForm.message.notFoundType", formType);
         }
 
         Constructor<UiForm> constructor = (Constructor<UiForm>) formClass.getConstructor(String.class, IModel.class);
         return constructor.newInstance(COMPONENT_ID_FORM, new Model<FormModel>(formModel));
     }
 
-    private Component createErrorLabel(final String message) {
-        Component label = UiFactory.createErrorLabel(COMPONENT_ID_FORM, new AbstractReadOnlyModel<String>() {
-
-            @Override
-            public String getObject() {
-                return message;
-            }
-        });
-
+    private Component createErrorLabel(String messageKey, Object... objects) {
+        Component label = UiFactory.createErrorLabel(COMPONENT_ID_FORM,
+                new StringResourceModel(messageKey, this, null, messageKey, objects));
         label.add(new AttributeModifier("style", "color: #f00;"));
 
         return label;

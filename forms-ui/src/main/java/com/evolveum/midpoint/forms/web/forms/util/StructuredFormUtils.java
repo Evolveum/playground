@@ -22,10 +22,14 @@
 package com.evolveum.midpoint.forms.web.forms.util;
 
 import com.evolveum.midpoint.forms.web.forms.object.*;
+import com.evolveum.midpoint.forms.web.forms.ui.UiRegistry;
 import com.evolveum.midpoint.forms.xml.*;
+import com.evolveum.midpoint.prism.PrismPropertyDefinition;
+import com.evolveum.midpoint.util.DOMUtil;
 import com.evolveum.midpoint.util.exception.SystemException;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
+import com.evolveum.midpoint.xml.ns._public.common.common_2.ProtectedStringType;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -109,5 +113,17 @@ public class StructuredFormUtils {
 
         cloneDisplay(oldDisplay, newDisplay);
         newDisplay.setNewLine(oldDisplay.isNewLine());
+    }
+
+    public static String getDefaultWidget(PrismPropertyDefinition definition) {
+        if (DOMUtil.XSD_DATETIME.equals(definition.getTypeName())) {
+            return UiRegistry.WIDGET_DATE;
+        } else if (ProtectedStringType.COMPLEX_TYPE.equals(definition.getTypeName())) {
+            return UiRegistry.WIDGET_PASSWORD;
+        } else if (DOMUtil.XSD_BOOLEAN.equals(definition.getTypeName())) {
+            return UiRegistry.WIDGET_CHECKBOX;
+        }
+
+        return UiRegistry.WIDGET_DEFAULT;
     }
 }

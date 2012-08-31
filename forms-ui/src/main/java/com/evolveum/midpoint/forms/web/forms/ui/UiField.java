@@ -26,7 +26,6 @@ import com.evolveum.midpoint.forms.web.forms.model.ValueModel;
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
 import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
@@ -52,7 +51,7 @@ public class UiField extends UiComponent<FieldModel> {
         FieldModel fieldModel = model.getObject();
         FieldDisplayType display = fieldModel.getDefaultDisplay();
         if (StringUtils.isNotEmpty(display.getCssClass())) {
-            main.add(new AttributeAppender("class", UiFactory.createReadOnlyModel(display.getCssClass()), " "));
+            main.add(new AttributeModifier("class", display.getCssClass()));
         }
         if (StringUtils.isNotEmpty(display.getCssStyle())) {
             main.add(new AttributeModifier("style", display.getCssStyle()));

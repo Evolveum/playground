@@ -34,7 +34,7 @@
         <xsd:appinfo>
             <jaxb:globalBindings>
                 <xjc:typeSubstitution type="complex"/>
-                <xjc:serializable uid="201207271342"/>
+                <xjc:serializable uid="201208301640"/>
             </jaxb:globalBindings>
         </xsd:appinfo>
     </xsd:annotation>
@@ -79,7 +79,9 @@
     <xsd:complexType name="FieldReferenceType">
         <xsd:annotation>
             <xsd:documentation>
-                <!--todo documentation-->
+                Field reference provides opportunity to reference field from other forms via include.
+                Include attribute points to alias attribute in include element which points to another form.
+                Alias attribute points to "name" attribute in referenced field.
             </xsd:documentation>
         </xsd:annotation>
         <xsd:complexContent>
@@ -149,12 +151,20 @@
             <xsd:extension base="tns:BaseGroupFieldType">
                 <xsd:sequence>
                     <xsd:element name="ref" type="tns:ReferenceType" minOccurs="0"/>
+
+                    <xsd:element name="exclusions" type="tns:ExclusionsType" minOccurs="0"/>
                 </xsd:sequence>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
 
     <xsd:complexType name="FieldType">
+        <xsd:annotation>
+            <xsd:documentation>
+                "widget" attribute is used for default included types like text, label, combo, password, checkbox,
+                    etc. or class name for custom implementation
+            </xsd:documentation>
+        </xsd:annotation>
         <xsd:complexContent>
             <xsd:extension base="tns:BaseDisplayableFieldType">
                 <xsd:sequence>
@@ -162,7 +172,6 @@
                     <xsd:element name="value" type="tns:ValueType"/>
                     <xsd:element name="validation" type="tns:ValidationType"/>
                 </xsd:sequence>
-                <!-- for default included types like text, label, combo, etc. or class name for custom implementation -->
                 <xsd:attribute name="widget" type="xsd:string" use="optional"/>
             </xsd:extension>
         </xsd:complexContent>
@@ -173,6 +182,23 @@
         real value to display value and after edit to translate displayed value to real value -->
 
         <!-- spring expression language -->
+    </xsd:complexType>
+
+    <xsd:complexType name="ExclusionsType">
+        <xsd:sequence>
+            <xsd:element name="exclusion" type="tns:PathType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PathType" mixed="true">
+        <xsd:annotation>
+            <xsd:appinfo>
+                <jaxb:dom/>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string"/>
+        </xsd:simpleContent>
     </xsd:complexType>
 
     <xsd:complexType name="ReferenceType" mixed="true">
@@ -187,7 +213,6 @@
             </xsd:extension>
         </xsd:simpleContent>
     </xsd:complexType>
-
 
     <xsd:complexType name="ValueType">
         <xsd:annotation>
@@ -217,7 +242,7 @@
             <!-- extended properties -->
             <xsd:element name="property" type="tns:PropertyType" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
-        <!-- UiField, UiFieldGroup, UiField loop by default -->
+        <!-- UiField, UiFieldGroup, UiField loop by default - implementation class for field. -->
         <xsd:attribute name="type" type="xsd:string" use="optional"/>
     </xsd:complexType>
 

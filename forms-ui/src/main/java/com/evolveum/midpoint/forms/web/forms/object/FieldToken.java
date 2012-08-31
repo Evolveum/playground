@@ -24,6 +24,8 @@ package com.evolveum.midpoint.forms.web.forms.object;
 import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
+import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
+import com.evolveum.midpoint.forms.xml.FieldDisplayType;
 import com.evolveum.midpoint.forms.xml.FieldType;
 import com.evolveum.midpoint.prism.*;
 import com.evolveum.midpoint.schema.holder.XPathHolder;
@@ -54,6 +56,8 @@ public class FieldToken extends BaseDisplayableFieldToken<FieldType> {
         Validate.notNull(definition, "Prism property definition must not be null.");
         this.property = property;
         this.definition = definition;
+
+        getField().setWidget(StructuredFormUtils.getDefaultWidget(definition));
     }
 
     @Override
@@ -91,9 +95,10 @@ public class FieldToken extends BaseDisplayableFieldToken<FieldType> {
             XPathHolder holder = new XPathHolder(ref.getElement());
             PropertyPath path = holder.toPropertyPath();
             item = container.findItem(path);
-            if (!(item instanceof PrismProperty)) {
+            if (item != null && !(item instanceof PrismProperty)) {
                 throw new InterpreterException("Referenced item " + ref + " is not instance of PrismProperty.");
             }
+
             property = (PrismProperty) item;
             if (property == null) {
                 PrismContainerDefinition containerDefinition = container.getDefinition();
