@@ -46,6 +46,7 @@ public class UiField extends UiComponent<FieldModel> {
     @Override
     protected void initLayout() {
         WebMarkupContainer main = new WebMarkupContainer("main");
+        main.setOutputMarkupId(true);
         add(main);
 
         FieldModel fieldModel = model.getObject();

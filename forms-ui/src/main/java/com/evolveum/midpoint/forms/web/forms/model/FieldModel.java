@@ -40,6 +40,7 @@ import java.util.Map;
 public class FieldModel extends BaseModel<BaseModel, FieldToken> implements DisplayableModel<FieldDisplayType> {
 
     private List<ValueModel> values;
+    private ValueStatus status;
 
     public FieldModel(BaseModel parentModel, FieldToken token, Map<String, Item> objects) {
         super(parentModel, token, objects);
@@ -59,12 +60,20 @@ public class FieldModel extends BaseModel<BaseModel, FieldToken> implements Disp
 
         List<PrismPropertyValue> values = property.getValues();
         for (PrismPropertyValue value : values) {
-            getValues().add(new ValueModel(this, value));
+            getValues().add(new ValueModel(this, value, ValueStatus.EXISTING));
         }
 
         if (getValues().isEmpty()) {
-            getValues().add(new ValueModel(this, new PrismPropertyValue(null)));    //todo set status ADD
+            addValue();
         }
+    }
+
+    public void addValue() {
+        getValues().add(new ValueModel(this, new PrismPropertyValue(null), ValueStatus.ADDED));
+    }
+
+    public void removeValue(ValueModel model) {
+        getValues().remove(model);
     }
 
     public List<ValueModel> getValues() {

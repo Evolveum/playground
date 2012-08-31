@@ -21,18 +21,31 @@
 
 package com.evolveum.midpoint.forms.web.forms.ui;
 
+import com.evolveum.midpoint.forms.component.util.VisibleEnableBehaviour;
+import com.evolveum.midpoint.forms.web.forms.model.FieldModel;
 import com.evolveum.midpoint.forms.web.forms.model.ValueModel;
 import com.evolveum.midpoint.forms.web.forms.object.FieldToken;
 import com.evolveum.midpoint.forms.web.forms.ui.widget.TextWidget;
 import com.evolveum.midpoint.forms.web.forms.ui.widget.UiWidget;
+import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
 import com.evolveum.midpoint.forms.xml.PropertyType;
+import com.evolveum.midpoint.prism.PrismPropertyDefinition;
+import com.evolveum.midpoint.schema.constants.SchemaConstants;
+import com.evolveum.midpoint.util.logging.LoggingUtils;
+import com.evolveum.midpoint.util.logging.Trace;
+import com.evolveum.midpoint.util.logging.TraceManager;
+import com.evolveum.midpoint.xml.ns._public.common.common_2.ProtectedStringType;
 import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
@@ -45,6 +58,7 @@ import java.util.List;
  */
 public class UiValue extends Panel {
 
+    private static final Trace LOGGER = TraceManager.getTrace(UiValue.class);
     private IModel<ValueModel> model;
     private boolean initialized;
 
@@ -64,11 +78,22 @@ public class UiValue extends Panel {
     }
 
     protected void initLayout() {
-        ValueModel valueModel = model.getObject();
+        final ValueModel valueModel = model.getObject();
         FieldDisplayType display = valueModel.getDefaultDisplay();
 
         //todo help
         Label label = new Label("label", new StringResourceModel(display.getLabel(), null, display.getLabel()));
+        label.add(new AttributeModifier("style", new AbstractReadOnlyModel<String>() {
+
+            @Override
+            public String getObject() {
+                if (valueModel.getValueIndex() > 0) {
+                    return "visibility: hidden;";
+                }
+                return null;
+            }
+        }));
+
         if (StringUtils.isNotEmpty(display.getTooltip())) {
             label.add(new AttributeModifier("title",
                     new StringResourceModel(display.getTooltip(), null, display.getTooltip())));
@@ -84,6 +109,37 @@ public class UiValue extends Panel {
         feedback.setOutputMarkupId(true);
         add(feedback);
 
+        AjaxLink addButton = new AjaxLink("addButton") {
+
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                addValue(target);
+            }
+        };
+        addButton.add(new VisibleEnableBehaviour() {
+
+            @Override
+            public boolean isVisible() {
+                return isAddButtonVisible();
+            }
+        });
+        add(addButton);
+
+        AjaxLink removeButton = new AjaxLink("removeButton") {
+
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                removeValue(target);
+            }
+        };
+        removeButton.add(new VisibleEnableBehaviour() {
+
+            @Override
+            public boolean isVisible() {
+                return isRemoveButtonVisible();
+            }
+        });
+        add(removeButton);
     }
 
     private UiWidget initWidget(String type, List<PropertyType> properties) {
@@ -96,15 +152,58 @@ public class UiValue extends Panel {
 
             return widget;
         } catch (Exception ex) {
-            //todo log exception
-            ex.printStackTrace();
+            StringBuilder builder = new StringBuilder();
+            StructuredFormUtils.createMessage(ex, builder);
+            error(builder.toString());
+
+            LoggingUtils.logException(LOGGER, "Couldn't create widget", ex);
         }
 
-        return new TextWidget("widget", new PropertyModel(model, "value.value"));
+        return new TextWidget("widget", createValueModel());
     }
 
+    /**
+     * @return Returns proper {@link PropertyModel} based on different types like
+     *         {@link com.evolveum.midpoint.prism.polystring.PolyString} or
+     *         {@link com.evolveum.midpoint.xml.ns._public.common.common_2.ProtectedStringType}
+     */
     private IModel createValueModel() {
-        //todo fix property model for polystring, password, etc..
-        return new PropertyModel(model, "value.value");
+        FieldToken token = model.getObject().getField().getToken();
+        PrismPropertyDefinition definition = token.getDefinition();
+
+        final String baseExpression = "value.value"; //pointing to prism property real value
+
+        if (ProtectedStringType.COMPLEX_TYPE.equals(definition.getTypeName())) {
+            return new PropertyModel<String>(model, baseExpression + ".clearValue");
+        } else if (SchemaConstants.T_POLY_STRING_TYPE.equals(definition.getTypeName())) {
+            return new PropertyModel<String>(model, baseExpression + ".orig");
+        }
+
+        return new PropertyModel(model, baseExpression);
+    }
+
+    private void addValue(AjaxRequestTarget target) {
+        FieldModel fieldModel = model.getObject().getField();
+        fieldModel.addValue();
+
+        ListView listView = findParent(ListView.class);
+        target.add(listView.getParent());
+    }
+
+    private void removeValue(AjaxRequestTarget target) {
+        ValueModel valueModel = model.getObject();
+        FieldModel fieldModel = valueModel.getField();
+        fieldModel.removeValue(valueModel);
+
+        ListView listView = findParent(ListView.class);
+        target.add(listView.getParent());
+    }
+
+    private boolean isAddButtonVisible() {
+        return true;
+    }
+
+    private boolean isRemoveButtonVisible() {
+        return true;
     }
 }

@@ -126,4 +126,16 @@ public class StructuredFormUtils {
 
         return UiRegistry.WIDGET_DEFAULT;
     }
+
+    public static String createMessage(Throwable ex, StringBuilder builder) {
+        builder.append("Caused by: \"");
+        builder.append(ex.getMessage());
+        builder.append("\" ");
+
+        if (ex.getCause() != null) {
+            createMessage(ex.getCause(), builder);
+        }
+
+        return builder.toString();
+    }
 }

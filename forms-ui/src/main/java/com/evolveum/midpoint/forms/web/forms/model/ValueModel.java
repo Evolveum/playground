@@ -26,7 +26,6 @@ import com.evolveum.midpoint.forms.xml.FieldDisplayType;
 import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.prism.PrismPropertyValue;
 import com.evolveum.midpoint.prism.PropertyPath;
-import com.evolveum.midpoint.prism.delta.PropertyDelta;
 import org.apache.commons.lang.Validate;
 
 import java.io.Serializable;
@@ -44,9 +43,9 @@ public class ValueModel<T> implements Serializable {
     private PrismPropertyValue<T> value;
     private PrismPropertyValue<T> oldValue;
     //value status
-    private ModelStatus status;
+    private ValueStatus status;
 
-    public ValueModel(FieldModel fieldModel, PrismPropertyValue<T> value) {
+    public ValueModel(FieldModel fieldModel, PrismPropertyValue<T> value, ValueStatus status) {
         Validate.notNull(fieldModel, "Field model must not be null.");
         this.field = fieldModel;
         this.value = value;
@@ -67,5 +66,18 @@ public class ValueModel<T> implements Serializable {
 
     public FieldDisplayType getDefaultDisplay() {
         return field.getDefaultDisplay();
+    }
+
+    public ValueStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ValueStatus status) {
+        this.status = status;
+    }
+
+    public int getValueIndex() {
+        //todo better implementation needed, deleted values are not taken to account
+        return field.getValues().indexOf(this);
     }
 }

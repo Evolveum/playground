@@ -26,6 +26,7 @@ import com.evolveum.midpoint.forms.web.forms.model.FormModel;
 import com.evolveum.midpoint.forms.web.forms.ui.UiFactory;
 import com.evolveum.midpoint.forms.web.forms.ui.UiForm;
 import com.evolveum.midpoint.forms.web.forms.ui.UiRegistry;
+import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.DisplayType;
 import com.evolveum.midpoint.forms.xml.FormType;
 import com.evolveum.midpoint.util.logging.LoggingUtils;
@@ -78,7 +79,7 @@ public class StructuredForm extends Panel {
         try {
             uiForm = initForm();
         } catch (Exception ex) {
-            createMessage(ex, errorMessage);
+            StructuredFormUtils.createMessage(ex, errorMessage);
             LoggingUtils.logException(LOGGER, "Couldn't create form", ex);
         }
 
@@ -133,17 +134,5 @@ public class StructuredForm extends Panel {
         label.add(new AttributeModifier("style", "color: #f00;"));
 
         return label;
-    }
-
-    private String createMessage(Throwable ex, StringBuilder builder) {
-        builder.append("Caused by: \"");
-        builder.append(ex.getMessage());
-        builder.append("\" ");
-
-        if (ex.getCause() != null) {
-            createMessage(ex.getCause(), builder);
-        }
-
-        return builder.toString();
     }
 }
