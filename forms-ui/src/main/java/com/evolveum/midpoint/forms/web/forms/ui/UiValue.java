@@ -87,7 +87,7 @@ public class UiValue extends Panel {
 
             @Override
             public String getObject() {
-                if (valueModel.getValueIndex() > 0) {
+                if (valueModel.getVisibleValueIndex() > 0) {
                     return "visibility: hidden;";
                 }
                 return null;
@@ -120,7 +120,7 @@ public class UiValue extends Panel {
 
             @Override
             public boolean isVisible() {
-                return isAddButtonVisible();
+                return valueModel.isAddButtonVisible();
             }
         });
         add(addButton);
@@ -136,7 +136,7 @@ public class UiValue extends Panel {
 
             @Override
             public boolean isVisible() {
-                return isRemoveButtonVisible();
+                return  valueModel.isRemoveButtonVisible();
             }
         });
         add(removeButton);
@@ -197,13 +197,5 @@ public class UiValue extends Panel {
 
         ListView listView = findParent(ListView.class);
         target.add(listView.getParent());
-    }
-
-    private boolean isAddButtonVisible() {
-        return true;
-    }
-
-    private boolean isRemoveButtonVisible() {
-        return true;
     }
 }

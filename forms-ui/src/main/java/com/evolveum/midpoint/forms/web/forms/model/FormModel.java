@@ -21,24 +21,28 @@
 
 package com.evolveum.midpoint.forms.web.forms.model;
 
-import com.evolveum.midpoint.forms.web.forms.object.BaseFieldToken;
 import com.evolveum.midpoint.forms.web.forms.object.FormToken;
+import com.evolveum.midpoint.forms.xml.FormDisplayType;
 import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.prism.delta.ItemDelta;
 import com.evolveum.midpoint.prism.delta.ObjectDelta;
 import com.evolveum.midpoint.xml.ns._public.common.common_2.ObjectType;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
  * @author lazyman
  */
-public class FormModel extends BaseGroupModel {
+public class FormModel extends BaseGroupModel<FormModel, FormToken> {
 
     public FormModel(FormToken token, Map<String, Item> objects) {
         super(null, token, objects);
+    }
+
+    public String getTheme() {
+        FormToken token = getToken();
+        FormDisplayType display = token.getDisplay();
+        return display != null ? display.getTheme() : null;
     }
 
     public <T extends ObjectType> ObjectDelta<T> getObjectDelta(String object) {

@@ -112,7 +112,18 @@ public class StructuredFormUtils {
         }
 
         cloneDisplay(oldDisplay, newDisplay);
+    }
+
+    //todo rename
+    public static void cloneFieldFieldDisplay(FieldFieldDisplayType oldDisplay, FieldFieldDisplayType newDisplay) {
+        if (oldDisplay == null) {
+            return;
+        }
+
+        cloneFieldDisplay(oldDisplay, newDisplay);
         newDisplay.setNewLine(oldDisplay.isNewLine());
+        newDisplay.setMinOccurs(oldDisplay.getMinOccurs());
+        newDisplay.setMaxOccurs(oldDisplay.getMaxOccurs());
     }
 
     public static String getDefaultWidget(PrismPropertyDefinition definition) {

@@ -25,10 +25,7 @@ import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
-import com.evolveum.midpoint.forms.xml.BaseDisplayableFieldType;
-import com.evolveum.midpoint.forms.xml.BaseFieldType;
-import com.evolveum.midpoint.forms.xml.FormType;
-import com.evolveum.midpoint.forms.xml.IncludeType;
+import com.evolveum.midpoint.forms.xml.*;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.StringUtils;
@@ -151,5 +148,9 @@ public class FormToken implements Token {
 
     public String getFormName() {
         return form.getName();
+    }
+
+    public FormDisplayType getDisplay() {
+        return form.getDisplay();
     }
 }

@@ -39,6 +39,7 @@ public class UiRegistry {
     public static final String WIDGET_CHECKBOX = "checkbox";
     public static final String WIDGET_DATE = "date";
     public static final String WIDGET_PASSWORD = "password";
+    public static final String WIDGET_COMBO_BOX = "combobox";
 
     private static final Trace LOGGER = TraceManager.getTrace(UiRegistry.class);
     private static final Map<String, Class<? extends UiWidget>> WIDGETS =
@@ -49,6 +50,7 @@ public class UiRegistry {
         WIDGETS.put(WIDGET_CHECKBOX, CheckBoxWidget.class);
         WIDGETS.put(WIDGET_DATE, DateWidget.class);
         WIDGETS.put(WIDGET_PASSWORD, PasswordWidget.class);
+        WIDGETS.put(WIDGET_COMBO_BOX, ComboBoxWidget.class);
     }
 
     public static Class<? extends UiForm> getForm(String type) {

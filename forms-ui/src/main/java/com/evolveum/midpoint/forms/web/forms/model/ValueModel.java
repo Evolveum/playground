@@ -23,6 +23,7 @@ package com.evolveum.midpoint.forms.web.forms.model;
 
 import com.evolveum.midpoint.forms.web.forms.object.FieldToken;
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
+import com.evolveum.midpoint.forms.xml.FieldFieldDisplayType;
 import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.prism.PrismPropertyValue;
 import com.evolveum.midpoint.prism.PropertyPath;
@@ -76,8 +77,35 @@ public class ValueModel<T> implements Serializable {
         this.status = status;
     }
 
-    public int getValueIndex() {
-        //todo better implementation needed, deleted values are not taken to account
-        return field.getValues().indexOf(this);
+    public int getVisibleValueIndex() {
+        return field.getVisibleValues().indexOf(this);
+    }
+
+    public boolean isAddButtonVisible() {
+        int size = field.getVisibleValues().size();
+        FieldFieldDisplayType display = field.getDefaultDisplay();
+        if (display.getMaxOccurs() < 0) {
+            return true;
+        }
+
+        if (size + 1 > display.getMaxOccurs()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean isRemoveButtonVisible() {
+        int size = field.getVisibleValues().size();
+        if (size == 1) {
+            return false;
+        }
+
+        FieldFieldDisplayType display = field.getDefaultDisplay();
+        if (size - 1 < display.getMinOccurs()) {
+            return false;
+        }
+
+        return true;
     }
 }

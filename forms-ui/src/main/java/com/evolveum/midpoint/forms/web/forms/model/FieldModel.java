@@ -24,6 +24,7 @@ package com.evolveum.midpoint.forms.web.forms.model;
 import com.evolveum.midpoint.forms.web.forms.object.FieldToken;
 import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
+import com.evolveum.midpoint.forms.xml.FieldFieldDisplayType;
 import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.prism.PrismProperty;
 import com.evolveum.midpoint.prism.PrismPropertyDefinition;
@@ -73,7 +74,11 @@ public class FieldModel extends BaseModel<BaseModel, FieldToken> implements Disp
     }
 
     public void removeValue(ValueModel model) {
-        getValues().remove(model);
+        if (ValueStatus.ADDED.equals(model.getStatus())) {
+            getValues().remove(model);
+        } else {
+            model.setStatus(ValueStatus.DELETED);
+        }
     }
 
     public List<ValueModel> getValues() {
@@ -83,18 +88,30 @@ public class FieldModel extends BaseModel<BaseModel, FieldToken> implements Disp
         return values;
     }
 
+    public List<ValueModel> getVisibleValues() {
+        List<ValueModel> visibleValues = new ArrayList<ValueModel>();
+        for (ValueModel model : getValues()) {
+            if (ValueStatus.DELETED.equals(model.getStatus())) {
+                continue;
+            }
+            visibleValues.add(model);
+        }
+
+        return visibleValues;
+    }
+
     @Override
-    public FieldDisplayType getDisplay() {
+    public FieldFieldDisplayType getDisplay() {
         FieldToken token = getToken();
         return token.getField().getDisplay();
     }
 
     @Override
-    public FieldDisplayType getDefaultDisplay() {
-        FieldDisplayType real = getDisplay();
+    public FieldFieldDisplayType getDefaultDisplay() {
+        FieldFieldDisplayType real = getDisplay();
 
-        FieldDisplayType defaultDisplay = new FieldDisplayType();
-        StructuredFormUtils.cloneFieldDisplay(real, defaultDisplay);
+        FieldFieldDisplayType defaultDisplay = new FieldFieldDisplayType();
+        StructuredFormUtils.cloneFieldFieldDisplay(real, defaultDisplay);
 
         PrismPropertyDefinition definition = getToken().getDefinition();
         if (StringUtils.isEmpty(defaultDisplay.getHelp())) {
@@ -105,9 +122,14 @@ public class FieldModel extends BaseModel<BaseModel, FieldToken> implements Disp
                     definition.getName().getLocalPart();
             defaultDisplay.setLabel(name);
         }
-        //todo min/max occurs
-//        definition.getMaxOccurs();
-//        definition.getMinOccurs();
+
+        if (defaultDisplay.getMinOccurs() == null) {
+            defaultDisplay.setMinOccurs(definition.getMinOccurs());
+        }
+
+        if (defaultDisplay.getMaxOccurs() == null) {
+            defaultDisplay.setMaxOccurs(definition.getMaxOccurs());
+        }
 
         return defaultDisplay;
     }

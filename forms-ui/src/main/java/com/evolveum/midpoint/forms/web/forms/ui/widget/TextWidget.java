@@ -51,7 +51,6 @@ public class TextWidget<T> extends UiWidget {
         final TextField<T> text = new TextField<T>(ID_INPUT, getModel());
         add(text);
 
-
         List<PropertyType> properties = getProperties();
         for (PropertyType property : properties) {
             try {

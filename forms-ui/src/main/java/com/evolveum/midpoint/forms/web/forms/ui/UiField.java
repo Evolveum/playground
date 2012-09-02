@@ -59,7 +59,7 @@ public class UiField extends UiComponent<FieldModel> {
         }
 
         ListView<ValueModel> values = new ListView<ValueModel>("value",
-                new PropertyModel<List<? extends ValueModel>>(model, "values")) {
+                new PropertyModel<List<? extends ValueModel>>(model, "visibleValues")) {
 
             @Override
             protected void populateItem(ListItem<ValueModel> item) {

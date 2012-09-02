@@ -37,6 +37,7 @@ import java.util.List;
  */
 public class UiForm extends UiComponent<FormModel> {
 
+    private static final String THEME_DEFAULT = "UiCleanDevel"; //todo change to UiClean
     private static final String THEME_FOLDER = "theme/";
 
     public UiForm(String id, IModel<FormModel> model) {
@@ -47,12 +48,8 @@ public class UiForm extends UiComponent<FormModel> {
     public void renderHead(IHeaderResponse response) {
         super.renderHead(response);
 
-        //todo get theme from form model -> form token -> form type
-        String theme = null;
-
-        if (StringUtils.isEmpty(theme)) {
-            theme = "UiCleanDevel";
-        }
+        FormModel formModel = model.getObject();
+        String theme = StringUtils.isNotEmpty(formModel.getTheme()) ? formModel.getTheme() : THEME_DEFAULT;
 
         ResourceReference ref = new PackageResourceReference(UiForm.class, THEME_FOLDER + theme + ".css");
         response.renderCSSReference(ref);
