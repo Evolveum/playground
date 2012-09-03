@@ -71,7 +71,6 @@ public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
 
     @Override
     public void interpret(InterpreterContext interpreterContext, StructuredFormContext context) throws InterpreterException {
-        super.interpret(interpreterContext, context);
         LOGGER.debug("interpret {}", new Object[]{this});
 
         FieldGroupType group = getField();

@@ -38,7 +38,7 @@ import java.util.Map;
 /**
  * @author lazyman
  */
-public class FieldLoopModel extends BaseModel<BaseGroupModel, FieldLoopToken> implements DisplayableModel<FieldDisplayType> {
+public class FieldLoopModel extends BaseModel<BaseGroupModel, FieldLoopToken> implements DisplayableModel<DisplayType> {
 
     public FieldLoopModel(BaseGroupModel parentModel, FieldLoopToken token, Map<String, FormContextItem> objects) {
         super(parentModel, token, objects);
@@ -51,17 +51,17 @@ public class FieldLoopModel extends BaseModel<BaseGroupModel, FieldLoopToken> im
     }
 
     @Override
-    public FieldDisplayType getDisplay() {
+    public DisplayType getDisplay() {
         FieldLoopToken token = getToken();
         return token.getField().getDisplay();
     }
 
     @Override
     public FieldDisplayType getDefaultDisplay() {
-        FieldDisplayType real = getDisplay();
+        DisplayType real = getDisplay();
 
         FieldDisplayType defaultDisplay = new FieldDisplayType();
-        StructuredFormUtils.cloneFieldDisplay(real, defaultDisplay);
+        StructuredFormUtils.cloneDisplay(real, defaultDisplay);
 
         PrismContainerDefinition definition = getToken().getDefinition();
         if (definition == null) {

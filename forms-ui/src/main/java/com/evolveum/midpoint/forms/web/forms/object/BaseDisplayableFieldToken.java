@@ -44,11 +44,6 @@ public abstract class BaseDisplayableFieldToken<T extends BaseDisplayableFieldTy
         super(parent, field);
     }
 
-    @Override
-    public void interpret(InterpreterContext interpreterContext, StructuredFormContext context) throws InterpreterException {
-        //todo implement
-    }
-
     protected ReferenceType validateReference(Element refElement, boolean canBeNull)
             throws InterpreterException {
         if (refElement == null && !canBeNull) {

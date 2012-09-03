@@ -21,9 +21,6 @@
 
 package com.evolveum.midpoint.forms.web.forms.object;
 
-import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
-import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterContext;
-import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.xml.BaseGroupFieldType;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
@@ -45,10 +42,5 @@ public abstract class BaseGroupFieldToken<T extends BaseGroupFieldType> extends 
 
     public List<BaseFieldToken> getFields() {
         return fields;
-    }
-
-    @Override
-    public void interpret(InterpreterContext interpreterContext, StructuredFormContext context) throws InterpreterException {
-        super.interpret(interpreterContext, context);
     }
 }

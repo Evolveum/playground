@@ -26,7 +26,6 @@ import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
-import com.evolveum.midpoint.forms.xml.FieldDisplayType;
 import com.evolveum.midpoint.forms.xml.FieldType;
 import com.evolveum.midpoint.prism.*;
 import com.evolveum.midpoint.schema.holder.XPathHolder;
@@ -63,7 +62,6 @@ public class FieldToken extends BaseDisplayableFieldToken<FieldType> {
 
     @Override
     public void interpret(InterpreterContext interpreterContext, StructuredFormContext context) throws InterpreterException {
-        super.interpret(interpreterContext, context);
         LOGGER.debug("interpret {}", new Object[]{this});
 
         FieldType field = getField();

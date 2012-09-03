@@ -52,7 +52,7 @@
 
     <xsd:complexType name="FormDisplayType">
         <xsd:complexContent>
-            <xsd:extension base="tns:DisplayType">
+            <xsd:extension base="tns:BaseDisplayType">
                 <xsd:sequence>
                     <xsd:element name="theme" type="xsd:string" minOccurs="0"/>
                 </xsd:sequence>
@@ -111,7 +111,6 @@
         <xsd:complexContent>
             <xsd:extension base="tns:BaseFieldType">
                 <xsd:sequence>
-                    <!--<xsd:element name="display" type="tns:FieldDisplayType"/>-->
                     <xsd:element name="enabled" type="tns:EnabledType"/>
                     <xsd:element name="visible" type="tns:VisibleType"/>
                 </xsd:sequence>
@@ -129,7 +128,7 @@
         <xsd:complexContent>
             <xsd:extension base="tns:BaseDisplayableFieldType">
                 <xsd:sequence>
-                    <xsd:element name="display" type="tns:FieldDisplayType"/>
+                    <xsd:element name="display" type="tns:DisplayType"/>
                     <xsd:element ref="tns:item" minOccurs="0" maxOccurs="unbounded"/>
                 </xsd:sequence>
             </xsd:extension>
@@ -179,7 +178,7 @@
         <xsd:complexContent>
             <xsd:extension base="tns:BaseDisplayableFieldType">
                 <xsd:sequence>
-                    <xsd:element name="display" type="tns:FieldFieldDisplayType"/>
+                    <xsd:element name="display" type="tns:FieldDisplayType"/>
                     <xsd:element name="ref" type="tns:ReferenceType"/>
                     <xsd:element name="value" type="tns:ValueType"/>
                     <xsd:element name="validation" type="tns:ValidationType"/>
@@ -196,10 +195,9 @@
         <!-- spring expression language -->
     </xsd:complexType>
 
-    <!-- todo rename !!! -->
-    <xsd:complexType name="FieldFieldDisplayType">
+    <xsd:complexType name="FieldDisplayType">
         <xsd:complexContent>
-            <xsd:extension base="tns:FieldDisplayType">
+            <xsd:extension base="tns:DisplayType">
                 <xsd:sequence>
                     <xsd:element name="minOccurs" type="xsd:int" minOccurs="0"/>
                     <xsd:element name="maxOccurs" type="xsd:int" minOccurs="0"/>
@@ -254,7 +252,7 @@
         <xsd:attribute name="minOccurs" type="xsd:int" use="optional"/>
     </xsd:complexType>
 
-    <xsd:complexType name="DisplayType">
+    <xsd:complexType name="BaseDisplayType" abstract="true">
         <xsd:sequence>
             <!-- base properties -->
             <xsd:element name="label" type="xsd:string" minOccurs="0"/>
@@ -270,9 +268,9 @@
         <xsd:attribute name="type" type="xsd:string" use="optional"/>
     </xsd:complexType>
 
-    <xsd:complexType name="FieldDisplayType">
+    <xsd:complexType name="DisplayType">
         <xsd:complexContent>
-            <xsd:extension base="tns:DisplayType">
+            <xsd:extension base="tns:BaseDisplayType">
                 <!-- displayable form component position (if true, field/group/loop will be placed on new line) -->
                 <xsd:attribute name="newLine" type="xsd:boolean" use="optional" default="true"/>
             </xsd:extension>

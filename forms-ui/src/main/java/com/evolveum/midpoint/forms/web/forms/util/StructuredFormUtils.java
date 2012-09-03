@@ -87,7 +87,7 @@ public class StructuredFormUtils {
         return token;
     }
 
-    public static void cloneDisplay(DisplayType oldDisplay, DisplayType newDisplay) {
+    public static void cloneBaseDisplay(BaseDisplayType oldDisplay, BaseDisplayType newDisplay) {
         if (oldDisplay == null) {
             return;
         }
@@ -108,22 +108,21 @@ public class StructuredFormUtils {
         }
     }
 
+    public static void cloneDisplay(DisplayType oldDisplay, DisplayType newDisplay) {
+        if (oldDisplay == null) {
+            return;
+        }
+
+        cloneDisplay(oldDisplay, newDisplay);
+        newDisplay.setNewLine(oldDisplay.isNewLine());
+    }
+
     public static void cloneFieldDisplay(FieldDisplayType oldDisplay, FieldDisplayType newDisplay) {
         if (oldDisplay == null) {
             return;
         }
 
         cloneDisplay(oldDisplay, newDisplay);
-    }
-
-    //todo rename
-    public static void cloneFieldFieldDisplay(FieldFieldDisplayType oldDisplay, FieldFieldDisplayType newDisplay) {
-        if (oldDisplay == null) {
-            return;
-        }
-
-        cloneFieldDisplay(oldDisplay, newDisplay);
-        newDisplay.setNewLine(oldDisplay.isNewLine());
         newDisplay.setMinOccurs(oldDisplay.getMinOccurs());
         newDisplay.setMaxOccurs(oldDisplay.getMaxOccurs());
     }

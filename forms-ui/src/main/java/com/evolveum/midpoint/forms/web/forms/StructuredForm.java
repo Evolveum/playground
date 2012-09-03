@@ -28,6 +28,7 @@ import com.evolveum.midpoint.forms.web.forms.ui.UiForm;
 import com.evolveum.midpoint.forms.web.forms.ui.UiRegistry;
 import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.DisplayType;
+import com.evolveum.midpoint.forms.xml.FormDisplayType;
 import com.evolveum.midpoint.forms.xml.FormType;
 import com.evolveum.midpoint.util.logging.LoggingUtils;
 import com.evolveum.midpoint.util.logging.Trace;
@@ -115,7 +116,7 @@ public class StructuredForm extends Panel {
         iContext.addIncludePath(context.getMainFormPath());
         FormModel formModel = interpreter.interpret(form, iContext, context);
 
-        DisplayType formDisplay = form.getDisplay();
+        FormDisplayType formDisplay = form.getDisplay();
         String formType = formDisplay != null ? formDisplay.getType() : null;
         LOGGER.debug("Using {} as form type.", new Object[]{formType});
 

@@ -25,8 +25,6 @@ import com.evolveum.midpoint.forms.web.forms.FormContextItem;
 import com.evolveum.midpoint.forms.web.forms.object.FieldToken;
 import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
-import com.evolveum.midpoint.forms.xml.FieldFieldDisplayType;
-import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.prism.PrismProperty;
 import com.evolveum.midpoint.prism.PrismPropertyDefinition;
 import com.evolveum.midpoint.prism.PrismPropertyValue;
@@ -127,17 +125,17 @@ public class FieldModel extends BaseModel<BaseModel, FieldToken> implements Disp
     }
 
     @Override
-    public FieldFieldDisplayType getDisplay() {
+    public FieldDisplayType getDisplay() {
         FieldToken token = getToken();
         return token.getField().getDisplay();
     }
 
     @Override
-    public FieldFieldDisplayType getDefaultDisplay() {
-        FieldFieldDisplayType real = getDisplay();
+    public FieldDisplayType getDefaultDisplay() {
+        FieldDisplayType real = getDisplay();
 
-        FieldFieldDisplayType defaultDisplay = new FieldFieldDisplayType();
-        StructuredFormUtils.cloneFieldFieldDisplay(real, defaultDisplay);
+        FieldDisplayType defaultDisplay = new FieldDisplayType();
+        StructuredFormUtils.cloneFieldDisplay(real, defaultDisplay);
 
         PrismPropertyDefinition definition = getToken().getDefinition();
         if (StringUtils.isEmpty(defaultDisplay.getHelp())) {

@@ -22,7 +22,6 @@
 package com.evolveum.midpoint.forms.web.forms.model;
 
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
-import com.evolveum.midpoint.forms.xml.FieldFieldDisplayType;
 import com.evolveum.midpoint.prism.PrismPropertyValue;
 import com.evolveum.midpoint.prism.polystring.PolyString;
 import org.apache.commons.lang.Validate;
@@ -106,7 +105,7 @@ public class ValueModel<T> implements Serializable {
 
     public boolean isAddButtonVisible() {
         int size = field.getVisibleValues().size();
-        FieldFieldDisplayType display = field.getDefaultDisplay();
+        FieldDisplayType display = field.getDefaultDisplay();
         if (display.getMaxOccurs() < 0) {
             return true;
         }
@@ -124,7 +123,7 @@ public class ValueModel<T> implements Serializable {
             return false;
         }
 
-        FieldFieldDisplayType display = field.getDefaultDisplay();
+        FieldDisplayType display = field.getDefaultDisplay();
         if (size - 1 < display.getMinOccurs()) {
             return false;
         }

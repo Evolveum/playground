@@ -24,6 +24,7 @@ package com.evolveum.midpoint.forms.web.forms.model;
 import com.evolveum.midpoint.forms.web.forms.FormContextItem;
 import com.evolveum.midpoint.forms.web.forms.object.FieldGroupToken;
 import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
+import com.evolveum.midpoint.forms.xml.DisplayType;
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
 import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.prism.PrismContainerDefinition;
@@ -35,7 +36,7 @@ import java.util.Map;
  * @author lazyman
  */
 public class FieldGroupModel extends BaseGroupModel<BaseGroupModel, FieldGroupToken>
-        implements DisplayableModel<FieldDisplayType> {
+        implements DisplayableModel<DisplayType> {
 
     public FieldGroupModel(BaseGroupModel parentModel, FieldGroupToken token, Map<String, FormContextItem> objects) {
         super(parentModel, token, objects);
@@ -48,17 +49,17 @@ public class FieldGroupModel extends BaseGroupModel<BaseGroupModel, FieldGroupTo
     }
 
     @Override
-    public FieldDisplayType getDisplay() {
+    public DisplayType getDisplay() {
         FieldGroupToken token = getToken();
         return token.getField().getDisplay();
     }
 
     @Override
     public FieldDisplayType getDefaultDisplay() {
-        FieldDisplayType real = getDisplay();
+        DisplayType real = getDisplay();
 
         FieldDisplayType defaultDisplay = new FieldDisplayType();
-        StructuredFormUtils.cloneFieldDisplay(real, defaultDisplay);
+        StructuredFormUtils.cloneDisplay(real, defaultDisplay);
 
         PrismContainerDefinition definition = getToken().getDefinition();
         if (definition == null) {
