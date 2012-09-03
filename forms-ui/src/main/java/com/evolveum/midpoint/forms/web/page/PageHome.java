@@ -366,7 +366,18 @@ public class PageHome extends PageBase {
     }
 
     public void loadSample4Performed(AjaxRequestTarget target) {
-        warn("No sample yet.");
+        projectModel.reset();
+
+        Project project = projectModel.getObject();
+        project.setMainForm("main.xml");
+        FormDto form = new FormDto("main.xml", loadFileContent("4/main.xml"));
+        project.getForms().add(form);
+
+        VariableDto variable = new VariableDto("user", loadFileContent("4/user.xml"));
+        project.getVariables().add(variable);
+
+        reloadTabs(target);
+        reloadFormPerformed(target);
     }
 
     private void loadSample2Performed(AjaxRequestTarget target) {

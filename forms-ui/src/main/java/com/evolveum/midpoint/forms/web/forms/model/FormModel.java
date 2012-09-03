@@ -44,14 +44,4 @@ public class FormModel extends BaseGroupModel<FormModel, FormToken> {
         FormDisplayType display = token.getDisplay();
         return display != null ? display.getTheme() : null;
     }
-
-    public <T extends ObjectType> ObjectDelta<T> getObjectDelta(String object) {
-        //todo implement
-        return null;
-    }
-
-    public <T extends ItemDelta> T getItemDelta(String object, Class<T> deltaType) {
-        //todo implement
-        return null;
-    }
 }

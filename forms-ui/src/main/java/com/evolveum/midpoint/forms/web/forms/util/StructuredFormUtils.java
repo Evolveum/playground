@@ -78,6 +78,8 @@ public class StructuredFormUtils {
             token = new FieldGroupToken(parent, (FieldGroupType) item);
         } else if (item instanceof FieldReferenceType) {
             token = new FieldRefToken(parent, (FieldReferenceType) item);
+//        } else if (item instanceof FieldLoopType) {
+//            token = new FieldLoopToken(parent, (FieldLoopType) item);
         } else {
             throw new SystemException("Unsupported token type '" + item.getClass().getName() + "'.");
         }

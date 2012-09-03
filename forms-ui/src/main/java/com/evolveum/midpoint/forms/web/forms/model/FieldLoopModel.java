@@ -21,10 +21,14 @@
 
 package com.evolveum.midpoint.forms.web.forms.model;
 
+import com.evolveum.midpoint.forms.web.forms.object.FieldGroupToken;
 import com.evolveum.midpoint.forms.web.forms.object.FieldLoopToken;
+import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.DisplayType;
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
 import com.evolveum.midpoint.prism.Item;
+import com.evolveum.midpoint.prism.PrismContainerDefinition;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,11 +51,31 @@ public class FieldLoopModel extends BaseModel<BaseGroupModel, FieldLoopToken> im
 
     @Override
     public FieldDisplayType getDisplay() {
-        return null;
+        FieldLoopToken token = getToken();
+        return token.getField().getDisplay();
     }
 
     @Override
     public FieldDisplayType getDefaultDisplay() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        FieldDisplayType real = getDisplay();
+
+        FieldDisplayType defaultDisplay = new FieldDisplayType();
+        StructuredFormUtils.cloneFieldDisplay(real, defaultDisplay);
+
+        PrismContainerDefinition definition = getToken().getDefinition();
+        if (definition == null) {
+            return defaultDisplay;
+        }
+
+        if (StringUtils.isEmpty(defaultDisplay.getHelp())) {
+            defaultDisplay.setHelp(definition.getHelp());
+        }
+        if (StringUtils.isEmpty(defaultDisplay.getLabel())) {
+            String name = StringUtils.isNotEmpty(definition.getDisplayName()) ? definition.getDisplayName() :
+                    definition.getName().getLocalPart();
+            defaultDisplay.setLabel(name);
+        }
+
+        return defaultDisplay;
     }
 }

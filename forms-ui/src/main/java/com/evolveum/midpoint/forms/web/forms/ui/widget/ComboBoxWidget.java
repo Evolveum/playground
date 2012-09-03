@@ -21,6 +21,7 @@
 
 package com.evolveum.midpoint.forms.web.forms.ui.widget;
 
+import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.model.IModel;
 
@@ -42,6 +43,7 @@ public class ComboBoxWidget extends UiWidget {
 
     @Override
     protected void initLayout() {
-
+        DropDownChoice input = new DropDownChoice("input");
+        add(input);
     }
 }

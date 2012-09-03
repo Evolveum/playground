@@ -21,16 +21,13 @@
 
 package com.evolveum.midpoint.forms.web.forms.model;
 
-import com.evolveum.midpoint.forms.web.forms.object.FieldToken;
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
 import com.evolveum.midpoint.forms.xml.FieldFieldDisplayType;
-import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.prism.PrismPropertyValue;
-import com.evolveum.midpoint.prism.PropertyPath;
+import com.evolveum.midpoint.prism.polystring.PolyString;
 import org.apache.commons.lang.Validate;
 
 import java.io.Serializable;
-import java.util.Map;
 
 /**
  * @author lazyman
@@ -38,8 +35,6 @@ import java.util.Map;
 public class ValueModel<T> implements Serializable {
 
     private FieldModel field;
-    //whatever...? todo
-    private PropertyPath path;
     //value for editing
     private PrismPropertyValue<T> value;
     private PrismPropertyValue<T> oldValue;
@@ -47,18 +42,46 @@ public class ValueModel<T> implements Serializable {
     private ValueStatus status;
 
     public ValueModel(FieldModel fieldModel, PrismPropertyValue<T> value, ValueStatus status) {
-        Validate.notNull(fieldModel, "Field model must not be null.");
-        this.field = fieldModel;
-        this.value = value;
-
-        initialize();
+        this(fieldModel, value, null, status);
     }
 
-    private void initialize() {
-        Map<String, Item> objects = field.getObjects();
+    public ValueModel(FieldModel fieldModel, PrismPropertyValue<T> value, PrismPropertyValue<T> oldValue,
+                      ValueStatus status) {
+        Validate.notNull(fieldModel, "Field model must not be null.");
+        Validate.notNull(value, "Prism property value must not be null.");
+        this.field = fieldModel;
+        this.value = value;
+        this.status = status;
 
-        FieldToken token = field.getToken();
-        token.getField().getRef();
+        //clone values, because we don't want to update original prism object that is used in main model.
+        if (value != null) {
+            T val = value.getValue();
+            if (val instanceof PolyString) {
+                PolyString poly = (PolyString) val;
+                this.value = new PrismPropertyValue(new PolyString(poly.getOrig(), poly.getNorm()),
+                        value.getType(), value.getSource());
+            } else {
+                this.value = value.clone();
+            }
+        }
+
+        if (oldValue == null) {
+            T val = this.value.getValue();
+            if (val instanceof PolyString) {
+                PolyString poly = (PolyString) val;
+                val = (T) new PolyString(poly.getOrig(), poly.getNorm());
+            }
+            oldValue = new PrismPropertyValue<T>(val, this.value.getType(), this.value.getSource());
+        }
+        this.oldValue = oldValue;
+    }
+
+    public PrismPropertyValue<T> getOldValue() {
+        return oldValue;
+    }
+
+    public PrismPropertyValue<T> getValue() {
+        return value;
     }
 
     public FieldModel getField() {

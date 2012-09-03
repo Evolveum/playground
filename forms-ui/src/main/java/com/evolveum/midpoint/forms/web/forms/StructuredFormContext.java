@@ -22,8 +22,13 @@
 package com.evolveum.midpoint.forms.web.forms;
 
 import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolver;
+import com.evolveum.midpoint.forms.web.forms.model.FormModel;
 import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.prism.PrismObject;
+import com.evolveum.midpoint.prism.delta.ChangeType;
+import com.evolveum.midpoint.prism.delta.ObjectDelta;
+import com.evolveum.midpoint.util.exception.SchemaException;
+import com.evolveum.midpoint.xml.ns._public.common.common_2.ObjectType;
 import com.evolveum.midpoint.xml.ns._public.common.common_2.UserType;
 import org.apache.commons.lang.Validate;
 
@@ -40,6 +45,8 @@ public class StructuredFormContext implements Serializable {
     private PrismObject<UserType> user;
     private Map<String, Item> objects;
     private FormResolver resolver;
+
+    private FormModel formModel;
 
     public StructuredFormContext(String mainForm, PrismObject<UserType> user, Map<String, Item> objects, FormResolver resolver) {
         Validate.notEmpty(mainForm, "Main form path must not be null.");
@@ -71,6 +78,14 @@ public class StructuredFormContext implements Serializable {
         return user;
     }
 
+    public FormModel getFormModel() {
+        return formModel;
+    }
+
+    public void setFormModel(FormModel formModel) {
+        this.formModel = formModel;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -83,5 +98,18 @@ public class StructuredFormContext implements Serializable {
         builder.append("}");
 
         return builder.toString();
+    }
+
+    public <T extends ObjectType> ObjectDelta<T> getObjectDelta(String objectKey) throws SchemaException {
+        Validate.notEmpty(objectKey, "Object key must not be null.");
+        Item item = objects.get(objectKey);
+        if (item == null || !(item instanceof PrismObject)) {
+            throw new SchemaException("Object '" + objectKey + "' doesn't exist or it's not prism object.");
+        }
+        PrismObject object = (PrismObject) item;
+        ObjectDelta delta = new ObjectDelta(object.getCompileTimeClass(), ChangeType.MODIFY);   //todo change type
+        //todo implement
+
+        return delta;
     }
 }

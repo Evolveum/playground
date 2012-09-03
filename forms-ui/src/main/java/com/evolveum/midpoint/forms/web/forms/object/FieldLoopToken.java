@@ -25,9 +25,17 @@ import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.xml.FieldLoopType;
+import com.evolveum.midpoint.prism.Item;
+import com.evolveum.midpoint.prism.PrismContainer;
+import com.evolveum.midpoint.prism.PrismContainerDefinition;
+import com.evolveum.midpoint.prism.PropertyPath;
+import com.evolveum.midpoint.schema.holder.XPathHolder;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.StringUtils;
+import org.w3c.dom.Element;
+
+import java.util.Map;
 
 /**
  * @author lazyman
@@ -35,20 +43,69 @@ import org.apache.commons.lang.StringUtils;
 public class FieldLoopToken extends BaseGroupFieldToken<FieldLoopType> {
 
     private static final Trace LOGGER = TraceManager.getTrace(FieldToken.class);
+    private PrismContainer container;
+    private PrismContainerDefinition definition;
 
     public FieldLoopToken(Token parent, FieldLoopType item) {
         super(parent, item);
     }
 
     @Override
+    public String toString() {
+        Element element = getField().getRef();
+        ReferenceType ref = element != null ? new ReferenceType(element) : null;
+
+        return "FieldLoopToken{name=" + getField().getName() + ", ref=" + ref + '}';
+    }
+
+    public PrismContainer getContainer() {
+        return container;
+    }
+
+    public PrismContainerDefinition getDefinition() {
+        return definition;
+    }
+
+    @Override
     public void interpret(InterpreterContext interpreterContext, StructuredFormContext context) throws InterpreterException {
         super.interpret(interpreterContext, context);
-        LOGGER.debug("interpret");
+        LOGGER.debug("interpret {}", new Object[]{this});
 
-//        FieldLoopType loopType = getItem();
-//        if (StringUtils.isEmpty(loopType.getRef())) {
-//            throw new InterpreterException("Field loop type doesn't have ref attribute defined (or it's empty).");
-//        }
+        FieldLoopType loop = getField();
+        ReferenceType ref = validateReference(loop.getRef(), false);
+        String key = ref.getKey();
+
+        Map<String, Item> objects = context.getObjects();
+        Item item = objects.get(key);
+        if (item == null) {
+            //todo maybe it can be only warn and show only empty loop...
+            throw new InterpreterException("Item with key '" + key + "' was not found in context.");
+        }
+
+        if (!(item instanceof PrismContainer)) {
+            //todo maybe it can be only warn and show only empty loop...
+            throw new InterpreterException("Item with key '" + key + "' is not instance of "
+                    + PrismContainer.class.getSimpleName() + ".");
+        }
+
+        PrismContainer parent = (PrismContainer) item;
+        if (StringUtils.isNotEmpty(ref.getValue())) {
+            XPathHolder holder = new XPathHolder(ref.getElement());
+            PropertyPath path = holder.toPropertyPath();
+
+            this.container = parent.findContainer(path);
+
+            PrismContainerDefinition parentDef = parent.getDefinition();
+            this.definition = parentDef.findContainerDefinition(path);
+        } else {
+            this.container = parent;
+            this.definition = parent.getDefinition();
+        }
+
+        if (definition == null) {
+            throw new InterpreterException("Prism container definition was not found for referenced item '" +
+                    this + "'.");
+        }
 
         //todo check if ref attribute points to list value
         //todo implement

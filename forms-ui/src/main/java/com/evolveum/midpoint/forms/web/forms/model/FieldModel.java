@@ -29,6 +29,9 @@ import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.prism.PrismProperty;
 import com.evolveum.midpoint.prism.PrismPropertyDefinition;
 import com.evolveum.midpoint.prism.PrismPropertyValue;
+import com.evolveum.midpoint.prism.polystring.PolyString;
+import com.evolveum.midpoint.schema.constants.SchemaConstants;
+import com.evolveum.midpoint.xml.ns._public.common.common_2.ProtectedStringType;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
@@ -54,9 +57,9 @@ public class FieldModel extends BaseModel<BaseModel, FieldToken> implements Disp
         PrismProperty property = token.getProperty();
         if (property == null) {
             property = token.getDefinition().instantiate();
-            //todo set status to ADD
+            status = ValueStatus.ADDED;
         } else {
-            //todo set status to MODIFY
+            status = ValueStatus.EXISTING;
         }
 
         List<PrismPropertyValue> values = property.getValues();
@@ -70,7 +73,25 @@ public class FieldModel extends BaseModel<BaseModel, FieldToken> implements Disp
     }
 
     public void addValue() {
-        getValues().add(new ValueModel(this, new PrismPropertyValue(null), ValueStatus.ADDED));
+        PrismPropertyDefinition definition = getToken().getDefinition();
+
+        if (ProtectedStringType.COMPLEX_TYPE.equals(definition.getTypeName())) {
+            values.add(new ValueModel(this, new PrismPropertyValue(new ProtectedStringType()),
+                    new PrismPropertyValue(new ProtectedStringType()), ValueStatus.ADDED));
+        } else if (SchemaConstants.T_POLY_STRING_TYPE.equals(definition.getTypeName())) {
+            values.add(new ValueModel(this, new PrismPropertyValue(new PolyString(null)),
+                    new PrismPropertyValue(new PolyString(null)), ValueStatus.ADDED));
+        } else if (isThisPropertyActivationEnabled()) {
+            values.add(new ValueModel(this, new PrismPropertyValue(true),
+                    new PrismPropertyValue(null), ValueStatus.ADDED));
+        } else {
+            getValues().add(new ValueModel(this, new PrismPropertyValue(null), ValueStatus.ADDED));
+        }
+    }
+
+    private boolean isThisPropertyActivationEnabled() {
+        //todo how to get this information until tri-state checkbox is available?
+        return false;
     }
 
     public void removeValue(ValueModel model) {
@@ -86,6 +107,10 @@ public class FieldModel extends BaseModel<BaseModel, FieldToken> implements Disp
             values = new ArrayList<ValueModel>();
         }
         return values;
+    }
+
+    public ValueStatus getStatus() {
+        return status;
     }
 
     public List<ValueModel> getVisibleValues() {
