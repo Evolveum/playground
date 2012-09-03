@@ -23,7 +23,7 @@ package com.evolveum.midpoint.forms.web.forms;
 
 import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolver;
 import com.evolveum.midpoint.forms.web.forms.model.FormModel;
-import com.evolveum.midpoint.prism.Item;
+import com.evolveum.midpoint.forms.web.forms.model.ValueStatus;
 import com.evolveum.midpoint.prism.PrismObject;
 import com.evolveum.midpoint.prism.delta.ChangeType;
 import com.evolveum.midpoint.prism.delta.ObjectDelta;
@@ -43,12 +43,12 @@ public class StructuredFormContext implements Serializable {
 
     private String mainForm;
     private PrismObject<UserType> user;
-    private Map<String, Item> objects;
+    private Map<String, FormContextItem> objects;
     private FormResolver resolver;
 
     private FormModel formModel;
 
-    public StructuredFormContext(String mainForm, PrismObject<UserType> user, Map<String, Item> objects, FormResolver resolver) {
+    public StructuredFormContext(String mainForm, PrismObject<UserType> user, Map<String, FormContextItem> objects, FormResolver resolver) {
         Validate.notEmpty(mainForm, "Main form path must not be null.");
 //        Validate.notNull(user, "PrismObject user must not be null.");
         Validate.notNull(resolver, "Form resolver must not be null.");
@@ -56,7 +56,7 @@ public class StructuredFormContext implements Serializable {
         this.mainForm = mainForm;
         this.objects = objects;
         if (this.objects == null) {
-            this.objects = new HashMap<String, Item>();
+            this.objects = new HashMap<String, FormContextItem>();
         }
         this.resolver = resolver;
         this.user = user;
@@ -66,7 +66,7 @@ public class StructuredFormContext implements Serializable {
         return mainForm;
     }
 
-    public Map<String, Item> getObjects() {
+    public Map<String, FormContextItem> getObjects() {
         return objects;
     }
 
@@ -102,13 +102,33 @@ public class StructuredFormContext implements Serializable {
 
     public <T extends ObjectType> ObjectDelta<T> getObjectDelta(String objectKey) throws SchemaException {
         Validate.notEmpty(objectKey, "Object key must not be null.");
-        Item item = objects.get(objectKey);
-        if (item == null || !(item instanceof PrismObject)) {
-            throw new SchemaException("Object '" + objectKey + "' doesn't exist or it's not prism object.");
+        FormContextItem contextItem = objects.get(objectKey);
+        if (contextItem == null) {
+            throw new SchemaException("Object '" + objectKey + "' doesn't exist.");
         }
-        PrismObject object = (PrismObject) item;
-        ObjectDelta delta = new ObjectDelta(object.getCompileTimeClass(), ChangeType.MODIFY);   //todo change type
-        //todo implement
+
+        if (!(contextItem.getItem() instanceof PrismObject)) {
+            throw new SchemaException("Object '" + objectKey + "' is not prism object.");
+        }
+
+        ObjectDelta delta;
+        PrismObject object = (PrismObject) contextItem.getItem();
+        switch (contextItem.getStatus()) {
+            case ADDED:
+                delta = new ObjectDelta(object.getCompileTimeClass(), ChangeType.ADD);
+                //todo implement
+                break;
+            case DELETED:
+                delta = new ObjectDelta(object.getCompileTimeClass(), ChangeType.DELETE);
+                delta.setOid(object.getOid());
+                //todo implement
+                break;
+            case EXISTING:
+            default:
+                delta = new ObjectDelta(object.getCompileTimeClass(), ChangeType.MODIFY);
+                delta.setOid(object.getOid());
+                //todo implement
+        }
 
         return delta;
     }

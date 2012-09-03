@@ -21,6 +21,7 @@
 
 package com.evolveum.midpoint.forms.web.forms.model;
 
+import com.evolveum.midpoint.forms.web.forms.FormContextItem;
 import com.evolveum.midpoint.forms.web.forms.object.FieldLoopToken;
 import com.evolveum.midpoint.prism.Item;
 
@@ -33,7 +34,7 @@ public class FieldLoopItem extends BaseGroupModel<BaseGroupModel, FieldLoopToken
 
     private int index;
 
-    public FieldLoopItem(BaseGroupModel parentModel, FieldLoopToken token, Map<String, Item> objects) {
+    public FieldLoopItem(BaseGroupModel parentModel, FieldLoopToken token, Map<String, FormContextItem> objects) {
         super(parentModel, token, objects);
     }
 }

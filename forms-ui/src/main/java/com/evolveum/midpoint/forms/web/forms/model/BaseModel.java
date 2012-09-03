@@ -21,6 +21,7 @@
 
 package com.evolveum.midpoint.forms.web.forms.model;
 
+import com.evolveum.midpoint.forms.web.forms.FormContextItem;
 import com.evolveum.midpoint.forms.web.forms.object.*;
 import com.evolveum.midpoint.prism.Item;
 import org.apache.commons.lang.Validate;
@@ -35,9 +36,9 @@ public class BaseModel<M extends BaseModel, T extends Token> implements Serializ
 
     private M parentModel;
     private T token;
-    private Map<String, Item> objects;
+    private Map<String, FormContextItem> objects;
 
-    public BaseModel(M parentModel, T token, Map<String, Item> objects) {
+    public BaseModel(M parentModel, T token, Map<String, FormContextItem> objects) {
         Validate.notNull(token, "Token must not be null.");
         Validate.notNull(objects, "Objects map must not be null.");
 
@@ -54,7 +55,7 @@ public class BaseModel<M extends BaseModel, T extends Token> implements Serializ
         return token;
     }
 
-    public Map<String, Item> getObjects() {
+    public Map<String, FormContextItem> getObjects() {
         return objects;
     }
 }

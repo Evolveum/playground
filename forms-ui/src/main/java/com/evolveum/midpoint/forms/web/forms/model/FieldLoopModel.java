@@ -21,6 +21,7 @@
 
 package com.evolveum.midpoint.forms.web.forms.model;
 
+import com.evolveum.midpoint.forms.web.forms.FormContextItem;
 import com.evolveum.midpoint.forms.web.forms.object.FieldGroupToken;
 import com.evolveum.midpoint.forms.web.forms.object.FieldLoopToken;
 import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
@@ -39,7 +40,7 @@ import java.util.Map;
  */
 public class FieldLoopModel extends BaseModel<BaseGroupModel, FieldLoopToken> implements DisplayableModel<FieldDisplayType> {
 
-    public FieldLoopModel(BaseGroupModel parentModel, FieldLoopToken token, Map<String, Item> objects) {
+    public FieldLoopModel(BaseGroupModel parentModel, FieldLoopToken token, Map<String, FormContextItem> objects) {
         super(parentModel, token, objects);
 
         initialize();

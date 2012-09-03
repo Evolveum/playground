@@ -21,9 +21,9 @@
 
 package com.evolveum.midpoint.forms.web.forms.interpreter;
 
+import com.evolveum.midpoint.forms.web.forms.FormContextItem;
 import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.FormType;
-import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.prism.PrismObject;
 import com.evolveum.midpoint.xml.ns._public.common.common_2.UserType;
 
@@ -36,7 +36,7 @@ import java.util.Map;
 public class DefaultFormResolver implements FormResolver {
 
     @Override
-    public FormType loadForm(String identificator, PrismObject<UserType> user, Map<String, Item> objects) {
+    public FormType loadForm(String identificator, PrismObject<UserType> user, Map<String, FormContextItem> objects) {
         File file = new File(identificator);
         if (!file.exists() || !file.canRead()) {
             //todo exception handling

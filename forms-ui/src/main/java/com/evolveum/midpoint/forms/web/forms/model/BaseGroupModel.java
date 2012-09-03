@@ -21,6 +21,7 @@
 
 package com.evolveum.midpoint.forms.web.forms.model;
 
+import com.evolveum.midpoint.forms.web.forms.FormContextItem;
 import com.evolveum.midpoint.forms.web.forms.object.*;
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
 import com.evolveum.midpoint.prism.Item;
@@ -40,7 +41,7 @@ public class BaseGroupModel<M extends BaseGroupModel, T extends Token>
     private static final Trace LOGGER = TraceManager.getTrace(BaseGroupModel.class);
     private List<DisplayableModel> fields;
 
-    public BaseGroupModel(M parentModel, T token, Map<String, Item> objects) {
+    public BaseGroupModel(M parentModel, T token, Map<String, FormContextItem> objects) {
         super(parentModel, token, objects);
         initialize();
     }
@@ -73,7 +74,7 @@ public class BaseGroupModel<M extends BaseGroupModel, T extends Token>
     }
 
     private DisplayableModel createDisplayableFieldModel(BaseGroupModel parent, BaseFieldToken token,
-                                                         Map<String, Item> objects) {
+                                                         Map<String, FormContextItem> objects) {
         if (token instanceof FieldRefToken) {
             FieldRefToken ref = (FieldRefToken) token;
             token = ref.getReferencedToken();

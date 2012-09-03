@@ -21,6 +21,7 @@
 
 package com.evolveum.midpoint.forms.web.forms.model;
 
+import com.evolveum.midpoint.forms.web.forms.FormContextItem;
 import com.evolveum.midpoint.forms.web.forms.object.FieldGroupToken;
 import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
@@ -36,7 +37,7 @@ import java.util.Map;
 public class FieldGroupModel extends BaseGroupModel<BaseGroupModel, FieldGroupToken>
         implements DisplayableModel<FieldDisplayType> {
 
-    public FieldGroupModel(BaseGroupModel parentModel, FieldGroupToken token, Map<String, Item> objects) {
+    public FieldGroupModel(BaseGroupModel parentModel, FieldGroupToken token, Map<String, FormContextItem> objects) {
         super(parentModel, token, objects);
 
         initialize();

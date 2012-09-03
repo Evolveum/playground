@@ -26,21 +26,28 @@ import com.evolveum.midpoint.forms.component.button.AjaxSubmitLinkButton;
 import com.evolveum.midpoint.forms.component.tab.FormTabbedPanel;
 import com.evolveum.midpoint.forms.component.util.LoadableModel;
 import com.evolveum.midpoint.forms.web.MidPointApplication;
+import com.evolveum.midpoint.forms.web.forms.FormContextItem;
 import com.evolveum.midpoint.forms.web.forms.StructuredForm;
 import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolver;
+import com.evolveum.midpoint.forms.web.forms.model.ValueStatus;
 import com.evolveum.midpoint.forms.web.page.component.EditorTab;
 import com.evolveum.midpoint.forms.web.page.dto.*;
 import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.prism.PrismContext;
 import com.evolveum.midpoint.prism.PrismObject;
+import com.evolveum.midpoint.util.logging.LoggingUtils;
+import com.evolveum.midpoint.util.logging.Trace;
+import com.evolveum.midpoint.util.logging.TraceManager;
 import com.evolveum.midpoint.xml.ns._public.common.common_2.UserType;
 import org.apache.commons.io.IOUtils;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.tabs.AjaxTabbedPanel;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
+import org.apache.wicket.markup.html.basic.MultiLineLabel;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.tree.LinkTree;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -57,15 +64,19 @@ import java.util.Map;
  */
 public class PageHome extends PageBase {
 
+    private static final Trace LOGGER = TraceManager.getTrace(PageHome.class);
+
     private static final String DEFAULT_FORM_NAME = "Form";
     private static final String DEFAULT_VARIABLE_NAME = "Variable";
     private static final String FORM_ID_EDITOR = "editorForm";
     private static final String FORM_ID_STRUCTURED_FORM = "structuredFormForm";
     private static final String ID_TABBED_PANEL = "tabpanel";
     private static final String ID_TREE = "tree";
+    private static final String ID_DELTAS = "deltas";
 
     private LoadableModel<Project> projectModel;
     private LoadableModel<StructuredFormContext> structuredFormModel;
+    private IModel<String> deltasModel;
 
     public PageHome() {
         projectModel = new LoadableModel<Project>(false) {
@@ -93,6 +104,11 @@ public class PageHome extends PageBase {
 
         initEditorLayout();
         initFormLayout();
+
+        deltasModel = new Model<String>();
+        MultiLineLabel deltas = new MultiLineLabel(ID_DELTAS, deltasModel);
+        deltas.setOutputMarkupId(true);
+        add(deltas);
     }
 
     private void initTree() {
@@ -139,6 +155,20 @@ public class PageHome extends PageBase {
 
         StructuredForm uiForm = new StructuredForm("structuredForm", structuredFormModel);
         formForm.add(uiForm);
+
+        AjaxSubmitLinkButton save = new AjaxSubmitLinkButton("save", createStringResource("pageHome.button.save")) {
+
+            @Override
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+                savePerformed(target);
+            }
+
+            @Override
+            protected void onError(AjaxRequestTarget target, Form<?> form) {
+                target.add(getFeedbackPanel());
+            }
+        };
+        formForm.add(save);
     }
 
     private void initButtons() {
@@ -437,14 +467,14 @@ public class PageHome extends PageBase {
             MidPointApplication app = (MidPointApplication) getApplication();
             PrismContext prismContext = app.getPrismContext();
 
-            Map<String, Item> objects = new HashMap<String, Item>();
+            Map<String, FormContextItem> objects = new HashMap<String, FormContextItem>();
             List<VariableDto> variables = project.getVariables();
             for (VariableDto variable : variables) {
                 if (!variable.isValid()) {
                     continue;
                 }
                 Item item = prismContext.parseObject(variable.getXml());
-                objects.put(variable.getName(), item);
+                objects.put(variable.getName(), new FormContextItem(item, ValueStatus.EXISTING));
             }
 
             PrismObject<UserType> owner = null;
@@ -469,5 +499,27 @@ public class PageHome extends PageBase {
         }
 
         return builder.toString();
+    }
+
+    private void savePerformed(AjaxRequestTarget target) {
+        StructuredFormContext context = structuredFormModel.getObject();
+        StringBuilder builder = new StringBuilder();
+
+        Map<String, FormContextItem> objects = context.getObjects();
+        for (String key : objects.keySet()) {
+            builder.append("Key '").append(key).append("'\n");
+            try {
+                builder.append(context.getObjectDelta(key).debugDump(3)).append('\n');
+            } catch (Exception ex) {
+                builder.append("error: ").append(ex.getMessage()).append('\n');
+                LoggingUtils.logException(LOGGER, "Couldn't create delta", ex);
+
+                error(ex.getMessage());
+            }
+            builder.append('\n');
+        }
+
+        deltasModel.setObject(builder.toString());
+        target.add(getFeedbackPanel(), get("deltas"));
     }
 }

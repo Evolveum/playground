@@ -21,6 +21,7 @@
 
 package com.evolveum.midpoint.forms.web.forms.object;
 
+import com.evolveum.midpoint.forms.web.forms.FormContextItem;
 import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
@@ -75,13 +76,15 @@ public class FieldLoopToken extends BaseGroupFieldToken<FieldLoopType> {
         ReferenceType ref = validateReference(loop.getRef(), false);
         String key = ref.getKey();
 
-        Map<String, Item> objects = context.getObjects();
-        Item item = objects.get(key);
-        if (item == null) {
+        Map<String, FormContextItem> objects = context.getObjects();
+        FormContextItem contextItem = objects.get(key);
+        //if item is not found in context, we can't create form
+        if (contextItem == null) {
             //todo maybe it can be only warn and show only empty loop...
             throw new InterpreterException("Item with key '" + key + "' was not found in context.");
         }
 
+        Item item = contextItem.getItem();
         if (!(item instanceof PrismContainer)) {
             //todo maybe it can be only warn and show only empty loop...
             throw new InterpreterException("Item with key '" + key + "' is not instance of "

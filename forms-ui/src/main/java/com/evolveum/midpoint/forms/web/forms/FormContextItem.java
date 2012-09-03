@@ -19,22 +19,33 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms.interpreter;
+package com.evolveum.midpoint.forms.web.forms;
 
-import com.evolveum.midpoint.forms.web.forms.FormContextItem;
-import com.evolveum.midpoint.forms.xml.FormType;
+import com.evolveum.midpoint.forms.web.forms.model.ValueStatus;
 import com.evolveum.midpoint.prism.Item;
-import com.evolveum.midpoint.prism.PrismObject;
-import com.evolveum.midpoint.xml.ns._public.common.common_2.UserType;
-
-import java.io.Serializable;
-import java.util.Map;
+import org.apache.commons.lang.Validate;
 
 /**
  * @author lazyman
  */
-public interface FormResolver extends Serializable {
+public class FormContextItem {
 
-    FormType loadForm(String identifier, PrismObject<UserType> user, Map<String, FormContextItem> objects)
-            throws FormResolverException;
+    private Item item;
+    private ValueStatus status;
+
+    public FormContextItem(Item item, ValueStatus status) {
+        Validate.notNull(item, "Item must not be null.");
+        Validate.notNull(status, "Status must not be null.");
+
+        this.item = item;
+        this.status = status;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public ValueStatus getStatus() {
+        return status;
+    }
 }

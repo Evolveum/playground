@@ -21,6 +21,7 @@
 
 package com.evolveum.midpoint.forms.web.forms.object;
 
+import com.evolveum.midpoint.forms.web.forms.FormContextItem;
 import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
@@ -69,13 +70,14 @@ public class FieldToken extends BaseDisplayableFieldToken<FieldType> {
         ReferenceType ref = validateReference(field.getRef(), false);
         String key = ref.getKey();
 
-        Map<String, Item> objects = context.getObjects();
-        Item item = objects.get(key);
+        Map<String, FormContextItem> objects = context.getObjects();
+        FormContextItem contextItem = objects.get(key);
         //if item is not found in context, we can't create form
-        if (item == null) {
+        if (contextItem == null) {
             throw new InterpreterException("Item with key '" + key + "' was not found in context.");
         }
 
+        Item item = contextItem.getItem();
         //if path is null then item in map must be prism property
         if (StringUtils.isEmpty(ref.getValue()) && !(item instanceof PrismProperty)) {
             throw new InterpreterException("Reference doesn't have path defined, but item with key '"

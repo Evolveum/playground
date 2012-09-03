@@ -21,6 +21,7 @@
 
 package com.evolveum.midpoint.forms.web.page.dto;
 
+import com.evolveum.midpoint.forms.web.forms.FormContextItem;
 import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolver;
 import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolverException;
 import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
@@ -49,7 +50,7 @@ public class EditorFormResolver implements FormResolver {
     }
 
     @Override
-    public FormType loadForm(String identifier, PrismObject<UserType> user, Map<String, Item> objects)
+    public FormType loadForm(String identifier, PrismObject<UserType> user, Map<String, FormContextItem> objects)
             throws FormResolverException {
         Validate.notNull(identifier, "Form identifier must not be null.");
 

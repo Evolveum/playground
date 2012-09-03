@@ -21,6 +21,7 @@
 
 package com.evolveum.midpoint.forms.web.forms.model;
 
+import com.evolveum.midpoint.forms.web.forms.FormContextItem;
 import com.evolveum.midpoint.forms.web.forms.object.FieldToken;
 import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
@@ -46,7 +47,7 @@ public class FieldModel extends BaseModel<BaseModel, FieldToken> implements Disp
     private List<ValueModel> values;
     private ValueStatus status;
 
-    public FieldModel(BaseModel parentModel, FieldToken token, Map<String, Item> objects) {
+    public FieldModel(BaseModel parentModel, FieldToken token, Map<String, FormContextItem> objects) {
         super(parentModel, token, objects);
 
         initialize();

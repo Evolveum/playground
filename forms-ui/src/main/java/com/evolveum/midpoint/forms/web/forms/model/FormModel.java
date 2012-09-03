@@ -21,6 +21,7 @@
 
 package com.evolveum.midpoint.forms.web.forms.model;
 
+import com.evolveum.midpoint.forms.web.forms.FormContextItem;
 import com.evolveum.midpoint.forms.web.forms.object.FormToken;
 import com.evolveum.midpoint.forms.xml.FormDisplayType;
 import com.evolveum.midpoint.prism.Item;
@@ -35,7 +36,7 @@ import java.util.Map;
  */
 public class FormModel extends BaseGroupModel<FormModel, FormToken> {
 
-    public FormModel(FormToken token, Map<String, Item> objects) {
+    public FormModel(FormToken token, Map<String, FormContextItem> objects) {
         super(null, token, objects);
     }
 

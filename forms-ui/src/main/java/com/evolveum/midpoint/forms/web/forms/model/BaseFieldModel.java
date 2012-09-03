@@ -21,6 +21,7 @@
 
 package com.evolveum.midpoint.forms.web.forms.model;
 
+import com.evolveum.midpoint.forms.web.forms.FormContextItem;
 import com.evolveum.midpoint.forms.web.forms.object.BaseDisplayableFieldToken;
 import com.evolveum.midpoint.prism.Item;
 
@@ -31,7 +32,7 @@ import java.util.Map;
  */
 public class BaseFieldModel extends BaseModel<BaseModel, BaseDisplayableFieldToken> {
 
-    public BaseFieldModel(BaseModel parentModel, BaseDisplayableFieldToken token, Map<String, Item> objects) {
+    public BaseFieldModel(BaseModel parentModel, BaseDisplayableFieldToken token, Map<String, FormContextItem> objects) {
         super(parentModel, token, objects);
     }
 }

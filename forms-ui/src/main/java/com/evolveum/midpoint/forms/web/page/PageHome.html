@@ -50,7 +50,9 @@
             <a href="#form">Structured form</a>
         </div>
 
-        <div wicket:id="tabpanel" class="tabpanel" style="border: 1px solid #000;"/>
+        <div style="margin: 10px;">
+            <div wicket:id="tabpanel" class="tabpanel" style="border: 1px solid #000;"/>
+        </div>
     </form>
 
     <hr/>
@@ -59,8 +61,13 @@
 
     <form wicket:id="structuredFormForm" style="padding: 10px;">
         <div wicket:id="structuredForm"/>
+
+        <a wicket:id="save"/>
     </form>
 
+    <h2><a name="deltas">Deltas</a></h2>
+
+    <div wicket:id="deltas"/>
 
 </wicket:extend>
 </body>
