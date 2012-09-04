@@ -40,12 +40,6 @@ public class FieldGroupModel extends BaseGroupModel<BaseGroupModel, FieldGroupTo
 
     public FieldGroupModel(BaseGroupModel parentModel, FieldGroupToken token, Map<String, FormContextItem> objects) {
         super(parentModel, token, objects);
-
-        initialize();
-    }
-
-    private void initialize() {
-        //todo implement
     }
 
     @Override
@@ -55,7 +49,7 @@ public class FieldGroupModel extends BaseGroupModel<BaseGroupModel, FieldGroupTo
     }
 
     @Override
-    public FieldDisplayType getDefaultDisplay() {
+    public DisplayType getDefaultDisplay() {
         DisplayType real = getDisplay();
 
         FieldDisplayType defaultDisplay = new FieldDisplayType();

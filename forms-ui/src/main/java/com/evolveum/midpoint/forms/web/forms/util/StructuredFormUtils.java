@@ -113,7 +113,7 @@ public class StructuredFormUtils {
             return;
         }
 
-        cloneDisplay(oldDisplay, newDisplay);
+        cloneBaseDisplay(oldDisplay, newDisplay);
         newDisplay.setNewLine(oldDisplay.isNewLine());
     }
 

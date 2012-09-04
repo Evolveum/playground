@@ -23,6 +23,7 @@ package com.evolveum.midpoint.forms.web.forms.model;
 
 import com.evolveum.midpoint.forms.web.forms.FormContextItem;
 import com.evolveum.midpoint.forms.web.forms.object.*;
+import com.evolveum.midpoint.forms.xml.DisplayType;
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
 import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.util.logging.Trace;
@@ -98,8 +99,8 @@ public class BaseGroupModel<M extends BaseGroupModel, T extends Token>
         List<LineModel> lines = new ArrayList<LineModel>();
 
         LineModel line = null;
-        for (DisplayableModel<FieldDisplayType> displayable : getFields()) {
-            FieldDisplayType display = displayable.getDisplay();
+        for (DisplayableModel<DisplayType> displayable : getFields()) {
+            DisplayType display = displayable.getDisplay();
             if (display == null || display.isNewLine()) {
                 line = new LineModel(this);
                 lines.add(line);

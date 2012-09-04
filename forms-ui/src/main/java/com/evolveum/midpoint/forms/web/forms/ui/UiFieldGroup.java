@@ -23,6 +23,7 @@ package com.evolveum.midpoint.forms.web.forms.ui;
 
 import com.evolveum.midpoint.forms.web.forms.model.FieldGroupModel;
 import com.evolveum.midpoint.forms.web.forms.model.LineModel;
+import com.evolveum.midpoint.forms.xml.DisplayType;
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
 import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.AttributeModifier;
@@ -49,7 +50,7 @@ public class UiFieldGroup extends UiComponent<FieldGroupModel> {
         add(main);
 
         FieldGroupModel groupModel = model.getObject();
-        FieldDisplayType display = groupModel.getDefaultDisplay();
+        DisplayType display = groupModel.getDefaultDisplay();
         if (StringUtils.isNotEmpty(display.getCssClass())) {
             main.add(new AttributeModifier("class", display.getCssClass()));
         }

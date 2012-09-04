@@ -25,10 +25,12 @@ import com.evolveum.midpoint.forms.web.forms.model.ValueStatus;
 import com.evolveum.midpoint.prism.Item;
 import org.apache.commons.lang.Validate;
 
+import java.io.Serializable;
+
 /**
  * @author lazyman
  */
-public class FormContextItem {
+public class FormContextItem implements Serializable {
 
     private Item item;
     private ValueStatus status;
