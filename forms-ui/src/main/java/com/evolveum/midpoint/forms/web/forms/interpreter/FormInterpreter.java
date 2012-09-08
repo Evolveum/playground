@@ -41,7 +41,7 @@ public class FormInterpreter {
         formToken.interpret(iContext, context);
         LOGGER.debug("interpret:end");
 
-        FormModel model = new FormModel(formToken, context.getObjects());
+        FormModel model = new FormModel(formToken);
         context.setFormModel(model);
 
         return model;

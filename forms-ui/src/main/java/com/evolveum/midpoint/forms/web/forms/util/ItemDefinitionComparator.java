@@ -27,6 +27,11 @@ import org.apache.commons.lang.StringUtils;
 import java.util.Comparator;
 
 /**
+ * This class provides simple comparation for prism items using item definitions {@link ItemDefinition}.
+ * At first it tries to sort through {@link com.evolveum.midpoint.prism.ItemDefinition#getDisplayOrder()},
+ * otherwise algorithm uses {@link com.evolveum.midpoint.prism.ItemDefinition#getDisplayName()}. Display
+ * name is compared without localization (e.g. in raw format - not translated).
+ *
  * @author lazyman
  */
 public class ItemDefinitionComparator implements Comparator<ItemDefinition> {

@@ -51,6 +51,7 @@ public class FieldRefToken extends BaseFieldToken<FieldReferenceType> {
         }
 
         if (StringUtils.isNotEmpty(reference.getInclude())) {
+            LOGGER.trace("Looking for include with alias {}.", new Object[]{reference.getInclude()});
             IncludeToken include = getFormToken().getInclude(reference.getInclude());
             if (include == null) {
                 throw new InterpreterException("Include with alias '" + reference.getInclude()
@@ -58,12 +59,14 @@ public class FieldRefToken extends BaseFieldToken<FieldReferenceType> {
             }
             FormToken includedForm = include.getIncludedFormToken();
             if (includedForm == null) {
+                LOGGER.trace("Interpreting included form.");
                 include.interpret(interpreterContext, context);
                 includedForm = include.getIncludedFormToken();
             }
-
+            LOGGER.trace("Looking for field with name {}.", new Object[]{reference.getAlias()});
             referencedToken = includedForm.getFormItem(reference.getAlias());
         } else {
+            LOGGER.trace("Looking for referenced field in current form.");
             referencedToken = getFormToken().getFormItem(reference.getAlias());
         }
 
@@ -72,6 +75,7 @@ public class FieldRefToken extends BaseFieldToken<FieldReferenceType> {
                     + reference.getAlias() + "' was not found in included form.");
         }
 
+        LOGGER.debug("Interpreting referenced token '{}'.", new Object[]{referencedToken});
         referencedToken.interpret(interpreterContext, context);
     }
 

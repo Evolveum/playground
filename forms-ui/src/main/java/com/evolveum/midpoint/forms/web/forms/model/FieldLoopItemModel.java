@@ -21,29 +21,26 @@
 
 package com.evolveum.midpoint.forms.web.forms.model;
 
-import com.evolveum.midpoint.prism.Item;
-import org.apache.commons.lang.Validate;
-import org.apache.wicket.model.AbstractReadOnlyModel;
+import com.evolveum.midpoint.forms.web.forms.object.FieldLoopItemToken;
+import com.evolveum.midpoint.forms.xml.DisplayType;
 
 /**
  * @author lazyman
  */
-public class PathModel<V, T extends Item<?>> extends AbstractReadOnlyModel<T> {
+public class FieldLoopItemModel extends BaseGroupModel<FieldLoopModel, FieldLoopItemToken>
+        implements DisplayableModel<DisplayType> {
 
-    private String path;
-    private Item item;
-
-    public PathModel(Item item, String path) {
-        Validate.notNull(item, "Item must not be null.");
-        Validate.notEmpty(path, "Path must not be empty.");
-
-        this.item = item;
-        this.path = path;
+    public FieldLoopItemModel(FieldLoopModel parentModel, FieldLoopItemToken token) {
+        super(parentModel, token);
     }
 
     @Override
-    public T getObject() {
-        //todo implement
-        return null;
+    public DisplayType getDefaultDisplay() {
+        return getParentModel().getDefaultDisplay();
+    }
+
+    @Override
+    public DisplayType getDisplay() {
+        return getParentModel().getDisplay();
     }
 }

@@ -26,16 +26,14 @@ import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.xml.FieldLoopType;
-import com.evolveum.midpoint.prism.Item;
-import com.evolveum.midpoint.prism.PrismContainer;
-import com.evolveum.midpoint.prism.PrismContainerDefinition;
-import com.evolveum.midpoint.prism.PropertyPath;
+import com.evolveum.midpoint.prism.*;
 import com.evolveum.midpoint.schema.holder.XPathHolder;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Element;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -86,8 +84,7 @@ public class FieldLoopToken extends BaseGroupFieldToken<FieldLoopType> {
         Item item = contextItem.getItem();
         if (!(item instanceof PrismContainer)) {
             //todo maybe it can be only warn and show only empty loop...
-            throw new InterpreterException("Item with key '" + key + "' is not instance of "
-                    + PrismContainer.class.getSimpleName() + ".");
+            throw new InterpreterException("Item with key '" + key + "' is not instance of PrismContainer.");
         }
 
         PrismContainer parent = (PrismContainer) item;
@@ -109,7 +106,16 @@ public class FieldLoopToken extends BaseGroupFieldToken<FieldLoopType> {
                     this + "'.");
         }
 
-        //todo check if ref attribute points to list value
-        //todo implement
+        if (container == null) {
+            //nothing to interpret, nothing to show.
+            return;
+        }
+
+        List<PrismContainerValue> values = container.getValues();
+        for (int i = 0; i< values.size(); i++) {
+            FieldLoopItemToken loopItemToken = new FieldLoopItemToken(this, i);
+            loopItemToken.interpret(interpreterContext, context);
+            getFields().add(loopItemToken);
+        }
     }
 }

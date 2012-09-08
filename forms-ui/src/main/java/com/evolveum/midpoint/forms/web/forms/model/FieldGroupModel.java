@@ -21,16 +21,12 @@
 
 package com.evolveum.midpoint.forms.web.forms.model;
 
-import com.evolveum.midpoint.forms.web.forms.FormContextItem;
 import com.evolveum.midpoint.forms.web.forms.object.FieldGroupToken;
 import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.DisplayType;
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
-import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.prism.PrismContainerDefinition;
 import org.apache.commons.lang.StringUtils;
-
-import java.util.Map;
 
 /**
  * @author lazyman
@@ -38,8 +34,8 @@ import java.util.Map;
 public class FieldGroupModel extends BaseGroupModel<BaseGroupModel, FieldGroupToken>
         implements DisplayableModel<DisplayType> {
 
-    public FieldGroupModel(BaseGroupModel parentModel, FieldGroupToken token, Map<String, FormContextItem> objects) {
-        super(parentModel, token, objects);
+    public FieldGroupModel(BaseGroupModel parentModel, FieldGroupToken token) {
+        super(parentModel, token);
     }
 
     @Override

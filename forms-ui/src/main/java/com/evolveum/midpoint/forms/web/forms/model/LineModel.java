@@ -37,6 +37,8 @@ import java.util.List;
 public class LineModel<M extends BaseGroupModel, T extends BaseDisplayableFieldToken>
         implements Serializable {
 
+    public static final String F_FIELDS = "fields";
+
     private BaseGroupModel<M, T> parent;
     private List<DisplayableModel> fields = new ArrayList<DisplayableModel>();
 

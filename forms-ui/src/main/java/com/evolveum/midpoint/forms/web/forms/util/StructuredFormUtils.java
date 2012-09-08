@@ -70,23 +70,6 @@ public class StructuredFormUtils {
         return unmarshaller;
     }
 
-    public static BaseFieldToken createItemToken(Token parent, BaseFieldType item) {
-        BaseFieldToken token;
-        if (item instanceof FieldType) {
-            token = new FieldToken(parent, (FieldType) item);
-        } else if (item instanceof FieldGroupType) {
-            token = new FieldGroupToken(parent, (FieldGroupType) item);
-        } else if (item instanceof FieldReferenceType) {
-            token = new FieldRefToken(parent, (FieldReferenceType) item);
-//        } else if (item instanceof FieldLoopType) {
-//            token = new FieldLoopToken(parent, (FieldLoopType) item);
-        } else {
-            throw new SystemException("Unsupported token type '" + item.getClass().getName() + "'.");
-        }
-
-        return token;
-    }
-
     public static void cloneBaseDisplay(BaseDisplayType oldDisplay, BaseDisplayType newDisplay) {
         if (oldDisplay == null) {
             return;
@@ -125,18 +108,6 @@ public class StructuredFormUtils {
         cloneDisplay(oldDisplay, newDisplay);
         newDisplay.setMinOccurs(oldDisplay.getMinOccurs());
         newDisplay.setMaxOccurs(oldDisplay.getMaxOccurs());
-    }
-
-    public static String getDefaultWidget(PrismPropertyDefinition definition) {
-        if (DOMUtil.XSD_DATETIME.equals(definition.getTypeName())) {
-            return UiRegistry.WIDGET_DATE;
-        } else if (ProtectedStringType.COMPLEX_TYPE.equals(definition.getTypeName())) {
-            return UiRegistry.WIDGET_PASSWORD;
-        } else if (DOMUtil.XSD_BOOLEAN.equals(definition.getTypeName())) {
-            return UiRegistry.WIDGET_CHECKBOX;
-        }
-
-        return UiRegistry.WIDGET_DEFAULT;
     }
 
     public static String createMessage(Throwable ex, StringBuilder builder) {

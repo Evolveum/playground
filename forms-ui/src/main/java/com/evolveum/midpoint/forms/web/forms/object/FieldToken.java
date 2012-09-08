@@ -25,7 +25,6 @@ import com.evolveum.midpoint.forms.web.forms.FormContextItem;
 import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
-import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.FieldType;
 import com.evolveum.midpoint.prism.*;
 import com.evolveum.midpoint.schema.holder.XPathHolder;
@@ -57,7 +56,7 @@ public class FieldToken extends BaseDisplayableFieldToken<FieldType> {
         this.property = property;
         this.definition = definition;
 
-        getField().setWidget(StructuredFormUtils.getDefaultWidget(definition));
+        getField().setWidget(TokenUtils.getDefaultWidget(definition));
     }
 
     @Override
@@ -110,6 +109,10 @@ public class FieldToken extends BaseDisplayableFieldToken<FieldType> {
 
         if (definition == null) {
             throw new InterpreterException("Definition for field '" + ref + "' was not found.");
+        }
+
+        if (StringUtils.isEmpty(field.getWidget())) {
+            field.setWidget(TokenUtils.getDefaultWidget(definition));
         }
     }
 

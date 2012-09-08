@@ -22,11 +22,10 @@
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
 <wicket:panel>
-    <div class="UiFieldLoop">
+    <div class="UiFieldLoop" wicket:id="main">
+        <span class="title" wicket:id="loopTitle" />
         <div class="UiFieldLoopItem" wicket:id="loopItem">
-            <div class="UiLine" wicket:id="line">
-                <div wicket:id="lineBody"/>
-            </div>
+            <div wicket:id="line"/>
         </div>
     </div>
 </wicket:panel>

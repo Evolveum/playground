@@ -115,17 +115,17 @@ public class StructuredFormContext implements Serializable {
         PrismObject object = (PrismObject) contextItem.getItem();
         switch (contextItem.getStatus()) {
             case ADDED:
-                delta = new ObjectDelta(object.getCompileTimeClass(), ChangeType.ADD);
+                delta = new ObjectDelta(object.getCompileTimeClass(), ChangeType.ADD, object.getPrismContext());
                 //todo implement
                 break;
             case DELETED:
-                delta = new ObjectDelta(object.getCompileTimeClass(), ChangeType.DELETE);
+                delta = new ObjectDelta(object.getCompileTimeClass(), ChangeType.DELETE, object.getPrismContext());
                 delta.setOid(object.getOid());
                 //todo implement
                 break;
             case EXISTING:
             default:
-                delta = new ObjectDelta(object.getCompileTimeClass(), ChangeType.MODIFY);
+                delta = new ObjectDelta(object.getCompileTimeClass(), ChangeType.MODIFY, object.getPrismContext());
                 delta.setOid(object.getOid());
                 //todo implement
         }

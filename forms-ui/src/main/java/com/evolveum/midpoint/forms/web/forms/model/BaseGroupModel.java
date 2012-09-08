@@ -21,17 +21,13 @@
 
 package com.evolveum.midpoint.forms.web.forms.model;
 
-import com.evolveum.midpoint.forms.web.forms.FormContextItem;
 import com.evolveum.midpoint.forms.web.forms.object.*;
 import com.evolveum.midpoint.forms.xml.DisplayType;
-import com.evolveum.midpoint.forms.xml.FieldDisplayType;
-import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author lazyman
@@ -42,8 +38,8 @@ public class BaseGroupModel<M extends BaseGroupModel, T extends Token>
     private static final Trace LOGGER = TraceManager.getTrace(BaseGroupModel.class);
     private List<DisplayableModel> fields;
 
-    public BaseGroupModel(M parentModel, T token, Map<String, FormContextItem> objects) {
-        super(parentModel, token, objects);
+    public BaseGroupModel(M parentModel, T token) {
+        super(parentModel, token);
         initialize();
     }
 
@@ -59,7 +55,7 @@ public class BaseGroupModel<M extends BaseGroupModel, T extends Token>
                     + "' or '" + BaseGroupFieldToken.class.getSimpleName() + "', can't find children (fields).");
         }
         for (BaseFieldToken fieldToken : fields) {
-            DisplayableModel model = createDisplayableFieldModel(this, fieldToken, getObjects());
+            DisplayableModel model = createDisplayableFieldModel(this, fieldToken);
             if (model == null) {
                 continue;
             }
@@ -74,19 +70,20 @@ public class BaseGroupModel<M extends BaseGroupModel, T extends Token>
         return fields;
     }
 
-    private DisplayableModel createDisplayableFieldModel(BaseGroupModel parent, BaseFieldToken token,
-                                                         Map<String, FormContextItem> objects) {
+    private DisplayableModel createDisplayableFieldModel(BaseGroupModel parent, BaseFieldToken token) {
         if (token instanceof FieldRefToken) {
             FieldRefToken ref = (FieldRefToken) token;
             token = ref.getReferencedToken();
         }
 
         if (token instanceof FieldToken) {
-            return new FieldModel(parent, (FieldToken) token, objects);
+            return new FieldModel(parent, (FieldToken) token);
         } else if (token instanceof FieldGroupToken) {
-            return new FieldGroupModel(parent, (FieldGroupToken) token, objects);
+            return new FieldGroupModel(parent, (FieldGroupToken) token);
         } else if (token instanceof FieldLoopToken) {
-            return new FieldLoopModel(parent, (FieldLoopToken) token, objects);
+            return new FieldLoopModel(parent, (FieldLoopToken) token);
+        } else if (token instanceof FieldLoopItemToken) {
+            return new FieldLoopItemModel((FieldLoopModel) parent, (FieldLoopItemToken) token);
         } else {
             LOGGER.warn("Unknown token instance '{}', model wont be created.",
                     new Object[]{token});

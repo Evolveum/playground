@@ -21,13 +21,10 @@
 
 package com.evolveum.midpoint.forms.web.forms.model;
 
-import com.evolveum.midpoint.forms.web.forms.FormContextItem;
-import com.evolveum.midpoint.forms.web.forms.object.*;
-import com.evolveum.midpoint.prism.Item;
+import com.evolveum.midpoint.forms.web.forms.object.Token;
 import org.apache.commons.lang.Validate;
 
 import java.io.Serializable;
-import java.util.Map;
 
 /**
  * @author lazyman
@@ -36,15 +33,12 @@ public class BaseModel<M extends BaseModel, T extends Token> implements Serializ
 
     private M parentModel;
     private T token;
-    private Map<String, FormContextItem> objects;
 
-    public BaseModel(M parentModel, T token, Map<String, FormContextItem> objects) {
+    public BaseModel(M parentModel, T token) {
         Validate.notNull(token, "Token must not be null.");
-        Validate.notNull(objects, "Objects map must not be null.");
 
         this.parentModel = parentModel;
         this.token = token;
-        this.objects = objects;
     }
 
     public M getParentModel() {
@@ -53,9 +47,5 @@ public class BaseModel<M extends BaseModel, T extends Token> implements Serializ
 
     public T getToken() {
         return token;
-    }
-
-    public Map<String, FormContextItem> getObjects() {
-        return objects;
     }
 }

@@ -62,7 +62,7 @@ public class FormToken implements Token {
         for (JAXBElement<? extends BaseFieldType> element : form.getItem()) {
             BaseFieldType item = element.getValue();
 
-            BaseFieldToken token = StructuredFormUtils.createItemToken(this, item);
+            BaseFieldToken token = TokenUtils.createItemToken(this, item);
             if (token == null) {
                 continue;
             }

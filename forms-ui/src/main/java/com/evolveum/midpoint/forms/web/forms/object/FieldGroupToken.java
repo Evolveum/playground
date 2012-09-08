@@ -54,7 +54,8 @@ public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
 
         for (JAXBElement<? extends BaseFieldType> element : field.getItem()) {
             BaseFieldType item = element.getValue();
-            getFields().add(StructuredFormUtils.createItemToken(this, item));
+            BaseFieldToken token = TokenUtils.createItemToken(this, item);
+            getFields().add(token);
         }
     }
 
@@ -109,8 +110,7 @@ public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
         Item item = contextItem.getItem();
         if (!(item instanceof PrismContainer)) {
             //todo maybe it can be only warn and show only empty group...
-            throw new InterpreterException("Item with key '" + key + "' is not instance of "
-                    + PrismContainer.class.getSimpleName() + ".");
+            throw new InterpreterException("Item with key '" + key + "' is not instance of PrismContainer.");
         }
 
         PrismContainer parent = (PrismContainer) item;

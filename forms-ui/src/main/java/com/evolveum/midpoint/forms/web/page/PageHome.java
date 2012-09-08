@@ -221,6 +221,16 @@ public class PageHome extends PageBase {
             }
         };
         add(loadSample);
+
+        loadSample = new AjaxLinkButton("loadSample5",
+                createStringResource("pageHome.button.loadSample5")) {
+
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                loadSample5Performed(target);
+            }
+        };
+        add(loadSample);
     }
 
     private void initEditorLayout() {
@@ -404,6 +414,21 @@ public class PageHome extends PageBase {
         project.getForms().add(form);
 
         VariableDto variable = new VariableDto("user", loadFileContent("4/user.xml"));
+        project.getVariables().add(variable);
+
+        reloadTabs(target);
+        reloadFormPerformed(target);
+    }
+
+    public void loadSample5Performed(AjaxRequestTarget target) {
+        projectModel.reset();
+
+        Project project = projectModel.getObject();
+        project.setMainForm("main.xml");
+        FormDto form = new FormDto("main.xml", loadFileContent("5/main.xml"));
+        project.getForms().add(form);
+
+        VariableDto variable = new VariableDto("user", loadFileContent("5/user.xml"));
         project.getVariables().add(variable);
 
         reloadTabs(target);
