@@ -37,14 +37,14 @@
 }
 
 .UiLine.even {
-
+    background-color: #fff;
 }
 
 .UiFieldGroup {
 }
 
 .UiFieldGroup span.title {
-    font-size: 120%;
+    font-size: 110%;
     font-weight: bold;
 }
 
@@ -55,6 +55,15 @@
 
 .UiFieldLoop {
     /*border: 1px solid #0ff;*/
+}
+
+.UiFieldLoop span.title {
+    font-size: 110%;
+    font-weight: bold;
+}
+
+.UiFieldLoopItem {
+    border: 1px solid #000;
 }
 
 .UiValue {

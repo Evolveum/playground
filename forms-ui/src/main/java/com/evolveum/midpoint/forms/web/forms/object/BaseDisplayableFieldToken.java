@@ -54,12 +54,6 @@ public abstract class BaseDisplayableFieldToken<T extends BaseDisplayableFieldTy
             return null;
         }
 
-        ReferenceType ref = new ReferenceType(refElement);
-        String key = ref.getKey();
-        if (StringUtils.isEmpty(key)) {
-            throw new InterpreterException("Reference doesn't have key attribute defined (or it's empty).");
-        }
-
-        return ref;
+        return new ReferenceType(refElement);
     }
 }

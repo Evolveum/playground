@@ -39,11 +39,13 @@ public class FieldLoopItemToken extends BaseGroupFieldToken<FieldLoopType> {
 
     public FieldLoopItemToken(FieldLoopToken parent, int index) {
         super(parent, parent.getField());
+
+        this.index = index;
     }
 
     @Override
     public void interpret(InterpreterContext interpreterContext, StructuredFormContext context) throws InterpreterException {
-        FieldLoopToken parent = (FieldLoopToken) getParent();
+        FieldLoopToken parent = getParent();
         PrismContainer container = parent.getContainer();
         if (container == null) {
             throw new InterpreterException("Prism container referenced by field loop '" + parent + "' is null.");
@@ -57,7 +59,19 @@ public class FieldLoopItemToken extends BaseGroupFieldToken<FieldLoopType> {
         for (JAXBElement<? extends BaseFieldType> element : fieldLoop.getItem()) {
             BaseFieldType item = element.getValue();
 
-
+            BaseFieldToken token = TokenUtils.createItemToken(this, item);
+            getFields().add(token);
+            token.interpret(interpreterContext, context);
         }
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    @Override
+    public FieldLoopToken getParent() {
+        //todo fix this through proper generics handling
+        return (FieldLoopToken) super.getParent();
     }
 }

@@ -77,13 +77,11 @@ public class FieldLoopToken extends BaseGroupFieldToken<FieldLoopType> {
         FormContextItem contextItem = objects.get(key);
         //if item is not found in context, we can't create form
         if (contextItem == null) {
-            //todo maybe it can be only warn and show only empty loop...
             throw new InterpreterException("Item with key '" + key + "' was not found in context.");
         }
 
         Item item = contextItem.getItem();
         if (!(item instanceof PrismContainer)) {
-            //todo maybe it can be only warn and show only empty loop...
             throw new InterpreterException("Item with key '" + key + "' is not instance of PrismContainer.");
         }
 
@@ -92,6 +90,7 @@ public class FieldLoopToken extends BaseGroupFieldToken<FieldLoopType> {
             XPathHolder holder = new XPathHolder(ref.getElement());
             PropertyPath path = holder.toPropertyPath();
 
+            //todo field loop can point to PrismReference...
             this.container = parent.findContainer(path);
 
             PrismContainerDefinition parentDef = parent.getDefinition();
@@ -112,10 +111,15 @@ public class FieldLoopToken extends BaseGroupFieldToken<FieldLoopType> {
         }
 
         List<PrismContainerValue> values = container.getValues();
-        for (int i = 0; i< values.size(); i++) {
+        for (int i = 0; i < values.size(); i++) {
             FieldLoopItemToken loopItemToken = new FieldLoopItemToken(this, i);
             loopItemToken.interpret(interpreterContext, context);
             getFields().add(loopItemToken);
         }
+    }
+
+    public ReferenceType getRef() {
+        FieldLoopType loop = getField();
+        return new ReferenceType(loop.getRef());
     }
 }

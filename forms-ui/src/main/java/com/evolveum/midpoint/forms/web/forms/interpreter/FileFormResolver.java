@@ -33,21 +33,21 @@ import java.util.Map;
 /**
  * @author lazyman
  */
-public class DefaultFormResolver implements FormResolver {
+public class FileFormResolver implements FormResolver {
 
     @Override
-    public FormType loadForm(String identificator, PrismObject<UserType> user, Map<String, FormContextItem> objects) {
-        File file = new File(identificator);
+    public FormType loadForm(String identifier, PrismObject<UserType> user, Map<String, FormContextItem> objects)
+            throws FormResolverException {
+
+        File file = new File(identifier);
         if (!file.exists() || !file.canRead()) {
-            //todo exception handling
-            throw new RuntimeException("File doesn't exist, or can't be read.");
+            throw new FormResolverException("File '" + file.getAbsolutePath() + "' doesn't exist, or can't be read.");
         }
 
         try {
             return StructuredFormUtils.loadForm(file);
         } catch (Exception ex) {
-            //todo exception handling
-            throw new RuntimeException("Couldn't parse file.", ex);
+            throw new FormResolverException("Couldn't parse file '" + file.getAbsolutePath() + "'.", ex);
         }
     }
 }

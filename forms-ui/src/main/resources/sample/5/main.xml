@@ -44,6 +44,9 @@
         <ref key="user">c:assignment</ref>
 
         <field>
+            <display>
+                <property name="size">40</property>
+            </display>
             <ref>c:description</ref>
         </field>
 

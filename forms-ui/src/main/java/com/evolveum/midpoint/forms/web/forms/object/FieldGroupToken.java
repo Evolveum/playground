@@ -26,7 +26,6 @@ import com.evolveum.midpoint.forms.web.forms.StructuredFormContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.web.forms.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.web.forms.util.ItemDefinitionComparator;
-import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.BaseFieldType;
 import com.evolveum.midpoint.forms.xml.FieldGroupType;
 import com.evolveum.midpoint.prism.*;
@@ -99,32 +98,14 @@ public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
         ReferenceType ref = validateReference(group.getRef(), false);
         String key = ref.getKey();
 
-        Map<String, FormContextItem> objects = context.getObjects();
-        FormContextItem contextItem = objects.get(key);
-        //if item is not found in context, we can't create form
-        if (contextItem == null) {
-            //todo maybe it can be only warn and show only empty group...
-            throw new InterpreterException("Item with key '" + key + "' was not found in context.");
-        }
-
-        Item item = contextItem.getItem();
-        if (!(item instanceof PrismContainer)) {
-            //todo maybe it can be only warn and show only empty group...
-            throw new InterpreterException("Item with key '" + key + "' is not instance of PrismContainer.");
-        }
-
-        PrismContainer parent = (PrismContainer) item;
-        if (StringUtils.isNotEmpty(ref.getValue())) {
-            XPathHolder holder = new XPathHolder(ref.getElement());
-            PropertyPath path = holder.toPropertyPath();
-
-            this.container = parent.findContainer(path);
-
-            PrismContainerDefinition parentDef = parent.getDefinition();
-            this.definition = parentDef.findContainerDefinition(path);
+        if (StringUtils.isEmpty(key) && (getParent() instanceof FieldLoopItemToken)) {
+            // it's in field loop, therefore custom "ref" handling - ref doesn't have key,
+            // it's used key and base path from field loop
+            interpretGroupInFieldLoop(context, ref);
+        } else if (StringUtils.isEmpty(key)) {
+            throw new InterpreterException("Reference '" + ref + "' doesn't have key defined or it's empty.");
         } else {
-            this.container = parent;
-            this.definition = parent.getDefinition();
+            interpretGroup(context, ref);
         }
 
         if (definition == null) {
@@ -134,6 +115,65 @@ public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
 
         Set<ItemDefinition> exclusions = createExclusions(definition);
         createChildren(container, definition, exclusions);
+    }
+
+    private void interpretGroupInFieldLoop(StructuredFormContext context, ReferenceType ref)
+            throws InterpreterException {
+
+        FieldLoopItemToken loopItemToken = (FieldLoopItemToken) getParent();
+        FieldLoopToken loopToken = loopItemToken.getParent();
+        PrismContainer loopContainer = loopToken.getContainer();
+
+        PrismContainerValue value = (PrismContainerValue) loopContainer.getValue(loopItemToken.getIndex());
+        if (StringUtils.isNotEmpty(ref.getValue())) {
+            XPathHolder holder = new XPathHolder(ref.getElement());
+            PropertyPath path = holder.toPropertyPath();
+
+            Item item = value.findItem(path);
+            //todo field loop can point to PrismReference
+            if (!(item instanceof PrismContainer)) {
+                throw new InterpreterException("Item referenced by '" + ref + "' must be PrismContainer, but it's '"
+                        + (item != null ? item.getClass().getSimpleName() : null) + "'.");
+            }
+            this.container = (PrismContainer) value.findItem(path);
+
+            PrismContainerDefinition parentDef = value.getParent().getDefinition();
+            this.definition = parentDef.findContainerDefinition(path);
+        } else {
+            //todo ??? field group with empty ref key is probably not usable in field loop. Or?
+            throw new InterpreterException("not properly implemented yet...[todo]");
+//            this.container = parent;
+//            this.definition = parent.getDefinition();
+        }
+    }
+
+    private void interpretGroup(StructuredFormContext context, ReferenceType ref) throws InterpreterException {
+        String key = ref.getKey();
+        Map<String, FormContextItem> objects = context.getObjects();
+        FormContextItem contextItem = objects.get(key);
+        //if item is not found in context, we can't create form
+        if (contextItem == null) {
+            throw new InterpreterException("Item with key '" + key + "' was not found in context.");
+        }
+
+        Item item = contextItem.getItem();
+        if (!(item instanceof PrismContainer)) {
+            throw new InterpreterException("Item with key '" + key + "' is not instance of PrismContainer.");
+        }
+
+        PrismContainer parent = (PrismContainer) item;
+        if (StringUtils.isNotEmpty(ref.getValue())) {
+            XPathHolder holder = new XPathHolder(ref.getElement());
+            PropertyPath path = holder.toPropertyPath();
+            //todo field group can point to PrismReference...
+            this.container = parent.findContainer(path);
+
+            PrismContainerDefinition parentDef = parent.getDefinition();
+            this.definition = parentDef.findContainerDefinition(path);
+        } else {
+            this.container = parent;
+            this.definition = parent.getDefinition();
+        }
     }
 
     private Set<ItemDefinition> createExclusions(PrismContainerDefinition definition) {

@@ -94,8 +94,8 @@ public class UiFieldLoop extends UiComponent<FieldLoopModel> {
 
             @Override
             public List<LineModel> getObject() {
-                //todo implement
-                return new ArrayList<LineModel>();
+                FieldLoopItemModel itemModel = model.getObject();
+                return itemModel.getLines();
             }
         };
     }

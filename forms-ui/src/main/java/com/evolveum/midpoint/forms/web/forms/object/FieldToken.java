@@ -67,13 +67,40 @@ public class FieldToken extends BaseDisplayableFieldToken<FieldType> {
         ReferenceType ref = validateReference(field.getRef(), false);
         String key = ref.getKey();
 
-        Map<String, FormContextItem> objects = context.getObjects();
+        if (StringUtils.isEmpty(key) && (getParent() instanceof FieldLoopItemToken)) {
+            // it's in field loop, therefore custom "ref" handling - ref doesn't have key,
+            // it's used key and base path from field loop
+            interpretFieldInFieldLoop(interpreterContext, context, ref);
+        } else if (StringUtils.isEmpty(key)) {
+            throw new InterpreterException("Reference '" + ref + "' doesn't have key defined or it's empty.");
+        } else {
+           interpretField(interpreterContext, context, ref);
+        }
+
+        if (definition == null) {
+            throw new InterpreterException("Definition for field '" + ref + "' was not found.");
+        }
+
+        if (StringUtils.isEmpty(field.getWidget())) {
+            field.setWidget(TokenUtils.getDefaultWidget(definition));
+        }
+    }
+
+    private FormContextItem getFormContextItem(Map<String, FormContextItem> objects, String key)
+            throws InterpreterException {
         FormContextItem contextItem = objects.get(key);
         //if item is not found in context, we can't create form
         if (contextItem == null) {
             throw new InterpreterException("Item with key '" + key + "' was not found in context.");
         }
 
+        return contextItem;
+    }
+
+    private void interpretField(InterpreterContext interpreterContext, StructuredFormContext context,
+                                ReferenceType ref) throws InterpreterException {
+        String key = ref.getKey();
+        FormContextItem contextItem = getFormContextItem(context.getObjects(), key);
         Item item = contextItem.getItem();
         //if path is null then item in map must be prism property
         if (StringUtils.isEmpty(ref.getValue()) && !(item instanceof PrismProperty)) {
@@ -106,14 +133,32 @@ public class FieldToken extends BaseDisplayableFieldToken<FieldType> {
                 definition = property.getDefinition();
             }
         }
+    }
 
-        if (definition == null) {
-            throw new InterpreterException("Definition for field '" + ref + "' was not found.");
+    private void interpretFieldInFieldLoop(InterpreterContext interpreterContext, StructuredFormContext context,
+                                           ReferenceType fieldRef) throws InterpreterException {
+
+        FieldLoopItemToken loopItemToken = (FieldLoopItemToken) getParent();
+        FieldLoopToken loopToken = loopItemToken.getParent();
+        PrismContainer loopContainer = loopToken.getContainer();
+
+        PrismContainerValue value = (PrismContainerValue) loopContainer.getValue(loopItemToken.getIndex());
+
+        XPathHolder holder = new XPathHolder(fieldRef.getElement());
+        PropertyPath path = holder.toPropertyPath();
+        Item item = value.findItem(path);
+        if (item != null && !(item instanceof PrismProperty)) {
+            throw new InterpreterException("Referenced item " + fieldRef + " is not instance of PrismProperty.");
         }
 
-        if (StringUtils.isEmpty(field.getWidget())) {
-            field.setWidget(TokenUtils.getDefaultWidget(definition));
+        property = (PrismProperty) item;
+        if (property == null) {
+            PrismContainerDefinition containerDefinition = value.getParent().getDefinition();
+            definition = containerDefinition.findPropertyDefinition(path);
+        } else {
+            definition = property.getDefinition();
         }
+
     }
 
     @Override

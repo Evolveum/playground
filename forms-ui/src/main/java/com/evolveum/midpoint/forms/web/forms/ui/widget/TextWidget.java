@@ -48,7 +48,7 @@ public class TextWidget<T> extends UiWidget {
 
     @Override
     protected void initLayout() {
-        final TextField text = new TextField(ID_INPUT, getModel(), String.class);
+        TextField text = new TextField(ID_INPUT, getModel(), String.class);
         add(text);
 
         List<PropertyType> properties = getProperties();

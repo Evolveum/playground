@@ -18,51 +18,32 @@
  *
  * Portions Copyrighted 2012 [name of copyright owner]
  */
-.UiForm {
-}
 
-.UiFormError {
-    color: #f00;
-}
+package com.evolveum.midpoint.forms.web.forms.ui.widget;
 
-.UiLine {
-}
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.FormComponent;
+import org.apache.wicket.model.IModel;
 
-.UiLine.odd {
-}
+/**
+ * @author lazyman
+ */
+public class LabelWidget extends UiWidget {
 
-.UiLine.even {
-}
+    private static final String ID_INPUT = "input";
 
-.UiFieldGroup {
-}
+    public LabelWidget(String id, IModel iModel) {
+        super(id, iModel);
+    }
 
-.UiFieldGroup span.title {
-}
+    @Override
+    public FormComponent getBaseFormComponent() {
+        return null;
+    }
 
-.UiField {
-    display: inline-block;
-    vertical-align: top;
-}
-
-.UiFieldLoop {
-}
-.UiFieldLoop span.title {
-}
-
-.UiFieldLoopItem {
-}
-
-.UiValue {
-}
-
-.UiValue div.label, .UiValue div.input, .UiValue div.buttons {
-    display: inline-block;
-}
-
-.UiValue div.feedback {
-}
-
-.UiButtons {
-    display: inline-block;
+    @Override
+    protected void initLayout() {
+        Label input = new Label(ID_INPUT, getModel());
+        add(input);
+    }
 }
