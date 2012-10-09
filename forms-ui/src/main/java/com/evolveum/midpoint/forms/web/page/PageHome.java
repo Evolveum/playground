@@ -41,11 +41,14 @@ import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 import com.evolveum.midpoint.xml.ns._public.common.common_2.UserType;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.tabs.AjaxTabbedPanel;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.basic.MultiLineLabel;
+import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.tree.LinkTree;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -53,11 +56,11 @@ import org.apache.wicket.model.Model;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
+import java.io.File;
+import java.io.FileFilter;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.net.URL;
+import java.util.*;
 
 /**
  * @author lazyman
@@ -66,6 +69,15 @@ public class PageHome extends PageBase {
 
     private static final Trace LOGGER = TraceManager.getTrace(PageHome.class);
 
+    private static final String SAMPLE_FOLDER = "sample";
+    private static final String SAMPLE_PROPERTIES = "sample.properties";
+
+    private static final String PROPERTY_NAME = "name";
+    private static final String PROPERTY_DESCRIPTION = "description";
+    private static final String PROPERTY_VARIABLE = "variable";
+    private static final String PROPERTY_FORMS = "forms";
+    private static final String PROPERTY_MAIN_FORM = "mainForm";
+
     private static final String DEFAULT_FORM_NAME = "Form";
     private static final String DEFAULT_VARIABLE_NAME = "Variable";
     private static final String FORM_ID_EDITOR = "editorForm";
@@ -73,6 +85,12 @@ public class PageHome extends PageBase {
     private static final String ID_TABBED_PANEL = "tabpanel";
     private static final String ID_TREE = "tree";
     private static final String ID_DELTAS = "deltas";
+    private static final String ID_LOAD_SAMPLE = "loadSample";
+    private static final String ID_CLEAR = "clear";
+    private static final String ID_SAMPLE_COMBO = "sampleCombo";
+    private static final String ID_MENU_FORM = "menuForm";
+
+    private IModel<List<SampleDto>> samplesModel;
 
     private LoadableModel<Project> projectModel;
     private LoadableModel<StructuredFormContext> structuredFormModel;
@@ -93,14 +111,85 @@ public class PageHome extends PageBase {
                 return loadStructuredFormContextModel();
             }
         };
+        samplesModel = new LoadableModel<List<SampleDto>>(false) {
+
+            @Override
+            protected List<SampleDto> load() {
+                return loadSampleList();
+            }
+        };
+    }
+
+    private List<SampleDto> loadSampleList() {
+        List<SampleDto> samples = new ArrayList<SampleDto>();
+
+        try {
+            ClassLoader loader = PageHome.class.getClassLoader();
+            URL url = loader.getResource(SAMPLE_FOLDER);
+
+            File root = new File(url.toURI());
+            File[] sampleFolders = root.listFiles(new FileFilter() {
+
+                @Override
+                public boolean accept(File file) {
+                    if (!file.isDirectory()) {
+                        return false;
+                    }
+
+                    return true;
+                }
+            });
+
+            for (File sampleFolder : sampleFolders) {
+                SampleDto dto = createSample(sampleFolder);
+                if (dto == null) {
+                    continue;
+                }
+                samples.add(dto);
+            }
+        } catch (Exception ex) {
+            //todo log error
+            ex.printStackTrace();
+        }
+
+        Collections.sort(samples);
+
+        return samples;
+    }
+
+    private SampleDto createSample(File sampleFolder) throws Exception {
+        SampleDto dto = new SampleDto();
+        dto.setSamplePath(sampleFolder.getName());
+
+        Properties properties = new Properties();
+        ClassLoader loader = PageHome.class.getClassLoader();
+        InputStream stream = loader.getResourceAsStream(SAMPLE_FOLDER + "/"
+                + sampleFolder.getName() + "/" + SAMPLE_PROPERTIES);
+        if (stream == null) {
+            return null;
+        }
+        properties.load(stream);
+
+        dto.setName(properties.getProperty(PROPERTY_NAME));
+        if (StringUtils.isEmpty(dto.getName())) {
+            dto.setName(sampleFolder.getName());
+        }
+        dto.setDescription(properties.getProperty(PROPERTY_DESCRIPTION));
+        dto.setMainForm(properties.getProperty(PROPERTY_MAIN_FORM));
+
+        //todo implement
+//        dto.setForms();
+//        dto.setVariables();
+
+        return dto;
     }
 
     @Override
     protected void initLayout() {
         super.initLayout();
-        initTree();
 
-        initButtons();
+        initMenuLayout();
+        initTree();
 
         initEditorLayout();
         initFormLayout();
@@ -121,7 +210,7 @@ public class PageHome extends PageBase {
         }) {
             @Override
             protected void onJunctionLinkClicked(AjaxRequestTarget target, Object node) {
-                super.onJunctionLinkClicked(target, node);    //To change body of overridden methods use File | Settings | File Templates.
+                super.onJunctionLinkClicked(target, node);
             }
         };
         tree.getTreeState().expandAll();
@@ -171,8 +260,27 @@ public class PageHome extends PageBase {
         formForm.add(save);
     }
 
-    private void initButtons() {
-        AjaxLinkButton clear = new AjaxLinkButton("clear",
+    private void initMenuLayout() {
+        Form menuForm = new Form(ID_MENU_FORM);
+        add(menuForm);
+
+        DropDownChoice sampleCombo = new DropDownChoice(ID_SAMPLE_COMBO, new Model(), samplesModel,
+                new IChoiceRenderer<SampleDto>() {
+
+                    @Override
+                    public Object getDisplayValue(SampleDto object) {
+                        return object.getName();
+                    }
+
+                    @Override
+                    public String getIdValue(SampleDto object, int index) {
+                        return Integer.toString(index);
+                    }
+                });
+        menuForm.add(sampleCombo);
+
+
+        AjaxLinkButton clear = new AjaxLinkButton(ID_CLEAR,
                 createStringResource("pageHome.button.clear")) {
 
             @Override
@@ -180,57 +288,17 @@ public class PageHome extends PageBase {
                 clearPerformed(target);
             }
         };
-        add(clear);
+        menuForm.add(clear);
 
-        AjaxLinkButton loadSample = new AjaxLinkButton("loadSample1",
-                createStringResource("pageHome.button.loadSample1")) {
-
-            @Override
-            public void onClick(AjaxRequestTarget target) {
-                loadSample1Performed(target);
-            }
-        };
-        add(loadSample);
-
-        loadSample = new AjaxLinkButton("loadSample2",
-                createStringResource("pageHome.button.loadSample2")) {
+        AjaxLinkButton loadSample = new AjaxLinkButton(ID_LOAD_SAMPLE,
+                createStringResource("pageHome.button.loadSample")) {
 
             @Override
             public void onClick(AjaxRequestTarget target) {
-                loadSample2Performed(target);
+                loadSamplePerformed(target);
             }
         };
-        add(loadSample);
-
-        loadSample = new AjaxLinkButton("loadSample3",
-                createStringResource("pageHome.button.loadSample3")) {
-
-            @Override
-            public void onClick(AjaxRequestTarget target) {
-                loadSample3Performed(target);
-            }
-        };
-        add(loadSample);
-
-        loadSample = new AjaxLinkButton("loadSample4",
-                createStringResource("pageHome.button.loadSample4")) {
-
-            @Override
-            public void onClick(AjaxRequestTarget target) {
-                loadSample4Performed(target);
-            }
-        };
-        add(loadSample);
-
-        loadSample = new AjaxLinkButton("loadSample5",
-                createStringResource("pageHome.button.loadSample5")) {
-
-            @Override
-            public void onClick(AjaxRequestTarget target) {
-                loadSample5Performed(target);
-            }
-        };
-        add(loadSample);
+        menuForm.add(loadSample);
     }
 
     private void initEditorLayout() {
@@ -375,6 +443,16 @@ public class PageHome extends PageBase {
         reloadFormPerformed(target);
     }
 
+    private void loadSamplePerformed(AjaxRequestTarget target) {
+        DropDownChoice sampleCombo = (DropDownChoice) get(ID_MENU_FORM + ":" + ID_SAMPLE_COMBO);
+        sampleCombo.getModelObject();
+
+        //todo implement
+
+        reloadTabs(target);
+        reloadFormPerformed(target);
+    }
+
     private void loadSample1Performed(AjaxRequestTarget target) {
         projectModel.reset();
 
@@ -459,7 +537,7 @@ public class PageHome extends PageBase {
         InputStream stream = null;
         try {
             ClassLoader loader = PageHome.class.getClassLoader();
-            stream = loader.getResourceAsStream("sample/" + fileName);
+            stream = loader.getResourceAsStream(SAMPLE_FOLDER + "/" + fileName);
 
             content = IOUtils.toString(stream, "utf-8");
             stream.close();

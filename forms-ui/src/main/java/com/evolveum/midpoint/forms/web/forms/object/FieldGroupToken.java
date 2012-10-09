@@ -75,7 +75,7 @@ public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
 
         FieldGroupType group = getField();
         if (group.getRef() != null) {
-            interpretReferencedGroup(context);
+            interpretReferencedGroup(interpreterContext, context);
         } else {
             for (BaseFieldToken token : getFields()) {
                 token.interpret(interpreterContext, context);
@@ -91,7 +91,7 @@ public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
         return "FieldGroupToken{name=" + getField().getName() + ", ref=" + ref + '}';
     }
 
-    private void interpretReferencedGroup(StructuredFormContext context) throws InterpreterException {
+    private void interpretReferencedGroup(InterpreterContext interpreterContext, StructuredFormContext context) throws InterpreterException {
         FieldGroupType group = getField();
 
         LOGGER.debug("Found ref in field group, ignoring children.");
@@ -101,7 +101,7 @@ public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
         if (StringUtils.isEmpty(key) && (getParent() instanceof FieldLoopItemToken)) {
             // it's in field loop, therefore custom "ref" handling - ref doesn't have key,
             // it's used key and base path from field loop
-            interpretGroupInFieldLoop(context, ref);
+            interpretGroupInFieldLoop(interpreterContext, context, ref);
         } else if (StringUtils.isEmpty(key)) {
             throw new InterpreterException("Reference '" + ref + "' doesn't have key defined or it's empty.");
         } else {
@@ -117,27 +117,29 @@ public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
         createChildren(container, definition, exclusions);
     }
 
-    private void interpretGroupInFieldLoop(StructuredFormContext context, ReferenceType ref)
-            throws InterpreterException {
+    private void interpretGroupInFieldLoop(InterpreterContext interpreterContext, StructuredFormContext context,
+                                           ReferenceType ref) throws InterpreterException {
 
         FieldLoopItemToken loopItemToken = (FieldLoopItemToken) getParent();
         FieldLoopToken loopToken = loopItemToken.getParent();
         PrismContainer loopContainer = loopToken.getContainer();
 
         PrismContainerValue value = (PrismContainerValue) loopContainer.getValue(loopItemToken.getIndex());
+        PrismContainerDefinition parentDef = value.getParent().getDefinition();
         if (StringUtils.isNotEmpty(ref.getValue())) {
             XPathHolder holder = new XPathHolder(ref.getElement());
             PropertyPath path = holder.toPropertyPath();
 
             Item item = value.findItem(path);
             //todo field loop can point to PrismReference
-            if (!(item instanceof PrismContainer)) {
+            if (item == null) {
+                item = new PrismContainer(path.last().getName());
+                item.revive(interpreterContext.getPrismContext());
+            } else if (!(item instanceof PrismContainer)) {
                 throw new InterpreterException("Item referenced by '" + ref + "' must be PrismContainer, but it's '"
                         + (item != null ? item.getClass().getSimpleName() : null) + "'.");
             }
-            this.container = (PrismContainer) value.findItem(path);
-
-            PrismContainerDefinition parentDef = value.getParent().getDefinition();
+            this.container = (PrismContainer) item;
             this.definition = parentDef.findContainerDefinition(path);
         } else {
             //todo ??? field group with empty ref key is probably not usable in field loop. Or?

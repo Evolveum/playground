@@ -21,6 +21,8 @@
 
 package com.evolveum.midpoint.forms.web.forms.interpreter;
 
+import com.evolveum.midpoint.prism.PrismContext;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,7 +31,12 @@ import java.util.Set;
  */
 public class InterpreterContext {
 
+    private PrismContext prismContext;
     private Set<String> includePaths = new HashSet<String>();
+
+    public PrismContext getPrismContext() {
+        return prismContext;
+    }
 
     public void addIncludePath(String path) {
         includePaths.add(path);

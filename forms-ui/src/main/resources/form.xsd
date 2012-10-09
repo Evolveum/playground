@@ -89,13 +89,20 @@
     <xsd:complexType name="FieldReferenceType">
         <xsd:annotation>
             <xsd:documentation>
-                Field reference provides opportunity to reference field from other forms via include.
-                Include attribute points to alias attribute in include element which points to another form.
-                Alias attribute points to "name" attribute in referenced field.
+                Field reference provides possibility to reference field from other part of form (or from completly
+                other forms) via include.
+
+                "ref" element is optional and can be used to override ref element in referenced field/group.
+
+                "include" attribute points to "alias" attribute in include element which points to another form, optional.
+                "alias" attribute points to "name" attribute in referenced field.
             </xsd:documentation>
         </xsd:annotation>
         <xsd:complexContent>
             <xsd:extension base="tns:BaseFieldType">
+                <xsd:sequence>
+                    <xsd:element name="ref" type="tns:ReferenceType" minOccurs="0"/>
+                </xsd:sequence>
                 <xsd:attribute name="include" type="xsd:string" use="optional"/>
                 <xsd:attribute name="alias" type="xsd:string" use="required"/>
             </xsd:extension>
@@ -172,7 +179,7 @@
         <xsd:annotation>
             <xsd:documentation>
                 "widget" attribute is used for default included types like text, label, combo, password, checkbox,
-                    etc. or class name for custom implementation
+                etc. or class name for custom implementation
             </xsd:documentation>
         </xsd:annotation>
         <xsd:complexContent>
@@ -180,6 +187,8 @@
                 <xsd:sequence>
                     <xsd:element name="display" type="tns:FieldDisplayType"/>
                     <xsd:element name="ref" type="tns:ReferenceType"/>
+                    <xsd:element name="source" type="tns:SourceType"/>
+                    <xsd:element name="target" type="tns:TargetType"/>
                     <xsd:element name="value" type="tns:ValueType"/>
                     <xsd:element name="validation" type="tns:ValidationType"/>
                 </xsd:sequence>
@@ -242,7 +251,7 @@
                 <!--todo documentation-->
 
                 design possibility to invoke java code, create some default impl for example to invoke
-                model methods to list groups on resource or something like that
+                model methods to list groups from somewhere (ldap) or something like that
             </xsd:documentation>
         </xsd:annotation>
         <xsd:sequence>
@@ -250,6 +259,30 @@
         </xsd:sequence>
         <xsd:attribute name="maxOccurs" type="xsd:int" use="optional"/>
         <xsd:attribute name="minOccurs" type="xsd:int" use="optional"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="SourceType">
+        <xsd:annotation>
+            <xsd:documentation>
+                This will be used later as input definition tag for "virtual" attributes
+
+                !!! only experimental stuff !!!
+
+                <!-- TODO finish this idea -->
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:complexType>
+
+    <xsd:complexType name="TargetType">
+        <xsd:annotation>
+            <xsd:documentation>
+                This will be used later as output definition tag for "virtual" attributes
+
+                !!! only experimental stuff !!!
+
+                <!-- TODO finish this idea -->
+            </xsd:documentation>
+        </xsd:annotation>
     </xsd:complexType>
 
     <xsd:complexType name="BaseDisplayType" abstract="true">

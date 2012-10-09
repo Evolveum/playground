@@ -76,6 +76,8 @@ public class FieldRefToken extends BaseFieldToken<FieldReferenceType> {
         }
 
         LOGGER.debug("Interpreting referenced token '{}'.", new Object[]{referencedToken});
+
+        //todo use overriding "ref" element if it's available
         referencedToken.interpret(interpreterContext, context);
     }
 
@@ -85,6 +87,17 @@ public class FieldRefToken extends BaseFieldToken<FieldReferenceType> {
 
     @Override
     public String toString() {
-        return "FieldRefToken{include=" + getField().getInclude() + ", alias=" + getField().getAlias() + '}';
+        FieldReferenceType reference = getField();
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("FieldRefToken{include=");
+        builder.append(reference.getInclude());
+        builder.append(", alias=");
+        builder.append(reference.getAlias());
+        builder.append(", ref=");
+        builder.append(reference.getRef() != null ? new ReferenceType(reference.getRef()) : "null");
+        builder.append('}');
+
+        return builder.toString();
     }
 }
