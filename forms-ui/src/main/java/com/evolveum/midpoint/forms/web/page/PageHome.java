@@ -148,8 +148,7 @@ public class PageHome extends PageBase {
                 samples.add(dto);
             }
         } catch (Exception ex) {
-            //todo log error
-            ex.printStackTrace();
+            LoggingUtils.logException(LOGGER, "Couldn't load samples", ex);
         }
 
         Collections.sort(samples);
@@ -177,9 +176,26 @@ public class PageHome extends PageBase {
         dto.setDescription(properties.getProperty(PROPERTY_DESCRIPTION));
         dto.setMainForm(properties.getProperty(PROPERTY_MAIN_FORM));
 
-        //todo implement
-//        dto.setForms();
-//        dto.setVariables();
+        for (Object object : properties.keySet()) {
+            String key = (String) object;
+            if (!key.startsWith(PROPERTY_VARIABLE)) {
+                continue;
+            }
+
+            String name = key.replace(PROPERTY_VARIABLE + ".", "");
+            dto.getVariables().put(name, properties.getProperty(key).trim());
+        }
+
+        String formsProperty = (String) properties.get(PROPERTY_FORMS);
+        if (StringUtils.isEmpty(formsProperty)) {
+            return dto;
+        }
+
+        String[] forms = formsProperty.split(",");
+        for (String form : forms) {
+            String trimmedForm = form.trim();
+            dto.getForms().add(trimmedForm);
+        }
 
         return dto;
     }
@@ -262,6 +278,7 @@ public class PageHome extends PageBase {
 
     private void initMenuLayout() {
         Form menuForm = new Form(ID_MENU_FORM);
+        menuForm.setOutputMarkupId(true);
         add(menuForm);
 
         DropDownChoice sampleCombo = new DropDownChoice(ID_SAMPLE_COMBO, new Model(), samplesModel,
@@ -290,11 +307,16 @@ public class PageHome extends PageBase {
         };
         menuForm.add(clear);
 
-        AjaxLinkButton loadSample = new AjaxLinkButton(ID_LOAD_SAMPLE,
+        AjaxSubmitLinkButton loadSample = new AjaxSubmitLinkButton(ID_LOAD_SAMPLE,
                 createStringResource("pageHome.button.loadSample")) {
 
             @Override
-            public void onClick(AjaxRequestTarget target) {
+            protected void onError(AjaxRequestTarget target, Form<?> form) {
+                target.add(getFeedbackPanel());
+            }
+
+            @Override
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
                 loadSamplePerformed(target);
             }
         };
@@ -437,6 +459,11 @@ public class PageHome extends PageBase {
     }
 
     private void clearPerformed(AjaxRequestTarget target) {
+        DropDownChoice<SampleDto> sampleCombo = (DropDownChoice) get(ID_MENU_FORM + ":" + ID_SAMPLE_COMBO);
+        sampleCombo.getModel().setObject(null);
+        target.add(get(ID_MENU_FORM));
+
+
         projectModel.reset();
 
         reloadTabs(target);
@@ -444,10 +471,22 @@ public class PageHome extends PageBase {
     }
 
     private void loadSamplePerformed(AjaxRequestTarget target) {
-        DropDownChoice sampleCombo = (DropDownChoice) get(ID_MENU_FORM + ":" + ID_SAMPLE_COMBO);
-        sampleCombo.getModelObject();
+        DropDownChoice<SampleDto> sampleCombo = (DropDownChoice) get(ID_MENU_FORM + ":" + ID_SAMPLE_COMBO);
+        SampleDto dto = sampleCombo.getModelObject();
 
-        //todo implement
+        projectModel.reset();
+        Project project = projectModel.getObject();
+        project.setMainForm(dto.getMainForm());
+
+        String path = dto.getSamplePath() + "/";
+
+        for (String form : dto.getForms()) {
+            project.getForms().add(new FormDto(form, loadFileContent(path + form)));
+        }
+
+        for (Map.Entry<String, String> entry : dto.getVariables().entrySet()) {
+            project.getVariables().add(new VariableDto(entry.getKey(), loadFileContent(path + entry.getValue())));
+        }
 
         reloadTabs(target);
         reloadFormPerformed(target);
