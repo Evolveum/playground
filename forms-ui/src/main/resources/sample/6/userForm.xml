@@ -41,23 +41,107 @@
             <cssStyle>background-color: #ccc;</cssStyle>
         </display>
 
-        <field>
-            <!--<ref key="user">c:givenName</ref>-->
+        <!-- we should use "c:ScriptExpressionEvaluatorType" for "script" element, or something like that -->
+        <field name="street">
+            <source>
+                <!-- value will be default variable for referenced prism value, language by default as groovy -->
+                <ref key="user">c:costCenter</ref>
+                <expression>
+                    <script>
+                        <code>value.split()[0]</code>
+                    </script>
+                </expression>
+            </source>
             <display>
                 <label>Street</label>
             </display>
         </field>
-        <field>
-            <!--<ref key="user">c:givenName</ref>-->
+        <field name="city">
+            <source>
+                <ref key="user">c:costCenter</ref>
+                <expression>
+                    <script>
+                        <code>value.split()[1]</code>
+                    </script>
+                </expression>
+            </source>
             <display>
-                <label>Street</label>
+                <label>City</label>
             </display>
         </field>
-        <field>
-            <!--<ref key="user">c:givenName</ref>-->
+        <field name="zip">
+            <source>
+                <ref key="user">c:costCenter</ref>
+                <expression>
+                    <script>
+                        <code>value.split()[2]</code>
+                    </script>
+                </expression>
+            </source>
             <display>
-                <label>Street</label>
+                <label>Zip</label>
             </display>
         </field>
+
+        <!--
+            all named field will be accessible as simple variables (fields included from other
+            forms will be accessible throug dot, e.g. <form_alias>.<field_name>
+
+            widget "none" mark special fields which aren't visible, they can be used for
+            property values pre/post processing
+        -->
+        <field widget="none">
+            <target>
+                <ref key="user">c:costCenter</ref>
+                <expression>
+                    <script>
+                        <code>street + ',' + city + ',' + zip</code>
+                    </script>
+                </expression>
+            </target>
+        </field>
+
+        <!--
+            standard "ref" element used in fields is equal to source and target defined with
+            the same ref and empty code expression
+        -->
+
+        <!-- these fields are the same -->
+        <field>
+            <ref key="user">c:costCenter</ref>
+        </field>
+
+        <field>
+            <source>
+                <ref key="user">c:costCenter</ref>
+            </source>
+            <target>
+                <ref key="user">c:costCenter</ref>
+            </target>
+        </field>
+
+        <field>
+            <source>
+                <ref key="user">c:costCenter</ref>
+                <expression>
+                    <script>
+                        <code>value</code>
+                    </script>
+                </expression>
+            </source>
+            <target>
+                <ref key="user">c:costCenter</ref>
+                <expression>
+                    <script>
+                        <code>value</code>
+                    </script>
+                </expression>
+            </target>
+        </field>
+
+        <!--
+            todo what about multivalue properties/fields, e.g. how would our address looked like if it
+            was multivalue -> in case user can have multiple addresses
+        -->
     </fieldGroup>
 </form>
