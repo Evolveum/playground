@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright (c) 2012 Evolveum
+  ~
+  ~ The contents of this file are subject to the terms
+  ~ of the Common Development and Distribution License
+  ~ (the License). You may not use this file except in
+  ~ compliance with the License.
+  ~
+  ~ You can obtain a copy of the License at
+  ~ http://www.opensource.org/licenses/cddl1 or
+  ~ CDDLv1.0.txt file in the source code distribution.
+  ~ See the License for the specific language governing
+  ~ permission and limitations under the License.
+  ~
+  ~ If applicable, add the following below the CDDL Header,
+  ~ with the fields enclosed by brackets [] replaced by
+  ~ your own identifying information:
+  ~
+  ~ Portions Copyrighted 2012 [name of copyright owner]
+  -->
+<form xmlns="http://midpoint.evolveum.com/xml/ns/public/gui/form"
+      name="User Detail Form">
+
+    <field widget="text">
+        <ref key="user">c:name</ref>
+        <display>
+            <label>xml.public.common.user.name</label>
+            <help>xml.public.common.user.name.help</help>
+            <tooltip>xml.public.common.user.name.tooltip</tooltip>
+            <cssStyle>font-weight: bold; color: blue;</cssStyle>
+            <cssClass>freakinAwesomeClass</cssClass>
+
+            <property name="size">40</property>
+        </display>
+    </field>
+    <fieldGroup>
+        <display>
+            <label>Address</label>
+            <cssStyle>background-color: #ccc;</cssStyle>
+        </display>
+
+        <field>
+            <!--<ref key="user">c:givenName</ref>-->
+            <display>
+                <label>Street</label>
+            </display>
+        </field>
+        <field>
+            <!--<ref key="user">c:givenName</ref>-->
+            <display>
+                <label>Street</label>
+            </display>
+        </field>
+        <field>
+            <!--<ref key="user">c:givenName</ref>-->
+            <display>
+                <label>Street</label>
+            </display>
+        </field>
+    </fieldGroup>
+</form>

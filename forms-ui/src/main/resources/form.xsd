@@ -201,7 +201,6 @@
         <!-- some kind of renderer, probably something like IChoiceRenderer in wicket to translate
         real value to display value and after edit to translate displayed value to real value -->
 
-        <!-- spring expression language -->
     </xsd:complexType>
 
     <xsd:complexType name="FieldDisplayType">
