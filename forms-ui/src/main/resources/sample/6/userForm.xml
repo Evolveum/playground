@@ -85,7 +85,7 @@
 
         <!--
             all named field will be accessible as simple variables (fields included from other
-            forms will be accessible throug dot, e.g. <form_alias>.<field_name>
+            forms will be accessible through dot, e.g. <form_alias>.<field_name>
 
             widget "none" mark special fields which aren't visible, they can be used for
             property values pre/post processing
@@ -144,4 +144,32 @@
             was multivalue -> in case user can have multiple addresses
         -->
     </fieldGroup>
+
+
+    <field widget="text" name="login">
+        <ref key="user">c:name</ref>
+    </field>
+    <field widget="none">
+        <target>
+            <ref key="user">c:emailAddress</ref>
+            <expression>
+                <script>name + '@example.com'</script>
+            </expression>
+        </target>
+    </field>
+
+    <field name="email">
+        <source>
+            <ref key="user">c:emailAddress</ref>
+            <expression>
+                <script>value.replace('@example.com','')</script>
+            </expression>
+        </source>
+        <target>
+            <ref key="user">c:emailAddress</ref>
+            <expression>
+                <script>value + '@example.com'</script>
+            </expression>
+        </target>
+    </field>
 </form>

@@ -53,7 +53,7 @@
     </field>
 
     <field widget="password">
-        <ref key="user">c:credentials/c:password/c:protectedString</ref>
+        <ref key="user">c:credentials/c:password/c:value</ref>
         <display>
             <label>Password</label>
         </display>

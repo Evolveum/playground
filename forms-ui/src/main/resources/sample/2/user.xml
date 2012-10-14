@@ -23,7 +23,10 @@
 <user oid="f00d-0" xmlns="http://midpoint.evolveum.com/xml/ns/public/common/common-2"
       xmlns:t="http://prism.evolveum.com/xml/ns/public/types-2"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <name>get account user</name>
+    <name>
+        <t:orig>get account user</t:orig>
+        <t:norm>get account user</t:norm>
+    </name>
     <fullName>
         <t:orig>Hector Barbossa</t:orig>
         <t:norm>hector barbossa</t:norm>
@@ -42,7 +45,7 @@
     </activation>
     <credentials xmlns="http://midpoint.evolveum.com/xml/ns/public/common/common-2">
         <password>
-            <protectedString xmlns:enc="http://www.w3.org/2001/04/xmlenc#" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+            <value xmlns:enc="http://www.w3.org/2001/04/xmlenc#" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
                 <enc:EncryptedData Type="http://www.w3.org/2001/04/xmlenc#Element">
                     <enc:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#aes256-cbc" />
                     <ds:KeyInfo>
@@ -52,13 +55,16 @@
                         <enc:CipherValue>LZ4QxLrHPrNz/VbNXm6tJU+fHverLrpLFaRudVOaIMAJEGJtpRu7gkgGqRlOJQEH</enc:CipherValue>
                     </enc:CipherData>
                 </enc:EncryptedData>
-            </protectedString>
+            </value>
         </password>
         <allowedIdmAdminGuiAccess>true</allowedIdmAdminGuiAccess>
     </credentials>
     
     <account oid="f00d-acc1">
-        <name>get account 1</name>
+        <name>
+            <t:orig>get account 1</t:orig>
+            <t:norm>get account 1</t:norm>
+        </name>
         <resourceRef oid="ef2bc95b-76e0-48e2-86d6-3d4f02d3e1a2" type="ResourceType"/>
         <objectClass xmlns:ri="http://midpoint.evolveum.com/xml/ns/public/resource/instance/ef2bc95b-76e0-48e2-86d6-3d4f02d3e1a2">ri:AccountObjectClass</objectClass>
         <attributes>
@@ -71,7 +77,10 @@
         </activation>
     </account>
     <account oid="f00d-acc2">
-        <name>get account 2</name>
+        <name>
+            <t:orig>get account 2</t:orig>
+            <t:norm>get account 2</t:norm>
+        </name>
         <resourceRef oid="ef2bc95b-76e0-48e2-86d6-3d4f02d3e1a2" type="ResourceType"/>
         <objectClass xmlns:ri="http://midpoint.evolveum.com/xml/ns/public/resource/instance/ef2bc95b-76e0-48e2-86d6-3d4f02d3e1a2">ri:AccountObjectClass</objectClass>
         <attributes>

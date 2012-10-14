@@ -25,7 +25,10 @@
       xmlns:c="http://midpoint.evolveum.com/xml/ns/public/common/common-2"
       xmlns:t="http://prism.evolveum.com/xml/ns/public/types-2"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <name>get account user</name>
+    <name>
+        <t:orig>get account user</t:orig>
+        <t:norm>get account user</t:norm>
+    </name>
     <fullName>
         <t:orig>Hector Barbossa</t:orig>
         <t:norm>hector barbossa</t:norm>
