@@ -23,20 +23,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.evolveum.midpoint</groupId>
-    <artifactId>forms-gui</artifactId>
-    <packaging>war</packaging>
+    <artifactId>forms-impl</artifactId>
+    <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
-    <name>forms-gui</name>
+    <name>forms-impl</name>
 	<parent>
         <artifactId>forms</artifactId>
         <groupId>com.evolveum.midpoint</groupId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <properties>
-        <spring.version>3.1.0.RELEASE</spring.version>
-        <wicket.version>1.5.7</wicket.version>
-    </properties>
+    
     <dependencies>
         <!-- SPRING -->
         <dependency>
