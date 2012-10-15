@@ -172,4 +172,9 @@
             </expression>
         </target>
     </field>
+
+    <!-- loading groups from ldap, then they can be chosen from combobox -->
+    <field widget="combo">
+        <ref key="user">c:additionalName</ref>
+    </field>
 </form>
