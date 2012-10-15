@@ -21,12 +21,11 @@
 
 package com.evolveum.midpoint.forms.web.page.dto;
 
-import com.evolveum.midpoint.forms.web.forms.FormContextItem;
-import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolver;
-import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolverException;
-import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
+import com.evolveum.midpoint.forms.impl.FormContextItem;
+import com.evolveum.midpoint.forms.impl.interpreter.FormResolver;
+import com.evolveum.midpoint.forms.impl.interpreter.FormResolverException;
+import com.evolveum.midpoint.forms.impl.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.FormType;
-import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.prism.PrismObject;
 import com.evolveum.midpoint.xml.ns._public.common.common_2.UserType;
 import org.apache.commons.lang.StringUtils;

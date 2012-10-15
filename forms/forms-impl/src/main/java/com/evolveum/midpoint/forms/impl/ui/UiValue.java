@@ -29,6 +29,7 @@ import com.evolveum.midpoint.forms.impl.ui.widget.UiWidget;
 import com.evolveum.midpoint.forms.impl.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
 import com.evolveum.midpoint.forms.xml.PropertyType;
+import com.evolveum.midpoint.gui.common.VisibleEnableBehaviour;
 import com.evolveum.midpoint.prism.PrismPropertyDefinition;
 import com.evolveum.midpoint.schema.constants.SchemaConstants;
 import com.evolveum.midpoint.util.logging.LoggingUtils;
