@@ -19,9 +19,9 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms.interpreter;
+package com.evolveum.midpoint.forms.impl.interpreter;
 
-import com.evolveum.midpoint.forms.web.forms.FormContextItem;
+import com.evolveum.midpoint.forms.impl.FormContextItem;
 import com.evolveum.midpoint.forms.xml.FormType;
 import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.prism.PrismObject;

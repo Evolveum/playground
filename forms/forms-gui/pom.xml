@@ -36,8 +36,15 @@
     <properties>
         <spring.version>3.1.0.RELEASE</spring.version>
         <wicket.version>1.5.7</wicket.version>
+        <forms.impl.version>0.0.1-SNAPSHOT</forms.impl.version>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>com.evolveum.midpoint</groupId>
+            <artifactId>forms-impl</artifactId>
+            <version>${forms.impl.version}</version>
+        </dependency>
+
         <!-- SPRING -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -234,24 +241,6 @@
                 <version>2.8</version>
                 <configuration>
                     <downloadSources>true</downloadSources>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.jvnet.jaxb2.maven2</groupId>
-                <artifactId>maven-jaxb2-plugin</artifactId>
-                <version>0.8.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <generatePackage>com.evolveum.midpoint.forms.xml</generatePackage>
-                    <extension>true</extension>
-                    <schemaDirectory>src/main/resources</schemaDirectory>
-                    <generateDirectory>${project.build.directory}/generated-sources/xjc</generateDirectory>
                 </configuration>
             </plugin>
         </plugins>

@@ -19,15 +19,15 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms.ui;
+package com.evolveum.midpoint.forms.impl.ui;
 
 import com.evolveum.midpoint.forms.component.util.VisibleEnableBehaviour;
-import com.evolveum.midpoint.forms.web.forms.model.FieldModel;
-import com.evolveum.midpoint.forms.web.forms.model.ValueModel;
-import com.evolveum.midpoint.forms.web.forms.object.FieldToken;
-import com.evolveum.midpoint.forms.web.forms.ui.widget.TextWidget;
-import com.evolveum.midpoint.forms.web.forms.ui.widget.UiWidget;
-import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
+import com.evolveum.midpoint.forms.impl.model.FieldModel;
+import com.evolveum.midpoint.forms.impl.model.ValueModel;
+import com.evolveum.midpoint.forms.impl.object.FieldToken;
+import com.evolveum.midpoint.forms.impl.ui.widget.TextWidget;
+import com.evolveum.midpoint.forms.impl.ui.widget.UiWidget;
+import com.evolveum.midpoint.forms.impl.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
 import com.evolveum.midpoint.forms.xml.PropertyType;
 import com.evolveum.midpoint.prism.PrismPropertyDefinition;

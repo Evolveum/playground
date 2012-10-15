@@ -19,7 +19,7 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms.ui.widget;
+package com.evolveum.midpoint.forms.impl.ui.widget;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;

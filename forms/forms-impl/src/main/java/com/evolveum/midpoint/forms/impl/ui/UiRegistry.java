@@ -19,9 +19,9 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms.ui;
+package com.evolveum.midpoint.forms.impl.ui;
 
-import com.evolveum.midpoint.forms.web.forms.ui.widget.*;
+import com.evolveum.midpoint.forms.impl.ui.widget.*;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.StringUtils;

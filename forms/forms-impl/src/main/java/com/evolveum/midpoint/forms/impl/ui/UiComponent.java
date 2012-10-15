@@ -19,9 +19,9 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms.ui;
+package com.evolveum.midpoint.forms.impl.ui;
 
-import com.evolveum.midpoint.forms.web.forms.model.BaseModel;
+import com.evolveum.midpoint.forms.impl.model.BaseModel;
 import org.apache.commons.lang.Validate;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;

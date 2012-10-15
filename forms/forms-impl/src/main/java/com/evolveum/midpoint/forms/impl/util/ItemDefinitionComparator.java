@@ -19,7 +19,7 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms.util;
+package com.evolveum.midpoint.forms.impl.util;
 
 import com.evolveum.midpoint.prism.ItemDefinition;
 import org.apache.commons.lang.StringUtils;

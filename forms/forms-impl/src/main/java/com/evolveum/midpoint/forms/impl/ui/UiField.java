@@ -19,10 +19,10 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms.ui;
+package com.evolveum.midpoint.forms.impl.ui;
 
-import com.evolveum.midpoint.forms.web.forms.model.FieldModel;
-import com.evolveum.midpoint.forms.web.forms.model.ValueModel;
+import com.evolveum.midpoint.forms.impl.model.FieldModel;
+import com.evolveum.midpoint.forms.impl.model.ValueModel;
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
 import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.AttributeModifier;

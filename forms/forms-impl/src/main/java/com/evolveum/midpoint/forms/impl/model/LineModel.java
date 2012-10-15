@@ -19,10 +19,10 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms.model;
+package com.evolveum.midpoint.forms.impl.model;
 
-import com.evolveum.midpoint.forms.web.forms.object.BaseDisplayableFieldToken;
-import com.evolveum.midpoint.forms.web.forms.object.Token;
+import com.evolveum.midpoint.forms.impl.object.BaseDisplayableFieldToken;
+import com.evolveum.midpoint.forms.impl.object.Token;
 import org.apache.commons.lang.Validate;
 
 import java.io.Serializable;

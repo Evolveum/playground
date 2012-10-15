@@ -19,15 +19,14 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms;
+package com.evolveum.midpoint.forms.impl;
 
-import com.evolveum.midpoint.forms.web.forms.interpreter.*;
-import com.evolveum.midpoint.forms.web.forms.model.FormModel;
-import com.evolveum.midpoint.forms.web.forms.ui.UiFactory;
-import com.evolveum.midpoint.forms.web.forms.ui.UiForm;
-import com.evolveum.midpoint.forms.web.forms.ui.UiRegistry;
-import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
-import com.evolveum.midpoint.forms.xml.DisplayType;
+import com.evolveum.midpoint.forms.impl.interpreter.*;
+import com.evolveum.midpoint.forms.impl.model.FormModel;
+import com.evolveum.midpoint.forms.impl.ui.UiFactory;
+import com.evolveum.midpoint.forms.impl.ui.UiForm;
+import com.evolveum.midpoint.forms.impl.ui.UiRegistry;
+import com.evolveum.midpoint.forms.impl.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.FormDisplayType;
 import com.evolveum.midpoint.forms.xml.FormType;
 import com.evolveum.midpoint.util.logging.LoggingUtils;

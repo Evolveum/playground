@@ -19,9 +19,9 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms.model;
+package com.evolveum.midpoint.forms.impl.model;
 
-import com.evolveum.midpoint.forms.web.forms.object.BaseDisplayableFieldToken;
+import com.evolveum.midpoint.forms.impl.object.BaseDisplayableFieldToken;
 
 /**
  * @author lazyman

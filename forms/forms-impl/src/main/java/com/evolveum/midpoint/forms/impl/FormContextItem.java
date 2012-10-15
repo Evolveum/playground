@@ -19,9 +19,9 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms;
+package com.evolveum.midpoint.forms.impl;
 
-import com.evolveum.midpoint.forms.web.forms.model.ValueStatus;
+import com.evolveum.midpoint.forms.impl.model.ValueStatus;
 import com.evolveum.midpoint.prism.Item;
 import org.apache.commons.lang.Validate;
 

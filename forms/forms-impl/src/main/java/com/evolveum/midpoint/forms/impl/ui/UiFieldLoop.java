@@ -19,12 +19,12 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms.ui;
+package com.evolveum.midpoint.forms.impl.ui;
 
-import com.evolveum.midpoint.forms.web.forms.model.DisplayableModel;
-import com.evolveum.midpoint.forms.web.forms.model.FieldLoopItemModel;
-import com.evolveum.midpoint.forms.web.forms.model.FieldLoopModel;
-import com.evolveum.midpoint.forms.web.forms.model.LineModel;
+import com.evolveum.midpoint.forms.impl.model.DisplayableModel;
+import com.evolveum.midpoint.forms.impl.model.FieldLoopItemModel;
+import com.evolveum.midpoint.forms.impl.model.FieldLoopModel;
+import com.evolveum.midpoint.forms.impl.model.LineModel;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;

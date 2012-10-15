@@ -19,10 +19,10 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms.model;
+package com.evolveum.midpoint.forms.impl.model;
 
-import com.evolveum.midpoint.forms.web.forms.object.FieldGroupToken;
-import com.evolveum.midpoint.forms.web.forms.util.StructuredFormUtils;
+import com.evolveum.midpoint.forms.impl.object.FieldGroupToken;
+import com.evolveum.midpoint.forms.impl.util.StructuredFormUtils;
 import com.evolveum.midpoint.forms.xml.DisplayType;
 import com.evolveum.midpoint.forms.xml.FieldDisplayType;
 import com.evolveum.midpoint.prism.PrismContainerDefinition;

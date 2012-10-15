@@ -19,11 +19,11 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms;
+package com.evolveum.midpoint.forms.impl;
 
-import com.evolveum.midpoint.forms.web.forms.interpreter.FormResolver;
-import com.evolveum.midpoint.forms.web.forms.model.FormModel;
-import com.evolveum.midpoint.forms.web.forms.model.ValueStatus;
+import com.evolveum.midpoint.forms.impl.interpreter.FormResolver;
+import com.evolveum.midpoint.forms.impl.model.FormModel;
+import com.evolveum.midpoint.forms.impl.model.ValueStatus;
 import com.evolveum.midpoint.prism.PrismObject;
 import com.evolveum.midpoint.prism.delta.ChangeType;
 import com.evolveum.midpoint.prism.delta.ObjectDelta;

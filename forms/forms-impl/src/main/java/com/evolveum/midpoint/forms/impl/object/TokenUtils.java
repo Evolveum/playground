@@ -19,9 +19,9 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms.object;
+package com.evolveum.midpoint.forms.impl.object;
 
-import com.evolveum.midpoint.forms.web.forms.ui.UiRegistry;
+import com.evolveum.midpoint.forms.impl.ui.UiRegistry;
 import com.evolveum.midpoint.forms.xml.*;
 import com.evolveum.midpoint.prism.PrismPropertyDefinition;
 import com.evolveum.midpoint.util.DOMUtil;

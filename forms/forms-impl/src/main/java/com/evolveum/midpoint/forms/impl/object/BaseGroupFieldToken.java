@@ -19,7 +19,7 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.web.forms.object;
+package com.evolveum.midpoint.forms.impl.object;
 
 import com.evolveum.midpoint.forms.xml.BaseGroupFieldType;
 import com.evolveum.midpoint.util.logging.Trace;
