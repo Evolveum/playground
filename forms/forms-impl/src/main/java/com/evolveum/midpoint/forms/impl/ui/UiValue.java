@@ -21,7 +21,6 @@
 
 package com.evolveum.midpoint.forms.impl.ui;
 
-import com.evolveum.midpoint.forms.component.util.VisibleEnableBehaviour;
 import com.evolveum.midpoint.forms.impl.model.FieldModel;
 import com.evolveum.midpoint.forms.impl.model.ValueModel;
 import com.evolveum.midpoint.forms.impl.object.FieldToken;

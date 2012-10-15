@@ -19,7 +19,7 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.component.util;
+package com.evolveum.midpoint.gui.common;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
