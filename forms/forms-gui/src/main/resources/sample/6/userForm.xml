@@ -153,28 +153,56 @@
         <target>
             <ref key="user">c:emailAddress</ref>
             <expression>
-                <script>name + '@example.com'</script>
+                <script>
+                    <code>name + '@example.com'</code>
+                </script>
             </expression>
         </target>
     </field>
 
+    <!-- this example shows emailAddress value without domain (everything after @ is not shown, but it's saved) -->
     <field name="email">
         <source>
             <ref key="user">c:emailAddress</ref>
             <expression>
-                <script>value.replace('@example.com','')</script>
+                <script>
+                    <code>value.replace('@example.com','')</code>
+                </script>
             </expression>
         </source>
         <target>
             <ref key="user">c:emailAddress</ref>
             <expression>
-                <script>value + '@example.com'</script>
+                <script>
+                    <code>value + '@example.com'</code>
+                </script>
             </expression>
         </target>
     </field>
 
-    <!-- loading groups from ldap, then they can be chosen from combobox -->
+    <!-- loading groups from ldap, then they can be chosen from combobox (ExampleClass.staticMethod), with
+        custom renderer. Value can be also used for mutliple select, and ...? -->
     <field widget="combo">
         <ref key="user">c:additionalName</ref>
+        <property name="renderer">com.evolveum.midpoint.forms.example.SampleComboRenderer</property>
+        <value>
+            <!-- sample 1 List<Object> is create from values defined as constants -->
+            <availableValues xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                             xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+                <object xsi:type="xsd:int">1</object>
+                <object xsi:type="xsd:int">2</object>
+                <object xsi:type="xsd:int">3</object>
+            </availableValues>
+            <!-- sample 2 - this should return List<Object>, never null -->
+            <availableValues>
+                <invoke>com.evoleum.midpoint.forms.example.SampleClass.getGroups</invoke>
+            </availableValues>
+            <!-- sample 3 - this script should return List<Object> -->
+            <availableValues>
+                <script>
+                    <code>email.split('@')</code>
+                </script>
+            </availableValues>
+        </value>
     </field>
 </form>
