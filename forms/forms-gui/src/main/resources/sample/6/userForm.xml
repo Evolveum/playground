@@ -20,15 +20,17 @@
   ~
   ~ Portions Copyrighted 2012 [name of copyright owner]
   -->
-<form xmlns="http://midpoint.evolveum.com/xml/ns/public/gui/form"
+<form xmlns="http://midpoint.evolveum.com/xml/ns/public/gui/form-1"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://midpoint.evolveum.com/xml/ns/public/gui/form-1 ../../../../../../forms-impl/src/main/resources/form.xsd"
       name="User Detail Form">
 
     <field widget="text">
         <ref key="user">c:name</ref>
         <display>
             <label>xml.public.common.user.name</label>
-            <help>xml.public.common.user.name.help</help>
             <tooltip>xml.public.common.user.name.tooltip</tooltip>
+            <help>xml.public.common.user.name.help</help>
             <cssStyle>font-weight: bold; color: blue;</cssStyle>
             <cssClass>freakinAwesomeClass</cssClass>
 
@@ -43,6 +45,9 @@
 
         <!-- we should use "c:ScriptExpressionEvaluatorType" for "script" element, or something like that -->
         <field name="street">
+            <display>
+                <label>Street</label>
+            </display>
             <source>
                 <!-- value will be default variable for referenced prism value, language by default as groovy -->
                 <ref key="user">c:costCenter</ref>
@@ -52,11 +57,11 @@
                     </script>
                 </expression>
             </source>
-            <display>
-                <label>Street</label>
-            </display>
         </field>
         <field name="city">
+            <display>
+                <label>City</label>
+            </display>
             <source>
                 <ref key="user">c:costCenter</ref>
                 <expression>
@@ -65,11 +70,11 @@
                     </script>
                 </expression>
             </source>
-            <display>
-                <label>City</label>
-            </display>
         </field>
         <field name="zip">
+            <display>
+                <label>Zip</label>
+            </display>
             <source>
                 <ref key="user">c:costCenter</ref>
                 <expression>
@@ -78,9 +83,6 @@
                     </script>
                 </expression>
             </source>
-            <display>
-                <label>Zip</label>
-            </display>
         </field>
 
         <!--
@@ -180,18 +182,22 @@
         </target>
 
         <enabled>
-            <script>
-                <code>
-                    <!--todo how should this look like? -->
-                </code>
-            </script>
+            <expression>
+                <script>
+                    <code>
+                        <!--todo how should this look like? -->
+                    </code>
+                </script>
+            </expression>
         </enabled>
         <visible>
-            <script>
-                <code>
-                    <!--todo how should this look like? -->
-                </code>
-            </script>
+            <expression>
+                <script>
+                    <code>
+                        <!--todo how should this look like? -->
+                    </code>
+                </script>
+            </expression>
         </visible>
     </field>
 
@@ -199,14 +205,16 @@
         custom renderer. Value can be also used for mutliple select, and ...? -->
     <field widget="combo">
         <ref key="user">c:additionalName</ref>
-        <property name="renderer">com.evolveum.midpoint.forms.example.SampleComboRenderer</property>
+        <display>
+            <property name="renderer">com.evolveum.midpoint.forms.example.SampleComboRenderer</property>
+        </display>
         <value>
             <!-- sample 1 List<Object> is create from values defined as constants -->
             <availableValues xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                              xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-                    <object xsi:type="xsd:int">1</object>
-                    <object xsi:type="xsd:int">2</object>
-                    <object xsi:type="xsd:int">3</object>
+                <object xsi:type="xsd:int">1</object>
+                <object xsi:type="xsd:int">2</object>
+                <object xsi:type="xsd:int">3</object>
             </availableValues>
 
             <!-- sample 2 - this should return List<Object>, never null -->
