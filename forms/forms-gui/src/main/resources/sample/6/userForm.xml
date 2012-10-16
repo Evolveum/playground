@@ -178,6 +178,21 @@
                 </script>
             </expression>
         </target>
+
+        <enabled>
+            <script>
+                <code>
+                    <!--todo how should this look like? -->
+                </code>
+            </script>
+        </enabled>
+        <visible>
+            <script>
+                <code>
+                    <!--todo how should this look like? -->
+                </code>
+            </script>
+        </visible>
     </field>
 
     <!-- loading groups from ldap, then they can be chosen from combobox (ExampleClass.staticMethod), with
@@ -189,20 +204,26 @@
             <!-- sample 1 List<Object> is create from values defined as constants -->
             <availableValues xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                              xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-                <object xsi:type="xsd:int">1</object>
-                <object xsi:type="xsd:int">2</object>
-                <object xsi:type="xsd:int">3</object>
+                    <object xsi:type="xsd:int">1</object>
+                    <object xsi:type="xsd:int">2</object>
+                    <object xsi:type="xsd:int">3</object>
             </availableValues>
+
             <!-- sample 2 - this should return List<Object>, never null -->
+            <!--
             <availableValues>
                 <invoke>com.evoleum.midpoint.forms.example.SampleClass.getGroups</invoke>
             </availableValues>
+            -->
+
             <!-- sample 3 - this script should return List<Object> -->
+            <!--
             <availableValues>
                 <script>
                     <code>email.split('@')</code>
                 </script>
             </availableValues>
+            -->
         </value>
     </field>
 </form>

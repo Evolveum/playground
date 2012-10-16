@@ -21,15 +21,10 @@
 
 package com.evolveum.midpoint.forms.impl.util;
 
-import com.evolveum.midpoint.forms.impl.object.*;
-import com.evolveum.midpoint.forms.impl.ui.UiRegistry;
 import com.evolveum.midpoint.forms.xml.*;
-import com.evolveum.midpoint.prism.PrismPropertyDefinition;
-import com.evolveum.midpoint.util.DOMUtil;
 import com.evolveum.midpoint.util.exception.SystemException;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
-import com.evolveum.midpoint.xml.ns._public.common.common_2.ProtectedStringType;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;

@@ -21,7 +21,7 @@
 
 package com.evolveum.midpoint.forms.impl.model;
 
-import com.evolveum.midpoint.forms.impl.object.FormToken;
+import com.evolveum.midpoint.forms.impl.token.FormToken;
 import com.evolveum.midpoint.forms.xml.FormDisplayType;
 
 /**

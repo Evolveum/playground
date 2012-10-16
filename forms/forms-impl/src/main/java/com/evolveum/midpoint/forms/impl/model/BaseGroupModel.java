@@ -21,7 +21,7 @@
 
 package com.evolveum.midpoint.forms.impl.model;
 
-import com.evolveum.midpoint.forms.impl.object.*;
+import com.evolveum.midpoint.forms.impl.token.*;
 import com.evolveum.midpoint.forms.xml.DisplayType;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;

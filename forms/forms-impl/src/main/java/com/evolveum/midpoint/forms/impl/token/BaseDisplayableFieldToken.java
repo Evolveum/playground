@@ -19,19 +19,13 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.impl.object;
+package com.evolveum.midpoint.forms.impl.token;
 
-import com.evolveum.midpoint.forms.impl.StructuredFormContext;
-import com.evolveum.midpoint.forms.impl.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.impl.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.xml.BaseDisplayableFieldType;
-import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
-import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Element;
-
-import java.util.Map;
 
 /**
  * @author lazyman

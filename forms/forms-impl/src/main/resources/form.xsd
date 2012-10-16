@@ -187,10 +187,9 @@
                 <xsd:sequence>
                     <xsd:element name="display" type="tns:FieldDisplayType"/>
                     <xsd:element name="ref" type="tns:ReferenceType"/>
-                    <xsd:element name="source" type="tns:SourceType"/>
-                    <xsd:element name="target" type="tns:TargetType"/>
+                    <xsd:element name="source" type="tns:ChannelType"/>
+                    <xsd:element name="target" type="tns:ChannelType"/>
                     <xsd:element name="value" type="tns:ValueType"/>
-                    <xsd:element name="validation" type="tns:ValidationType"/>
                 </xsd:sequence>
                 <xsd:attribute name="widget" type="xsd:string" use="optional"/>
             </xsd:extension>
@@ -255,37 +254,35 @@
         </xsd:annotation>
         <xsd:sequence>
             <xsd:element name="type" type="xsd:QName" minOccurs="0"/>
+            <xsd:element name="minOccurs" type="xsd:int"  minOccurs="0"/>
+            <xsd:element name="maxOccurs" type="xsd:int" minOccurs="0"/>
+
+            <xsd:element name="availableValues" type="tns:AvailableValuesType" minOccurs="0"/>
+            <xsd:element name="validation" type="tns:ValidationType"/>
         </xsd:sequence>
-        <xsd:attribute name="maxOccurs" type="xsd:int" use="optional"/>
-        <xsd:attribute name="minOccurs" type="xsd:int" use="optional"/>
     </xsd:complexType>
 
-    <xsd:complexType name="SourceType">
-        <xsd:annotation>
-            <xsd:documentation>
-                This will be used later as input definition tag for "virtual" attributes
-
-                !!! only experimental stuff !!!
-
-                <!-- TODO finish this idea -->
-            </xsd:documentation>
-        </xsd:annotation>
+    <xsd:complexType name="AvailableValuesType">
+        <xsd:sequence>
+            <xsd:element ref="tns:expressionEvaluator" minOccurs="1" maxOccurs="unbounded" />
+        </xsd:sequence>
     </xsd:complexType>
 
-    <xsd:complexType name="TargetType">
+    <xsd:complexType name="ChannelType">
         <xsd:annotation>
             <xsd:documentation>
-                This will be used later as output definition tag for "virtual" attributes
-
-                !!! only experimental stuff !!!
-
-                <!-- TODO finish this idea -->
+                <!-- todo document -->
             </xsd:documentation>
         </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="ref" type="tns:ReferenceType"/>
+            <xsd:element ref="tns:expressionEvaluator" minOccurs="1" maxOccurs="unbounded" />
+        </xsd:sequence>
     </xsd:complexType>
 
     <xsd:complexType name="BaseDisplayType" abstract="true">
         <xsd:sequence>
+            <xsd:element ref="tns:description" minOccurs="0"/>
             <!-- base properties -->
             <xsd:element name="label" type="xsd:string" minOccurs="0"/>
             <xsd:element name="tooltip" type="xsd:string" minOccurs="0"/>
@@ -357,9 +354,11 @@
             </xsd:documentation>
         </xsd:annotation>
         <xsd:sequence>
-            <xsd:element ref="tns:operation" minOccurs="0" maxOccurs="unbounded"/>
+            <!-- todo design this data structure -->
         </xsd:sequence>
     </xsd:complexType>
+
+    <xsd:element name="description" type="xsd:string" />
 
     <xsd:complexType name="VisibleType">
         <xsd:annotation>
@@ -371,45 +370,51 @@
             </xsd:documentation>
         </xsd:annotation>
         <xsd:sequence>
-            <xsd:element ref="tns:operation" minOccurs="0" maxOccurs="unbounded"/>
+            <!-- todo design this data structure -->
         </xsd:sequence>
     </xsd:complexType>
 
-    <xsd:element name="operation" type="tns:OperationType"/>
+    <xsd:element name="expressionEvaluator" abstract="true"/>
+    <xsd:element name="object" type="xsd:anyType" substitutionGroup="tns:expressionEvaluator" nillable="true"/>
+    <xsd:element name="script" type="tns:ScriptExpressionEvaluatorType" substitutionGroup="tns:expressionEvaluator"/>
+    <xsd:element name="invoke" type="xsd:string" substitutionGroup="tns:expressionEvaluator"/>
 
-    <xsd:simpleType name="OperationType">
+    <xsd:complexType name="ScriptExpressionEvaluatorType">
         <xsd:annotation>
             <xsd:documentation>
                 <!-- todo document -->
             </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element ref="tns:description" minOccurs="0"/>
+            <xsd:element name="language" type="xsd:anyURI" minOccurs="0" default="http://midpoint.evolveum.com/xml/ns/public/expression/language#Groovy">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Language of the expression. Groovy is the default language if other language is not specified.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="code" type="tns:ScriptExpressionCodeType">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        TODO
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ScriptExpressionCodeType" mixed="true">
+        <xsd:annotation>
+            <xsd:documentation>
+                The expression code is supposed to be in the context of this type. The content ix "mixed"
+                which allows both XML and non-XML languages.
+            </xsd:documentation>
             <xsd:appinfo>
-                <jaxb:typesafeEnumClass/>
+                <jaxb:dom/>
             </xsd:appinfo>
         </xsd:annotation>
-        <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="create">
-                <xsd:annotation>
-                    <xsd:appinfo>
-                        <jaxb:typesafeEnumMember name="CREATE"/>
-                    </xsd:appinfo>
-                </xsd:annotation>
-            </xsd:enumeration>
-            <xsd:enumeration value="read">
-                <xsd:annotation>
-                    <xsd:appinfo>
-                        <jaxb:typesafeEnumMember name="READ"/>
-                    </xsd:appinfo>
-                </xsd:annotation>
-            </xsd:enumeration>
-            <xsd:enumeration value="update">
-                <xsd:annotation>
-                    <xsd:appinfo>
-                        <jaxb:typesafeEnumMember name="UPDATE"/>
-                    </xsd:appinfo>
-                </xsd:annotation>
-            </xsd:enumeration>
-        </xsd:restriction>
-    </xsd:simpleType>
+    </xsd:complexType>
 
     <!-- ajax validators - default existing stuff, users should be able to implement their own validators -->
     <!-- label width for fields only also global defined in field groups -->

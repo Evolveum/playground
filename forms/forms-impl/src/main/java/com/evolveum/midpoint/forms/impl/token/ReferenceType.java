@@ -19,7 +19,7 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.impl.object;
+package com.evolveum.midpoint.forms.impl.token;
 
 import org.apache.commons.lang.Validate;
 import org.w3c.dom.Element;

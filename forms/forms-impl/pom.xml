@@ -110,11 +110,21 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <args>
+                        <arg>-copy-constructor</arg>
+                    </args>
                     <generatePackage>com.evolveum.midpoint.forms.xml</generatePackage>
                     <extension>true</extension>
                     <schemaDirectory>src/main/resources</schemaDirectory>
                     <generateDirectory>${project.build.directory}/generated-sources/xjc</generateDirectory>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>net.sourceforge.ccxjc</groupId>
+                        <artifactId>cc-xjc-plugin</artifactId>
+                        <version>2.0</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

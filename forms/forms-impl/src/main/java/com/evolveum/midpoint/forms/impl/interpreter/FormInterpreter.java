@@ -23,7 +23,7 @@ package com.evolveum.midpoint.forms.impl.interpreter;
 
 import com.evolveum.midpoint.forms.impl.StructuredFormContext;
 import com.evolveum.midpoint.forms.impl.model.FormModel;
-import com.evolveum.midpoint.forms.impl.object.FormToken;
+import com.evolveum.midpoint.forms.impl.token.FormToken;
 import com.evolveum.midpoint.forms.xml.FormType;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;

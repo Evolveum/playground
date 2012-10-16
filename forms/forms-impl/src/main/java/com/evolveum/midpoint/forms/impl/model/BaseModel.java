@@ -21,7 +21,7 @@
 
 package com.evolveum.midpoint.forms.impl.model;
 
-import com.evolveum.midpoint.forms.impl.object.Token;
+import com.evolveum.midpoint.forms.impl.token.Token;
 import org.apache.commons.lang.Validate;
 
 import java.io.Serializable;

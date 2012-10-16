@@ -19,15 +19,13 @@
  * Portions Copyrighted 2012 [name of copyright owner]
  */
 
-package com.evolveum.midpoint.forms.impl.object;
+package com.evolveum.midpoint.forms.impl.token;
 
 import com.evolveum.midpoint.forms.impl.StructuredFormContext;
 import com.evolveum.midpoint.forms.impl.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.impl.interpreter.InterpreterException;
-import com.evolveum.midpoint.prism.Item;
 
 import java.io.Serializable;
-import java.util.Map;
 
 /**
  * @author lazyman

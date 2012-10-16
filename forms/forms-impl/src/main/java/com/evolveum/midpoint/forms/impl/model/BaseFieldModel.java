@@ -21,7 +21,7 @@
 
 package com.evolveum.midpoint.forms.impl.model;
 
-import com.evolveum.midpoint.forms.impl.object.BaseDisplayableFieldToken;
+import com.evolveum.midpoint.forms.impl.token.BaseDisplayableFieldToken;
 
 /**
  * @author lazyman

@@ -21,7 +21,7 @@
 
 package com.evolveum.midpoint.forms.impl.model;
 
-import com.evolveum.midpoint.forms.impl.object.FieldLoopItemToken;
+import com.evolveum.midpoint.forms.impl.token.FieldLoopItemToken;
 import com.evolveum.midpoint.forms.xml.DisplayType;
 
 /**
