@@ -164,6 +164,20 @@
 
     <!-- this example shows emailAddress value without domain (everything after @ is not shown, but it's saved) -->
     <field name="email">
+        <enabled>
+            <script>
+                <code>
+                    <!--todo how should this look like? -->
+                </code>
+            </script>
+        </enabled>
+        <visible>
+            <script>
+                <code>
+                    <!--todo how should this look like? -->
+                </code>
+            </script>
+        </visible>
         <source>
             <ref key="user">c:emailAddress</ref>
             <expression>
@@ -180,25 +194,6 @@
                 </script>
             </expression>
         </target>
-
-        <enabled>
-            <expression>
-                <script>
-                    <code>
-                        <!--todo how should this look like? -->
-                    </code>
-                </script>
-            </expression>
-        </enabled>
-        <visible>
-            <expression>
-                <script>
-                    <code>
-                        <!--todo how should this look like? -->
-                    </code>
-                </script>
-            </expression>
-        </visible>
     </field>
 
     <!-- loading groups from ldap, then they can be chosen from combobox (ExampleClass.staticMethod), with

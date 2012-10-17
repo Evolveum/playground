@@ -122,8 +122,26 @@
         <xsd:complexContent>
             <xsd:extension base="tns:BaseFieldType">
                 <xsd:sequence>
-                    <xsd:element name="enabled" type="tns:EnabledType" minOccurs="0"/>
-                    <xsd:element name="visible" type="tns:VisibleType" minOccurs="0"/>
+                    <xsd:element name="enabled" type="tns:ExpressionType" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                This element is responsible for enabling/disabling input fields. Now it's only simple
+                                decision based on state of edited object. When this element is not defined, input field
+                                is always enabled. If it's defined and it's not empty than input field is only enabled
+                                if object state is corresponds with OperationType definition.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="visible" type="tns:ExpressionType" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                This element is responsible for visibility of input fields. Now it's only simple
+                                decision based on state of edited object. When this element is not defined, input field
+                                is always visible. If it's defined and it's not empty than input field is only visible
+                                if object state is corresponds with OperationType definition.
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
                 </xsd:sequence>
                 <xsd:attribute name="name" type="xsd:string" use="optional"/>
             </xsd:extension>
@@ -263,14 +281,8 @@
             <xsd:element name="minOccurs" type="xsd:int" minOccurs="0"/>
             <xsd:element name="maxOccurs" type="xsd:int" minOccurs="0"/>
 
-            <xsd:element name="availableValues" type="tns:AvailableValuesType" minOccurs="0"/>
-            <xsd:element name="validation" type="tns:ValidationType"/>
-        </xsd:sequence>
-    </xsd:complexType>
-
-    <xsd:complexType name="AvailableValuesType">
-        <xsd:sequence>
-            <xsd:element ref="tns:expression" minOccurs="0"/>
+            <xsd:element name="availableValues" type="tns:ExpressionType" minOccurs="0"/>
+            <xsd:element name="validation" type="tns:ValidationType" minOccurs="0"/>
         </xsd:sequence>
     </xsd:complexType>
 
@@ -349,47 +361,15 @@
         </xsd:simpleContent>
     </xsd:complexType>
 
-    <xsd:complexType name="EnabledType">
-        <xsd:annotation>
-            <xsd:documentation>
-                This element is responsible for enabling/disabling input fields. Now it's only simple
-                decision based on state of edited object. When this element is not defined, input field
-                is always enabled. If it's defined and it's not empty than input field is only enabled
-                if object state is corresponds with OperationType definition.
-            </xsd:documentation>
-        </xsd:annotation>
-        <xsd:sequence>
-            <!-- todo design this data structure -->
-        </xsd:sequence>
-    </xsd:complexType>
-
     <xsd:element name="description" type="xsd:string"/>
-
-    <xsd:complexType name="VisibleType">
-        <xsd:annotation>
-            <xsd:documentation>
-                This element is responsible for visibility of input fields. Now it's only simple
-                decision based on state of edited object. When this element is not defined, input field
-                is always visible. If it's defined and it's not empty than input field is only visible
-                if object state is corresponds with OperationType definition.
-            </xsd:documentation>
-        </xsd:annotation>
-        <xsd:sequence>
-            <!-- todo design this data structure -->
-        </xsd:sequence>
-    </xsd:complexType>
 
     <xsd:element name="expression" type="tns:ExpressionType"/>
 
+    <!-- TODO REMOVE AND USE c:ExpressionType insead -->
     <xsd:complexType name="ExpressionType">
-        <xsd:annotation>
-            <xsd:documentation>
-                <!-- todo documentation -->
-            </xsd:documentation>
-        </xsd:annotation>
         <xsd:sequence>
             <xsd:element ref="tns:description" minOccurs="0"/>
-            <xsd:element ref="tns:expressionEvaluator" minOccurs="1" maxOccurs="unbounded" />
+            <xsd:element ref="tns:expressionEvaluator" minOccurs="1" maxOccurs="unbounded"/>
         </xsd:sequence>
     </xsd:complexType>
 
