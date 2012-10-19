@@ -156,7 +156,7 @@
                                     <type>jar</type>
                                 </artifactItem>
                             </artifactItems>
-                            <includes>**/*.xsd</includes>
+                            <includes>**/*.xsd,**/*.dtd</includes>
                             <outputDirectory>${project.basedir}/target/xsd-includes</outputDirectory>
                         </configuration>
                     </execution>
@@ -204,9 +204,9 @@
                                         <extraarg>-nexclude</extraarg>
                                         <extraarg>http://prism.evolveum.com/xml/ns/public/query-2</extraarg>
                                         <extraarg>-nexclude</extraarg>
-                                        <extraarg>http://www.w3.org/2000/09/xmldsig#</extraarg>
+                                        <extraarg>http://www.w3.org/2000/09/xmldsig#=org.w3._2000._09.xmldsig</extraarg>
                                         <extraarg>-nexclude</extraarg>
-                                        <extraarg>http://www.w3.org/2001/04/xmlenc#</extraarg>
+                                        <extraarg>http://www.w3.org/2001/04/xmlenc#=org.w3._2001._04.xmlenc</extraarg>
                                     </extraargs>
                                 </wsdlOption>
                                 <![CDATA[
