@@ -27,7 +27,7 @@
             xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
             xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
             xmlns:t="http://prism.evolveum.com/xml/ns/public/types-2"
-            xmlns:c="http://prism.evolveum.com/xml/ns/public/common-2"
+            xmlns:c="http://prism.evolveum.com/xml/ns/public/common/common-2"
             elementFormDefault="qualified"
             jaxb:extensionBindingPrefixes="xjc"
             jaxb:version="2.0">
@@ -50,8 +50,8 @@
         </xsd:annotation>
     </xsd:import>
 
-    <xsd:import namespace="http://prism.evolveum.com/xml/ns/public/common-2"
-                schemaLocation="http://prism.evolveum.com/xml/ns/public/common-2">
+    <xsd:import namespace="http://midpoint.evolveum.com/xml/ns/public/common/common-2"
+                schemaLocation="http://midpoint.evolveum.com/xml/ns/public/common/common-2">
         <xsd:annotation>
             <xsd:documentation>
                 MidPoint common schema.

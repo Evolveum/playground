@@ -38,7 +38,7 @@
                         schemaLocation="../../public/gui/form-1.xsd"/>
 
             <xsd:import namespace="http://midpoint.evolveum.com/xml/ns/public/common/common-2"
-            			schemaLocation="http://prism.evolveum.com/xml/ns/public/common/common-2"/>
+            			schemaLocation="http://midpoint.evolveum.com/xml/ns/public/common/common-2"/>
             <xsd:import namespace="http://prism.evolveum.com/xml/ns/public/types-2"
             			schemaLocation="http://prism.evolveum.com/xml/ns/public/types-2"/>
         </xsd:schema>
