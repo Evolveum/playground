@@ -25,11 +25,10 @@ import com.evolveum.midpoint.forms.impl.FormContextItem;
 import com.evolveum.midpoint.forms.impl.StructuredFormContext;
 import com.evolveum.midpoint.forms.impl.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.impl.interpreter.InterpreterException;
-import com.evolveum.midpoint.xml.ns._public.gui.form_1.FieldLoopType;
 import com.evolveum.midpoint.prism.*;
-import com.evolveum.midpoint.schema.holder.XPathHolder;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
+import com.evolveum.midpoint.xml.ns._public.gui.form_1.FieldLoopType;
 import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Element;
 
@@ -52,7 +51,7 @@ public class FieldLoopToken extends BaseGroupFieldToken<FieldLoopType> {
     @Override
     public String toString() {
         Element element = getField().getRef();
-        ReferenceType ref = element != null ? new ReferenceType(element) : null;
+        ReferenceToken ref = element != null ? new ReferenceToken(element) : null;
 
         return "FieldLoopToken{name=" + getField().getName() + ", ref=" + ref + '}';
     }
@@ -70,7 +69,7 @@ public class FieldLoopToken extends BaseGroupFieldToken<FieldLoopType> {
         LOGGER.debug("interpret {}", new Object[]{this});
 
         FieldLoopType loop = getField();
-        ReferenceType ref = validateReference(loop.getRef(), false);
+        ReferenceToken ref = validateReference(loop.getRef(), false);
         String key = ref.getKey();
 
         Map<String, FormContextItem> objects = context.getObjects();
@@ -86,9 +85,8 @@ public class FieldLoopToken extends BaseGroupFieldToken<FieldLoopType> {
         }
 
         PrismContainer parent = (PrismContainer) item;
-        if (StringUtils.isNotEmpty(ref.getValue())) {
-            XPathHolder holder = new XPathHolder(ref.getElement());
-            PropertyPath path = holder.toPropertyPath();
+        if (!ref.getPath().isEmpty()) {
+            PropertyPath path = ref.getPath();
 
             //todo field loop can point to PrismReference...
             this.container = parent.findContainer(path);
@@ -118,8 +116,8 @@ public class FieldLoopToken extends BaseGroupFieldToken<FieldLoopType> {
         }
     }
 
-    public ReferenceType getRef() {
+    public ReferenceToken getRef() {
         FieldLoopType loop = getField();
-        return new ReferenceType(loop.getRef());
+        return new ReferenceToken(loop.getRef());
     }
 }

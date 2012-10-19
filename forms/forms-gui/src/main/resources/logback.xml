@@ -31,5 +31,5 @@
     </root>
 
     <logger name="org.apache.wicket" level="WARN"/>
-    <logger name="com.evolveum.midpoint.forms.web" level="TRACE"/>
+    <logger name="com.evolveum.midpoint.forms" level="TRACE"/>
 </configuration>

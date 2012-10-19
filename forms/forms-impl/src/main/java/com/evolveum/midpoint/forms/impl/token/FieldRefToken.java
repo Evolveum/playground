@@ -95,7 +95,7 @@ public class FieldRefToken extends BaseFieldToken<FieldReferenceType> {
         builder.append(", alias=");
         builder.append(reference.getAlias());
         builder.append(", ref=");
-        builder.append(reference.getRef() != null ? new ReferenceType(reference.getRef()) : "null");
+        builder.append(reference.getRef() != null ? new ReferenceToken(reference.getRef()) : "null");
         builder.append('}');
 
         return builder.toString();

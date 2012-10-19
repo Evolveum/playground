@@ -21,24 +21,45 @@
 
 package com.evolveum.midpoint.forms.impl.token;
 
+import com.evolveum.midpoint.prism.PropertyPath;
+import com.evolveum.midpoint.prism.PropertyPathSegment;
+import com.evolveum.midpoint.schema.holder.XPathHolder;
 import org.apache.commons.lang.Validate;
 import org.w3c.dom.Element;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author lazyman
  */
-public class ReferenceType {
+public class ReferenceToken {
 
-    private static final String ATTR_KEY = "key";
     private Element element;
+    private PropertyPath path;
 
-    public ReferenceType(Element element) {
+    public ReferenceToken(Element element) {
         Validate.notNull(element, "Reference element must not be null.");
         this.element = element;
+
+        XPathHolder holder = new XPathHolder(element);
+        path = holder.toPropertyPath();
     }
 
     public String getKey() {
-        return element.getAttribute(ATTR_KEY);
+        if (!isFirstVariable()) {
+            return null;
+        }
+        return path.first().getName().getLocalPart();
+    }
+
+    private boolean isFirstVariable() {
+        PropertyPathSegment first = path.first();
+        if (first == null || !first.isVariable()) {
+            return false;
+        }
+
+        return true;
     }
 
     public String getValue() {
@@ -47,6 +68,17 @@ public class ReferenceType {
 
     public Element getElement() {
         return element;
+    }
+
+    public PropertyPath getPath() {
+        List<PropertyPathSegment> segments = new ArrayList<PropertyPathSegment>();
+        if (isFirstVariable()) {
+            segments.addAll(path.tail().getSegments());
+        } else {
+            segments.addAll(path.getSegments());
+        }
+
+        return new PropertyPath(segments);
     }
 
     @Override

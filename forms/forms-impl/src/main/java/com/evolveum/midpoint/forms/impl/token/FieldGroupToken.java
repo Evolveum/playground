@@ -26,12 +26,12 @@ import com.evolveum.midpoint.forms.impl.StructuredFormContext;
 import com.evolveum.midpoint.forms.impl.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.impl.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.impl.util.ItemDefinitionComparator;
-import com.evolveum.midpoint.xml.ns._public.gui.form_1.BaseFieldType;
-import com.evolveum.midpoint.xml.ns._public.gui.form_1.FieldGroupType;
 import com.evolveum.midpoint.prism.*;
 import com.evolveum.midpoint.schema.holder.XPathHolder;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
+import com.evolveum.midpoint.xml.ns._public.gui.form_1.BaseFieldType;
+import com.evolveum.midpoint.xml.ns._public.gui.form_1.FieldGroupType;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.w3c.dom.Element;
@@ -86,7 +86,7 @@ public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
     @Override
     public String toString() {
         Element element = getField().getRef();
-        ReferenceType ref = element != null ? new ReferenceType(element) : null;
+        ReferenceToken ref = element != null ? new ReferenceToken(element) : null;
 
         return "FieldGroupToken{name=" + getField().getName() + ", ref=" + ref + '}';
     }
@@ -95,7 +95,7 @@ public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
         FieldGroupType group = getField();
 
         LOGGER.debug("Found ref in field group, ignoring children.");
-        ReferenceType ref = validateReference(group.getRef(), false);
+        ReferenceToken ref = validateReference(group.getRef(), false);
         String key = ref.getKey();
 
         if (StringUtils.isEmpty(key) && (getParent() instanceof FieldLoopItemToken)) {
@@ -118,7 +118,7 @@ public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
     }
 
     private void interpretGroupInFieldLoop(InterpreterContext interpreterContext, StructuredFormContext context,
-                                           ReferenceType ref) throws InterpreterException {
+                                           ReferenceToken ref) throws InterpreterException {
 
         FieldLoopItemToken loopItemToken = (FieldLoopItemToken) getParent();
         FieldLoopToken loopToken = loopItemToken.getParent();
@@ -126,10 +126,8 @@ public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
 
         PrismContainerValue value = (PrismContainerValue) loopContainer.getValue(loopItemToken.getIndex());
         PrismContainerDefinition parentDef = value.getParent().getDefinition();
-        if (StringUtils.isNotEmpty(ref.getValue())) {
-            XPathHolder holder = new XPathHolder(ref.getElement());
-            PropertyPath path = holder.toPropertyPath();
-
+        if (!ref.getPath().isEmpty()) {
+            PropertyPath path = ref.getPath();
             Item item = value.findItem(path);
             //todo field loop can point to PrismReference
             if (item == null) {
@@ -149,7 +147,7 @@ public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
         }
     }
 
-    private void interpretGroup(StructuredFormContext context, ReferenceType ref) throws InterpreterException {
+    private void interpretGroup(StructuredFormContext context, ReferenceToken ref) throws InterpreterException {
         String key = ref.getKey();
         Map<String, FormContextItem> objects = context.getObjects();
         FormContextItem contextItem = objects.get(key);
@@ -164,9 +162,8 @@ public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
         }
 
         PrismContainer parent = (PrismContainer) item;
-        if (StringUtils.isNotEmpty(ref.getValue())) {
-            XPathHolder holder = new XPathHolder(ref.getElement());
-            PropertyPath path = holder.toPropertyPath();
+        if (!ref.getPath().isEmpty()) {
+            PropertyPath path = ref.getPath();
             //todo field group can point to PrismReference...
             this.container = parent.findContainer(path);
 

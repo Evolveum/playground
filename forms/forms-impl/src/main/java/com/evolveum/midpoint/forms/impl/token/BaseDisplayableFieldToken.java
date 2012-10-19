@@ -38,7 +38,7 @@ public abstract class BaseDisplayableFieldToken<T extends BaseDisplayableFieldTy
         super(parent, field);
     }
 
-    protected ReferenceType validateReference(Element refElement, boolean canBeNull)
+    protected ReferenceToken validateReference(Element refElement, boolean canBeNull)
             throws InterpreterException {
         if (refElement == null && !canBeNull) {
             throw new InterpreterException("Reference element is not defined for displayable field.");
@@ -48,6 +48,6 @@ public abstract class BaseDisplayableFieldToken<T extends BaseDisplayableFieldTy
             return null;
         }
 
-        return new ReferenceType(refElement);
+        return new ReferenceToken(refElement);
     }
 }
