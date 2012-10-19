@@ -38,18 +38,5 @@
     <public publicId="http://midpoint.evolveum.com/xml/ns/public/common/common-2" uri="../../../../target/xsd-includes/xml/ns/public/common/common-2.xsd" />
     <system systemId="http://midpoint.evolveum.com/xml/ns/public/common/common-2" uri="../../../../target/xsd-includes/xml/ns/public/common/common-2.xsd" />
 
-
-    <!--
-       <public publicId="http://midpoint.evolveum.com/xml/ns/public/common/fault-1.wsdl" uri="classpath:/xml/ns/public/query-2.xsd" />
-       <system systemId="http://midpoint.evolveum.com/xml/ns/public/common/fault-1.wsdl" uri="classpath:/xml/ns/public/query-2.xsd" />
-
-       <public publicId="http://prism.evolveum.com/xml/ns/public/query-2" uri="classpath:/xml/ns/public/query-2.xsd" />
-       <system systemId="http://prism.evolveum.com/xml/ns/public/query-2" uri="classpath:/xml/ns/public/query-2.xsd" />
-
-    -->
-	    
-<!--    <rewriteSystem systemIdStartString="http://midpoint.evolveum.com/xml/" rewritePrefix="main/resources/xml/"/>
-    <rewriteSystem systemIdStartString="http://prism.evolveum.com/xml/" rewritePrefix="../prism/main/resources/xml/"/>  -->
-    
    <nextCatalog catalog="catalog.xml"/>
 </catalog>

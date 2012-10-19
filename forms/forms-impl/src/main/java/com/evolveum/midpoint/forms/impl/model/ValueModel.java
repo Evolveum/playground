@@ -21,7 +21,7 @@
 
 package com.evolveum.midpoint.forms.impl.model;
 
-import com.evolveum.midpoint.forms.xml.FieldDisplayType;
+import com.evolveum.midpoint.xml.ns._public.gui.form_1.FieldDisplayType;
 import com.evolveum.midpoint.prism.PrismPropertyValue;
 import com.evolveum.midpoint.prism.polystring.PolyString;
 import org.apache.commons.lang.Validate;

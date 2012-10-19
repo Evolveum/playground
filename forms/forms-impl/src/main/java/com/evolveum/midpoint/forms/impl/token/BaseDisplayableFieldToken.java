@@ -22,7 +22,7 @@
 package com.evolveum.midpoint.forms.impl.token;
 
 import com.evolveum.midpoint.forms.impl.interpreter.InterpreterException;
-import com.evolveum.midpoint.forms.xml.BaseDisplayableFieldType;
+import com.evolveum.midpoint.xml.ns._public.gui.form_1.BaseDisplayableFieldType;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 import org.w3c.dom.Element;

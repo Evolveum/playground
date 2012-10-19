@@ -21,7 +21,7 @@
 
 package com.evolveum.midpoint.forms.impl.token;
 
-import com.evolveum.midpoint.forms.xml.BaseFieldType;
+import com.evolveum.midpoint.xml.ns._public.gui.form_1.BaseFieldType;
 import org.apache.commons.lang.Validate;
 
 /**

@@ -21,7 +21,7 @@
 
 package com.evolveum.midpoint.forms.impl.token;
 
-import com.evolveum.midpoint.forms.xml.BaseGroupFieldType;
+import com.evolveum.midpoint.xml.ns._public.gui.form_1.BaseGroupFieldType;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 

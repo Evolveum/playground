@@ -21,7 +21,7 @@
 
 package com.evolveum.midpoint.forms.impl.ui.widget;
 
-import com.evolveum.midpoint.forms.xml.PropertyType;
+import com.evolveum.midpoint.xml.ns._public.gui.form_1.PropertyType;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.StringUtils;

@@ -22,7 +22,7 @@
 package com.evolveum.midpoint.forms.impl.interpreter;
 
 import com.evolveum.midpoint.forms.impl.FormContextItem;
-import com.evolveum.midpoint.forms.xml.FormType;
+import com.evolveum.midpoint.xml.ns._public.gui.form_1.FormType;
 import com.evolveum.midpoint.prism.Item;
 import com.evolveum.midpoint.prism.PrismObject;
 import com.evolveum.midpoint.xml.ns._public.common.common_2.UserType;

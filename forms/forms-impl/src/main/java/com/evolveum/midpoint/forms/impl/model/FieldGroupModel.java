@@ -23,8 +23,8 @@ package com.evolveum.midpoint.forms.impl.model;
 
 import com.evolveum.midpoint.forms.impl.token.FieldGroupToken;
 import com.evolveum.midpoint.forms.impl.util.StructuredFormUtils;
-import com.evolveum.midpoint.forms.xml.DisplayType;
-import com.evolveum.midpoint.forms.xml.FieldDisplayType;
+import com.evolveum.midpoint.xml.ns._public.gui.form_1.DisplayType;
+import com.evolveum.midpoint.xml.ns._public.gui.form_1.FieldDisplayType;
 import com.evolveum.midpoint.prism.PrismContainerDefinition;
 import org.apache.commons.lang.StringUtils;
 

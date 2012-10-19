@@ -21,7 +21,7 @@
 
 package com.evolveum.midpoint.forms.impl.ui.widget;
 
-import com.evolveum.midpoint.forms.xml.PropertyType;
+import com.evolveum.midpoint.xml.ns._public.gui.form_1.PropertyType;
 import org.apache.commons.lang.Validate;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.Panel;

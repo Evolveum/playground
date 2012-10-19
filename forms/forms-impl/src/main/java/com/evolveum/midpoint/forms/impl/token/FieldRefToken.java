@@ -24,7 +24,7 @@ package com.evolveum.midpoint.forms.impl.token;
 import com.evolveum.midpoint.forms.impl.StructuredFormContext;
 import com.evolveum.midpoint.forms.impl.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.impl.interpreter.InterpreterException;
-import com.evolveum.midpoint.forms.xml.FieldReferenceType;
+import com.evolveum.midpoint.xml.ns._public.gui.form_1.FieldReferenceType;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 import org.apache.commons.lang.StringUtils;

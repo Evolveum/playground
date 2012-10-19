@@ -21,7 +21,7 @@
 
 package com.evolveum.midpoint.forms.impl.util;
 
-import com.evolveum.midpoint.forms.xml.*;
+import com.evolveum.midpoint.xml.ns._public.gui.form_1.*;
 import com.evolveum.midpoint.util.exception.SystemException;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;

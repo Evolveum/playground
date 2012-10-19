@@ -21,7 +21,7 @@
 
 package com.evolveum.midpoint.forms.impl.model;
 
-import com.evolveum.midpoint.forms.xml.DisplayType;
+import com.evolveum.midpoint.xml.ns._public.gui.form_1.DisplayType;
 
 /**
  * @author lazyman

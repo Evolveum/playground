@@ -25,7 +25,7 @@ import com.evolveum.midpoint.forms.impl.FormContextItem;
 import com.evolveum.midpoint.forms.impl.StructuredFormContext;
 import com.evolveum.midpoint.forms.impl.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.impl.interpreter.InterpreterException;
-import com.evolveum.midpoint.forms.xml.FieldLoopType;
+import com.evolveum.midpoint.xml.ns._public.gui.form_1.FieldLoopType;
 import com.evolveum.midpoint.prism.*;
 import com.evolveum.midpoint.schema.holder.XPathHolder;
 import com.evolveum.midpoint.util.logging.Trace;

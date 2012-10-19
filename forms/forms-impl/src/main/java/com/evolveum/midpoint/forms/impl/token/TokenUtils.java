@@ -22,7 +22,7 @@
 package com.evolveum.midpoint.forms.impl.token;
 
 import com.evolveum.midpoint.forms.impl.ui.UiRegistry;
-import com.evolveum.midpoint.forms.xml.*;
+import com.evolveum.midpoint.xml.ns._public.gui.form_1.*;
 import com.evolveum.midpoint.prism.PrismPropertyDefinition;
 import com.evolveum.midpoint.util.DOMUtil;
 import com.evolveum.midpoint.util.exception.SystemException;

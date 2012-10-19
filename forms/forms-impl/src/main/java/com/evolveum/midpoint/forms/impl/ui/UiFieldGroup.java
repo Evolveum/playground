@@ -23,7 +23,7 @@ package com.evolveum.midpoint.forms.impl.ui;
 
 import com.evolveum.midpoint.forms.impl.model.FieldGroupModel;
 import com.evolveum.midpoint.forms.impl.model.LineModel;
-import com.evolveum.midpoint.forms.xml.DisplayType;
+import com.evolveum.midpoint.xml.ns._public.gui.form_1.DisplayType;
 import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.WebMarkupContainer;

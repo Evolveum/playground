@@ -22,7 +22,7 @@
 package com.evolveum.midpoint.forms.impl.model;
 
 import com.evolveum.midpoint.forms.impl.token.FormToken;
-import com.evolveum.midpoint.forms.xml.FormDisplayType;
+import com.evolveum.midpoint.xml.ns._public.gui.form_1.FormDisplayType;
 
 /**
  * @author lazyman
