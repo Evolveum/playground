@@ -27,34 +27,25 @@
             xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
             xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
             xmlns:t="http://prism.evolveum.com/xml/ns/public/types-2"
-            xmlns:c="http://prism.evolveum.com/xml/ns/public/common/common-2"
+            xmlns:c="http://midpoint.evolveum.com/xml/ns/public/common/common-2"
             elementFormDefault="qualified"
             jaxb:extensionBindingPrefixes="xjc"
             jaxb:version="2.0">
-
-    <xsd:annotation>
-        <xsd:appinfo>
-            <jaxb:globalBindings>
-                <xjc:typeSubstitution type="complex"/>
-                <xjc:serializable uid="201208301640"/>
-            </jaxb:globalBindings>
-        </xsd:appinfo>
-    </xsd:annotation>
-
-    <xsd:import namespace="http://prism.evolveum.com/xml/ns/public/types-2"
-                schemaLocation="http://prism.evolveum.com/xml/ns/public/types-2">
-        <xsd:annotation>
-            <xsd:documentation>
-                Prism data types.
-            </xsd:documentation>
-        </xsd:annotation>
-    </xsd:import>
 
     <xsd:import namespace="http://midpoint.evolveum.com/xml/ns/public/common/common-2"
                 schemaLocation="http://midpoint.evolveum.com/xml/ns/public/common/common-2">
         <xsd:annotation>
             <xsd:documentation>
                 MidPoint common schema.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:import>
+
+    <xsd:import namespace="http://prism.evolveum.com/xml/ns/public/types-2"
+                schemaLocation="http://prism.evolveum.com/xml/ns/public/types-2">
+        <xsd:annotation>
+            <xsd:documentation>
+                Prism data types.
             </xsd:documentation>
         </xsd:annotation>
     </xsd:import>

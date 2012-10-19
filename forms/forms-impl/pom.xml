@@ -178,7 +178,7 @@
                                     <!-- Ugly hack. The fake WSDL includes all the XSD files we need to compile
                             This is the only way I found to generate equals and hashCode methods with CXF.
                             If you find anything better please correct it. -->
-                                    <wsdl>src/main/resources/xml/ns/private/fake/fakeWrapper.wsdl</wsdl>
+                                    <wsdl>src/main/resources/xml/ns/private/fake/form-fakeWrapper.wsdl</wsdl>
                                     <catalog>${basedir}/src/main/resources/META-INF/jax-ws-catalog.xml</catalog>
                                     <extraargs>
                                         <extraarg>-impl</extraarg>
@@ -186,6 +186,7 @@
                                         <extraarg>-validate</extraarg>
                                         <extraarg>-xjc-Xts</extraarg>
                                         <extraarg>-xjc-XhashCode</extraarg>
+                                        <extraarg>-xjc-copy-constructor</extraarg>
                                         <extraarg>
                                             -xjc-XhashCode-hashCodeStrategyClass=com.evolveum.midpoint.schema.DomAwareHashCodeStrategy
                                         </extraarg>
@@ -193,11 +194,19 @@
                                         <extraarg>
                                             -xjc-Xequals-equalsStrategyClass=com.evolveum.midpoint.schema.DomAwareEqualsStrategy
                                         </extraarg>
+
                                         <extraarg>-nexclude</extraarg>
                                         <extraarg>http://prism.evolveum.com/xml/ns/public/types-2</extraarg>
                                         <extraarg>-nexclude</extraarg>
-                                        <extraarg>http://prism.evolveum.com/xml/ns/public/common-2</extraarg>
-                                        <extraarg>-xjc-copy-constructor</extraarg>
+                                        <extraarg>http://midpoint.evolveum.com/xml/ns/public/common/common-2</extraarg>
+                                        <extraarg>-nexclude</extraarg>
+                                        <extraarg>http://prism.evolveum.com/xml/ns/public/annotation-2</extraarg>
+                                        <extraarg>-nexclude</extraarg>
+                                        <extraarg>http://prism.evolveum.com/xml/ns/public/query-2</extraarg>
+                                        <extraarg>-nexclude</extraarg>
+                                        <extraarg>http://www.w3.org/2000/09/xmldsig#</extraarg>
+                                        <extraarg>-nexclude</extraarg>
+                                        <extraarg>http://www.w3.org/2001/04/xmlenc#</extraarg>
                                     </extraargs>
                                 </wsdlOption>
                                 <![CDATA[

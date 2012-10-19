@@ -20,8 +20,8 @@
  * -->
 
 <definitions name="fake"
-             targetNamespace="http://midpoint.evolveum.com/xml/ns/private/fake/fake-1.wsdl"
-             xmlns:tns="http://midpoint.evolveum.com/xml/ns/private/fake/fake-1.wsdl"
+             targetNamespace="http://midpoint.evolveum.com/xml/ns/private/fake/form-fake-1.wsdl"
+             xmlns:tns="http://midpoint.evolveum.com/xml/ns/private/fake/form-fake-1.wsdl"
              xmlns="http://schemas.xmlsoap.org/wsdl/"
              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
              xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
@@ -33,14 +33,22 @@
     </documentation>
 
     <types>
-        <xsd:schema targetNamespace="http://midpoint.evolveum.com/xml/ns/private/fake/fake-1.wsdl">
+        <xsd:schema targetNamespace="http://midpoint.evolveum.com/xml/ns/private/fake/form-fake-1.wsdl">
             <xsd:import namespace="http://midpoint.evolveum.com/xml/ns/public/gui/form-1"
                         schemaLocation="../../public/gui/form-1.xsd"/>
 
-            <xsd:import namespace="http://midpoint.evolveum.com/xml/ns/public/common/common-2"
-            			schemaLocation="http://midpoint.evolveum.com/xml/ns/public/common/common-2"/>
+            <xsd:import namespace="http://prism.evolveum.com/xml/ns/public/annotation-2"
+                        schemaLocation="http://prism.evolveum.com/xml/ns/public/annotation-2"/>
             <xsd:import namespace="http://prism.evolveum.com/xml/ns/public/types-2"
-            			schemaLocation="http://prism.evolveum.com/xml/ns/public/types-2"/>
+                        schemaLocation="http://prism.evolveum.com/xml/ns/public/types-2"/>
+            <xsd:import namespace="http://prism.evolveum.com/xml/ns/public/query-2"
+                        schemaLocation="http://prism.evolveum.com/xml/ns/public/query-2"/>
+            <xsd:import namespace="http://midpoint.evolveum.com/xml/ns/public/common/common-2"
+                        schemaLocation="http://midpoint.evolveum.com/xml/ns/public/common/common-2"/>
+            <xsd:import namespace="http://www.w3.org/2001/04/xmlenc#"
+                        schemaLocation="http://www.w3.org/2001/04/xmlenc#"/>
+            <xsd:import namespace="http://www.w3.org/2000/09/xmldsig#"
+                        schemaLocation="http://www.w3.org/2000/09/xmldsig#"/>
         </xsd:schema>
     </types>
 
