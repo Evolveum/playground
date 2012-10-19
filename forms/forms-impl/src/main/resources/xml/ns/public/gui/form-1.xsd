@@ -222,7 +222,7 @@
                     <xsd:element name="display" type="tns:FieldDisplayType" minOccurs="0"/>
                     <xsd:element name="source" type="tns:ChannelType" minOccurs="0"/>
                     <xsd:element name="target" type="tns:ChannelType" minOccurs="0"/>
-                    <xsd:element name="value" type="tns:ValueType" minOccurs="0"/>
+                    <xsd:element name="valueDescription" type="tns:ValueType" minOccurs="0"/>
                 </xsd:sequence>
                 <xsd:attribute name="widget" type="xsd:string" use="optional"/>
             </xsd:extension>

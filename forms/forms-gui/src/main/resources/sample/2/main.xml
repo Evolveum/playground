@@ -19,14 +19,15 @@
   ~
   ~ Portions Copyrighted 2012 [name of copyright owner]
   -->
-<form xmlns="http://midpoint.evolveum.com/xml/ns/public/gui/form"
+<form xmlns="http://midpoint.evolveum.com/xml/ns/public/gui/form-1"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://midpoint.evolveum.com/xml/ns/public/gui/form-1 ../../../../../../forms-impl/src/main/resources/xml/ns/public/gui/form-1.xsd"
       name="Main Form">
 
     <include file="other.xml" alias="other" />
 
     <field widget="text">
-        <ref key="user">c:name</ref>
+        <ref>$user/c:name</ref>
         <display>
             <label>xml.public.common.user.name</label>
             <help>xml.public.common.user.name.help</help>
@@ -39,21 +40,21 @@
     </field>
 
     <field widget="checkbox">
-        <ref key="user">c:activation/c:enabled</ref>
+        <ref>$user/c:activation/c:enabled</ref>
         <display>
             <label>Enabled</label>
         </display>
     </field>
 
     <field name="activation" widget="date">
-        <ref key="user">c:activation/c:validFrom</ref>
+        <ref>$user/c:activation/c:validFrom</ref>
         <display>
             <label>Valid from</label>
         </display>
     </field>
 
     <field widget="password">
-        <ref key="user">c:credentials/c:password/c:value</ref>
+        <ref>$user/c:credentials/c:password/c:value</ref>
         <display>
             <label>Password</label>
         </display>
@@ -65,20 +66,20 @@
         </display>
 
         <field>
-            <ref key="user">c:givenName</ref>
+            <ref>$user/c:givenName</ref>
             <display>
                 <label>Given name</label>
             </display>
         </field>
         <field>
-            <ref key="user">c:familyName</ref>
+            <ref>$user/c:familyName</ref>
             <display newLine="false">
                 <label>Family name</label>
             </display>
         </field>
 
         <field>
-            <ref key="user">c:fullName</ref>
+            <ref>$user/c:fullName</ref>
             <display>
                 <label>Full name</label>
                 <cssStyle>font-size: 20px;</cssStyle>

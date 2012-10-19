@@ -21,8 +21,8 @@
   ~ Portions Copyrighted 2012 [name of copyright owner]
   -->
 <form xmlns="http://midpoint.evolveum.com/xml/ns/public/gui/form-1"
+      xmlns:c="http://midpoint.evolveum.com/xml/ns/public/common/common-2"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://midpoint.evolveum.com/xml/ns/public/gui/form-1 ../../../../../../forms-impl/src/main/resources/form.xsd"
       name="User Detail Form">
 
     <field widget="text">
@@ -52,9 +52,9 @@
                 <!-- value will be default variable for referenced prism value, language by default as groovy -->
                 <ref>$user/c:costCenter</ref>
                 <expression>
-                    <script>
-                        <code>value.split()[0]</code>
-                    </script>
+                    <c:script>
+                        <c:code>value.split()[0]</c:code>
+                    </c:script>
                 </expression>
             </source>
         </field>
@@ -65,9 +65,9 @@
             <source>
                 <ref>$user/c:costCenter</ref>
                 <expression>
-                    <script>
-                        <code>value.split()[1]</code>
-                    </script>
+                    <c:script>
+                        <c:code>value.split()[1]</c:code>
+                    </c:script>
                 </expression>
             </source>
         </field>
@@ -78,9 +78,9 @@
             <source>
                 <ref>$user/c:costCenter</ref>
                 <expression>
-                    <script>
-                        <code>value.split()[2]</code>
-                    </script>
+                    <c:script>
+                        <c:code>value.split()[2]</c:code>
+                    </c:script>
                 </expression>
             </source>
         </field>
@@ -96,9 +96,9 @@
             <target>
                 <ref>$user/c:costCenter</ref>
                 <expression>
-                    <script>
-                        <code>street + ',' + city + ',' + zip</code>
-                    </script>
+                    <c:script>
+                        <c:code>street + ',' + city + ',' + zip</c:code>
+                    </c:script>
                 </expression>
             </target>
         </field>
@@ -126,17 +126,17 @@
             <source>
                 <ref>$user/c:costCenter</ref>
                 <expression>
-                    <script>
-                        <code>value</code>
-                    </script>
+                    <c:script>
+                        <c:code>value</c:code>
+                    </c:script>
                 </expression>
             </source>
             <target>
                 <ref>$user/c:costCenter</ref>
                 <expression>
-                    <script>
-                        <code>value</code>
-                    </script>
+                    <c:script>
+                        <c:code>value</c:code>
+                    </c:script>
                 </expression>
             </target>
         </field>
@@ -155,9 +155,9 @@
         <target>
             <ref>$user/c:emailAddress</ref>
             <expression>
-                <script>
-                    <code>name + '@example.com'</code>
-                </script>
+                <c:script>
+                    <c:code>name + '@example.com'</c:code>
+                </c:script>
             </expression>
         </target>
     </field>
@@ -165,33 +165,33 @@
     <!-- this example shows emailAddress value without domain (everything after @ is not shown, but it's saved) -->
     <field name="email">
         <enabled>
-            <script>
-                <code>
+            <c:script>
+                <c:code>
                     <!--todo how should this look like? -->
-                </code>
-            </script>
+                </c:code>
+            </c:script>
         </enabled>
         <visible>
-            <script>
-                <code>
+            <c:script>
+                <c:code>
                     <!--todo how should this look like? -->
-                </code>
-            </script>
+                </c:code>
+            </c:script>
         </visible>
         <source>
             <ref>$user/c:emailAddress</ref>
             <expression>
-                <script>
-                    <code>value.replace('@example.com','')</code>
-                </script>
+                <c:script>
+                    <c:code>value.replace('@example.com','')</c:code>
+                </c:script>
             </expression>
         </source>
         <target>
             <ref>$user/c:emailAddress</ref>
             <expression>
-                <script>
-                    <code>value + '@example.com'</code>
-                </script>
+                <c:script>
+                    <c:code>value + '@example.com'</c:code>
+                </c:script>
             </expression>
         </target>
     </field>
@@ -203,30 +203,30 @@
         <display>
             <property name="renderer">com.evolveum.midpoint.forms.example.SampleComboRenderer</property>
         </display>
-        <value>
+        <valueDescription>
             <!-- sample 1 List<Object> is create from values defined as constants -->
             <availableValues xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                              xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-                <object xsi:type="xsd:int">1</object>
-                <object xsi:type="xsd:int">2</object>
-                <object xsi:type="xsd:int">3</object>
+                <c:value xsi:type="xsd:int">1</c:value>
+                <c:value xsi:type="xsd:int">2</c:value>
+                <c:value xsi:type="xsd:int">3</c:value>
             </availableValues>
 
             <!-- sample 2 - this should return List<Object>, never null -->
             <!--
             <availableValues>
-                <invoke>com.evoleum.midpoint.forms.example.SampleClass.getGroups</invoke>
+                <c:invoke>com.evoleum.midpoint.forms.example.SampleClass.getGroups</c:invoke>
             </availableValues>
             -->
 
             <!-- sample 3 - this script should return List<Object> -->
             <!--
             <availableValues>
-                <script>
-                    <code>email.split('@')</code>
-                </script>
+                <c:script>
+                    <c:code>email.split('@')</c:code>
+                </c:script>
             </availableValues>
             -->
-        </value>
+        </valueDescription>
     </field>
 </form>

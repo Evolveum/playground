@@ -19,15 +19,16 @@
   ~
   ~ Portions Copyrighted 2012 [name of copyright owner]
   -->
-<form xmlns="http://midpoint.evolveum.com/xml/ns/public/gui/form"
+<form xmlns="http://midpoint.evolveum.com/xml/ns/public/gui/form-1"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://midpoint.evolveum.com/xml/ns/public/gui/form-1 ../../../../../../forms-impl/src/main/resources/xml/ns/public/gui/form-1.xsd"
       name="User Detail Form">
 
     <fieldGroup>
         <display>
             <cssStyle>background-color: #ccc;</cssStyle>
         </display>
-        <ref key="user"/>
+        <ref>$user</ref>
 
         <exclusions>
             <exclusion>c:fetchResult</exclusion>
