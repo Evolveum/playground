@@ -26,7 +26,7 @@
       name="User Detail Form">
 
     <field widget="text">
-        <ref key="user">c:name</ref>
+        <ref>$user/c:name</ref>
         <display>
             <label>xml.public.common.user.name</label>
             <tooltip>xml.public.common.user.name.tooltip</tooltip>
@@ -50,7 +50,7 @@
             </display>
             <source>
                 <!-- value will be default variable for referenced prism value, language by default as groovy -->
-                <ref key="user">c:costCenter</ref>
+                <ref>$user/c:costCenter</ref>
                 <expression>
                     <script>
                         <code>value.split()[0]</code>
@@ -63,7 +63,7 @@
                 <label>City</label>
             </display>
             <source>
-                <ref key="user">c:costCenter</ref>
+                <ref>$user/c:costCenter</ref>
                 <expression>
                     <script>
                         <code>value.split()[1]</code>
@@ -76,7 +76,7 @@
                 <label>Zip</label>
             </display>
             <source>
-                <ref key="user">c:costCenter</ref>
+                <ref>$user/c:costCenter</ref>
                 <expression>
                     <script>
                         <code>value.split()[2]</code>
@@ -94,7 +94,7 @@
         -->
         <field widget="none">
             <target>
-                <ref key="user">c:costCenter</ref>
+                <ref>$user/c:costCenter</ref>
                 <expression>
                     <script>
                         <code>street + ',' + city + ',' + zip</code>
@@ -110,21 +110,21 @@
 
         <!-- these fields are the same -->
         <field>
-            <ref key="user">c:costCenter</ref>
+            <ref>$user/c:costCenter</ref>
         </field>
 
         <field>
             <source>
-                <ref key="user">c:costCenter</ref>
+                <ref>$user/c:costCenter</ref>
             </source>
             <target>
-                <ref key="user">c:costCenter</ref>
+                <ref>$user/c:costCenter</ref>
             </target>
         </field>
 
         <field>
             <source>
-                <ref key="user">c:costCenter</ref>
+                <ref>$user/c:costCenter</ref>
                 <expression>
                     <script>
                         <code>value</code>
@@ -132,7 +132,7 @@
                 </expression>
             </source>
             <target>
-                <ref key="user">c:costCenter</ref>
+                <ref>$user/c:costCenter</ref>
                 <expression>
                     <script>
                         <code>value</code>
@@ -149,11 +149,11 @@
 
 
     <field widget="text" name="login">
-        <ref key="user">c:name</ref>
+        <ref>$user/c:name</ref>
     </field>
     <field widget="none">
         <target>
-            <ref key="user">c:emailAddress</ref>
+            <ref>$user/c:emailAddress</ref>
             <expression>
                 <script>
                     <code>name + '@example.com'</code>
@@ -179,7 +179,7 @@
             </script>
         </visible>
         <source>
-            <ref key="user">c:emailAddress</ref>
+            <ref>$user/c:emailAddress</ref>
             <expression>
                 <script>
                     <code>value.replace('@example.com','')</code>
@@ -187,7 +187,7 @@
             </expression>
         </source>
         <target>
-            <ref key="user">c:emailAddress</ref>
+            <ref>$user/c:emailAddress</ref>
             <expression>
                 <script>
                     <code>value + '@example.com'</code>
@@ -199,7 +199,7 @@
     <!-- loading groups from ldap, then they can be chosen from combobox (ExampleClass.staticMethod), with
         custom renderer. Value can be also used for mutliple select, and ...? -->
     <field widget="combo">
-        <ref key="user">c:additionalName</ref>
+        <ref>$user/c:additionalName</ref>
         <display>
             <property name="renderer">com.evolveum.midpoint.forms.example.SampleComboRenderer</property>
         </display>

@@ -26,6 +26,7 @@
             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
             xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+            xmlns:t="http://prism.evolveum.com/xml/ns/public/types-2"
             elementFormDefault="qualified"
             jaxb:extensionBindingPrefixes="xjc"
             jaxb:version="2.0">
@@ -38,6 +39,15 @@
             </jaxb:globalBindings>
         </xsd:appinfo>
     </xsd:annotation>
+
+    <xsd:import namespace="http://prism.evolveum.com/xml/ns/public/types-2"
+                schemaLocation="http://prism.evolveum.com/xml/ns/public/types-2">
+        <xsd:annotation>
+            <xsd:documentation>
+                Prism data types.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:import>
 
     <xsd:element name="form" type="tns:FormType"/>
 
@@ -105,7 +115,7 @@
         <xsd:complexContent>
             <xsd:extension base="tns:BaseFieldType">
                 <xsd:sequence>
-                    <xsd:element name="ref" type="tns:ReferenceType" minOccurs="0"/>
+                    <xsd:element name="ref" type="t:XPathType" minOccurs="0"/>
                 </xsd:sequence>
                 <xsd:attribute name="include" type="xsd:string" use="optional"/>
                 <xsd:attribute name="alias" type="xsd:string" use="required"/>
@@ -173,7 +183,7 @@
         <xsd:complexContent>
             <xsd:extension base="tns:BaseGroupFieldType">
                 <xsd:sequence>
-                    <xsd:element name="ref" type="tns:ReferenceType"/>
+                    <xsd:element name="ref" type="t:XPathType"/>
                 </xsd:sequence>
             </xsd:extension>
         </xsd:complexContent>
@@ -189,7 +199,7 @@
         <xsd:complexContent>
             <xsd:extension base="tns:BaseGroupFieldType">
                 <xsd:sequence>
-                    <xsd:element name="ref" type="tns:ReferenceType" minOccurs="0"/>
+                    <xsd:element name="ref" type="t:XPathType" minOccurs="0"/>
 
                     <xsd:element name="exclusions" type="tns:ExclusionsType" minOccurs="0"/>
                 </xsd:sequence>
@@ -207,7 +217,7 @@
         <xsd:complexContent>
             <xsd:extension base="tns:BaseDisplayableFieldType">
                 <xsd:sequence>
-                    <xsd:element name="ref" type="tns:ReferenceType" minOccurs="0"/>
+                    <xsd:element name="ref" type="t:XPathType" minOccurs="0"/>
                     <xsd:element name="display" type="tns:FieldDisplayType" minOccurs="0"/>
                     <xsd:element name="source" type="tns:ChannelType" minOccurs="0"/>
                     <xsd:element name="target" type="tns:ChannelType" minOccurs="0"/>
@@ -238,32 +248,8 @@
 
     <xsd:complexType name="ExclusionsType">
         <xsd:sequence>
-            <xsd:element name="exclusion" type="tns:PathType" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="exclusion" type="t:XPathType" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
-    </xsd:complexType>
-
-    <xsd:complexType name="PathType" mixed="true">
-        <xsd:annotation>
-            <xsd:appinfo>
-                <jaxb:dom/>
-            </xsd:appinfo>
-        </xsd:annotation>
-        <xsd:simpleContent>
-            <xsd:extension base="xsd:string"/>
-        </xsd:simpleContent>
-    </xsd:complexType>
-
-    <xsd:complexType name="ReferenceType" mixed="true">
-        <xsd:annotation>
-            <xsd:appinfo>
-                <jaxb:dom/>
-            </xsd:appinfo>
-        </xsd:annotation>
-        <xsd:simpleContent>
-            <xsd:extension base="xsd:string">
-                <xsd:attribute name="key" type="xsd:string"/>
-            </xsd:extension>
-        </xsd:simpleContent>
     </xsd:complexType>
 
     <xsd:complexType name="ValueType">
@@ -293,7 +279,7 @@
             </xsd:documentation>
         </xsd:annotation>
         <xsd:sequence>
-            <xsd:element name="ref" type="tns:ReferenceType"/>
+            <xsd:element name="ref" type="t:XPathType"/>
             <xsd:element ref="tns:expression" minOccurs="0"/>
         </xsd:sequence>
     </xsd:complexType>

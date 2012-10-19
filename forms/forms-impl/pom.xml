@@ -27,7 +27,7 @@
     <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
     <name>forms-impl</name>
-	<parent>
+    <parent>
         <artifactId>forms</artifactId>
         <groupId>com.evolveum.midpoint</groupId>
         <version>0.0.1-SNAPSHOT</version>
@@ -35,9 +35,11 @@
     </parent>
 
     <properties>
+        <cxf.version>2.4.3</cxf.version>
+        <cxf-xjc.version>2.4.0</cxf-xjc.version>
         <common.gui.version>0.0.1-SNAPSHOT</common.gui.version>
     </properties>
-    
+
     <dependencies>
         <dependency>
             <groupId>com.evolveum.midpoint</groupId>
@@ -98,6 +100,7 @@
             </testResource>
         </testResources>
         <plugins>
+            <!--
             <plugin>
                 <groupId>org.jvnet.jaxb2.maven2</groupId>
                 <artifactId>maven-jaxb2-plugin</artifactId>
@@ -113,12 +116,118 @@
                     <args>
                         <arg>-copy-constructor</arg>
                     </args>
-                    <generatePackage>com.evolveum.midpoint.forms.xml</generatePackage>
+                    <generatePackage>com.evolveum.midpoint.forms.impl.xml</generatePackage>
                     <extension>true</extension>
                     <schemaDirectory>src/main/resources</schemaDirectory>
                     <generateDirectory>${project.build.directory}/generated-sources/xjc</generateDirectory>
                 </configuration>
                 <dependencies>
+                    <dependency>
+                        <groupId>net.sourceforge.ccxjc</groupId>
+                        <artifactId>cc-xjc-plugin</artifactId>
+                        <version>2.0</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            -->
+            <plugin>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-codegen-plugin</artifactId>
+                <version>${cxf.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-sources</id>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <sourceRoot>${project.build.directory}/generated/cxf</sourceRoot>
+                            <wsdlRoot>${project.directory}/src/main/resources/xml</wsdlRoot>
+                            <wsdlOptions>
+                                <wsdlOption>
+                                    <!-- Ugly hack. The fake WSDL includes all the XSD files we need to compile
+                            This is the only way I found to generate equals and hashCode methods with CXF.
+                            If you find anything better please correct it. -->
+                                    <wsdl>src/main/resources/xml/ns/private/fake/fakeWrapper.wsdl</wsdl>
+                                    <catalog>${basedir}/src/main/resources/META-INF/jax-ws-catalog.xml</catalog>
+                                    <extraargs>
+                                        <extraarg>-impl</extraarg>
+                                        <extraarg>-verbose</extraarg>
+                                        <extraarg>-validate</extraarg>
+                                        <extraarg>-xjc-Xts</extraarg>
+                                        <extraarg>-xjc-XhashCode</extraarg>
+                                        <extraarg>
+                                            -xjc-XhashCode-hashCodeStrategyClass=com.evolveum.midpoint.schema.DomAwareHashCodeStrategy
+                                        </extraarg>
+                                        <extraarg>-xjc-Xequals</extraarg>
+                                        <extraarg>
+                                            -xjc-Xequals-equalsStrategyClass=com.evolveum.midpoint.schema.DomAwareEqualsStrategy
+                                        </extraarg>
+                                        <extraarg>-nexclude</extraarg>
+                                        <extraarg>http://prism.evolveum.com/xml/ns/public/types-2</extraarg>
+                                        <extraarg>-xjc-copy-constructor</extraarg>
+                                    </extraargs>
+                                </wsdlOption>
+                                <![CDATA[
+                            <wsdlOption>
+                                <wsdl>src/main/resources/xml/ns/private/model/modelWrapper.wsdl</wsdl>
+                                <catalog>${basedir}/src/main/resources/META-INF/jax-ws-catalog.xml</catalog>
+                                <extraargs>
+                                    <extraarg>-impl</extraarg>
+                                    <extraarg>-verbose</extraarg>
+                                    <extraarg>-validate</extraarg>
+                                    <extraarg>-xjc-Xts</extraarg>
+                                    <extraarg>-xjc-XhashCode</extraarg>
+                                    <extraarg>-xjc-Xequals</extraarg>
+                                    <extraarg>
+                                        -xjc-Xequals-equalsStrategyClass=com.evolveum.midpoint.schema.DomAwareEqualsStrategy
+                                    </extraarg>
+                                    <extraarg>-nexclude</extraarg>
+                                    <extraarg>http://prism.evolveum.com/xml/ns/public/types-2</extraarg>
+                                    <!-- <extraargs>-version</extraargs> -->
+                                </extraargs>
+                            </wsdlOption>
+                            <wsdlOption>
+                                <!-- Ugly hack. The fake WSDL includes all the XSD files we need to compile
+                        This is the only way I found to generate equals and hashCode methods with CXF.
+                        If you find anything better please correct it. -->
+                                <wsdl>src/main/resources/xml/ns/private/fake/fakeWrapper.wsdl</wsdl>
+                                <catalog>${basedir}/src/main/resources/META-INF/jax-ws-catalog.xml</catalog>
+                                <extraargs>
+                                    <extraarg>-impl</extraarg>
+                                    <extraarg>-verbose</extraarg>
+                                    <extraarg>-validate</extraarg>
+                                    <extraarg>-xjc-Xts</extraarg>
+                                    <extraarg>-xjc-XhashCode</extraarg>
+                                    <extraarg>
+                                        -xjc-XhashCode-hashCodeStrategyClass=com.evolveum.midpoint.schema.DomAwareHashCodeStrategy
+                                    </extraarg>
+                                    <extraarg>-xjc-Xequals</extraarg>
+                                    <extraarg>
+                                        -xjc-Xequals-equalsStrategyClass=com.evolveum.midpoint.schema.DomAwareEqualsStrategy
+                                    </extraarg>
+                                    <extraarg>-nexclude</extraarg>
+                                    <extraarg>http://prism.evolveum.com/xml/ns/public/types-2</extraarg>
+                                    <!-- <extraargs>-version</extraargs> -->
+                                </extraargs>
+                            </wsdlOption>
+                            ]]>
+                            </wsdlOptions>
+                        </configuration>
+                        <goals>
+                            <goal>wsdl2java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.cxf.xjcplugins</groupId>
+                        <artifactId>cxf-xjc-ts</artifactId>
+                        <version>${cxf-xjc.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.jvnet.jaxb2_commons</groupId>
+                        <artifactId>jaxb2-basics</artifactId>
+                        <version>0.6.3</version>
+                    </dependency>
                     <dependency>
                         <groupId>net.sourceforge.ccxjc</groupId>
                         <artifactId>cc-xjc-plugin</artifactId>
