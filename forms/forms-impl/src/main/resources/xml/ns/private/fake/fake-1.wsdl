@@ -34,10 +34,11 @@
 
     <types>
         <xsd:schema targetNamespace="http://midpoint.evolveum.com/xml/ns/private/fake/fake-1.wsdl">
-            <xsd:import namespace="http://midpoint.evolveum.com/xml/ns/public/common/common-2"
+            <xsd:import namespace="http://midpoint.evolveum.com/xml/ns/public/gui/form-1"
                         schemaLocation="../../public/gui/form-1.xsd"/>
+
             <xsd:import namespace="http://midpoint.evolveum.com/xml/ns/public/common/common-2"
-            			schemaLocation="../../public/common/common-2.xsd"/>
+            			schemaLocation="http://prism.evolveum.com/xml/ns/public/common/common-2"/>
             <xsd:import namespace="http://prism.evolveum.com/xml/ns/public/types-2"
             			schemaLocation="http://prism.evolveum.com/xml/ns/public/types-2"/>
         </xsd:schema>

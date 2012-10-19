@@ -163,6 +163,8 @@
                                         </extraarg>
                                         <extraarg>-nexclude</extraarg>
                                         <extraarg>http://prism.evolveum.com/xml/ns/public/types-2</extraarg>
+                                        <extraarg>-nexclude</extraarg>
+                                        <extraarg>http://prism.evolveum.com/xml/ns/public/common-2</extraarg>
                                         <extraarg>-xjc-copy-constructor</extraarg>
                                     </extraargs>
                                 </wsdlOption>

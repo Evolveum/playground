@@ -27,6 +27,7 @@
             xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
             xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
             xmlns:t="http://prism.evolveum.com/xml/ns/public/types-2"
+            xmlns:c="http://prism.evolveum.com/xml/ns/public/common-2"
             elementFormDefault="qualified"
             jaxb:extensionBindingPrefixes="xjc"
             jaxb:version="2.0">
@@ -45,6 +46,15 @@
         <xsd:annotation>
             <xsd:documentation>
                 Prism data types.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:import>
+
+    <xsd:import namespace="http://prism.evolveum.com/xml/ns/public/common-2"
+                schemaLocation="http://prism.evolveum.com/xml/ns/public/common-2">
+        <xsd:annotation>
+            <xsd:documentation>
+                MidPoint common schema.
             </xsd:documentation>
         </xsd:annotation>
     </xsd:import>
@@ -132,7 +142,7 @@
         <xsd:complexContent>
             <xsd:extension base="tns:BaseFieldType">
                 <xsd:sequence>
-                    <xsd:element name="enabled" type="tns:ExpressionType" minOccurs="0">
+                    <xsd:element name="enabled" type="c:ExpressionType" minOccurs="0">
                         <xsd:annotation>
                             <xsd:documentation>
                                 This element is responsible for enabling/disabling input fields. Now it's only simple
@@ -142,7 +152,7 @@
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:element>
-                    <xsd:element name="visible" type="tns:ExpressionType" minOccurs="0">
+                    <xsd:element name="visible" type="c:ExpressionType" minOccurs="0">
                         <xsd:annotation>
                             <xsd:documentation>
                                 This element is responsible for visibility of input fields. Now it's only simple
@@ -267,7 +277,7 @@
             <xsd:element name="minOccurs" type="xsd:int" minOccurs="0"/>
             <xsd:element name="maxOccurs" type="xsd:int" minOccurs="0"/>
 
-            <xsd:element name="availableValues" type="tns:ExpressionType" minOccurs="0"/>
+            <xsd:element name="availableValues" type="c:ExpressionType" minOccurs="0"/>
             <xsd:element name="validation" type="tns:ValidationType" minOccurs="0"/>
         </xsd:sequence>
     </xsd:complexType>
@@ -280,7 +290,7 @@
         </xsd:annotation>
         <xsd:sequence>
             <xsd:element name="ref" type="t:XPathType"/>
-            <xsd:element ref="tns:expression" minOccurs="0"/>
+            <xsd:element name="expression" type="c:ExpressionType" minOccurs="0"/>
         </xsd:sequence>
     </xsd:complexType>
 
@@ -348,59 +358,6 @@
     </xsd:complexType>
 
     <xsd:element name="description" type="xsd:string"/>
-
-    <xsd:element name="expression" type="tns:ExpressionType"/>
-
-    <!-- TODO REMOVE AND USE c:ExpressionType insead -->
-    <xsd:complexType name="ExpressionType">
-        <xsd:sequence>
-            <xsd:element ref="tns:description" minOccurs="0"/>
-            <xsd:element ref="tns:expressionEvaluator" minOccurs="1" maxOccurs="unbounded"/>
-        </xsd:sequence>
-    </xsd:complexType>
-
-    <xsd:element name="expressionEvaluator" abstract="true"/>
-    <xsd:element name="object" type="xsd:anyType" substitutionGroup="tns:expressionEvaluator" nillable="true"/>
-    <xsd:element name="script" type="tns:ScriptExpressionEvaluatorType" substitutionGroup="tns:expressionEvaluator"/>
-    <xsd:element name="invoke" type="xsd:string" substitutionGroup="tns:expressionEvaluator"/>
-
-    <xsd:complexType name="ScriptExpressionEvaluatorType">
-        <xsd:annotation>
-            <xsd:documentation>
-                <!-- todo document -->
-            </xsd:documentation>
-        </xsd:annotation>
-        <xsd:sequence>
-            <xsd:element ref="tns:description" minOccurs="0"/>
-            <xsd:element name="language" type="xsd:anyURI" minOccurs="0"
-                         default="http://midpoint.evolveum.com/xml/ns/public/expression/language#Groovy">
-                <xsd:annotation>
-                    <xsd:documentation>
-                        Language of the expression. Groovy is the default language if other language is not specified.
-                    </xsd:documentation>
-                </xsd:annotation>
-            </xsd:element>
-            <xsd:element name="code" type="tns:ScriptExpressionCodeType">
-                <xsd:annotation>
-                    <xsd:documentation>
-                        TODO
-                    </xsd:documentation>
-                </xsd:annotation>
-            </xsd:element>
-        </xsd:sequence>
-    </xsd:complexType>
-
-    <xsd:complexType name="ScriptExpressionCodeType" mixed="true">
-        <xsd:annotation>
-            <xsd:documentation>
-                The expression code is supposed to be in the context of this type. The content ix "mixed"
-                which allows both XML and non-XML languages.
-            </xsd:documentation>
-            <xsd:appinfo>
-                <jaxb:dom/>
-            </xsd:appinfo>
-        </xsd:annotation>
-    </xsd:complexType>
 
     <!-- ajax validators - default existing stuff, users should be able to implement their own validators -->
     <!-- label width for fields only also global defined in field groups -->
