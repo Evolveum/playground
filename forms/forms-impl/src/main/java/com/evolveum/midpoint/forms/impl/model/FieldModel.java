@@ -41,7 +41,7 @@ import java.util.List;
 public class FieldModel extends BaseModel<BaseModel, FieldToken> implements DisplayableModel<FieldDisplayType> {
 
     private List<ValueModel> values;
-    private ValueStatus status;
+    private ItemStatus status;
 
     public FieldModel(BaseModel parentModel, FieldToken token) {
         super(parentModel, token);
@@ -54,14 +54,14 @@ public class FieldModel extends BaseModel<BaseModel, FieldToken> implements Disp
         PrismProperty property = token.getProperty();
         if (property == null) {
             property = token.getDefinition().instantiate();
-            status = ValueStatus.ADDED;
+            status = ItemStatus.ADDED;
         } else {
-            status = ValueStatus.EXISTING;
+            status = ItemStatus.EXISTING;
         }
 
         List<PrismPropertyValue> values = property.getValues();
         for (PrismPropertyValue value : values) {
-            getValues().add(new ValueModel(this, value, ValueStatus.EXISTING));
+            getValues().add(new ValueModel(this, value, ItemStatus.EXISTING));
         }
 
         if (getValues().isEmpty()) {
@@ -74,15 +74,15 @@ public class FieldModel extends BaseModel<BaseModel, FieldToken> implements Disp
 
         if (ProtectedStringType.COMPLEX_TYPE.equals(definition.getTypeName())) {
             values.add(new ValueModel(this, new PrismPropertyValue(new ProtectedStringType()),
-                    new PrismPropertyValue(new ProtectedStringType()), ValueStatus.ADDED));
+                    new PrismPropertyValue(new ProtectedStringType()), ItemStatus.ADDED));
         } else if (SchemaConstants.T_POLY_STRING_TYPE.equals(definition.getTypeName())) {
             values.add(new ValueModel(this, new PrismPropertyValue(new PolyString(null)),
-                    new PrismPropertyValue(new PolyString(null)), ValueStatus.ADDED));
+                    new PrismPropertyValue(new PolyString(null)), ItemStatus.ADDED));
         } else if (isThisPropertyActivationEnabled()) {
             values.add(new ValueModel(this, new PrismPropertyValue(true),
-                    new PrismPropertyValue(null), ValueStatus.ADDED));
+                    new PrismPropertyValue(null), ItemStatus.ADDED));
         } else {
-            getValues().add(new ValueModel(this, new PrismPropertyValue(null), ValueStatus.ADDED));
+            getValues().add(new ValueModel(this, new PrismPropertyValue(null), ItemStatus.ADDED));
         }
     }
 
@@ -92,10 +92,10 @@ public class FieldModel extends BaseModel<BaseModel, FieldToken> implements Disp
     }
 
     public void removeValue(ValueModel model) {
-        if (ValueStatus.ADDED.equals(model.getStatus())) {
+        if (ItemStatus.ADDED.equals(model.getStatus())) {
             getValues().remove(model);
         } else {
-            model.setStatus(ValueStatus.DELETED);
+            model.setStatus(ItemStatus.DELETED);
         }
     }
 
@@ -106,14 +106,14 @@ public class FieldModel extends BaseModel<BaseModel, FieldToken> implements Disp
         return values;
     }
 
-    public ValueStatus getStatus() {
+    public ItemStatus getStatus() {
         return status;
     }
 
     public List<ValueModel> getVisibleValues() {
         List<ValueModel> visibleValues = new ArrayList<ValueModel>();
         for (ValueModel model : getValues()) {
-            if (ValueStatus.DELETED.equals(model.getStatus())) {
+            if (ItemStatus.DELETED.equals(model.getStatus())) {
                 continue;
             }
             visibleValues.add(model);

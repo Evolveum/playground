@@ -41,6 +41,7 @@ public class UiRegistry {
     public static final String WIDGET_PASSWORD = "password";
     public static final String WIDGET_COMBO_BOX = "combobox";
     public static final String WIDGET_LABEL = "label";
+    public static final String WIDGET_MULTI_SELECT = "multiselect";
 
     private static final Trace LOGGER = TraceManager.getTrace(UiRegistry.class);
     private static final Map<String, Class<? extends UiWidget>> WIDGETS =
@@ -53,6 +54,7 @@ public class UiRegistry {
         WIDGETS.put(WIDGET_PASSWORD, PasswordWidget.class);
         WIDGETS.put(WIDGET_COMBO_BOX, ComboBoxWidget.class);
         WIDGETS.put(WIDGET_LABEL, LabelWidget.class);
+        WIDGETS.put(WIDGET_MULTI_SELECT, MultiSelectWidget.class);
     }
 
     public static Class<? extends UiForm> getForm(String type) {

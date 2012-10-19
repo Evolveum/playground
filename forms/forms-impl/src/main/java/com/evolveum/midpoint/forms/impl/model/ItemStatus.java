@@ -24,7 +24,7 @@ package com.evolveum.midpoint.forms.impl.model;
 /**
  * @author lazyman
  */
-public enum ValueStatus {
+public enum ItemStatus {
 
     ADDED, DELETED, EXISTING;
 }

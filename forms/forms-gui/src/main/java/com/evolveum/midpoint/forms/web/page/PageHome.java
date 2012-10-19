@@ -24,12 +24,12 @@ package com.evolveum.midpoint.forms.web.page;
 import com.evolveum.midpoint.forms.component.button.AjaxLinkButton;
 import com.evolveum.midpoint.forms.component.button.AjaxSubmitLinkButton;
 import com.evolveum.midpoint.forms.component.tab.FormTabbedPanel;
+import com.evolveum.midpoint.forms.impl.model.ItemStatus;
 import com.evolveum.midpoint.forms.web.MidPointApplication;
 import com.evolveum.midpoint.forms.impl.FormContextItem;
 import com.evolveum.midpoint.forms.impl.StructuredForm;
 import com.evolveum.midpoint.forms.impl.StructuredFormContext;
 import com.evolveum.midpoint.forms.impl.interpreter.FormResolver;
-import com.evolveum.midpoint.forms.impl.model.ValueStatus;
 import com.evolveum.midpoint.forms.web.page.component.EditorTab;
 import com.evolveum.midpoint.forms.web.page.dto.*;
 import com.evolveum.midpoint.gui.common.LoadableModel;
@@ -616,7 +616,7 @@ public class PageHome extends PageBase {
                     continue;
                 }
                 Item item = prismContext.parseObject(variable.getXml());
-                objects.put(variable.getName(), new FormContextItem(item, ValueStatus.EXISTING));
+                objects.put(variable.getName(), new FormContextItem(item, ItemStatus.EXISTING));
             }
 
             PrismObject<UserType> owner = null;

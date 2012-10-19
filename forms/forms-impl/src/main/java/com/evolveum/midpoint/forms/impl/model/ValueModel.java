@@ -38,14 +38,14 @@ public class ValueModel<T> implements Serializable {
     private PrismPropertyValue<T> value;
     private PrismPropertyValue<T> oldValue;
     //value status
-    private ValueStatus status;
+    private ItemStatus status;
 
-    public ValueModel(FieldModel fieldModel, PrismPropertyValue<T> value, ValueStatus status) {
+    public ValueModel(FieldModel fieldModel, PrismPropertyValue<T> value, ItemStatus status) {
         this(fieldModel, value, null, status);
     }
 
     public ValueModel(FieldModel fieldModel, PrismPropertyValue<T> value, PrismPropertyValue<T> oldValue,
-                      ValueStatus status) {
+                      ItemStatus status) {
         Validate.notNull(fieldModel, "Field model must not be null.");
         Validate.notNull(value, "Prism property value must not be null.");
         this.field = fieldModel;
@@ -91,11 +91,11 @@ public class ValueModel<T> implements Serializable {
         return field.getDefaultDisplay();
     }
 
-    public ValueStatus getStatus() {
+    public ItemStatus getStatus() {
         return status;
     }
 
-    public void setStatus(ValueStatus status) {
+    public void setStatus(ItemStatus status) {
         this.status = status;
     }
 

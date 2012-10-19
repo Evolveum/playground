@@ -23,7 +23,6 @@ package com.evolveum.midpoint.forms.impl;
 
 import com.evolveum.midpoint.forms.impl.interpreter.FormResolver;
 import com.evolveum.midpoint.forms.impl.model.FormModel;
-import com.evolveum.midpoint.forms.impl.model.ValueStatus;
 import com.evolveum.midpoint.prism.PrismObject;
 import com.evolveum.midpoint.prism.delta.ChangeType;
 import com.evolveum.midpoint.prism.delta.ObjectDelta;

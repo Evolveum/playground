@@ -43,7 +43,7 @@ public class ComboBoxWidget extends UiWidget {
 
     @Override
     protected void initLayout() {
-        DropDownChoice input = new DropDownChoice("input");
+        DropDownChoice input = new DropDownChoice(ID_INPUT);
         add(input);
     }
 }

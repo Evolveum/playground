@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!-- 
+<!--
  * Copyright (c) 2011 Evolveum
  *
  * The contents of this file are subject to the terms
@@ -19,8 +18,6 @@
  * your own identifying information:
  * "Portions Copyrighted 2011 [name of copyright owner]"
  * -->
-
-
 <definitions name="fake"
              targetNamespace="http://midpoint.evolveum.com/xml/ns/private/fake/fake-1.wsdl"
              xmlns="http://schemas.xmlsoap.org/wsdl/"

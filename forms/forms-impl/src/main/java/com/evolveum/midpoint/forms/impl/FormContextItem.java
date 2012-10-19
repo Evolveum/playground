@@ -21,7 +21,7 @@
 
 package com.evolveum.midpoint.forms.impl;
 
-import com.evolveum.midpoint.forms.impl.model.ValueStatus;
+import com.evolveum.midpoint.forms.impl.model.ItemStatus;
 import com.evolveum.midpoint.prism.Item;
 import org.apache.commons.lang.Validate;
 
@@ -33,9 +33,9 @@ import java.io.Serializable;
 public class FormContextItem implements Serializable {
 
     private Item item;
-    private ValueStatus status;
+    private ItemStatus status;
 
-    public FormContextItem(Item item, ValueStatus status) {
+    public FormContextItem(Item item, ItemStatus status) {
         Validate.notNull(item, "Item must not be null.");
         Validate.notNull(status, "Status must not be null.");
 
@@ -47,7 +47,7 @@ public class FormContextItem implements Serializable {
         return item;
     }
 
-    public ValueStatus getStatus() {
+    public ItemStatus getStatus() {
         return status;
     }
 }

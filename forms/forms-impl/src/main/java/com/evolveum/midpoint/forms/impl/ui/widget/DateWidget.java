@@ -52,7 +52,7 @@ public class DateWidget extends UiWidget {
 
     @Override
     protected void initLayout() {
-        DateTextField date = DateTextField.forDatePattern("input", createDateModel(), "dd/MMM/yyyy");
+        DateTextField date = DateTextField.forDatePattern(ID_INPUT, createDateModel(), "dd/MMM/yyyy");
         date.add(new DatePicker());
         add(date);
     }

@@ -51,6 +51,10 @@ public class TokenUtils {
     }
 
     public static String getDefaultWidget(PrismPropertyDefinition definition) {
+        if (definition.getAllowedValues() != null && definition.getAllowedValues().length > 0) {
+            return UiRegistry.WIDGET_MULTI_SELECT;
+        }
+
         if (DOMUtil.XSD_DATETIME.equals(definition.getTypeName())) {
             return UiRegistry.WIDGET_DATE;
         } else if (ProtectedStringType.COMPLEX_TYPE.equals(definition.getTypeName())) {
