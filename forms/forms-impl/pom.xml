@@ -100,36 +100,6 @@
             </testResource>
         </testResources>
         <plugins>
-            <!--
-            <plugin>
-                <groupId>org.jvnet.jaxb2.maven2</groupId>
-                <artifactId>maven-jaxb2-plugin</artifactId>
-                <version>0.8.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <args>
-                        <arg>-copy-constructor</arg>
-                    </args>
-                    <generatePackage>com.evolveum.midpoint.forms.impl.xml</generatePackage>
-                    <extension>true</extension>
-                    <schemaDirectory>src/main/resources</schemaDirectory>
-                    <generateDirectory>${project.build.directory}/generated-sources/xjc</generateDirectory>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>net.sourceforge.ccxjc</groupId>
-                        <artifactId>cc-xjc-plugin</artifactId>
-                        <version>2.0</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-            -->
             <plugin>
                 <!-- Used to pull XSD files from the JAR -->
                 <groupId>org.apache.maven.plugins</groupId>
@@ -209,50 +179,6 @@
                                         <extraarg>http://www.w3.org/2001/04/xmlenc#=org.w3._2001._04.xmlenc</extraarg>
                                     </extraargs>
                                 </wsdlOption>
-                                <![CDATA[
-                            <wsdlOption>
-                                <wsdl>src/main/resources/xml/ns/private/model/modelWrapper.wsdl</wsdl>
-                                <catalog>${basedir}/src/main/resources/META-INF/jax-ws-catalog.xml</catalog>
-                                <extraargs>
-                                    <extraarg>-impl</extraarg>
-                                    <extraarg>-verbose</extraarg>
-                                    <extraarg>-validate</extraarg>
-                                    <extraarg>-xjc-Xts</extraarg>
-                                    <extraarg>-xjc-XhashCode</extraarg>
-                                    <extraarg>-xjc-Xequals</extraarg>
-                                    <extraarg>
-                                        -xjc-Xequals-equalsStrategyClass=com.evolveum.midpoint.schema.DomAwareEqualsStrategy
-                                    </extraarg>
-                                    <extraarg>-nexclude</extraarg>
-                                    <extraarg>http://prism.evolveum.com/xml/ns/public/types-2</extraarg>
-                                    <!-- <extraargs>-version</extraargs> -->
-                                </extraargs>
-                            </wsdlOption>
-                            <wsdlOption>
-                                <!-- Ugly hack. The fake WSDL includes all the XSD files we need to compile
-                        This is the only way I found to generate equals and hashCode methods with CXF.
-                        If you find anything better please correct it. -->
-                                <wsdl>src/main/resources/xml/ns/private/fake/fakeWrapper.wsdl</wsdl>
-                                <catalog>${basedir}/src/main/resources/META-INF/jax-ws-catalog.xml</catalog>
-                                <extraargs>
-                                    <extraarg>-impl</extraarg>
-                                    <extraarg>-verbose</extraarg>
-                                    <extraarg>-validate</extraarg>
-                                    <extraarg>-xjc-Xts</extraarg>
-                                    <extraarg>-xjc-XhashCode</extraarg>
-                                    <extraarg>
-                                        -xjc-XhashCode-hashCodeStrategyClass=com.evolveum.midpoint.schema.DomAwareHashCodeStrategy
-                                    </extraarg>
-                                    <extraarg>-xjc-Xequals</extraarg>
-                                    <extraarg>
-                                        -xjc-Xequals-equalsStrategyClass=com.evolveum.midpoint.schema.DomAwareEqualsStrategy
-                                    </extraarg>
-                                    <extraarg>-nexclude</extraarg>
-                                    <extraarg>http://prism.evolveum.com/xml/ns/public/types-2</extraarg>
-                                    <!-- <extraargs>-version</extraargs> -->
-                                </extraargs>
-                            </wsdlOption>
-                            ]]>
                             </wsdlOptions>
                         </configuration>
                         <goals>
