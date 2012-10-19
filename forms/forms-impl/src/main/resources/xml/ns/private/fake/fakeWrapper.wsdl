@@ -22,11 +22,11 @@
 
 
 <definitions name="fake"
-             targetNamespace="http://midpoint.evolveum.com/xml/ns/private/fake/form-fake-1.wsdl"
+             targetNamespace="http://midpoint.evolveum.com/xml/ns/private/fake/fake-1.wsdl"
              xmlns="http://schemas.xmlsoap.org/wsdl/"
-             xmlns:tns="http://midpoint.evolveum.com/xml/ns/private/fake/form-fake-1.wsdl"
+             xmlns:tns="http://midpoint.evolveum.com/xml/ns/private/fake/fake-1.wsdl"
              xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
-    <import namespace="http://midpoint.evolveum.com/xml/ns/private/fake/form-fake-1.wsdl" location="form-fake-1.wsdl"/>
+    <import namespace="http://midpoint.evolveum.com/xml/ns/private/fake/fake-1.wsdl" location="fake-1.wsdl"/>
     <service name="fakeService">
         <port name="fakePort" binding="tns:fakeBinding">
             <soap:address location="http://localhost:${HttpDefaultPort}/fakeService/fakePort"/>

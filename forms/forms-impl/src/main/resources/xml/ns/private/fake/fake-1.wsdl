@@ -20,8 +20,8 @@
  * -->
 
 <definitions name="fake"
-             targetNamespace="http://midpoint.evolveum.com/xml/ns/private/fake/form-fake-1.wsdl"
-             xmlns:tns="http://midpoint.evolveum.com/xml/ns/private/fake/form-fake-1.wsdl"
+             targetNamespace="http://midpoint.evolveum.com/xml/ns/private/fake/fake-1.wsdl"
+             xmlns:tns="http://midpoint.evolveum.com/xml/ns/private/fake/fake-1.wsdl"
              xmlns="http://schemas.xmlsoap.org/wsdl/"
              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
              xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
@@ -33,7 +33,7 @@
     </documentation>
 
     <types>
-        <xsd:schema targetNamespace="http://midpoint.evolveum.com/xml/ns/private/fake/form-fake-1.wsdl">
+        <xsd:schema targetNamespace="http://midpoint.evolveum.com/xml/ns/private/fake/fake-1.wsdl">
             <xsd:import namespace="http://midpoint.evolveum.com/xml/ns/public/gui/form-1"
                         schemaLocation="../../public/gui/form-1.xsd"/>
 

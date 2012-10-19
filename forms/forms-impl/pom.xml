@@ -178,7 +178,7 @@
                                     <!-- Ugly hack. The fake WSDL includes all the XSD files we need to compile
                             This is the only way I found to generate equals and hashCode methods with CXF.
                             If you find anything better please correct it. -->
-                                    <wsdl>src/main/resources/xml/ns/private/fake/form-fakeWrapper.wsdl</wsdl>
+                                    <wsdl>src/main/resources/xml/ns/private/fake/fakeWrapper.wsdl</wsdl>
                                     <catalog>${basedir}/src/main/resources/META-INF/jax-ws-catalog.xml</catalog>
                                     <extraargs>
                                         <extraarg>-impl</extraarg>
