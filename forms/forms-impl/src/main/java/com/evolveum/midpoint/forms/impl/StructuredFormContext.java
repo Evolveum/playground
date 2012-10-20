@@ -45,7 +45,7 @@ public class StructuredFormContext implements Serializable {
     private Map<String, FormContextItem> objects;
     private FormResolver resolver;
 
-    private FormModel formModel;
+//    private FormModel formModel;
 
     public StructuredFormContext(String mainForm, PrismObject<UserType> user, Map<String, FormContextItem> objects, FormResolver resolver) {
         Validate.notEmpty(mainForm, "Main form path must not be null.");
@@ -77,13 +77,13 @@ public class StructuredFormContext implements Serializable {
         return user;
     }
 
-    public FormModel getFormModel() {
-        return formModel;
-    }
-
-    public void setFormModel(FormModel formModel) {
-        this.formModel = formModel;
-    }
+//    public FormModel getFormModel() {
+//        return formModel;
+//    }
+//
+//    public void setFormModel(FormModel formModel) {
+//        this.formModel = formModel;
+//    }
 
     @Override
     public String toString() {

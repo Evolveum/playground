@@ -117,6 +117,8 @@
             <xsd:extension base="tns:BaseFieldType">
                 <xsd:sequence>
                     <xsd:element name="ref" type="t:XPathType" minOccurs="0"/>
+                    <xsd:element name="sourceRef" type="t:XPathType" minOccurs="0"/>
+                    <xsd:element name="targetRef" type="t:XPathType" minOccurs="0"/>
                 </xsd:sequence>
                 <xsd:attribute name="include" type="xsd:string" use="optional"/>
                 <xsd:attribute name="alias" type="xsd:string" use="required"/>

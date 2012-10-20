@@ -45,13 +45,16 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.tabs.AjaxTabbedPanel;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.basic.MultiLineLabel;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.tree.LinkTree;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -89,6 +92,7 @@ public class PageHome extends PageBase {
     private static final String ID_CLEAR = "clear";
     private static final String ID_SAMPLE_COMBO = "sampleCombo";
     private static final String ID_MENU_FORM = "menuForm";
+    private static final String ID_DESCRIPTION = "description";
 
     private IModel<List<SampleDto>> samplesModel;
 
@@ -206,6 +210,20 @@ public class PageHome extends PageBase {
 
         initMenuLayout();
         initTree();
+
+        Label description = new Label(ID_DESCRIPTION, new AbstractReadOnlyModel<String>() {
+
+            @Override
+            public String getObject() {
+                DropDownChoice<SampleDto> sampleCombo = (DropDownChoice) PageHome.this.get(ID_MENU_FORM
+                        + ":" + ID_SAMPLE_COMBO);
+                SampleDto dto = sampleCombo.getModelObject();
+
+                return dto != null ? dto.getDescription() : null;
+            }
+        });
+        description.setOutputMarkupId(true);
+        add(description);
 
         initEditorLayout();
         initFormLayout();
@@ -463,7 +481,6 @@ public class PageHome extends PageBase {
         sampleCombo.getModel().setObject(null);
         target.add(get(ID_MENU_FORM));
 
-
         projectModel.reset();
 
         reloadTabs(target);
@@ -487,84 +504,6 @@ public class PageHome extends PageBase {
         for (Map.Entry<String, String> entry : dto.getVariables().entrySet()) {
             project.getVariables().add(new VariableDto(entry.getKey(), loadFileContent(path + entry.getValue())));
         }
-
-        reloadTabs(target);
-        reloadFormPerformed(target);
-    }
-
-    private void loadSample1Performed(AjaxRequestTarget target) {
-        projectModel.reset();
-
-        Project project = projectModel.getObject();
-        project.setMainForm("main");
-        FormDto editor = new FormDto("main", loadFileContent("1/userForm.xml"));
-        project.getForms().add(editor);
-
-        VariableDto variable = new VariableDto("user", loadFileContent("1/user.xml"));
-        project.getVariables().add(variable);
-
-        reloadTabs(target);
-        reloadFormPerformed(target);
-    }
-
-    private void loadSample3Performed(AjaxRequestTarget target) {
-        projectModel.reset();
-
-        Project project = projectModel.getObject();
-        project.setMainForm("main");
-        FormDto editor = new FormDto("main", loadFileContent("3/main.xml"));
-        project.getForms().add(editor);
-
-        VariableDto variable = new VariableDto("user", loadFileContent("3/user.xml"));
-        project.getVariables().add(variable);
-
-        reloadTabs(target);
-        reloadFormPerformed(target);
-    }
-
-    public void loadSample4Performed(AjaxRequestTarget target) {
-        projectModel.reset();
-
-        Project project = projectModel.getObject();
-        project.setMainForm("main.xml");
-        FormDto form = new FormDto("main.xml", loadFileContent("4/main.xml"));
-        project.getForms().add(form);
-
-        VariableDto variable = new VariableDto("user", loadFileContent("4/user.xml"));
-        project.getVariables().add(variable);
-
-        reloadTabs(target);
-        reloadFormPerformed(target);
-    }
-
-    public void loadSample5Performed(AjaxRequestTarget target) {
-        projectModel.reset();
-
-        Project project = projectModel.getObject();
-        project.setMainForm("main.xml");
-        FormDto form = new FormDto("main.xml", loadFileContent("5/main.xml"));
-        project.getForms().add(form);
-
-        VariableDto variable = new VariableDto("user", loadFileContent("5/user.xml"));
-        project.getVariables().add(variable);
-
-        reloadTabs(target);
-        reloadFormPerformed(target);
-    }
-
-    private void loadSample2Performed(AjaxRequestTarget target) {
-        projectModel.reset();
-
-        Project project = projectModel.getObject();
-        project.setMainForm("main.xml");
-        FormDto form = new FormDto("main.xml", loadFileContent("2/main.xml"));
-        project.getForms().add(form);
-
-        form = new FormDto("other.xml", loadFileContent("2/other.xml"));
-        project.getForms().add(form);
-
-        VariableDto variable = new VariableDto("user", loadFileContent("2/user.xml"));
-        project.getVariables().add(variable);
 
         reloadTabs(target);
         reloadFormPerformed(target);
@@ -596,6 +535,7 @@ public class PageHome extends PageBase {
         form.addOrReplace(new StructuredForm("structuredForm", structuredFormModel));
 
         target.add(form);
+        target.add(get(ID_DESCRIPTION));
         target.add(getFeedbackPanel());
     }
 

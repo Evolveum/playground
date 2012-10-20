@@ -42,7 +42,7 @@ public class FormInterpreter {
         LOGGER.debug("interpret:end");
 
         FormModel model = new FormModel(formToken);
-        context.setFormModel(model);
+//        context.setFormModel(model);
 
         return model;
     }

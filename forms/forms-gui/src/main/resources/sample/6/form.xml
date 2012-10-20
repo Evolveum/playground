@@ -25,18 +25,6 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       name="User Detail Form">
 
-    <field widget="text">
-        <ref>$user/c:name</ref>
-        <display>
-            <label>xml.public.common.user.name</label>
-            <tooltip>xml.public.common.user.name.tooltip</tooltip>
-            <help>xml.public.common.user.name.help</help>
-            <cssStyle>font-weight: bold; color: blue;</cssStyle>
-            <cssClass>freakinAwesomeClass</cssClass>
-
-            <property name="size">40</property>
-        </display>
-    </field>
     <fieldGroup>
         <display>
             <label>Address</label>
@@ -58,6 +46,7 @@
                 </expression>
             </source>
         </field>
+
         <field name="city">
             <display>
                 <label>City</label>
@@ -71,6 +60,7 @@
                 </expression>
             </source>
         </field>
+
         <field name="zip">
             <display>
                 <label>Zip</label>
@@ -89,10 +79,10 @@
             all named field will be accessible as simple variables (fields included from other
             forms will be accessible through dot, e.g. <form_alias>.<field_name>
 
-            widget "none" mark special fields which aren't visible, they can be used for
+            widget "virtual" mark special fields which aren't visible, they can be used for
             property values pre/post processing
         -->
-        <field widget="none">
+        <field virtual="true">
             <target>
                 <ref>$user/c:costCenter</ref>
                 <expression>
@@ -109,6 +99,7 @@
         -->
 
         <!-- these fields are the same -->
+        <!--
         <field>
             <ref>$user/c:costCenter</ref>
         </field>
@@ -140,93 +131,11 @@
                 </expression>
             </target>
         </field>
+        -->
 
         <!--
             todo what about multivalue properties/fields, e.g. how would our address looked like if it
             was multivalue -> in case user can have multiple addresses
         -->
     </fieldGroup>
-
-
-    <field widget="text" name="login">
-        <ref>$user/c:name</ref>
-    </field>
-    <field widget="none">
-        <target>
-            <ref>$user/c:emailAddress</ref>
-            <expression>
-                <c:script>
-                    <c:code>name + '@example.com'</c:code>
-                </c:script>
-            </expression>
-        </target>
-    </field>
-
-    <!-- this example shows emailAddress value without domain (everything after @ is not shown, but it's saved) -->
-    <field name="email">
-        <enabled>
-            <c:script>
-                <c:code>
-                    <!--todo how should this look like? -->
-                </c:code>
-            </c:script>
-        </enabled>
-        <visible>
-            <c:script>
-                <c:code>
-                    <!--todo how should this look like? -->
-                </c:code>
-            </c:script>
-        </visible>
-        <source>
-            <ref>$user/c:emailAddress</ref>
-            <expression>
-                <c:script>
-                    <c:code>value.replace('@example.com','')</c:code>
-                </c:script>
-            </expression>
-        </source>
-        <target>
-            <ref>$user/c:emailAddress</ref>
-            <expression>
-                <c:script>
-                    <c:code>value + '@example.com'</c:code>
-                </c:script>
-            </expression>
-        </target>
-    </field>
-
-    <!-- loading groups from ldap, then they can be chosen from combobox (ExampleClass.staticMethod), with
-        custom renderer. Value can be also used for mutliple select, and ...? -->
-    <field widget="combo">
-        <ref>$user/c:additionalName</ref>
-        <display>
-            <property name="renderer">com.evolveum.midpoint.forms.example.SampleComboRenderer</property>
-        </display>
-        <valueDescription>
-            <!-- sample 1 List<Object> is create from values defined as constants -->
-            <availableValues xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                             xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-                <c:value xsi:type="xsd:int">1</c:value>
-                <c:value xsi:type="xsd:int">2</c:value>
-                <c:value xsi:type="xsd:int">3</c:value>
-            </availableValues>
-
-            <!-- sample 2 - this should return List<Object>, never null -->
-            <!--
-            <availableValues>
-                <c:invoke>com.evoleum.midpoint.forms.example.SampleClass.getGroups</c:invoke>
-            </availableValues>
-            -->
-
-            <!-- sample 3 - this script should return List<Object> -->
-            <!--
-            <availableValues>
-                <c:script>
-                    <c:code>email.split('@')</c:code>
-                </c:script>
-            </availableValues>
-            -->
-        </valueDescription>
-    </field>
 </form>

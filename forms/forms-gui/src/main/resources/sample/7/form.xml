@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright (c) 2012 Evolveum
+  ~
+  ~ The contents of this file are subject to the terms
+  ~ of the Common Development and Distribution License
+  ~ (the License). You may not use this file except in
+  ~ compliance with the License.
+  ~
+  ~ You can obtain a copy of the License at
+  ~ http://www.opensource.org/licenses/cddl1 or
+  ~ CDDLv1.0.txt file in the source code distribution.
+  ~ See the License for the specific language governing
+  ~ permission and limitations under the License.
+  ~
+  ~ If applicable, add the following below the CDDL Header,
+  ~ with the fields enclosed by brackets [] replaced by
+  ~ your own identifying information:
+  ~
+  ~ Portions Copyrighted 2012 [name of copyright owner]
+  -->
+<form xmlns="http://midpoint.evolveum.com/xml/ns/public/gui/form-1"
+      xmlns:c="http://midpoint.evolveum.com/xml/ns/public/common/common-2"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      name="User Detail Form">
+
+    <!-- email address derived from login (c:user/c:name) -->
+    <field widget="text" name="login">
+        <ref>$user/c:name</ref>
+    </field>
+
+    <field virtual="true">
+        <target>
+            <ref>$user/c:emailAddress</ref>
+            <expression>
+                <c:script>
+                    <c:code>login + '@example.com'</c:code>
+                </c:script>
+            </expression>
+        </target>
+    </field>
+
+    <!-- this example shows emailAddress value without domain (everything after @ is not shown, but it's saved) -->
+    <field name="email">
+        <enabled>
+            <c:script>
+                <c:code>
+                    <!--todo how should this look like? -->
+                </c:code>
+            </c:script>
+        </enabled>
+        <visible>
+            <c:script>
+                <c:code>
+                    <!--todo how should this look like? -->
+                </c:code>
+            </c:script>
+        </visible>
+        <source>
+            <ref>$user/c:emailAddress</ref>
+            <expression>
+                <c:script>
+                    <c:code>value.replace('@example.com','')</c:code>
+                </c:script>
+            </expression>
+        </source>
+        <target>
+            <ref>$user/c:emailAddress</ref>
+            <expression>
+                <c:script>
+                    <c:code>value + '@example.com'</c:code>
+                </c:script>
+            </expression>
+        </target>
+    </field>
+
+    <!-- loading groups from ldap, then they can be chosen from combobox (ExampleClass.staticMethod), with
+        custom renderer. Value can be also used for mutliple select, and ...? -->
+    <field widget="combo">
+        <ref>$user/c:additionalName</ref>
+        <display>
+            <property name="renderer">com.evolveum.midpoint.forms.example.SampleComboRenderer</property>
+        </display>
+        <valueDescription>
+            <!-- sample 1 List<Object> is create from values defined as constants -->
+            <availableValues xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                             xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+                <c:value xsi:type="xsd:int">1</c:value>
+                <c:value xsi:type="xsd:int">2</c:value>
+                <c:value xsi:type="xsd:int">3</c:value>
+            </availableValues>
+
+            <!-- sample 2 - this should return List<Object>, never null -->
+            <!--
+            <availableValues>
+                <c:invoke>com.evoleum.midpoint.forms.example.SampleClass.getGroups</c:invoke>
+            </availableValues>
+            -->
+
+            <!-- sample 3 - this script should return List<Object> -->
+            <!--
+            <availableValues>
+                <c:script>
+                    <c:code>email.split('@')</c:code>
+                </c:script>
+            </availableValues>
+            -->
+        </valueDescription>
+    </field>
+</form>
