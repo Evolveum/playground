@@ -1,0 +1,223 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright (c) 2011 Evolveum
+  ~
+  ~ The contents of this file are subject to the terms
+  ~ of the Common Development and Distribution License
+  ~ (the License). You may not use this file except in
+  ~ compliance with the License.
+  ~
+  ~ You can obtain a copy of the License at
+  ~ http://www.opensource.org/licenses/cddl1 or
+  ~ CDDLv1.0.txt file in the source code distribution.
+  ~ See the License for the specific language governing
+  ~ permission and limitations under the License.
+  ~
+  ~ If applicable, add the following below the CDDL Header,
+  ~ with the fields enclosed by brackets [] replaced by
+  ~ your own identifying information:
+  ~
+  ~ Portions Copyrighted 2011 [name of copyright owner]
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.forgerock.openicf.connectors</groupId>
+        <artifactId>connectors-parent</artifactId>
+        <version>1.1.0.0-e1</version>
+    </parent>
+    <name>WSDL connector</name>
+    <groupId>com.evolveum.openicf.connectors</groupId>
+    <artifactId>wsdl-connector</artifactId>
+    <packaging>jar</packaging>
+    <organization>
+        <name>Evolveum</name>
+        <url>http://www.evolveum.com</url>
+    </organization>
+    <licenses>
+        <license>
+            <name>CDDL v1.0</name>
+            <url>http://www.sun.com/cddl/cddl.html</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+    <issueManagement>
+        <system>Atlassian JIRA</system>
+        <url>http://jira.evolveum.com/</url>
+    </issueManagement>
+    <scm>
+        <connection>scm:svn:http://svn.evolveum.com/midpoint/</connection>
+        <developerConnection>scm:svn:https://svn.evolveum.com/midpoint/</developerConnection>
+        <url>https://fisheye.evolveum.com/midpoint/</url>
+    </scm>
+    <repositories>
+        <repository>
+            <id>evolveum</id>
+            <name>repo</name>
+            <url>http://repo.evolveum.com/repo</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>evolveum</id>
+            <name>repo</name>
+            <url>http://repo.evolveum.com/repo</url>
+        </pluginRepository>
+    </pluginRepositories>
+    <properties>
+        <cxf.version>2.4.3</cxf.version>
+        <cxf-xjc.version>2.4.0</cxf-xjc.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>com.evolveum.midpoint.infra</groupId>
+            <artifactId>schema</artifactId>
+            <version>2.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-simple</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxws</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-databinding-aegis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-local</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http-jetty</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-management</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-common-utilities</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>xml-resolver</groupId>
+            <artifactId>xml-resolver</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.ws.xmlschema</groupId>
+            <artifactId>xmlschema-core</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jvnet.jaxb2_commons</groupId>
+            <artifactId>jaxb2-basics-runtime</artifactId>
+            <version>0.6.3</version>
+        </dependency>
+        <!--  Testing dependecies  -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.evolveum.midpoint.tools</groupId>
+            <artifactId>test-ng</artifactId>
+            <version>2.1-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-codegen-plugin</artifactId>
+                <version>${cxf.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-sources</id>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <sourceRoot>${project.build.directory}/generated/cxf</sourceRoot>
+                            <wsdlRoot>${project.directory}/src/main/resources/xml</wsdlRoot>
+                            <wsdlOptions>
+                                <wsdlOption>
+                                    <!-- Ugly hack. The fake WSDL includes all the XSD files we need to compile
+                                                  This is the only way I found to generate equals and hashCode methods with CXF.
+                                                  If you find anything better please correct it. -->
+                                    <wsdl>src/main/resources/xml/ns/private/provisioning/connectorWrapper.wsdl</wsdl>
+                                    <catalog>${basedir}/src/main/resources/META-INF/jax-ws-catalog.xml</catalog>
+                                    <extraargs>
+                                        <extraarg>-impl</extraarg>
+                                        <extraarg>-verbose</extraarg>
+                                        <extraarg>-validate</extraarg>
+                                        <extraarg>-xjc-Xts</extraarg>
+                                        <extraarg>-xjc-XhashCode</extraarg>
+                                        <extraarg>
+                                            -xjc-XhashCode-hashCodeStrategyClass=com.evolveum.midpoint.schema.DomAwareHashCodeStrategy
+                                        </extraarg>
+                                        <extraarg>-xjc-Xequals</extraarg>
+                                        <extraarg>
+                                            -xjc-Xequals-equalsStrategyClass=com.evolveum.midpoint.schema.DomAwareEqualsStrategy
+                                        </extraarg>
+                                        <!-- 										<extraargs>-version</extraargs> -->
+                                        <extraarg>-nexclude</extraarg>
+                                        <extraarg>http://prism.evolveum.com/xml/ns/public/types-2</extraarg>
+
+                                        <extraarg>-xjc-Xmidpoint</extraarg>
+                                    </extraargs>
+                                </wsdlOption>
+                            </wsdlOptions>
+                        </configuration>
+                        <goals>
+                            <goal>wsdl2java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.cxf.xjcplugins</groupId>
+                        <artifactId>cxf-xjc-ts</artifactId>
+                        <version>${cxf-xjc.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.jvnet.jaxb2_commons</groupId>
+                        <artifactId>jaxb2-basics</artifactId>
+                        <version>0.6.3</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.evolveum.midpoint.tools</groupId>
+                        <artifactId>xjc-plugin</artifactId>
+                        <version>2.1-SNAPSHOT</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+
