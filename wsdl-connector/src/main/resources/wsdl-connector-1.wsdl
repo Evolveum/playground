@@ -30,7 +30,10 @@
 
     <documentation>
 
-        TODO
+        <!-- todo documentation -->
+        <!-- todo faults -->
+        <!-- todo operation options if necessary -->
+        <!-- todo uid probably more complex, not only string -->
 
     </documentation>
 
@@ -38,97 +41,314 @@
         <xsd:schema targetNamespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl">
             <xsd:import namespace="http://midpoint.evolveum.com/xml/ns/public/common/common-2"
                         schemaLocation="http://midpoint.evolveum.com/xml/ns/public/common/common-2"/>
+
+            <xsd:complexType name="AttributeType">
+                <xsd:sequence>
+                    <xsd:element name="name" type="xsd:string"/>
+                    <xsd:element name="value" type="xsd:anyType" minOccurs="0" maxOccurs="unbounded" />
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:complexType name="AttributesType">
+                <xsd:sequence>
+                    <xsd:element name="attribute" type="tns:AttributeType" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:complexType name="SchemaType">
+                <!-- todo body?? or common-2 type? -->
+            </xsd:complexType>
+
+            <xsd:complexType name="ScriptType">
+                <!-- todo body?? or common-2 type? -->
+            </xsd:complexType>
         </xsd:schema>
     </types>
 
     <message name="authenticateRequest">
-        <part name="objectClass" type="xsd:QName"/>
+        <part name="objectClass" type="xsd:string"/>
         <part name="username" type="xsd:string"/>
         <part name="password" type="c:ProtectedStringType"/> <!-- todo really use protected string? -->
-        <!-- todo operation options -->
     </message>
     <message name="authenticateResponse">
         <part name="uid" type="xsd:string"/>    <!-- probably more complex thing in here -->
     </message>
-    <!--<message name="createRequest">-->
-        <!--<part name="fakePart" type="xsd:string"/>-->
-    <!--</message>-->
-    <!--<message name="createResponse">-->
-        <!--<part name="fakePart" type="xsd:string"/>-->
-    <!--</message>-->
-    <!--<message name="deleteRequest">-->
-        <!--<part name="fakePart" type="xsd:string"/>-->
-    <!--</message>-->
+    <message name="createRequest">
+        <part name="objectClass" type="xsd:string"/>
+        <part name="attributes" type="tns:AttributesType"/>
+    </message>
+    <message name="createResponse">
+        <part name="uid" type="xsd:string"/>
+    </message>
+    <message name="deleteRequest">
+        <part name="objectClass" type="xsd:string"/>
+        <part name="uid" type="xsd:string"/>
+    </message>
+    <message name="resolveUsernameRequest">
+        <part name="objectClass" type="xsd:string"/>
+        <part name="username" type="xsd:string"/>
+    </message>
+    <message name="resolveUsernameResponse">
+        <part name="uid" type="xsd:string"/>
+    </message>
+    <message name="schemaRequest"/>
+    <message name="schemaResponse">
+        <part name="schema" type="tns:SchemaType"/>
+    </message>
+    <message name="runScriptOnConnectorRequest">
+        <part name="script" type="tns:ScriptType"/>
+    </message>
+    <message name="runScriptOnConnectorResponse">
+        <part name="object" type="xsd:anyType"/>
+    </message>
+    <message name="runScriptOnResourceRequest">
+        <part name="script" type="tns:ScriptType"/>
+    </message>
+    <message name="runScriptOnResourceResponse">
+        <part name="object" type="xsd:anyType"/>
+    </message>
+    <message name="createFilterTranslatorRequest">
+
+    </message>
+    <message name="createFilterTranslatorResponse">
+
+    </message>
+    <message name="executeQueryRequest">
+
+    </message>
+    <message name="executeQueryResponse">
+
+    </message>
+    <message name="getLatestSyncTokenRequest">
+
+    </message>
+    <message name="getLatestSyncTokenResponse">
+
+    </message>
+    <message name="syncRequest">
+
+    </message>
+    <message name="syncResponse">
+
+    </message>
+    <message name="testRequest">
+
+    </message>
+    <message name="testResponse">
+
+    </message>
+    <message name="addAttributeValuesRequest">
+
+    </message>
+    <message name="addAttributeValuesResponse">
+
+    </message>
+    <message name="removeAttributeValuesRequest">
+
+    </message>
+    <message name="removeAttributeValuesResponse">
+
+    </message>
+    <message name="updateRequest">
+
+    </message>
+    <message name="updateResponse">
+
+    </message>
 
     <portType name="WsdlConnectorPortType">
         <operation name="authenticate">
-            <input name="authenticateRequest" message="tns:authenticateRequest"/>
-            <output name="authenticateResponse" message="tns:authenticateResponse"/>
+            <input name="authenticateInput" message="tns:authenticateRequest"/>
+            <output name="authenticateOutput" message="tns:authenticateResponse"/>
         </operation>
-        <!--<operation name="create">-->
-            <!--<input name="createRequest" message="tns:createRequest"/>-->
-            <!--<output name="createResponse" message="tns:createResponse"/>-->
-        <!--</operation>-->
-        <!--<operation name="delete">-->
-            <!--<input name="deleteRequest" message="tns:deleteRequest"/>-->
-        <!--</operation>-->
-        <!--<operation name="resolveUsername">-->
-            <!--<input name="resolveUsernameRequest" message="tns:resolveUsernameRequest"/>-->
-            <!--<output name="resolveUsernameResponse" message="tns:resolveUsernameResponse"/>-->
-        <!--</operation>-->
-        <!--<operation name="schema">-->
-            <!--<input name="schemaRequest" message="tns:schemaRequest"/>-->
-            <!--<output name="schemaResponse" message="tns:schemaResponse"/>-->
-        <!--</operation>-->
-        <!--<operation name="runScriptOnConnector">-->
-            <!--<input name="runScriptOnConnectorRequest" message="tns:runScriptOnConnectorRequest"/>-->
-            <!--<output name="runScriptOnConnectorResponse" message="tns:runScriptOnConnectorResponse"/>-->
-        <!--</operation>-->
-        <!--<operation name="runScriptOnResource">-->
-            <!--<input name="runScriptOnResourceRequest" message="tns:runScriptOnResourceRequest"/>-->
-            <!--<output name="runScriptOnResourceResponse" message="tns:runScriptOnResourceResponse"/>-->
-        <!--</operation>-->
-        <!--<operation name="createFilterTranslator">-->
-            <!--<input name="createFilterTranslatorRequest" message="tns:createFilterTranslatorRequest"/>-->
-            <!--<output name="createFilterTranslatorResponse" message="tns:createFilterTranslatorResponse"/>-->
-        <!--</operation>-->
-        <!--<operation name="executeQuery">-->
-            <!--<input name="executeQueryRequest" message="tns:executeQueryRequest"/>-->
-        <!--</operation>-->
-        <!--<operation name="getLatestSyncToken">-->
-            <!--<input name="getLatestSyncTokenRequest" message="tns:getLatestSyncTokenRequest"/>-->
-            <!--<output name="getLatestSyncTokenResponse" message="tns:getLatestSyncTokenResponse"/>-->
-        <!--</operation>-->
-        <!--<operation name="sync">-->
-            <!--<input name="syncRequest" message="tns:syncRequest"/>-->
-            <!--<output name="syncResponse" message="tns:syncResponse"/>-->
-        <!--</operation>-->
-        <!--<operation name="test">-->
-            <!--<input name="testRequest" message="tns:testRequest"/>-->
-            <!--<output name="testResponse" message="tns:testResponse"/>-->
-        <!--</operation>-->
-        <!--<operation name="addAttributeValues">-->
-            <!--<input name="addAttributeValuesRequest" message="tns:addAttributeValuesRequest"/>-->
-            <!--<output name="addAttributeValuesResponse" message="tns:addAttributeValuesResponse"/>-->
-        <!--</operation>-->
-        <!--<operation name="removeAttributeValues">-->
-            <!--<input name="removeAttributeValuesRequest" message="tns:removeAttributeValuesRequest"/>-->
-            <!--<output name="removeAttributeValuesResponse" message="tns:removeAttributeValuesResponse"/>-->
-        <!--</operation>-->
-        <!--<operation name="update">-->
-            <!--<input name="updateRequest" message="tns:updateRequest"/>-->
-            <!--<output name="updateResponse" message="tns:updateResponse"/>-->
-        <!--</operation>-->
+        <operation name="create">
+            <input name="createInput" message="tns:createRequest"/>
+            <output name="createOutput" message="tns:createResponse"/>
+        </operation>
+        <operation name="delete">
+            <input name="deleteInput" message="tns:deleteRequest"/>
+        </operation>
+        <operation name="resolveUsername">
+            <input name="resolveUsernameInput" message="tns:resolveUsernameRequest"/>
+            <output name="resolveUsernameOutput" message="tns:resolveUsernameResponse"/>
+        </operation>
+        <operation name="schema">
+            <input name="schemaInput" message="tns:schemaRequest"/>
+            <output name="schemaOutput" message="tns:schemaResponse"/>
+        </operation>
+        <operation name="runScriptOnConnector">
+            <input name="runScriptOnConnectorInput" message="tns:runScriptOnConnectorRequest"/>
+            <output name="runScriptOnConnectorOutput" message="tns:runScriptOnConnectorResponse"/>
+        </operation>
+        <operation name="runScriptOnResource">
+            <input name="runScriptOnResourceInput" message="tns:runScriptOnResourceRequest"/>
+            <output name="runScriptOnResourceOutput" message="tns:runScriptOnResourceResponse"/>
+        </operation>
+        <operation name="createFilterTranslator">
+            <input name="createFilterTranslatorInput" message="tns:createFilterTranslatorRequest"/>
+            <output name="createFilterTranslatorOutput" message="tns:createFilterTranslatorResponse"/>
+        </operation>
+        <operation name="executeQuery">
+            <input name="executeQueryInput" message="tns:executeQueryRequest"/>
+            <output name="executeQueryOutput" message="tns:executeQueryResponse"/>
+        </operation>
+        <operation name="getLatestSyncToken">
+            <input name="getLatestSyncTokenInput" message="tns:getLatestSyncTokenRequest"/>
+            <output name="getLatestSyncTokenOutput" message="tns:getLatestSyncTokenResponse"/>
+        </operation>
+        <operation name="sync">
+            <input name="syncInput" message="tns:syncRequest"/>
+            <output name="syncOutput" message="tns:syncResponse"/>
+        </operation>
+        <operation name="test">
+            <input name="testInput" message="tns:testRequest"/>
+            <output name="testOutput" message="tns:testResponse"/>
+        </operation>
+        <operation name="addAttributeValues">
+            <input name="addAttributeValuesInput" message="tns:addAttributeValuesRequest"/>
+            <output name="addAttributeValuesOutput" message="tns:addAttributeValuesResponse"/>
+        </operation>
+        <operation name="removeAttributeValues">
+            <input name="removeAttributeValuesInput" message="tns:removeAttributeValuesRequest"/>
+            <output name="removeAttributeValuesOutput" message="tns:removeAttributeValuesResponse"/>
+        </operation>
+        <operation name="update">
+            <input name="updateInput" message="tns:updateRequest"/>
+            <output name="updateOutput" message="tns:updateResponse"/>
+        </operation>
     </portType>
 
     <binding name="connectorBinding" type="tns:WsdlConnectorPortType">
         <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
         <operation name="authenticate">
             <soap:operation/>
-            <input name="authenticateRequest">
+            <input name="authenticateInput">
                 <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
             </input>
-            <output name="authenticateResponse">
+            <output name="authenticateOutput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </output>
+        </operation>
+        <operation name="create">
+            <soap:operation/>
+            <input name="createInput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </input>
+            <output name="createOutput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </output>
+        </operation>
+        <operation name="delete">
+            <soap:operation/>
+            <input name="deleteInput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </input>
+        </operation>
+        <operation name="resolveUsername">
+            <soap:operation/>
+            <input name="resolveUsernameInput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </input>
+            <output name="resolveUsernameOutput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </output>
+        </operation>
+        <operation name="schema">
+            <soap:operation/>
+            <input name="schemaInput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </input>                                    Input
+            <output name="schemaOutput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </output>
+        </operation>
+        <operation name="runScriptOnConnector">
+            <soap:operation/>
+            <input name="runScriptOnConnectorInput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </input>
+            <output name="runScriptOnConnectorOutput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </output>
+        </operation>
+        <operation name="runScriptOnResource">
+            <soap:operation/>
+            <input name="runScriptOnResourceInput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </input>
+            <output name="runScriptOnResourceOutput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </output>
+        </operation>
+        <operation name="createFilterTranslator">
+            <soap:operation/>
+            <input name="createFilterTranslatorInput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </input>
+            <output name="createFilterTranslatorOutput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </output>
+        </operation>
+        <operation name="executeQuery">
+            <soap:operation/>
+            <input name="executeQueryInput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </input>
+            <output name="executeQueryOutput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </output>
+        </operation>
+        <operation name="getLatestSyncToken">
+            <soap:operation/>
+            <input name="getLatestSyncTokenInput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </input>
+            <output name="getLatestSyncTokenOutput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </output>
+        </operation>
+        <operation name="sync">
+            <soap:operation/>
+            <input name="syncInput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </input>
+            <output name="syncOutput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </output>
+        </operation>
+        <operation name="test">
+            <soap:operation/>
+            <input name="testInput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </input>
+            <output name="testOutput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </output>
+        </operation>
+        <operation name="addAttributeValues">
+            <soap:operation/>
+            <input name="addAttributeValuesInput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </input>
+            <output name="addAttributeValuesOutput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </output>
+        </operation>
+        <operation name="removeAttributeValues">
+            <soap:operation/>
+            <input name="removeAttributeValuesInput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </input>
+            <output name="removeAttributeValuesOutput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </output>
+        </operation>
+        <operation name="update">
+            <soap:operation/>
+            <input name="updateInput">
+                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
+            </input>
+            <output name="updateOutput">
                 <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
             </output>
         </operation>
