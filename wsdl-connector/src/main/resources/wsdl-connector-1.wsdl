@@ -108,52 +108,48 @@
         <part name="object" type="xsd:anyType"/>
     </message>
     <message name="createFilterTranslatorRequest">
-
+        <!-- todo -->
     </message>
     <message name="createFilterTranslatorResponse">
-
+        <!-- todo -->
     </message>
     <message name="executeQueryRequest">
-
+        <!-- todo -->
     </message>
     <message name="executeQueryResponse">
-
+        <!-- todo -->
     </message>
     <message name="getLatestSyncTokenRequest">
-
+        <part name="objectClass" type="xsd:string"/>
     </message>
     <message name="getLatestSyncTokenResponse">
-
+        <part name="token" type="xsd:string"/>  <!-- todo token maybe more complex? -->
     </message>
     <message name="syncRequest">
-
+        <!-- todo -->
     </message>
     <message name="syncResponse">
-
+        <!-- todo -->
     </message>
     <message name="testRequest">
-
-    </message>
-    <message name="testResponse">
-
     </message>
     <message name="addAttributeValuesRequest">
-
+        <!-- todo -->
     </message>
     <message name="addAttributeValuesResponse">
-
+        <!-- todo -->
     </message>
     <message name="removeAttributeValuesRequest">
-
+        <!-- todo -->
     </message>
     <message name="removeAttributeValuesResponse">
-
+        <!-- todo -->
     </message>
     <message name="updateRequest">
-
+        <!-- todo -->
     </message>
     <message name="updateResponse">
-
+        <!-- todo -->
     </message>
 
     <portType name="WsdlConnectorPortType">
@@ -202,7 +198,6 @@
         </operation>
         <operation name="test">
             <input name="testInput" message="tns:testRequest"/>
-            <output name="testOutput" message="tns:testResponse"/>
         </operation>
         <operation name="addAttributeValues">
             <input name="addAttributeValuesInput" message="tns:addAttributeValuesRequest"/>
@@ -321,9 +316,6 @@
             <input name="testInput">
                 <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
             </input>
-            <output name="testOutput">
-                <soap:body use="literal" namespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl"/>
-            </output>
         </operation>
         <operation name="addAttributeValues">
             <soap:operation/>
