@@ -37,8 +37,7 @@
     <types>
         <xsd:schema targetNamespace="http://midpoint.evolveum.com/xml/ns/public/wsdl-connector-1.wsdl">
             <xsd:import namespace="http://midpoint.evolveum.com/xml/ns/public/common/common-2"
-                        schemaLocation="../common/common-2.xsd"/>
-
+                        schemaLocation="http://midpoint.evolveum.com/xml/ns/public/common/common-2"/>
         </xsd:schema>
     </types>
 

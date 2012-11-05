@@ -26,11 +26,12 @@
     <parent>
         <groupId>org.forgerock.openicf.connectors</groupId>
         <artifactId>connectors-parent</artifactId>
-        <version>1.1.0.0-e1</version>
+        <version>1.1.0.0-SNAPSHOT</version>
     </parent>
     <name>WSDL connector</name>
     <groupId>com.evolveum.openicf.connectors</groupId>
     <artifactId>wsdl-connector</artifactId>
+    <version>1.1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <organization>
         <name>Evolveum</name>
@@ -56,8 +57,19 @@
     <repositories>
         <repository>
             <id>evolveum</id>
-            <name>repo</name>
+            <name>evolveum repository</name>
             <url>http://repo.evolveum.com/repo</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>forgerock-snapshots-repository</id>
+            <name>ForgeRock Snapshot Repository</name>
+            <url>http://maven.forgerock.org/repo/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
         </repository>
     </repositories>
     <pluginRepositories>
@@ -70,6 +82,8 @@
     <properties>
         <cxf.version>2.4.3</cxf.version>
         <cxf-xjc.version>2.4.0</cxf-xjc.version>
+        <commons.lang.version>2.6</commons.lang.version>
+        <xml.resolver.version>1.2</xml.resolver.version>
     </properties>
     <dependencies>
         <dependency>
@@ -80,54 +94,67 @@
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
+            <version>1.8.3</version>
         </dependency>
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
+            <version>3.2.1</version>
         </dependency>
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
+            <version>${commons.lang.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-core</artifactId>
+            <version>${cxf.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-simple</artifactId>
+            <version>${cxf.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-jaxws</artifactId>
+            <version>${cxf.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-databinding-aegis</artifactId>
+            <version>${cxf.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-transports-local</artifactId>
+            <version>${cxf.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-transports-http</artifactId>
+            <version>${cxf.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-transports-http-jetty</artifactId>
+            <version>${cxf.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-management</artifactId>
+            <version>${cxf.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-common-utilities</artifactId>
+            <version>${cxf.version}</version>
         </dependency>
         <dependency>
             <groupId>xml-resolver</groupId>
             <artifactId>xml-resolver</artifactId>
+            <version>${xml.resolver.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.ws.xmlschema</groupId>
@@ -155,6 +182,38 @@
     <build>
         <plugins>
             <plugin>
+                <!-- Used to pull XSD files from the JAR -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack-xsd-files</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.evolveum.midpoint.infra</groupId>
+                                    <artifactId>prism</artifactId>
+                                    <version>2.1-SNAPSHOT</version>
+                                    <type>jar</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>com.evolveum.midpoint.infra</groupId>
+                                    <artifactId>schema</artifactId>
+                                    <version>2.1-SNAPSHOT</version>
+                                    <type>jar</type>
+                                </artifactItem>
+                            </artifactItems>
+                            <includes>**/*.xsd,**/*.dtd</includes>
+                            <outputDirectory>${project.basedir}/target/xsd-includes</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.cxf</groupId>
                 <artifactId>cxf-codegen-plugin</artifactId>
                 <version>${cxf.version}</version>
@@ -170,7 +229,7 @@
                                     <!-- Ugly hack. The fake WSDL includes all the XSD files we need to compile
                                                   This is the only way I found to generate equals and hashCode methods with CXF.
                                                   If you find anything better please correct it. -->
-                                    <wsdl>src/main/resources/xml/ns/private/provisioning/connectorWrapper.wsdl</wsdl>
+                                    <wsdl>src/main/resources/connectorWrapper.wsdl</wsdl>
                                     <catalog>${basedir}/src/main/resources/META-INF/jax-ws-catalog.xml</catalog>
                                     <extraargs>
                                         <extraarg>-impl</extraarg>
@@ -186,10 +245,19 @@
                                             -xjc-Xequals-equalsStrategyClass=com.evolveum.midpoint.schema.DomAwareEqualsStrategy
                                         </extraarg>
                                         <!-- 										<extraargs>-version</extraargs> -->
+
                                         <extraarg>-nexclude</extraarg>
                                         <extraarg>http://prism.evolveum.com/xml/ns/public/types-2</extraarg>
-
-                                        <extraarg>-xjc-Xmidpoint</extraarg>
+                                        <extraarg>-nexclude</extraarg>
+                                        <extraarg>http://midpoint.evolveum.com/xml/ns/public/common/common-2</extraarg>
+                                        <extraarg>-nexclude</extraarg>
+                                        <extraarg>http://prism.evolveum.com/xml/ns/public/annotation-2</extraarg>
+                                        <extraarg>-nexclude</extraarg>
+                                        <extraarg>http://prism.evolveum.com/xml/ns/public/query-2</extraarg>
+                                        <extraarg>-nexclude</extraarg>
+                                        <extraarg>http://www.w3.org/2000/09/xmldsig#=org.w3._2000._09.xmldsig</extraarg>
+                                        <extraarg>-nexclude</extraarg>
+                                        <extraarg>http://www.w3.org/2001/04/xmlenc#=org.w3._2001._04.xmlenc</extraarg>
                                     </extraargs>
                                 </wsdlOption>
                             </wsdlOptions>
@@ -209,11 +277,6 @@
                         <groupId>org.jvnet.jaxb2_commons</groupId>
                         <artifactId>jaxb2-basics</artifactId>
                         <version>0.6.3</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>com.evolveum.midpoint.tools</groupId>
-                        <artifactId>xjc-plugin</artifactId>
-                        <version>2.1-SNAPSHOT</version>
                     </dependency>
                 </dependencies>
             </plugin>
