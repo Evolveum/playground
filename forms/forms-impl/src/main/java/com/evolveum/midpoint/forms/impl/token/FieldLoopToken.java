@@ -25,11 +25,14 @@ import com.evolveum.midpoint.forms.impl.FormContextItem;
 import com.evolveum.midpoint.forms.impl.StructuredFormContext;
 import com.evolveum.midpoint.forms.impl.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.impl.interpreter.InterpreterException;
-import com.evolveum.midpoint.prism.*;
+import com.evolveum.midpoint.prism.Item;
+import com.evolveum.midpoint.prism.PrismContainer;
+import com.evolveum.midpoint.prism.PrismContainerDefinition;
+import com.evolveum.midpoint.prism.PrismContainerValue;
+import com.evolveum.midpoint.prism.path.ItemPath;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 import com.evolveum.midpoint.xml.ns._public.gui.form_1.FieldLoopType;
-import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Element;
 
 import java.util.List;
@@ -86,7 +89,7 @@ public class FieldLoopToken extends BaseGroupFieldToken<FieldLoopType> {
 
         PrismContainer parent = (PrismContainer) item;
         if (!ref.getPath().isEmpty()) {
-            PropertyPath path = ref.getPath();
+            ItemPath path = ref.getPath();
 
             //todo field loop can point to PrismReference...
             this.container = parent.findContainer(path);

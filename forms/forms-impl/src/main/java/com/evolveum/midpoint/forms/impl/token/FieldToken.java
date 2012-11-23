@@ -26,6 +26,7 @@ import com.evolveum.midpoint.forms.impl.StructuredFormContext;
 import com.evolveum.midpoint.forms.impl.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.impl.interpreter.InterpreterException;
 import com.evolveum.midpoint.prism.*;
+import com.evolveum.midpoint.prism.path.ItemPath;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
 import com.evolveum.midpoint.xml.ns._public.gui.form_1.FieldType;
@@ -117,7 +118,7 @@ public class FieldToken extends BaseDisplayableFieldToken<FieldType> {
             }
 
             PrismContainer container = (PrismContainer) item;
-            PropertyPath path = ref.getPath();
+            ItemPath path = ref.getPath();
             item = container.findItem(path);
             if (item != null && !(item instanceof PrismProperty)) {
                 throw new InterpreterException("Referenced item " + ref + " is not instance of PrismProperty.");
@@ -142,7 +143,7 @@ public class FieldToken extends BaseDisplayableFieldToken<FieldType> {
 
         PrismContainerValue value = (PrismContainerValue) loopContainer.getValue(loopItemToken.getIndex());
 
-        PropertyPath path = fieldRef.getPath();
+        ItemPath path = fieldRef.getPath();
         Item item = value.findItem(path);
         if (item != null && !(item instanceof PrismProperty)) {
             throw new InterpreterException("Referenced item " + fieldRef + " is not instance of PrismProperty.");

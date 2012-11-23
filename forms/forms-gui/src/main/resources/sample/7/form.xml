@@ -21,7 +21,7 @@
   ~ Portions Copyrighted 2012 [name of copyright owner]
   -->
 <form xmlns="http://midpoint.evolveum.com/xml/ns/public/gui/form-1"
-      xmlns:c="http://midpoint.evolveum.com/xml/ns/public/common/common-2"
+      xmlns:c="http://midpoint.evolveum.com/xml/ns/public/common/common-2a"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       name="User Detail Form">
 

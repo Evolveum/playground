@@ -27,7 +27,7 @@ import com.evolveum.midpoint.forms.impl.interpreter.FormResolverException;
 import com.evolveum.midpoint.forms.impl.util.StructuredFormUtils;
 import com.evolveum.midpoint.xml.ns._public.gui.form_1.FormType;
 import com.evolveum.midpoint.prism.PrismObject;
-import com.evolveum.midpoint.xml.ns._public.common.common_2.UserType;
+import com.evolveum.midpoint.xml.ns._public.common.common_2a.UserType;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 

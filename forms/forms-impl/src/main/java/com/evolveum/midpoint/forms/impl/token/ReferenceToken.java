@@ -21,8 +21,9 @@
 
 package com.evolveum.midpoint.forms.impl.token;
 
-import com.evolveum.midpoint.prism.PropertyPath;
-import com.evolveum.midpoint.prism.PropertyPathSegment;
+import com.evolveum.midpoint.prism.path.ItemPath;
+import com.evolveum.midpoint.prism.path.ItemPathSegment;
+import com.evolveum.midpoint.prism.path.NameItemPathSegment;
 import com.evolveum.midpoint.schema.holder.XPathHolder;
 import org.apache.commons.lang.Validate;
 import org.w3c.dom.Element;
@@ -36,7 +37,7 @@ import java.util.List;
 public class ReferenceToken {
 
     private Element element;
-    private PropertyPath path;
+    private ItemPath path;
 
     public ReferenceToken(Element element) {
         Validate.notNull(element, "Reference element must not be null.");
@@ -50,16 +51,17 @@ public class ReferenceToken {
         if (!isFirstVariable()) {
             return null;
         }
-        return path.first().getName().getLocalPart();
+        return ((NameItemPathSegment) path.first()).getName().getLocalPart();
     }
 
     private boolean isFirstVariable() {
-        PropertyPathSegment first = path.first();
-        if (first == null || !first.isVariable()) {
+        ItemPathSegment first = path.first();
+        if (!(first instanceof NameItemPathSegment)) {
             return false;
         }
 
-        return true;
+        NameItemPathSegment nameItemPathSegment = (NameItemPathSegment) first;
+        return nameItemPathSegment.isVariable();
     }
 
     public String getValue() {
@@ -70,15 +72,15 @@ public class ReferenceToken {
         return element;
     }
 
-    public PropertyPath getPath() {
-        List<PropertyPathSegment> segments = new ArrayList<PropertyPathSegment>();
+    public ItemPath getPath() {
+        List<ItemPathSegment> segments = new ArrayList<ItemPathSegment>();
         if (isFirstVariable()) {
             segments.addAll(path.tail().getSegments());
         } else {
             segments.addAll(path.getSegments());
         }
 
-        return new PropertyPath(segments);
+        return new ItemPath(segments);
     }
 
     @Override

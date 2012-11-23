@@ -23,13 +23,13 @@ package com.evolveum.midpoint.forms.impl.model;
 
 import com.evolveum.midpoint.forms.impl.token.FieldToken;
 import com.evolveum.midpoint.forms.impl.util.StructuredFormUtils;
-import com.evolveum.midpoint.xml.ns._public.gui.form_1.FieldDisplayType;
 import com.evolveum.midpoint.prism.PrismProperty;
 import com.evolveum.midpoint.prism.PrismPropertyDefinition;
 import com.evolveum.midpoint.prism.PrismPropertyValue;
 import com.evolveum.midpoint.prism.polystring.PolyString;
 import com.evolveum.midpoint.schema.constants.SchemaConstants;
-import com.evolveum.midpoint.xml.ns._public.common.common_2.ProtectedStringType;
+import com.evolveum.midpoint.xml.ns._public.common.common_2a.ProtectedStringType;
+import com.evolveum.midpoint.xml.ns._public.gui.form_1.FieldDisplayType;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;

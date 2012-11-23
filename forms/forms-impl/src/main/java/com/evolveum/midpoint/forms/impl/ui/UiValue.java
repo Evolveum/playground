@@ -27,15 +27,15 @@ import com.evolveum.midpoint.forms.impl.token.FieldToken;
 import com.evolveum.midpoint.forms.impl.ui.widget.TextWidget;
 import com.evolveum.midpoint.forms.impl.ui.widget.UiWidget;
 import com.evolveum.midpoint.forms.impl.util.StructuredFormUtils;
-import com.evolveum.midpoint.xml.ns._public.gui.form_1.FieldDisplayType;
-import com.evolveum.midpoint.xml.ns._public.gui.form_1.PropertyType;
 import com.evolveum.midpoint.gui.common.VisibleEnableBehaviour;
 import com.evolveum.midpoint.prism.PrismPropertyDefinition;
 import com.evolveum.midpoint.schema.constants.SchemaConstants;
 import com.evolveum.midpoint.util.logging.LoggingUtils;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
-import com.evolveum.midpoint.xml.ns._public.common.common_2.ProtectedStringType;
+import com.evolveum.midpoint.xml.ns._public.common.common_2a.ProtectedStringType;
+import com.evolveum.midpoint.xml.ns._public.gui.form_1.FieldDisplayType;
+import com.evolveum.midpoint.xml.ns._public.gui.form_1.PropertyType;
 import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -165,7 +165,7 @@ public class UiValue extends Panel {
     /**
      * @return Returns proper {@link PropertyModel} based on different types like
      *         {@link com.evolveum.midpoint.prism.polystring.PolyString} or
-     *         {@link com.evolveum.midpoint.xml.ns._public.common.common_2.ProtectedStringType}
+     *         {@link com.evolveum.midpoint.xml.ns._public.common.common_2a.ProtectedStringType}
      */
     private IModel createValueModel() {
         FieldToken token = model.getObject().getField().getToken();

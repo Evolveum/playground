@@ -22,11 +22,11 @@
 package com.evolveum.midpoint.forms.impl.token;
 
 import com.evolveum.midpoint.forms.impl.ui.UiRegistry;
-import com.evolveum.midpoint.xml.ns._public.gui.form_1.*;
 import com.evolveum.midpoint.prism.PrismPropertyDefinition;
 import com.evolveum.midpoint.util.DOMUtil;
 import com.evolveum.midpoint.util.exception.SystemException;
-import com.evolveum.midpoint.xml.ns._public.common.common_2.ProtectedStringType;
+import com.evolveum.midpoint.xml.ns._public.common.common_2a.ProtectedStringType;
+import com.evolveum.midpoint.xml.ns._public.gui.form_1.*;
 
 /**
  * @author lazyman

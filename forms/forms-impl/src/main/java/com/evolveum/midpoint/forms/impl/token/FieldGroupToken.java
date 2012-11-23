@@ -27,6 +27,8 @@ import com.evolveum.midpoint.forms.impl.interpreter.InterpreterContext;
 import com.evolveum.midpoint.forms.impl.interpreter.InterpreterException;
 import com.evolveum.midpoint.forms.impl.util.ItemDefinitionComparator;
 import com.evolveum.midpoint.prism.*;
+import com.evolveum.midpoint.prism.path.ItemPath;
+import com.evolveum.midpoint.prism.path.NameItemPathSegment;
 import com.evolveum.midpoint.schema.holder.XPathHolder;
 import com.evolveum.midpoint.util.logging.Trace;
 import com.evolveum.midpoint.util.logging.TraceManager;
@@ -127,11 +129,11 @@ public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
         PrismContainerValue value = (PrismContainerValue) loopContainer.getValue(loopItemToken.getIndex());
         PrismContainerDefinition parentDef = value.getParent().getDefinition();
         if (!ref.getPath().isEmpty()) {
-            PropertyPath path = ref.getPath();
+            ItemPath path = ref.getPath();
             Item item = value.findItem(path);
             //todo field loop can point to PrismReference
             if (item == null) {
-                item = new PrismContainer(path.last().getName());
+                item = new PrismContainer(((NameItemPathSegment)path.last()).getName());
                 item.revive(interpreterContext.getPrismContext());
             } else if (!(item instanceof PrismContainer)) {
                 throw new InterpreterException("Item referenced by '" + ref + "' must be PrismContainer, but it's '"
@@ -163,7 +165,7 @@ public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
 
         PrismContainer parent = (PrismContainer) item;
         if (!ref.getPath().isEmpty()) {
-            PropertyPath path = ref.getPath();
+            ItemPath path = ref.getPath();
             //todo field group can point to PrismReference...
             this.container = parent.findContainer(path);
 
@@ -186,7 +188,7 @@ public class FieldGroupToken extends BaseGroupFieldToken<FieldGroupType> {
         }
 
         for (Element element : elements) {
-            PropertyPath path = new XPathHolder(element).toPropertyPath();
+            ItemPath path = new XPathHolder(element).toPropertyPath();
             ItemDefinition def = definition.findItemDefinition(path);
             if (def != null) {
                 exclusions.add(def);

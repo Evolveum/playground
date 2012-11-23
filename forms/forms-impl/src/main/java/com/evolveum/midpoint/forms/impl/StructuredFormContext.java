@@ -22,13 +22,12 @@
 package com.evolveum.midpoint.forms.impl;
 
 import com.evolveum.midpoint.forms.impl.interpreter.FormResolver;
-import com.evolveum.midpoint.forms.impl.model.FormModel;
 import com.evolveum.midpoint.prism.PrismObject;
 import com.evolveum.midpoint.prism.delta.ChangeType;
 import com.evolveum.midpoint.prism.delta.ObjectDelta;
 import com.evolveum.midpoint.util.exception.SchemaException;
-import com.evolveum.midpoint.xml.ns._public.common.common_2.ObjectType;
-import com.evolveum.midpoint.xml.ns._public.common.common_2.UserType;
+import com.evolveum.midpoint.xml.ns._public.common.common_2a.ObjectType;
+import com.evolveum.midpoint.xml.ns._public.common.common_2a.UserType;
 import org.apache.commons.lang.Validate;
 
 import java.io.Serializable;
