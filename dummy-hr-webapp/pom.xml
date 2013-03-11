@@ -25,7 +25,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.evolveum.demo.hr</groupId>
-	<artifactId>dummy-hr-webapp</artifactId>
+	<artifactId>admin-gui</artifactId>
 	<packaging>war</packaging>
 	<version>1.0</version>
 	<name>Dummy HR application for midPoint demo environment</name>
@@ -68,6 +68,14 @@
 			<version>${jetty.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>commons-configuration</groupId>
+			<artifactId>commons-configuration</artifactId>
+			<version>1.6</version>
+		</dependency>
+            
+		
 		
 	</dependencies>
 	<build>
@@ -160,5 +168,7 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+	    
 	</repositories>
+
 	</project>

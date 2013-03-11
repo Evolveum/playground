@@ -1,45 +1,22 @@
 package com.evolveum.demo.model;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable{
 
 	private Integer id;
-	private String fullName;
-	private String givenName;
+	private String firstname;
+	private String surname;
 	private String emailAddress;
 	private Integer employeeNumber;
 	
-	public User(String fullName, String givenName, String emailAddress, Integer employeeNumber, Integer id){
+	public User(String firstname, String surname, String emailAddress, Integer employeeNumber, Integer id){
 		
-		this.fullName = fullName;
-		this.givenName = givenName;
+		this.firstname = firstname;
+		this.surname = surname;
 		this.emailAddress = emailAddress;
 		this.employeeNumber = employeeNumber;
 		this.id = id;
-	}
-	
-	public String getFullName() {
-		return fullName;
-	}
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
-	public String getGivenName() {
-		return givenName;
-	}
-	public void setGivenName(String givenName) {
-		this.givenName = givenName;
-	}
-	public String getEmailAddress() {
-		return emailAddress;
-	}
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
-	}
-	public Integer getEmployeeNumber() {
-		return employeeNumber;
-	}
-	public void setEmployeeNumber(Integer employeeNumber) {
-		this.employeeNumber = employeeNumber;
 	}
 
 	public Integer getId() {
@@ -49,7 +26,40 @@ public class User {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	public Integer getEmployeeNumber() {
+		return employeeNumber;
+	}
+
+	public void setEmployeeNumber(Integer employeeNumber) {
+		this.employeeNumber = employeeNumber;
+	}
 	
+
 	
 
 }

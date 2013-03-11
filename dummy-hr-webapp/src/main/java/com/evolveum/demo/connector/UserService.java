@@ -1,5 +1,6 @@
 package com.evolveum.demo.connector;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,9 +8,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 import com.evolveum.demo.model.User;
 
-public class UserService {
+public class UserService implements Serializable{
 	Connection connection;
 	
 	public UserService(Connection connection ){
@@ -17,40 +20,38 @@ public class UserService {
 	}
 
 
-	public void registerNewUser(String fullName, String givenName, String email, Integer number, Integer id){
+	public void registerNewUser(String firstname, String surname, String email, Integer number) throws Exception{
 		Statement st = null; 
 		ResultSet rs = null;
+    	
+    	Random generator = new Random();
+    	int id = generator.nextInt(300);
 		
 		if (connection !=  null){
-			if(checkIfUserExists(fullName, givenName, email)){
-				try {
-					System.out.println("Hi!");
+			if(checkIfUserExists(firstname, surname, email)){
 					PreparedStatement ps = connection.prepareStatement("INSERT INTO users(id, fullName, givenName, emailAddress, employeeNumber) VALUES (?, ?, ?, ?, ?);");
-					ps.setString(2, fullName);
-					ps.setString(3, givenName);
+					ps.setString(2, firstname);
+					ps.setString(3, surname);
 					ps.setString(4, email);
 					ps.setInt(5 , number );
 					ps.setInt(1, id);
 					
 					Integer i = ps.executeUpdate();
 					System.out.println(i.toString());
-					
-				} catch (SQLException e) {
-					System.out.println(e.getMessage());
-					e.printStackTrace();
-				}
+			}
+			else{
+				throw new Exception();
 			}
 		}
-		
 	}
 	
-	public void updateUser(String fullName, String givenName, String email, Integer number, Integer id){
+	public void updateUser(String firstname, String surname, String email, Integer number, Integer id){
 		ResultSet rs = null;
 		
 		try {
 			PreparedStatement ps = connection.prepareStatement("UPDATE users SET fullname=?, givenname=?, emailaddress=?, employeenumber=? WHERE id = ? ");
-			ps.setString(1, fullName);
-			ps.setString(2, givenName);
+			ps.setString(1, firstname);
+			ps.setString(2, surname);
 			ps.setString(3, email);
 			ps.setInt(4 , number );
 			ps.setInt(5, id);
@@ -78,20 +79,16 @@ public class UserService {
 		}
 	}
 	
-	public ArrayList<User> listAllUsers(){
+	public ArrayList<User> listAllUsers() throws SQLException{
 		ResultSet rs = null;
 		ArrayList users = new ArrayList<User>();
 		
-		try {
-			PreparedStatement ps = connection.prepareStatement("SELECT * FROM users");
-			rs = ps.executeQuery();
+		PreparedStatement ps = connection.prepareStatement("SELECT * FROM users");
+		rs = ps.executeQuery();
 			
-			while(rs.next()){
-				User u = new User(rs.getString("fullName"), rs.getString("givenName"),rs.getString("emailAddress"),rs.getInt("employeeNumber"), rs.getInt("id"));
-				users.add(u);
-			}
-		}catch (SQLException e) {
-			e.printStackTrace();
+		while(rs.next()){
+			User u = new User(rs.getString("fullName"), rs.getString("givenName"),rs.getString("emailAddress"),rs.getInt("employeeNumber"), rs.getInt("id"));
+			users.add(u);
 		}
 		
 		return users;
@@ -117,13 +114,13 @@ public class UserService {
 		return user;
 	}
 	
-	public boolean checkIfUserExists(String fullName, String givenName, String emailAddress){
+	public boolean checkIfUserExists(String firstname, String surname, String emailAddress){
 		ResultSet rs = null;
 		
 		try {
 			PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE fullName = ? AND givenName = ? OR emailAddress = ?");
-			ps.setString(1, fullName);
-			ps.setString(2, givenName);
+			ps.setString(1, firstname);
+			ps.setString(2, surname);
 			ps.setString(3, emailAddress);
 			
 			rs = ps.executeQuery();

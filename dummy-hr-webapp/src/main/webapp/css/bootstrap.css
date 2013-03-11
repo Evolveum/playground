@@ -420,7 +420,13 @@ a:focus {
           box-sizing: border-box;
 }
 .allert {
+	padding: 5px;
 	color:red;
+	height: auto;
+}
+
+.allertHidden{
+	visibility:hidden;
 }
 
 .row-fluid [class*="span"]:first-child {
@@ -5287,6 +5293,12 @@ input[type="submit"].btn.btn-mini {
 .modal-footer .btn + .btn {
   margin-bottom: 0;
   margin-left: 5px;
+}
+
+#footer{
+	float:center;
+	text-align: center;
+	padding: 15px;
 }
 
 .modal-footer .btn-group .btn + .btn {

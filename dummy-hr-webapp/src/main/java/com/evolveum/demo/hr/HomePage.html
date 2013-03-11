@@ -1,12 +1,10 @@
 <html>
 <head>
 	<link href="css/bootstrap.css" rel="stylesheet">
-
 </head>
 <body>
 <!-- Navbar
 ================================================== -->
-<section id="navbar">
   <div class="navbar">
     <div class="navbar-inner">
       <div class="container" style="width: auto;">
@@ -15,43 +13,25 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </a>
-        <a class="brand" href="#">HR app</a>
+        <a class="brand"><wicket:message key="message.appname"/></a>
         <div class="nav-collapse">
           <ul class="nav">
-            <li> <a href="#" wicket:id="register">Register User</a></li>
-            <li><a href="#" wicket:id="show">Show users</a></li>
-          </ul>
-          <ul class="nav pull-right">
-            <li><a href="#">Link</a></li>
-            <li class="divider-vertical"></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-              </ul>
-            </li>
+            <li> <a  wicket:id="register">Register user</a></li>
+            <li><a  wicket:id="show">Show users</a></li>
           </ul>
         </div><!-- /.nav-collapse -->
       </div>
     </div><!-- /navbar-inner -->
   </div><!-- /navbar -->
 
+     <div class="content">	
 
-</section>
-
-
-
-		<wicket:child />
-
-
-
-
+		<div wicket:id="feedbackPanel" class="allert"></div>
+     			 
+		<wicket:child/>		 
+	 </div>
+			
 <hr>
-
 <div id="footer">
 	<span wicket:id="footer"></span><br>
 		 <span wicket:id="clock"/>
