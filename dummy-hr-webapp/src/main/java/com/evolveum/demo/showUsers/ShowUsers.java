@@ -1,7 +1,4 @@
 package com.evolveum.demo.showUsers;
-import java.util.Properties;
-
-import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,9 +6,6 @@ import java.util.ArrayList;
 import javax.servlet.ServletContext;
 import javax.xml.stream.Location;
 
-import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -23,7 +17,6 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.protocol.http.WebApplication;
 
-import com.evolveum.demo.connector.PostgresConnector;
 import com.evolveum.demo.connector.UserService;
 import com.evolveum.demo.exporter.CsvWriter;
 import com.evolveum.demo.hr.HomePage;
@@ -56,33 +49,36 @@ public class ShowUsers extends HomePage {
 					
 	                item.add(new Label("surname", new PropertyModel<Location>(item.getModel(),  new StringResourceModel("surname", this, null).getString()))); 
 	                item.add(new Label("firstname", new PropertyModel<Location>(item.getModel(), new StringResourceModel("firstname", this, null).getString())));
+	                item.add(new Label("artname", new PropertyModel<Location>(item.getModel(), new StringResourceModel("artname", this, null).getString())));
 	                item.add(new Label("emailAddress", new PropertyModel<Location>(item.getModel(), new StringResourceModel("emailAddress", this, null).getString())));
 	                item.add(new Label("employeeNumber", new PropertyModel<Location>(item.getModel(), new StringResourceModel("employeeNumber", this, null).getString())));
 	                item.add(new Label("id", new PropertyModel<Location>(item.getModel(), new StringResourceModel("id", this, null).getString())));
+	                item.add(new Label("emptype", new PropertyModel<Location>(item.getModel(), new StringResourceModel("emptype", this, null).getString())));
 	            }
 	        };
+	        final Label exportCheck = new Label("exportCheck", "Sucessfully exported");
+	        exportCheck.setVisible(Boolean.FALSE);
+	        add(exportCheck);
 
 	        add(new Label("totalUsersCount", String.valueOf(users.size()))); 
-	 
+	        add(new Label("exportPath", config.getProperty("exportPath").toString()));
+	        
 	        add(userList);
-
-	        //String path =  this.getPath();
 
 		Form<ShowUsers> form = new Form<ShowUsers>("form",new CompoundPropertyModel<ShowUsers>(this));
 		
 		Button exportButton = new Button("exportButton") {
 			@Override
 			public void onSubmit() {
-				ServletContext servletContext = WebApplication.get()
-						.getServletContext();
+				ServletContext servletContext = WebApplication.get().getServletContext();
 				String contextPath = servletContext.getContextPath();
-				System.out.println();
 
 				try {
-					CsvWriter exporter = new CsvWriter(users, new StringResourceModel("exportPath", this, null).getString());
-					System.out.println(new StringResourceModel(config.getProperty("exportPath").toString(), this, null).getString());
-				} catch (IOException e) {
-					e.printStackTrace();
+					CsvWriter exporter = new CsvWriter(users, config.getProperty("exportPath").toString() );
+					exportCheck.setVisible(Boolean.TRUE);
+					//System.out.println(new StringResourceModel(config.getProperty("exportPath").toString(), this, null).getString());
+				} catch (Exception e) {
+					error(e.toString());
 					log.error(e.toString());
 				}
 			}

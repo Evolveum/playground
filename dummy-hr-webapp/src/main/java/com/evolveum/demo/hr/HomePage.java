@@ -13,18 +13,16 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.StringResourceModel;
 
 import com.evolveum.demo.connector.Clock;
-import com.evolveum.demo.connector.PostgresConnector;
 import com.evolveum.demo.connector.UserService;
 import com.evolveum.demo.registerUser.RegisterUser;
 import com.evolveum.demo.showUsers.ShowUsers;
 
 public class HomePage extends WebPage {
 	private static final long serialVersionUID = 1L;
-	public Configuration config;
-	static PostgresConnector pgc = new PostgresConnector();
-	public static UserService userService = new UserService(pgc.connect());
-	
+	public static transient Configuration config ;
 	public static Logger log = Logger.getLogger(HomePage.class.getName());
+	
+	public static transient UserService userService = UserService.getInstance();
 
 	public HomePage() {
 		initGui();
@@ -40,6 +38,7 @@ public class HomePage extends WebPage {
 	private void initGui(){
 		add(new BookmarkablePageLink("register", RegisterUser.class));
 		add(new BookmarkablePageLink("show", ShowUsers.class));
+		add(new BookmarkablePageLink("home", HomePage.class));
         add(new Label("footer", new StringResourceModel("footer", this, null)));
         add(new FeedbackPanel("feedbackPanel"));
 

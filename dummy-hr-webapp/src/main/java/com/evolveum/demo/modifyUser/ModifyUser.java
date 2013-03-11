@@ -1,21 +1,21 @@
 package com.evolveum.demo.modifyUser;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 
-import org.apache.wicket.RestartResponseException;
+import org.apache.wicket.extensions.markup.html.form.select.Select;
+import org.apache.wicket.extensions.markup.html.form.select.SelectOption;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.apache.wicket.validation.validator.StringValidator;
 
-import com.evolveum.demo.connector.PostgresConnector;
 import com.evolveum.demo.connector.UserService;
 import com.evolveum.demo.hr.HomePage;
 import com.evolveum.demo.model.User;
@@ -27,6 +27,8 @@ public class ModifyUser extends HomePage implements Serializable {
 	private String emailAddress;
 	private Integer employeeNumber;
 	private Integer id;
+	private String artname;
+	private String emptype;
 	
 	public ModifyUser(Integer userId){
 		initGui(userId);
@@ -34,12 +36,22 @@ public class ModifyUser extends HomePage implements Serializable {
 	}
 	
 	private void initGui(Integer userId){
-		User u = userService.showUser(userId);
-		firstname = u.getFirstname();
-		surname = u.getSurname();
-		emailAddress = u.getEmailAddress();
-		employeeNumber = u.getEmployeeNumber();
-		id = u.getId();
+		User u;
+		try {
+			u = userService.showUser(userId);
+			firstname = u.getFirstname();
+			surname = u.getSurname();
+			emailAddress = u.getEmailAddress();
+			employeeNumber = u.getEmployeeNumber();
+			id = u.getId();
+			artname = u.getArtname();
+			emptype = u.getEmptype();
+			
+		} catch (Exception e) {
+			error("Sql exception" + e.toString());
+			log.error(e.toString());
+		}
+
 		
 		Form<ModifyUser> addRegisterForm = new Form<ModifyUser>("addLocationForm", new CompoundPropertyModel<ModifyUser>(this));
         add(addRegisterForm);
@@ -62,6 +74,14 @@ public class ModifyUser extends HomePage implements Serializable {
         givenNameField.add(StringValidator.minimumLength(5)).setRequired(true);;
         addRegisterForm.add(givenNameField);
         
+        Label artNameLabel = new Label("artnameLabel", new StringResourceModel("artnameLabel", this, null)); 
+        addRegisterForm.add(artNameLabel);
+        
+        TextField<String> artNameField = new TextField<String>("artname",new PropertyModel(this, "artname")); 
+        artNameField.add(StringValidator.maximumLength(255));
+        artNameField.add(StringValidator.minimumLength(2)).setRequired(true);;
+        addRegisterForm.add(artNameField);
+        
         Label emailAddressLabel = new Label("emailAddressLabel", new StringResourceModel("emailAddressLabel", this, null));
         addRegisterForm.add(emailAddressLabel);
         
@@ -79,11 +99,27 @@ public class ModifyUser extends HomePage implements Serializable {
         employeeNumberField.setRequired(true);
         addRegisterForm.add(employeeNumberField);
         
+        Label empTypeLabel = new Label("empTypeLabel", new StringResourceModel("empTypeLabel", this, null));
+        addRegisterForm.add(empTypeLabel);
+        
+        Select empSelect = new Select("empSelect", new PropertyModel<String>(this, "emptype"));
+        addRegisterForm.add(empSelect);
+        
+        empSelect.add(new SelectOption<String>("EmpType1", new Model<String>("FTE")));
+        empSelect.add(new SelectOption<String>("EmpType2", new Model<String>("PTE")));
+        empSelect.add(new SelectOption<String>("EmpType3", new Model<String>("CONTRACTOR")));
+        empSelect.add(new SelectOption<String>("EmpType4", new Model<String>("RETIRED")));
+        
         
         Button submitButton = new Button("submitButton") { 
             @Override
             public void onSubmit() {
-            	userService.updateUser(firstname, surname, emailAddress, employeeNumber, id);
+            	try {
+					userService.modifyUser(firstname, surname, emailAddress, employeeNumber, id, artname, emptype);
+				} catch (SQLException e) {
+					error("Sql exception" + e.toString());
+					log.error(e.toString());
+				}
             	setResponsePage(ShowUsers.class);
             }
         };

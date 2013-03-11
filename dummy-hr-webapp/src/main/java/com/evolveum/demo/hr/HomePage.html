@@ -1,6 +1,7 @@
 <html>
 <head>
 	<link href="css/bootstrap.css" rel="stylesheet">
+	<title>Demo HR app</title>
 </head>
 <body>
 <!-- Navbar
@@ -13,7 +14,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </a>
-        <a class="brand"><wicket:message key="message.appname"/></a>
+        <a class="brand" wicket:id="home">Demo HR app</a>
         <div class="nav-collapse">
           <ul class="nav">
             <li> <a  wicket:id="register">Register user</a></li>
@@ -24,8 +25,8 @@
     </div><!-- /navbar-inner -->
   </div><!-- /navbar -->
 
-     <div class="content">	
-
+     <div class="content">
+		
 		<div wicket:id="feedbackPanel" class="allert"></div>
      			 
 		<wicket:child/>		 

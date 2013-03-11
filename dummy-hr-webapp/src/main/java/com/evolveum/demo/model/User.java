@@ -9,14 +9,47 @@ public class User implements Serializable{
 	private String surname;
 	private String emailAddress;
 	private Integer employeeNumber;
+	private String artname;
+	private EmpType emptype;
 	
-	public User(String firstname, String surname, String emailAddress, Integer employeeNumber, Integer id){
+	public User(String firstname, String surname, String emailAddress, Integer employeeNumber, Integer id, String artname, String emptype){
 		
 		this.firstname = firstname;
 		this.surname = surname;
 		this.emailAddress = emailAddress;
 		this.employeeNumber = employeeNumber;
 		this.id = id;
+		this.artname = artname;
+		
+		if(emptype.equals("FTE")){
+			this.emptype = EmpType.FTE;
+		}
+		else if(emptype.equals("PTE")){
+			this.emptype = EmpType.PTE;
+		}
+		else if(emptype.equals("CONTRACTOR")){
+			this.emptype = EmpType.CONTRACTOR;
+		}
+		else if(emptype.equals("RETIRED")){
+			this.emptype = EmpType.RETIRED;
+		}
+		
+	}
+
+	public String getArtname() {
+		return artname;
+	}
+
+	public void setArtname(String artname) {
+		this.artname = artname;
+	}
+
+	public String getEmptype() {
+		return emptype.toString();
+	}
+
+	public void setEmptype(EmpType emptype) {
+		this.emptype = emptype;
 	}
 
 	public Integer getId() {
@@ -60,6 +93,9 @@ public class User implements Serializable{
 	}
 	
 
+	public enum EmpType {
+		 FTE, PTE, CONTRACTOR, RETIRED;
+	 }
 	
 
 }
