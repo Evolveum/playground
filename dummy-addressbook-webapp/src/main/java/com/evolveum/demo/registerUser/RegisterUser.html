@@ -1,0 +1,53 @@
+<html>
+<head></head>
+<body>
+<wicket:extend>
+	<div class="well">
+    	<h1><wicket:message key="message.registerUser"/></h1>
+    </div>
+		 
+		<wicket:child/>		 
+
+					
+	<form class="form-horizontal well" action="" wicket:id="addRegisterForm">
+		<fieldset>
+          <legend><wicket:message key="message.registerInfo"/></legend>
+         
+          	<div class="control-group">
+          
+                <label  class="control-label" for="name" wicket:id="firstnameLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="firstname" wicket:id="firstname"/>
+                <p class="help-block"><wicket:message key="message.firstname"/></p> </div>
+                <label  class="control-label" for="name" wicket:id=surnameLabel></label> <div class="controls"><input class="input-xlarge" type="text" id="surname" wicket:id="surname"/>
+                <p class="help-block"><wicket:message key="message.surname"/></p> </div>
+                 <label  class="control-label" for="name" wicket:id=artnameLabel></label> <div class="controls"><input class="input-xlarge" type="text" id="artname" wicket:id="artname"/>
+                <p class="help-block"><wicket:message key="message.artName"/></p> </div>
+                <label  class="control-label" for="name" wicket:id="emailAddressLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="emailAddress" wicket:id="emailAddress"/>
+                <p class="help-block"><wicket:message key="message.emailAddress"/></p> </div>
+                <label  class="control-label" for="name" wicket:id="employeeNumberLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="employeeNumber" wicket:id="employeeNumber"/>
+                <p class="help-block"><wicket:message key="message.employeeNumber"/></p> </div>
+                <br/>
+                 <label  class="control-label" for="name" wicket:id="empTypeLabel"></label>
+                <div class="controls">
+
+	                <select wicket:id="empSelect">
+						<optgroup label="EmpType">
+							<option wicket:id="EmpType1" ><wicket:message key="message.fte"/></option>
+							<option wicket:id="EmpType2" ><wicket:message key="message.pte"/></option>
+							<option wicket:id="EmpType3" ><wicket:message key="message.contractor"/></option>
+							<option wicket:id="EmpType4" ><wicket:message key="message.retired"/></option>
+						</optgroup>
+					</select>
+                </div>
+                 <div class="controls"><p class="help-block"><wicket:message key="message.empType"/></p></div>
+                
+            </div>
+             <div class="form-actions">
+             	 <input type="submit" value="Register user" class="btn btn-primary" name="save" wicket:id="submitButton"/>
+             </div>
+               
+        </fieldset>
+    </form>
+
+</wicket:extend>
+</body>
+</html>

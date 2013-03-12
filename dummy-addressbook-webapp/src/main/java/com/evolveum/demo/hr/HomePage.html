@@ -1,0 +1,41 @@
+<html>
+<head>
+	<link href="css/bootstrap.css" rel="stylesheet">
+	<title>Demo HR app</title>
+</head>
+<body>
+<!-- Navbar
+================================================== -->
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container" style="width: auto;">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <a class="brand" wicket:id="home">Demo HR app</a>
+        <div class="nav-collapse">
+          <ul class="nav">
+            <li> <a  wicket:id="register">Register user</a></li>
+            <li><a  wicket:id="show">Show users</a></li>
+          </ul>
+        </div><!-- /.nav-collapse -->
+      </div>
+    </div><!-- /navbar-inner -->
+  </div><!-- /navbar -->
+
+     <div class="content">
+		
+		<div wicket:id="feedbackPanel" class="allert"></div>
+     			 
+		<wicket:child/>		 
+	 </div>
+			
+<hr>
+<div id="footer">
+	<span wicket:id="footer"></span><br>
+		 <span wicket:id="clock"/>
+</div>
+</body>
+</html>
