@@ -14,7 +14,14 @@ public class CsvWriter {
 		String csvStr;
 
 		for (User c : users) {
-			csvStr = c.getId().toString() + ";" + c.getFirstname().trim() + ";" + c.getSurname().trim() +  ";" + c.getEmailAddress().trim() + ";" + c.getEmployeeNumber().toString() + ";";
+			csvStr = 
+			c.getId().toString() + ";"
+			+ c.getFirstname().trim() + ";" 
+			+ c.getSurname().trim() +  ";" 
+			+ c.getArtname().trim() + ";"
+			+ c.getEmailAddress().trim() + ";"
+			+ c.getEmployeeNumber().toString() + ";"
+			+ c.getEmptype()+";";
 			fw.write(csvStr + "\n");
 		}
 		
