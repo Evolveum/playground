@@ -18,3 +18,5 @@ CREATE TABLE usershr
   	CONSTRAINT usershr_pkey PRIMARY KEY (id)
 
 )
+
+CREATE TYPE emp AS ENUM('FTE', PTE', 'CONTRACTOR', 'RETIRED');
