@@ -1,0 +1,19 @@
+CREATE TABLE people
+(
+  id serial NOT NULL,
+  username character(64),
+  first_name character(100),
+  last_name character(100) NOT NULL,
+  tel_number character(32),
+  fax_number character(32),
+  office_id character(32),
+  floor integer,
+  street_address character(100),
+  city character(100),
+  country character(100),
+  postal_code character(16),
+  validity boolean,
+  created timestamp without time zone,
+  modified timestamp without time zone,
+  password character(64)
+);

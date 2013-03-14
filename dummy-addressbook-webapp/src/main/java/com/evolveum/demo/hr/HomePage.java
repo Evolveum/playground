@@ -1,6 +1,10 @@
 package com.evolveum.demo.hr;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.TimeZone;
+
+import javax.xml.stream.Location;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
@@ -9,23 +13,25 @@ import org.apache.log4j.Logger;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 
 import com.evolveum.demo.connector.Clock;
-import com.evolveum.demo.connector.UserService;
-import com.evolveum.demo.registerUser.RegisterUser;
-import com.evolveum.demo.showUsers.ShowUsers;
+import com.evolveum.demo.connector.PeopleService;
+import com.evolveum.demo.model.People;
 
 public class HomePage extends WebPage {
 	private static final long serialVersionUID = 1L;
 	public static transient Configuration config ;
 	public static Logger log = Logger.getLogger(HomePage.class.getName());
 	
-	public static transient UserService userService = UserService.getInstance();
-
+	public static transient PeopleService peopleService = PeopleService.getInstance();
+	ArrayList<People> people;
+	
 	public HomePage() {
-		initGui();
         
         try {
 			config = new PropertiesConfiguration("application.properties");
@@ -33,17 +39,49 @@ public class HomePage extends WebPage {
 			e.printStackTrace();
 			log.error(e.toString());
 		}
+        
+        try {
+        	people = peopleService.listAllUsers();
+        	initGui();
+		} catch (SQLException e1) {
+			log.error(e1.toString());
+			error("Sql exception");
+		}
     }
 	
 	private void initGui(){
-		add(new BookmarkablePageLink("register", RegisterUser.class));
-		add(new BookmarkablePageLink("show", ShowUsers.class));
 		add(new BookmarkablePageLink("home", HomePage.class));
         add(new Label("footer", new StringResourceModel("footer", this, null)));
         add(new FeedbackPanel("feedbackPanel"));
 
 		Clock clock = new Clock("clock", TimeZone.getTimeZone("America/Los_Angeles"));
         add(clock);
+        
+        ListView<People> userList = new ListView<People>("people", people) {
+        	
+			@Override
+			protected void populateItem(ListItem<People> item) {
+
+					item.add(new Label("id", new PropertyModel<Location>(item.getModel(),  new StringResourceModel("id", this, null).getString()))); 
+					item.add(new Label("username", new PropertyModel<Location>(item.getModel(),  new StringResourceModel("username", this, null).getString()))); 
+					item.add(new Label("first_name", new PropertyModel<Location>(item.getModel(),  new StringResourceModel("first_name", this, null).getString()))); 
+					item.add(new Label("last_name", new PropertyModel<Location>(item.getModel(),  new StringResourceModel("last_name", this, null).getString()))); 
+					item.add(new Label("tel_number", new PropertyModel<Location>(item.getModel(),  new StringResourceModel("tel_number", this, null).getString()))); 
+					item.add(new Label("fax_number", new PropertyModel<Location>(item.getModel(),  new StringResourceModel("fax_number", this, null).getString()))); 
+					item.add(new Label("office_id", new PropertyModel<Location>(item.getModel(),  new StringResourceModel("office_id", this, null).getString()))); 
+					item.add(new Label("floor", new PropertyModel<Location>(item.getModel(),  new StringResourceModel("floor", this, null).getString()))); 
+					item.add(new Label("street_address", new PropertyModel<Location>(item.getModel(),  new StringResourceModel("street_address", this, null).getString()))); 
+					item.add(new Label("city", new PropertyModel<Location>(item.getModel(),  new StringResourceModel("city", this, null).getString()))); 
+					item.add(new Label("country", new PropertyModel<Location>(item.getModel(),  new StringResourceModel("country", this, null).getString()))); 
+					item.add(new Label("postal_code", new PropertyModel<Location>(item.getModel(),  new StringResourceModel("postal_code", this, null).getString()))); 
+					item.add(new Label("validity", new PropertyModel<Location>(item.getModel(),  new StringResourceModel("validity", this, null).getString()))); 
+					item.add(new Label("created", new PropertyModel<Location>(item.getModel(),  new StringResourceModel("created", this, null).getString()))); 
+					item.add(new Label("modified", new PropertyModel<Location>(item.getModel(),  new StringResourceModel("modified", this, null).getString()))); 
+					item.add(new Label("password", new PropertyModel<Location>(item.getModel(),  new StringResourceModel("password", this, null).getString()))); 
+				
+	            }
+	        };
+	        add(userList);
 	}
 	
 }

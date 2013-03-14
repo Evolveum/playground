@@ -1,41 +1,114 @@
-<html>
-<head>
-	<link href="css/bootstrap.css" rel="stylesheet">
-	<title>Demo HR app</title>
-</head>
-<body>
-<!-- Navbar
-================================================== -->
-  <div class="navbar">
-    <div class="navbar-inner">
-      <div class="container" style="width: auto;">
-        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </a>
-        <a class="brand" wicket:id="home">Demo HR app</a>
-        <div class="nav-collapse">
-          <ul class="nav">
-            <li> <a  wicket:id="register">Register user</a></li>
-            <li><a  wicket:id="show">Show users</a></li>
-          </ul>
-        </div><!-- /.nav-collapse -->
-      </div>
-    </div><!-- /navbar-inner -->
-  </div><!-- /navbar -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Bootswatch: Cerulean</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A calm, blue sky.">
+    <meta name="author" content="Thomas Park">
 
-     <div class="content">
-		
-		<div wicket:id="feedbackPanel" class="allert"></div>
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootswatch.css" rel="stylesheet">
+
+  </head>
+
+  <body class="preview" id="top" data-spy="scroll" data-target=".subnav" data-offset="80">
+
+
+  <!-- Navbar
+    ================================================== -->
+ <div class="navbar navbar-fixed-top">
+   <div class="navbar-inner">
+     <div class="container">
+       <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+       </a>
+        <a class="brand" wicket:id="home">AddressBook</a>
+       <div class="nav-collapse collapse" id="main-menu">
+        <ul class="nav" id="main-menu-left">
+        </ul>
+        <ul class="nav pull-right" id="main-menu-right">
+          <li><a><span wicket:id="clock"/></a></li>
+        </ul>
+       </div>
+     </div>
+   </div>
+ </div>
+
+<div class="container">
+
+
+<!-- Masthead
+================================================== -->
+<header class="jumbotron subhead" id="overview">
+  <div class="row">
+    <div class="span6">
+      <h1> Address book :</h1>
+    </div>
+  </div>
+  <div wicket:id="feedbackPanel" class="allert"></div>
      			 
-		<wicket:child/>		 
-	 </div>
-			
-<hr>
-<div id="footer">
-	<span wicket:id="footer"></span><br>
-		 <span wicket:id="clock"/>
+		 <table class="table table-bordered table-striped table-hover">
+	     <thead>
+	      <tr>
+	        <th>#<wicket:message key="message.id"/></th>
+	        <th><wicket:message key="message.username"/></th>
+	        <th><wicket:message key="message.first_name"/></th>
+	        <th><wicket:message key="message.last_name"/></th>
+	        <th><wicket:message key="message.tel_number"/></th>
+	        <th><wicket:message key="message.fax_number"/></th>
+	        <th><wicket:message key="message.office_id"/></th>
+	        <th><wicket:message key="message.floor"/></th>
+	        <th><wicket:message key="message.street_address"/></th>
+	        <th><wicket:message key="message.city"/></th>
+	        <th><wicket:message key="message.country"/></th>
+	        <th><wicket:message key="message.postal_code"/></th>
+	        <th><wicket:message key="message.validity"/></th>
+	        <th><wicket:message key="message.created"/></th>
+	        <th><wicket:message key="message.modified"/></th>
+	        <th><wicket:message key="message.password"/></th>
+	      </tr>
+	    </thead>
+	        
+        <tbody>
+	      <span wicket:id="people">
+	      <tr>
+			<td><span wicket:id="id"/> | </td>
+			<td><span wicket:id="username"></span></td>
+			<td><span wicket:id="first_name"></span></td>
+			<td><span wicket:id="last_name"></span></td>
+			<td><span wicket:id="tel_number"></span></td>
+			<td><span wicket:id="fax_number"/></td>
+			<td><span wicket:id="office_id"/></td>
+			<td><span wicket:id="floor"/></td>
+			<td><span wicket:id="street_address"/></td>
+			<td><span wicket:id="city"/></td>
+			<td><span wicket:id="country"/></td>
+			<td><span wicket:id="postal_code"/></td>
+			<td><span wicket:id="validity"/></td>
+			<td><span wicket:id="created"/></td>
+			<td><span wicket:id="modified"/></td>
+			<td><span wicket:id="password"/></td>
+	        <td>      
+	              
+	        </td>       
+	      </tr>
+	      </span>
+       </tbody>
+ 	 </table> 	 
+</header>
+
+	<div id="footer">
+		<span wicket:id="footer"></span><br>	 
+	</div>
+
 </div>
+
 </body>
 </html>
