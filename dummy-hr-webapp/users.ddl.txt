@@ -1,0 +1,20 @@
+CREATE TABLE usershr
+
+(
+  
+	id serial NOT NULL,
+	firstname character(255),
+
+ 	surname character(255),
+
+  	emailaddress character(255),
+
+  	employeenumber integer,
+
+  	artname character(255),
+
+  	emptype emp NOT NULL,
+
+  	CONSTRAINT usershr_pkey PRIMARY KEY (id)
+
+)
