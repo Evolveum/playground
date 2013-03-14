@@ -28,8 +28,6 @@ public class RegisterUser extends HomePage {
 	private String artname;
 	private String emptype;
 	
-	UserService userService = UserService.getInstance();
-	
 	public RegisterUser() {     
         initGui();
 	}

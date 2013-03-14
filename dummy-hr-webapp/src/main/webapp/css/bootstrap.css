@@ -2017,6 +2017,7 @@ table {
 .table {
   width: 100%;
   margin-bottom: 20px;
+  font-size: 13px;
 }
 
 .table th,
@@ -5299,6 +5300,14 @@ input[type="submit"].btn.btn-mini {
 	float:center;
 	text-align: center;
 	padding: 15px;
+	
+	color:white;	
+   position:fixed;
+   left:0px;
+   bottom:0px;
+   height:20px;
+   width:100%;
+   background:#1990d5;
 }
 
 .modal-footer .btn-group .btn + .btn {

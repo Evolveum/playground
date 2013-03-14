@@ -20,12 +20,13 @@ import com.evolveum.demo.model.User;
 public class UserService implements Serializable{
 	private static UserService userService;
 	private static Configuration config;
-	private static Connection connection = connect();
+	private static Connection connection;
 	
 	
-	public static synchronized UserService getInstance() {
+	public static synchronized UserService getInstance() throws ClassNotFoundException, ConfigurationException, SQLException {
 		if(userService == null){
 			userService = new UserService();
+			connection = connect();
 		}
 		return userService;
 	}
@@ -34,28 +35,16 @@ public class UserService implements Serializable{
 		//connection = this.connect();
 	}
 	
-	public static Connection connect() {
+	public static Connection connect() throws ClassNotFoundException, SQLException, ConfigurationException {
 		 Connection connection = null;
-		 try {
 			config = new PropertiesConfiguration("application.properties");
-		} catch (ConfigurationException e1) {
-			e1.printStackTrace();
-		}
 		
-		try {
 			Class.forName("org.postgresql.Driver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		try {
+			
 			connection = DriverManager.getConnection(
 					config.getProperty("dbHost").toString(), 
 					config.getProperty("dbUsername").toString(),
 					config.getProperty("dbPassword").toString());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 
 		if (connection != null) {
 			//System.out.println("You made it, take control your database now!");

@@ -1,5 +1,4 @@
 package com.evolveum.demo.showUsers;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -17,21 +16,23 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.protocol.http.WebApplication;
 
-import com.evolveum.demo.connector.UserService;
 import com.evolveum.demo.exporter.CsvWriter;
 import com.evolveum.demo.hr.HomePage;
 import com.evolveum.demo.model.User;
 import com.evolveum.demo.modifyUser.ModifyUser;
 
 public class ShowUsers extends HomePage {
-	ArrayList<User> users = null;
+	public ArrayList<User> users = null;
 	
 	public ShowUsers() {	
 		try {
 			users = userService.listAllUsers();
 		} catch (SQLException e1) {
-			log.error(e1.toString());
+			//log.error(e1.toString());
 			error("Sql exception");
+		}
+		catch (Exception e1){
+			error("Connection exception");
 		}
 		
 		ListView<User> userList = new ListView<User>("users", users) {
@@ -79,7 +80,7 @@ public class ShowUsers extends HomePage {
 					//System.out.println(new StringResourceModel(config.getProperty("exportPath").toString(), this, null).getString());
 				} catch (Exception e) {
 					error(e.toString());
-					log.error(e.toString());
+					//log.error(e.toString());
 				}
 			}
 		};
