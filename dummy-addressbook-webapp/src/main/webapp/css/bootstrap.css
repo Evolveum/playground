@@ -5298,6 +5298,14 @@ input[type="submit"].btn.btn-mini {
 	text-align: center;
 	padding: 15px;
 	border-bottom: 1px solid silver;
+	
+	color:white;	
+   position:fixed;
+   left:0px;
+   bottom:0px;
+   height:20px;
+   width:100%;
+   background:green;
 }
 
 .modal-footer .btn-group .btn + .btn {

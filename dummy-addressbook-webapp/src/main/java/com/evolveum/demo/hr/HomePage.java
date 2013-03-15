@@ -21,6 +21,7 @@ import org.apache.wicket.model.StringResourceModel;
 
 import com.evolveum.demo.connector.Clock;
 import com.evolveum.demo.connector.PeopleService;
+import com.evolveum.demo.errorHandling.ErrorPage;
 import com.evolveum.demo.model.People;
 
 public class HomePage extends WebPage {
@@ -42,11 +43,11 @@ public class HomePage extends WebPage {
         
         try {
         	people = peopleService.listAllUsers();
-        	initGui();
 		} catch (SQLException e1) {
-			log.error(e1.toString());
-			error("Sql exception");
+			redirectToInterceptPage(new ErrorPage("from SQL " + e1.getMessage()));
 		}
+        
+        initGui();
     }
 	
 	private void initGui(){
@@ -62,7 +63,6 @@ public class HomePage extends WebPage {
 			@Override
 			protected void populateItem(ListItem<People> item) {
 
-					item.add(new Label("id", new PropertyModel<Location>(item.getModel(),  new StringResourceModel("id", this, null).getString()))); 
 					item.add(new Label("username", new PropertyModel<Location>(item.getModel(),  new StringResourceModel("username", this, null).getString()))); 
 					item.add(new Label("first_name", new PropertyModel<Location>(item.getModel(),  new StringResourceModel("first_name", this, null).getString()))); 
 					item.add(new Label("last_name", new PropertyModel<Location>(item.getModel(),  new StringResourceModel("last_name", this, null).getString()))); 

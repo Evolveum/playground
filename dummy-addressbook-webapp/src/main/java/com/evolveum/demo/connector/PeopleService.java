@@ -74,7 +74,6 @@ public class PeopleService implements Serializable{
 		rs = ps.executeQuery();
 			
 		while(rs.next()){
-			Integer id = rs.getInt("id");
 			String username = rs.getString("username");
 			String first_name = rs.getString("first_name");
 			String last_name = rs.getString("last_name");
@@ -91,7 +90,7 @@ public class PeopleService implements Serializable{
 			Date modified = rs.getTimestamp("modified");
 			String password = rs.getString("password");
 			
-			People p = new People(id, username, first_name, last_name, tel_number, fax_number, office_id, floor, street_address, city, country, postal_code, 
+			People p = new People(username, first_name, last_name, tel_number, fax_number, office_id, floor, street_address, city, country, postal_code, 
 		            validity, created, modified, password);
 			people.add(p);
 

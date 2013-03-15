@@ -5,7 +5,6 @@ import java.util.Date;
 
 public class People implements Serializable{
 
-	private Integer id;
 	private String username;
 	private String first_name;
 	private String last_name;
@@ -23,7 +22,6 @@ public class People implements Serializable{
 	private String password;
 	
 	public People(	
-				Integer id,
 				String username,
 				String first_name,
 				String last_name,
@@ -40,7 +38,6 @@ public class People implements Serializable{
 				Date modified,
 				String password){
 		
-		this.id = id;
 		this.username = username;
 		this.first_name = first_name;
 		this.last_name = last_name;
@@ -58,14 +55,6 @@ public class People implements Serializable{
 		this.password = password;
 		
 		
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getUsername() {

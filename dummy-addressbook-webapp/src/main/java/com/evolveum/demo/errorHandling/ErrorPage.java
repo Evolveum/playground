@@ -1,12 +1,11 @@
 package com.evolveum.demo.errorHandling;
 
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 
-import com.evolveum.demo.hr.HomePage;
+public class ErrorPage extends WebPage{
 
-public class Error extends HomePage{
-
-	public Error(String errorMessage){
+	public ErrorPage(String errorMessage){
 		add(new Label("error", errorMessage));
 	}
 
