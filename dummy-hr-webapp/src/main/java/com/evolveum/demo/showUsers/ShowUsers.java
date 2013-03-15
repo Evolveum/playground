@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.servlet.ServletContext;
 import javax.xml.stream.Location;
 
+import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -16,47 +17,52 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.protocol.http.WebApplication;
 
+import com.evolveum.demo.errorHandling.ErrorPage;
 import com.evolveum.demo.exporter.CsvWriter;
 import com.evolveum.demo.hr.HomePage;
 import com.evolveum.demo.model.User;
 import com.evolveum.demo.modifyUser.ModifyUser;
 
 public class ShowUsers extends HomePage {
-	public ArrayList<User> users = null;
+	public ArrayList<User> users;
 	
 	public ShowUsers() {	
 		try {
 			users = userService.listAllUsers();
 		} catch (SQLException e1) {
-			//log.error(e1.toString());
-			error("Sql exception");
+
+			redirectToInterceptPage(new ErrorPage(e1.getSQLState()+ " from SQL " + e1.getMessage()));
 		}
 		catch (Exception e1){
-			error("Connection exception");
+			redirectToInterceptPage(new ErrorPage(" from SQL " + e1.getMessage()));
 		}
 		
-		ListView<User> userList = new ListView<User>("users", users) {
-			@Override
-			protected void populateItem(ListItem<User> item) {
+			ListView<User> userList = new ListView<User>("users", users) {
+				@Override
+				protected void populateItem(ListItem<User> item) {
 
-				Link view = new Link("view", item.getModel()) {
-					public void onClick() {
-						User c = (User) getModelObject();
-						setResponsePage(new ModifyUser(c.getId()));
-					}
-				};
+					Link view = new Link("view", item.getModel()) {
+						public void onClick() {
+							User c = (User) getModelObject();
+							setResponsePage(new ModifyUser(c.getId()));
+						}
+					};
 
-				item.add(view);
-					
-	                item.add(new Label("surname", new PropertyModel<Location>(item.getModel(),  new StringResourceModel("surname", this, null).getString()))); 
-	                item.add(new Label("firstname", new PropertyModel<Location>(item.getModel(), new StringResourceModel("firstname", this, null).getString())));
-	                item.add(new Label("artname", new PropertyModel<Location>(item.getModel(), new StringResourceModel("artname", this, null).getString())));
-	                item.add(new Label("emailAddress", new PropertyModel<Location>(item.getModel(), new StringResourceModel("emailAddress", this, null).getString())));
-	                item.add(new Label("employeeNumber", new PropertyModel<Location>(item.getModel(), new StringResourceModel("employeeNumber", this, null).getString())));
-	                item.add(new Label("id", new PropertyModel<Location>(item.getModel(), new StringResourceModel("id", this, null).getString())));
-	                item.add(new Label("emptype", new PropertyModel<Location>(item.getModel(), new StringResourceModel("emptype", this, null).getString())));
-	            }
-	        };
+					item.add(view);
+						
+		                item.add(new Label("surname", new PropertyModel<Location>(item.getModel(),  new StringResourceModel("surname", this, null).getString()))); 
+		                item.add(new Label("firstname", new PropertyModel<Location>(item.getModel(), new StringResourceModel("firstname", this, null).getString())));
+		                item.add(new Label("artname", new PropertyModel<Location>(item.getModel(), new StringResourceModel("artname", this, null).getString())));
+		                item.add(new Label("emailAddress", new PropertyModel<Location>(item.getModel(), new StringResourceModel("emailAddress", this, null).getString())));
+		                item.add(new Label("employeeNumber", new PropertyModel<Location>(item.getModel(), new StringResourceModel("employeeNumber", this, null).getString())));
+		                item.add(new Label("id", new PropertyModel<Location>(item.getModel(), new StringResourceModel("id", this, null).getString())));
+		                item.add(new Label("emptype", new PropertyModel<Location>(item.getModel(), new StringResourceModel("emptype", this, null).getString())));
+		            }
+		        };
+
+		        userList.setVisible(true);
+		        add(userList);
+		
 	        final Label exportCheck = new Label("exportCheck", "Sucessfully exported");
 	        exportCheck.setVisible(Boolean.FALSE);
 	        add(exportCheck);
@@ -64,7 +70,6 @@ public class ShowUsers extends HomePage {
 	        add(new Label("totalUsersCount", String.valueOf(users.size()))); 
 	        add(new Label("exportPath", config.getProperty("exportPath").toString()));
 	        
-	        add(userList);
 
 		Form<ShowUsers> form = new Form<ShowUsers>("form",new CompoundPropertyModel<ShowUsers>(this));
 		

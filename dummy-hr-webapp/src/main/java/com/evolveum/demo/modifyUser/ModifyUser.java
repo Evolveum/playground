@@ -61,8 +61,8 @@ public class ModifyUser extends HomePage implements Serializable {
         addRegisterForm.add(nameLabel);
         
         TextField<String> nameField = new TextField<String>("firstname",new PropertyModel(this, "firstname"));
-        nameField.add(StringValidator.maximumLength(255));
-        nameField.add(StringValidator.minimumLength(5)).setRequired(true);;
+        nameField.add(StringValidator.maximumLength(100));
+        nameField.add(StringValidator.minimumLength(1)).setRequired(true);;
         nameField.setConvertEmptyInputStringToNull(false);
         addRegisterForm.add(nameField);
         
@@ -70,24 +70,24 @@ public class ModifyUser extends HomePage implements Serializable {
         addRegisterForm.add(givenNameLabel);
         
         TextField<String> givenNameField = new TextField<String>("surname",new PropertyModel(this, "surname")); 
-        givenNameField.add(StringValidator.maximumLength(255));
-        givenNameField.add(StringValidator.minimumLength(5)).setRequired(true);;
+        givenNameField.add(StringValidator.maximumLength(100));
+        givenNameField.add(StringValidator.minimumLength(1)).setRequired(true);;
         addRegisterForm.add(givenNameField);
         
         Label artNameLabel = new Label("artnameLabel", new StringResourceModel("artnameLabel", this, null)); 
         addRegisterForm.add(artNameLabel);
         
         TextField<String> artNameField = new TextField<String>("artname",new PropertyModel(this, "artname")); 
-        artNameField.add(StringValidator.maximumLength(255));
-        artNameField.add(StringValidator.minimumLength(2)).setRequired(true);;
+        artNameField.add(StringValidator.maximumLength(100));
+        artNameField.add(StringValidator.minimumLength(1)).setRequired(true);;
         addRegisterForm.add(artNameField);
         
         Label emailAddressLabel = new Label("emailAddressLabel", new StringResourceModel("emailAddressLabel", this, null));
         addRegisterForm.add(emailAddressLabel);
         
         TextField<String> emailAddressField = new TextField<String>("emailAddress",new PropertyModel(this, "emailAddress"));
-        emailAddressField.add(StringValidator.maximumLength(255));
-        emailAddressField.add(StringValidator.minimumLength(5));
+        emailAddressField.add(StringValidator.maximumLength(100));
+        emailAddressField.add(StringValidator.minimumLength(4));
         emailAddressField.add(EmailAddressValidator.getInstance());
         emailAddressField.setRequired(true);
         addRegisterForm.add(emailAddressField);

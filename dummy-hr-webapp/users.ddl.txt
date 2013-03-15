@@ -13,10 +13,8 @@ CREATE TABLE usershr
 
   	artname character(255),
 
-  	emptype emp NOT NULL,
-
-  	CONSTRAINT usershr_pkey PRIMARY KEY (id)
+  	emptype emp NOT NULL
 
 )
 
-CREATE TYPE emp AS ENUM('FTE', 'PTE', 'CONTRACTOR', 'RETIRED');
+CREATE TYPE emp AS ENUM('FTE', PTE', 'CONTRACTOR', 'RETIRED');

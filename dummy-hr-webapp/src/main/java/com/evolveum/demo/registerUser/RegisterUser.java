@@ -40,8 +40,8 @@ public class RegisterUser extends HomePage {
         addRegisterForm.add(nameLabel);
         
         TextField<String> firstnameField = new TextField<String>("firstname");
-        firstnameField.add(StringValidator.maximumLength(255));
-        firstnameField.add(StringValidator.minimumLength(5)).setRequired(true);
+        firstnameField.add(StringValidator.maximumLength(100));
+        firstnameField.add(StringValidator.minimumLength(1)).setRequired(true);
         addRegisterForm.add(firstnameField);
         
         Label givenNameLabel = new Label("surnameLabel", new StringResourceModel("surnameLabel", this, null)); 
@@ -49,16 +49,16 @@ public class RegisterUser extends HomePage {
         
         
         TextField<String> surnameField = new TextField<String>("surname");
-        surnameField.add(StringValidator.maximumLength(255));
-        surnameField.add(StringValidator.minimumLength(5)).setRequired(true);
+        surnameField.add(StringValidator.maximumLength(100));
+        surnameField.add(StringValidator.minimumLength(1)).setRequired(true);
         addRegisterForm.add(surnameField);
         
         Label artNameLabel = new Label("artnameLabel", new StringResourceModel("artnameLabel", this, null));
         addRegisterForm.add(artNameLabel);
         
         TextField<String> artNameField = new TextField<String>("artname");
-        artNameField.add(StringValidator.maximumLength(255));
-        artNameField.add(StringValidator.minimumLength(2)).setRequired(true);
+        artNameField.add(StringValidator.maximumLength(100));
+        artNameField.add(StringValidator.minimumLength(1)).setRequired(true);
         addRegisterForm.add(artNameField);
         
         
@@ -66,8 +66,8 @@ public class RegisterUser extends HomePage {
         addRegisterForm.add(emailAddressLabel);
         
         TextField<String> emailAddressField = new TextField<String>("emailAddress");
-        emailAddressField.add(StringValidator.maximumLength(255));
-        emailAddressField.add(StringValidator.minimumLength(5)).setRequired(true);
+        emailAddressField.add(StringValidator.maximumLength(100));
+        emailAddressField.add(StringValidator.minimumLength(4)).setRequired(true);
         emailAddressField.add(EmailAddressValidator.getInstance());
         addRegisterForm.add(emailAddressField);
         
