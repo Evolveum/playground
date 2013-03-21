@@ -10,27 +10,36 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
+import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.list.PageableListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import com.evolveum.demo.connector.Clock;
+import com.evolveum.demo.connector.HelloWorldService;
 import com.evolveum.demo.connector.PeopleService;
 import com.evolveum.demo.errorHandling.ErrorPage;
 import com.evolveum.demo.model.People;
 
+@AuthorizeInstantiation("ROLE_ADMIN")
 public class HomePage extends WebPage {
 	private static final long serialVersionUID = 1L;
 	public static transient Configuration config ;
 	public static Logger log = Logger.getLogger(HomePage.class.getName());
 	
+	
 	public static transient PeopleService peopleService = PeopleService.getInstance();
 	ArrayList<People> people;
+	
+	@SpringBean
+	private HelloWorldService helloWorldService;
 	
 	public HomePage() {
         
@@ -51,6 +60,8 @@ public class HomePage extends WebPage {
     }
 	
 	private void initGui(){
+		System.out.println(helloWorldService.sayHello());
+		
 		add(new BookmarkablePageLink("home", HomePage.class));
         add(new Label("footer", new StringResourceModel("footer", this, null)));
         add(new FeedbackPanel("feedbackPanel"));
@@ -58,7 +69,7 @@ public class HomePage extends WebPage {
 		Clock clock = new Clock("clock", TimeZone.getTimeZone("America/Los_Angeles"));
         add(clock);
         
-        ListView<People> userList = new ListView<People>("people", people) {
+        PageableListView<People> userList = new PageableListView<People>("people", people, 10) {
         	
 			@Override
 			protected void populateItem(ListItem<People> item) {
@@ -82,6 +93,7 @@ public class HomePage extends WebPage {
 	            }
 	        };
 	        add(userList);
+	        add(new AjaxPagingNavigator("navigator", userList));
 	}
 	
 }
