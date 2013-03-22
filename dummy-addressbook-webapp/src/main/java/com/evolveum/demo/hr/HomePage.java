@@ -28,7 +28,7 @@ import com.evolveum.demo.connector.PeopleService;
 import com.evolveum.demo.errorHandling.ErrorPage;
 import com.evolveum.demo.model.People;
 
-@AuthorizeInstantiation("ROLE_ADMIN")
+@AuthorizeInstantiation("ROLE_USER")
 public class HomePage extends WebPage {
 	private static final long serialVersionUID = 1L;
 	public static transient Configuration config ;
