@@ -13,22 +13,22 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
-import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.apache.wicket.validation.validator.StringValidator;
 
-import com.evolveum.demo.connector.UserService;
 import com.evolveum.demo.hr.HomePage;
 import com.evolveum.demo.model.User;
+import com.evolveum.demo.model.UserJpa;
 import com.evolveum.demo.showUsers.ShowUsers;
 
 public class ModifyUser extends HomePage implements Serializable {
 	private String firstname;
 	private String surname;
-	private String emailAddress;
 	private Integer employeeNumber;
 	private Integer id;
 	private String artname;
 	private String emptype;
+	
+	UserJpa user;
 	
 	public ModifyUser(Integer userId){
 		initGui(userId);
@@ -36,21 +36,14 @@ public class ModifyUser extends HomePage implements Serializable {
 	}
 	
 	private void initGui(Integer userId){
-		User u;
-		try {
-			u = userService.showUser(userId);
-			firstname = u.getFirstname();
-			surname = u.getSurname();
-			emailAddress = u.getEmailAddress();
-			employeeNumber = u.getEmployeeNumber();
-			id = u.getId();
-			artname = u.getArtname();
-			emptype = u.getEmptype();
-			
-		} catch (Exception e) {
-			error("Sql exception" + e.toString());
-			log.error(e.toString());
-		}
+		
+		user = userService.getUser(userId);
+		firstname = user.getFirstname();
+		surname = user.getSurname();
+		employeeNumber = user.getEmployeeNumber();
+		id = user.getId();
+		artname = user.getArtname();
+		emptype = user.getEmptype();
 
 		
 		Form<ModifyUser> addRegisterForm = new Form<ModifyUser>("addLocationForm", new CompoundPropertyModel<ModifyUser>(this));
@@ -82,16 +75,6 @@ public class ModifyUser extends HomePage implements Serializable {
         artNameField.add(StringValidator.minimumLength(1)).setRequired(true);;
         addRegisterForm.add(artNameField);
         
-        Label emailAddressLabel = new Label("emailAddressLabel", new StringResourceModel("emailAddressLabel", this, null));
-        addRegisterForm.add(emailAddressLabel);
-        
-        TextField<String> emailAddressField = new TextField<String>("emailAddress",new PropertyModel(this, "emailAddress"));
-        emailAddressField.add(StringValidator.maximumLength(100));
-        emailAddressField.add(StringValidator.minimumLength(4));
-        emailAddressField.add(EmailAddressValidator.getInstance());
-        emailAddressField.setRequired(true);
-        addRegisterForm.add(emailAddressField);
-        
         Label employeeNumberLabel = new Label("employeeNumberLabel", new StringResourceModel("employeeNumberLabel", this, null));
         addRegisterForm.add(employeeNumberLabel);
         
@@ -114,12 +97,13 @@ public class ModifyUser extends HomePage implements Serializable {
         Button submitButton = new Button("submitButton") { 
             @Override
             public void onSubmit() {
-            	try {
-					userService.modifyUser(firstname, surname, emailAddress, employeeNumber, id, artname, emptype);
-				} catch (SQLException e) {
-					error("Sql exception" + e.toString());
-					log.error(e.toString());
-				}
+            	user.setFirstname(firstname);
+            	user.setSurname(surname);
+            	user.setEmptype(emptype);
+            	user.setEmployeeNumber(employeeNumber);
+            	user.setArtname(artname);
+            	
+				userService.modifyUser(user);
             	setResponsePage(ShowUsers.class);
             }
         };
@@ -128,7 +112,7 @@ public class ModifyUser extends HomePage implements Serializable {
         Button deleteButton = new Button("deleteButton") { 
             @Override
             public void onSubmit() {
-            	userService.deleteUser(id);
+            	userService.deleteUser(user);
             	setResponsePage(ShowUsers.class);
             }
         };

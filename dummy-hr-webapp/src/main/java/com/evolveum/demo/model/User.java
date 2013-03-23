@@ -7,16 +7,14 @@ public class User implements Serializable{
 	private Integer id;
 	private String firstname;
 	private String surname;
-	private String emailAddress;
 	private Integer employeeNumber;
 	private String artname;
 	private EmpType emptype;
 	
-	public User(String firstname, String surname, String emailAddress, Integer employeeNumber, Integer id, String artname, String emptype){
+	public User(String firstname, String surname, Integer employeeNumber, Integer id, String artname, String emptype){
 		
 		this.firstname = firstname;
 		this.surname = surname;
-		this.emailAddress = emailAddress;
 		this.employeeNumber = employeeNumber;
 		this.id = id;
 		this.artname = artname;
@@ -76,14 +74,6 @@ public class User implements Serializable{
 		this.surname = surname;
 	}
 
-	public String getEmailAddress() {
-		return emailAddress;
-	}
-
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
-	}
-
 	public Integer getEmployeeNumber() {
 		return employeeNumber;
 	}
@@ -93,9 +83,6 @@ public class User implements Serializable{
 	}
 	
 
-	public enum EmpType {
-		 FTE, PTE, CONTRACTOR, RETIRED;
-	 }
-	
+
 
 }

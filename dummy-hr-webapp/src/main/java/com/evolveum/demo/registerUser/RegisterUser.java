@@ -12,18 +12,16 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
-import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.apache.wicket.validation.validator.StringValidator;
 
-import com.evolveum.demo.connector.UserService;
 import com.evolveum.demo.errorHandling.UserAlreadyExistsException;
 import com.evolveum.demo.hr.HomePage;
+import com.evolveum.demo.model.UserJpa;
 import com.evolveum.demo.showUsers.ShowUsers;
 
 public class RegisterUser extends HomePage {
 	private String firstname;
 	private String surname;
-	private String emailAddress;
 	private Integer employeeNumber;
 	private String artname;
 	private String emptype;
@@ -61,16 +59,6 @@ public class RegisterUser extends HomePage {
         artNameField.add(StringValidator.minimumLength(1)).setRequired(true);
         addRegisterForm.add(artNameField);
         
-        
-        Label emailAddressLabel = new Label("emailAddressLabel",new StringResourceModel("emailAddressLabel", this, null));
-        addRegisterForm.add(emailAddressLabel);
-        
-        TextField<String> emailAddressField = new TextField<String>("emailAddress");
-        emailAddressField.add(StringValidator.maximumLength(100));
-        emailAddressField.add(StringValidator.minimumLength(4)).setRequired(true);
-        emailAddressField.add(EmailAddressValidator.getInstance());
-        addRegisterForm.add(emailAddressField);
-        
         Label employeeNumberLabel = new Label("employeeNumberLabel", new StringResourceModel("employeeNumberLabel", this, null));
         addRegisterForm.add(employeeNumberLabel);
         
@@ -91,18 +79,9 @@ public class RegisterUser extends HomePage {
         
         Button submitButton = new Button("submitButton") { 
             @Override
-            public void onSubmit() {
-            	try {
-					userService.registerUser(firstname, surname, emailAddress, employeeNumber, artname, emptype);
+            public void onSubmit() {       		
+					userService.registerUser(new UserJpa(firstname, surname, employeeNumber, artname, emptype));
 					setResponsePage(ShowUsers.class);
-				} catch (SQLException e) {
-					//throw new RestartResponseException(new Error("sql eception" + e.toString()));
-					error("Sql exception" + e.toString());
-					log.error(e.toString());
-				} catch (UserAlreadyExistsException e) {
-					error("User already exists, try another name or email");
-					log.error(e.toString());
-				}
             }
         };
         addRegisterForm.add(submitButton);

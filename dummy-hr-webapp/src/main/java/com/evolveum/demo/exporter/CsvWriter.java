@@ -5,24 +5,25 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.evolveum.demo.model.User;
+import com.evolveum.demo.model.UserJpa;
 
 public class CsvWriter {
 
 
-	public CsvWriter(ArrayList<User> users, String path) throws IOException {
+	public CsvWriter(ArrayList<UserJpa> users, String path) throws IOException {
 		final FileWriter fw = new FileWriter(path);
 		String csvStr;
-
-		for (User c : users) {
+		
+		fw.write("\"empnum\",\"firstname\",\"lastname\",\"artname\",\"emptype\"" + "\n");
+		
+		for (UserJpa c : users) {
 			csvStr = 
-			c.getId().toString() + ";"
-			+ c.getFirstname().trim() + ";" 
-			+ c.getSurname().trim() +  ";" 
-			+ c.getArtname().trim() + ";"
-			+ c.getEmailAddress().trim() + ";"
-			+ c.getEmployeeNumber().toString() + ";"
-			+ c.getEmptype()+";";
-			fw.write(csvStr + "\n");
+					'"'+ c.getEmployeeNumber().toString().trim() + '"' + ","+
+					'"'+ c.getFirstname().trim() + '"' +","+
+					'"'+ c.getSurname().trim() + '"' +","+
+					'"'+ c.getArtname().trim() + '"' +","+
+					'"'+ c.getEmptype().trim() + '"' ;
+					fw.write(csvStr + "\n");
 		}
 		
 		fw.close();

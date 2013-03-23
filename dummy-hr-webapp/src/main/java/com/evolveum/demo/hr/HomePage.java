@@ -1,6 +1,7 @@
 package com.evolveum.demo.hr;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.TimeZone;
 
 import org.apache.commons.configuration.Configuration;
@@ -12,10 +13,12 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import com.evolveum.demo.connector.Clock;
 import com.evolveum.demo.connector.UserService;
-import com.evolveum.demo.modifyUser.ModifyUser;
+import com.evolveum.demo.dao.UserServiceJpa;
+import com.evolveum.demo.model.UserJpa;
 import com.evolveum.demo.registerUser.RegisterUser;
 import com.evolveum.demo.showUsers.ShowUsers;
 
@@ -24,23 +27,13 @@ public class HomePage extends WebPage {
 	public static transient Configuration config ;
 	public static Logger log = Logger.getLogger(HomePage.class.getName());
 	
-	public static transient UserService userService;
+	//public static transient UserService userService;
+	
+	@SpringBean
+	public static transient UserServiceJpa userService;
 
 	public HomePage() {
 		initGui();
-        
-		try {
-			userService = UserService.getInstance();
-		} catch (ConfigurationException e1) {
-			error(e1.toString());
-			e1.printStackTrace();
-		} catch (ClassNotFoundException e1) {
-			error(e1.toString());
-			e1.printStackTrace();
-		} catch (SQLException e1) {
-			error(e1.toString());
-			e1.printStackTrace();
-		}
 		
         try {
 			config = new PropertiesConfiguration("application.properties");

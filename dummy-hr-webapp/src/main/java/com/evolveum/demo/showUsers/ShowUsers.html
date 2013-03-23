@@ -14,7 +14,6 @@
 	        <th><wicket:message key="message.surname"/></th>
 	        <th><wicket:message key="message.artname"/></th>
 	        <th><wicket:message key="message.emptype"/></th>
-	        <th><wicket:message key="message.emailAddress"/></th>
 	        <th><wicket:message key="message.employeeNumber"/></th>
 	        <th><wicket:message key="message.modifyDelete"/></th>
 	      </tr>
@@ -23,21 +22,25 @@
         <tbody>
 	      <span wicket:id="users">
 	      <tr>
-			<td><span wicket:id="id"/> | </td>
+			<td><span wicket:id="id"/> </td>
 			<td><span wicket:id="firstname"></span></td>
 			<td><span wicket:id="surname"></span></td>
 			<td><span wicket:id="artname"></span></td>
 			<td><span wicket:id="emptype"></span></td>
-			<td><span wicket:id="emailAddress"/></td>
 			<td><span wicket:id="employeeNumber"/></td>
 	        <td>      
 	              <a wicket:id="view">
-                    <img src="img/tool.png" width="25px" height="25px"> Modify user
+                    <img src="img/tool.png" width="25px" height="25px"> Modify
                  </a>
 	        </td>       
 	      </tr>
 	      </span>
        </tbody>
+        <tfoot>
+            <tr>
+                <td wicket:id="navigator"></td>
+            </tr>
+        </tfoot>
  	 </table> 
  	 <hr>
 
