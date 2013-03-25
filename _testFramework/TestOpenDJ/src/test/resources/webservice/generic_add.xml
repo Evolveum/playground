@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2011 Evolveum                             -->
+<!--                                                         -->
+<!-- The contents of this file are subject to the terms      -->
+<!-- of the Common Development and Distribution License      -->
+<!-- (the License). You may not use this file except in      -->
+<!-- compliance with the License.                            -->
+<!--                                                         -->
+<!-- You can obtain a copy of the License at                 -->
+<!-- http://www.opensource.org/licenses/cddl1 or             -->
+<!-- CDDLv1.0.txt file in the source code distribution.      -->
+<!-- See the License for the specific language governing     -->
+<!-- permission and limitations under the License.           -->
+<!--                                                         -->
+<!-- If applicable, add the following below the CDDL Header, -->
+<!-- with the fields enclosed by brackets [] replaced by     -->
+<!-- your own identifying information:                       -->
+<!--                                                         -->
+<!-- Portions Copyrighted 2011 [name of copyright owner]     -->
+<!--                                                         -->
+<genericObject	xmlns="http://midpoint.evolveum.com/xml/ns/public/common/common-2a"
+				xmlns:t='http://prism.evolveum.com/xml/ns/public/types-2'
+				oid="c0c010c0-d34d-b33f-f00d-999111111111">
+    <name><t:orig>My Sample Config Object</t:orig></name>
+    <description>
+        Sample custom configuration object. Object of the genericObject type are
+        in fact free-form objects. They can contain almost any XML data in the
+        extension part. They are supposed to hold data structures that parametrize
+        the IDM custom business logic or IDM expressions.
+    </description>
+    <extension>       
+            <!-- Extensions goes here -->
+    </extension>
+    <!-- This is generic object, it must have an "application level" type.
+         However, this is not used in the current business logic. Can be anything. -->
+    <objectType>http://myself.me/schemas/objects#SampleConfigType</objectType>
+</genericObject>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2012 Evolveum                             -->
+<!--                                                         -->
+<!-- The contents of this file are subject to the terms      -->
+<!-- of the Common Development and Distribution License      -->
+<!-- (the License). You may not use this file except in      -->
+<!-- compliance with the License.                            -->
+<!--                                                         -->
+<!-- You can obtain a copy of the License at                 -->
+<!-- http://www.opensource.org/licenses/cddl1 or             -->
+<!-- CDDLv1.0.txt file in the source code distribution.      -->
+<!-- See the License for the specific language governing     -->
+<!-- permission and limitations under the License.           -->
+<!--                                                         -->
+<!-- If applicable, add the following below the CDDL Header, -->
+<!-- with the fields enclosed by brackets [] replaced by     -->
+<!-- your own identifying information:                       -->
+<!--                                                         -->
+<!-- Portions Copyrighted 2012 [name of copyright owner]     -->
+<!--                                                         -->
+
+<!-- User template that demonstrates advanced usage such as account assignment and RB-RBAC -->
+
+<userTemplate oid="10000000-0000-0000-0000-000000000222"
+   xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+   xmlns='http://midpoint.evolveum.com/xml/ns/public/common/common-2a'
+   xmlns:c='http://midpoint.evolveum.com/xml/ns/public/common/common-2a'
+   xmlns:t='http://prism.evolveum.com/xml/ns/public/types-2'>
+    <name><t:orig>Complex User Template</t:orig></name>
+    <mapping>
+		<!-- This expression is NOT initial so if will in fact FORCE fullname consistency -->
+		<source>
+			<path>$user/givenName</path>
+		</source>
+		<source>
+			<path>$user/familyName</path>
+		</source>
+		<expression>
+			<script>
+				<language>http://midpoint.evolveum.com/xml/ns/public/expression/language#Groovy</language>
+				<code>
+					givenName + ' ' + familyName
+				</code>
+			</script>
+		</expression>
+		<target>
+			<path>fullName</path>
+		</target>
+	</mapping>
+    
+	<!-- Unconditional automatic assignment of OpenDJ resource -->
+    <mapping>
+    	<expression>
+            <value>
+            	<assignment>
+					<accountConstruction>
+						<resourceRef oid="ef2bc95b-76e0-48e2-86d6-3d4f02d3e1a2" type="c:ResourceType"/>
+					</accountConstruction>
+				</assignment>
+            </value>    	
+    	</expression>
+    	<target>
+    		<path>assignment</path>
+    	</target>
+    </mapping>
+    
+    <!-- RB-RBAC functionality. The Pirate role is automatically assigned based on the value of employeeType property -->
+    <mapping>
+    	<source>
+    		<path>employeeType</path>
+    	</source>
+    	<expression>
+            <value>
+            	<assignment>
+					<targetRef oid="12345678-d34d-b33f-f00d-987987987988" type="c:RoleType"/>
+				</assignment>
+            </value>    	
+    	</expression>
+    	<target>
+    		<path>assignment</path>
+    	</target>
+    	<condition>
+    		<script>
+            	<language>http://midpoint.evolveum.com/xml/ns/public/expression/language#Groovy</language>
+            	<code>employeeType == 'PIRATE'</code>
+            </script>
+		</condition>
+    </mapping>
+    
+    <!-- Automatically generate employee number if there is none (note the "weak" flag)
+	The "Alphanumeric Password Policy" will be used.  -->
+    <mapping>
+    	<strength>weak</strength>
+    	<expression>
+            <generate>
+        	<valuePolicyRef oid="81818181-76e0-59e2-8888-3d4f02d3fffd"/>
+            </generate>
+    	</expression>
+    	<target>
+    		<path>employeeNumber</path>
+    	</target>
+    </mapping>
+
+</userTemplate>

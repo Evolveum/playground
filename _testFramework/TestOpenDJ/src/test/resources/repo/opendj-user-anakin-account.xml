@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<account xmlns="http://midpoint.evolveum.com/xml/ns/public/common/common-2a"
+		 xmlns:c='http://midpoint.evolveum.com/xml/ns/public/common/common-2a'
+		 xmlns:org='http://midpoint.evolveum.com/xml/ns/public/common/org-2'	
+         oid="aa0ade81-c925-41f6-b576-2e968b8ed677"
+         version="1">
+   <name>
+      <orig xmlns="http://prism.evolveum.com/xml/ns/public/types-2">uid=Anakin,ou=people,dc=example,dc=com</orig>
+      <norm xmlns="http://prism.evolveum.com/xml/ns/public/types-2">uidanakinoupeopledcexampledccom</norm>
+   </name>
+   <resourceRef xmlns:c="http://midpoint.evolveum.com/xml/ns/public/common/common-2a"
+                oid="ef2bc95b-76e0-48e2-86d6-3d4f02d3e1a2"
+                type="c:ResourceType"/>
+   <c:synchronizationSituation xmlns:c="http://midpoint.evolveum.com/xml/ns/public/common/common-2a"
+                               xmlns:icfs="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/resource-schema-2"
+                               xmlns:t="http://prism.evolveum.com/xml/ns/public/types-2"
+                               xmlns:icfc="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/connector-schema-2"
+                               xmlns:q="http://prism.evolveum.com/xml/ns/public/query-2"
+                               xmlns:cap="http://midpoint.evolveum.com/xml/ns/public/resource/capabilities-2"
+                               xmlns:apti="http://midpoint.evolveum.com/xml/ns/public/common/api-types-2"
+                               xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+                               xmlns:enc="http://www.w3.org/2001/04/xmlenc#">linked</c:synchronizationSituation>
+   <c:synchronizationSituationDescription xmlns:c="http://midpoint.evolveum.com/xml/ns/public/common/common-2a"
+                                          xmlns:icfs="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/resource-schema-2"
+                                          xmlns:t="http://prism.evolveum.com/xml/ns/public/types-2"
+                                          xmlns:icfc="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/connector-schema-2"
+                                          xmlns:q="http://prism.evolveum.com/xml/ns/public/query-2"
+                                          xmlns:cap="http://midpoint.evolveum.com/xml/ns/public/resource/capabilities-2"
+                                          xmlns:apti="http://midpoint.evolveum.com/xml/ns/public/common/api-types-2"
+                                          xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+                                          xmlns:enc="http://www.w3.org/2001/04/xmlenc#">
+      <c:situation>linked</c:situation>
+      <c:timestamp>2013-03-04T17:04:11.519+01:00</c:timestamp>
+      <c:channel>http://midpoint.evolveum.com/xml/ns/public/gui/channels-2#user</c:channel>
+   </c:synchronizationSituationDescription>
+   <objectClass xmlns:qn850="http://midpoint.evolveum.com/xml/ns/public/resource/instance-2">qn850:AccountObjectClass</objectClass>
+   <attributes>
+      <icfs:name xmlns:icfs="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/resource-schema-2">uid=Anakin,ou=people,dc=example,dc=com</icfs:name>
+      <icfs:uid xmlns:icfs="http://midpoint.evolveum.com/xml/ns/public/connector/icf-1/resource-schema-2">7b71de97-63f4-4fac-8662-eacf1a775dea</icfs:uid>
+   </attributes>
+   <accountType>default</accountType>
+</account>
