@@ -29,19 +29,14 @@ import com.evolveum.midpoint.xml.ns._public.common.api_types_2.OperationOptionsT
 import com.evolveum.midpoint.xml.ns._public.common.common_2a.*;
 import com.evolveum.midpoint.xml.ns._public.common.fault_1_wsdl.FaultMessage;
 import org.apache.cxf.binding.soap.SoapFault;
-import org.apache.cxf.interceptor.Fault;
 import org.apache.ws.security.WSPasswordCallback;
 import com.evolveum.midpoint.xml.ns._public.model.model_1_wsdl.ModelPortType;
 import com.evolveum.midpoint.xml.ns._public.model.model_1_wsdl.ModelService;
 import org.apache.cxf.frontend.ClientProxy;
 import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor;
 import org.apache.ws.security.WSConstants;
-import org.apache.ws.security.WSPasswordCallback;
-import org.apache.ws.security.WSSecurityException;
 import org.apache.ws.security.handler.WSHandlerConstants;
-import org.omg.CosNaming._BindingIteratorImplBase;
-import org.springframework.remoting.soap.SoapFaultException;
-import org.testng.TestException;
+
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -81,6 +76,7 @@ public class WebserviceSecurityTest extends TestFrameworkUtil {
     private static final String USER_TEST_6_FILENAME = "user_test6.xml";
 
     private static final String test_user_oid_2 = "c0c010c0-d34d-b33f-f00d-111111111112";
+    private static final String system_config_oid = "00000000-0000-0000-0000-000000000001";
 
     private static final String UNIVERSAL_USER_PASSWORD = "ineedmorepower";
 
@@ -126,6 +122,7 @@ public class WebserviceSecurityTest extends TestFrameworkUtil {
 
     @BeforeClass
     public void beforeTests(){
+        LOGGER.info("WebService security test suite started.");
         initSystem();
     }
 
@@ -133,6 +130,7 @@ public class WebserviceSecurityTest extends TestFrameworkUtil {
     public void afterTests() throws FaultMessage, JAXBException{
         modelPort = createModelPort();
         cleanRepository();
+        LOGGER.info("WebService security test suite finished successfully. All tests passed.");
     }
 
     /**
@@ -161,6 +159,7 @@ public class WebserviceSecurityTest extends TestFrameworkUtil {
     @Test(expectedExceptions = Exception.class)
     public void wsSecurity02() throws FaultMessage, JAXBException{
         modelPort = createModelPort();
+        configurationType = getConfiguration(modelPort);
         File file = new File(SECURITY_DIR_NAME + USER_TEST_2_FILENAME);
         UserType user = (UserType)unmarshallFromFile(file, PACKAGE_COMMON_2A);
 
@@ -175,6 +174,7 @@ public class WebserviceSecurityTest extends TestFrameworkUtil {
         ObjectModificationType objectChange = (ObjectModificationType)unmarshallFromFile(file, PACKAGE_API_TYPES_2);
         modelPort.modifyObject(getTypeUri(UserType.class), objectChange);
 
+        modelPort.deleteObject(getTypeUri(SystemConfigurationType.class), system_config_oid);
         file = new File(SECURITY_DIR_NAME + SYSTEM_CONFIG_NORMAL_FILENAME);
         config = (SystemConfigurationType)unmarshallFromFile(file, PACKAGE_COMMON_2A);
         modelPort.addObject(config, new Holder<String>(), new Holder<OperationResultType>());
@@ -261,7 +261,6 @@ public class WebserviceSecurityTest extends TestFrameworkUtil {
         modelPort = createModelPort("Anakin6", "wsSecurity06");
         configurationType = getConfiguration(modelPort);
     }
-
 }
 
 

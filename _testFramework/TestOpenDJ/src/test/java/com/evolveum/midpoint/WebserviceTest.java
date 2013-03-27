@@ -105,11 +105,10 @@ public class WebserviceTest extends TestFrameworkUtil{
     private static final String PACKAGE_API_TYPES_2 = "com.evolveum.midpoint.xml.ns._public.common.api_types_2";
     private static final String PACKAGE_COMMON_2A = "com.evolveum.midpoint.xml.ns._public.common.common_2a";
 
-    //TODO
-
     private static final String WEBSERVICE_DIR_NAME = "src/test/resources/webservice/";
     private static final String USER_ADD_FILENAME = "user_add.xml";
     private static final String USER_MODIFY_FILENAME = "user_modify.xml";
+    private static final String OBJECT_MODIFY_FILENAME = "object_modify.xml";
 
     private static final String ACCOUNT_ADD_FILENAME = "account_add.xml";
     private static final String ACCOUNT_MODIFY_FILENAME = "account_modify.xml";
@@ -141,17 +140,38 @@ public class WebserviceTest extends TestFrameworkUtil{
     private static final String ORG_ADD_FILENAME = "org_add.xml";
     private static final String ORG_MODIFY_FILENAME = "org_modify.xml";
 
+    private static final String RESOURCE_ADD_FILENAME = "resource_add.xml";
+    private static final String RESOURCE_MODIFY_FILENAME = "resource_modify.xml";
+
+    //TODO - switch between production and test Object Identifiers
+    //for testing purpose, use initialised String object identifiers
     private static String userOid = "c0c010c0-d34d-b33f-f00d-111111111111";
     private static String accountOid = "ef2bc95b-76e0-59e2-86d6-3d4f02d3aaaa";
-    private static String connectorOid;
-    private static String connectorHostOid;
-    private static String genericObjectOid;
+    private static String connectorOid = "84d22e78-3ed0-4bf8-9311-0b647e08b3e3";
+    private static String connectorHostOid = "91919191-76e0-59e2-86d6-44cc44cc44cc";
+    private static String genericObjectOid = "c0c010c0-d34d-b33f-f00d-999111111111";
+    private static String resourceOid = "ef2bc95b-76e0-48e2-86d6-3d4f02d3e1a2";
     private static String userTemplateOid = "10000000-0000-0000-0000-000000000222";
     private static String systemConfigOid = "00000000-3333-2222-1111-000000000001";
     private static String taskOid = "91919191-76e0-59e2-86d6-3d4f02d30000";
     private static String passwordPolicyOid = "81818181-76e0-59e2-8888-3d4f02d3fffd";
     private static String roleOid = "12345678-d34d-b33f-f00d-988888888889";
     private static String orgOid = "00000000-8888-6666-0000-100000000001";
+
+    //production form
+    /*private static String userOid;
+    private static String accountOid;
+    private static String connectorOid;
+    private static String connectorHostOid;
+    private static String genericObjectOid;
+    private static String resourceOid;
+    private static String userTemplateOid;
+    private static String systemConfigOid;
+    private static String taskOid;
+    private static String passwordPolicyOid;
+    private static String roleOid;
+    private static String orgOid;*/
+
 
     @BeforeMethod
     public void beforeTest(){}
@@ -252,7 +272,7 @@ public class WebserviceTest extends TestFrameworkUtil{
      *
      *  @return ResourceObjectShadowListType
      * */
-    private ResourceObjectShadowListType listResourceObjectShadows(String resourceOid, String resourceObjectType) throws FaultMessage{
+    private ResourceObjectShadowListType listResourceObjectShadowsTest(String resourceOid, String resourceObjectType) throws FaultMessage{
         Holder<ResourceObjectShadowListType> objectListHolder = new Holder<ResourceObjectShadowListType>();
         Holder<OperationResultType> resultHolder = new Holder<OperationResultType>();
 
@@ -393,7 +413,8 @@ public class WebserviceTest extends TestFrameworkUtil{
 
     /*=============================================ACCOUNT=========================================================*/
 
-    //TODO - dorobit pridanie resource a usera, pred pridanim acc, inak nepujdze
+    //TODO - add user and resource before adding account
+    //TODO - if resource is up, oid from xml file is ignored and new oid is generated
     @Test
     public void wsTest_0101_accountAddObject()throws JAXBException, FaultMessage{
         File file = new File(WEBSERVICE_DIR_NAME+ACCOUNT_ADD_FILENAME);
@@ -607,10 +628,106 @@ public class WebserviceTest extends TestFrameworkUtil{
 
     /*=============================================RESOURCE========================================================*/
 
-    //TODO - resource testy, this will be the hardest part
-    //TODO - implement listAccountShadowOwner operation
+    //TODO - addObject does not work - https://jira.evolveum.com/browse/MID-1205
     @Test
-    public void wsTest_0501_resourceAddObject(){}
+    public void wsTest_0501_resourceAddObject() throws JAXBException, FaultMessage{
+        File file = new File(WEBSERVICE_DIR_NAME+RESOURCE_ADD_FILENAME);
+        ResourceType resource = (ResourceType)unmarshallFromFile(file, PACKAGE_COMMON_2A);
+
+        resourceOid = addObjectTest(resource);
+
+        //Check, if user was added correctly
+        resource = (ResourceType)getObjectTest(getTypeUri(ResourceType.class), resourceOid);
+        AssertJUnit.assertNotNull(resource);
+        AssertJUnit.assertEquals(resource.getOid(), resourceOid);
+
+        LOGGER.info("wsTest_0501_resourceAddObject: Resource Object added correctly. ResourceObjectOid: " + resourceOid);
+    }
+
+    @Test
+    public void wsTest_0502_resourceModifyObject() throws JAXBException, FaultMessage{
+        File file = new File(WEBSERVICE_DIR_NAME + RESOURCE_MODIFY_FILENAME);
+        ObjectModificationType objectChange = (ObjectModificationType)unmarshallFromFile(file, PACKAGE_API_TYPES_2);
+
+        modifyObjectTest(getTypeUri(ResourceType.class), objectChange);
+
+        //Check, if changes were applied
+        ResourceType resource = (ResourceType)getObjectTest(getTypeUri(ResourceType.class), resourceOid);
+        AssertJUnit.assertNotNull(resource);
+        AssertJUnit.assertNotSame("Localhost OpenDJ", resource.getName().getContent().get(1).toString());
+
+        LOGGER.info("wsTest_0502_resourceModifyObject: Modification applied correctly");
+    }
+
+    @Test
+    public void wsTest_0503_resourceSearchObject() throws SAXException, IOException, FaultMessage{
+        String genericObjectName = "Localhost OpenDJ After Change";
+        QueryType query = generateSearchQuery(genericObjectName);
+
+        ObjectListType objectList = searchObjectsTest(getTypeUri(ResourceType.class), query);
+        checkSearchResults(objectList, "Resource Object", "wsTest_0503_resourceSearchObject");
+    }
+
+    @Test
+    public void wsTest_0504_resourceListObjects() throws FaultMessage{
+        ObjectListType objectList = listObjectsTest(getTypeUri(ResourceType.class));
+        checkListObjectsResults(objectList, 1, "wsTest_0504_resourcelistObjects");
+    }
+
+    @Test
+    public void wsTest_0505_resourceDeleteObject() throws FaultMessage{
+        deleteObjectTest(getTypeUri(ResourceType.class), resourceOid);
+        LOGGER.info("wsTest_0505_resourceDeleteObject: resource deleted correctly.");
+    }
+
+    @Test
+    public void wsTest_0506_listAccountShadowOwnerTest() throws FaultMessage, JAXBException{
+        File file = new File(WEBSERVICE_DIR_NAME + USER_ADD_FILENAME);
+        UserType user = (UserType)unmarshallFromFile(file, PACKAGE_COMMON_2A);
+        userOid = addObjectTest(user);
+
+        file = new File(WEBSERVICE_DIR_NAME + ACCOUNT_ADD_FILENAME);
+        AccountShadowType account = (AccountShadowType)unmarshallFromFile(file, PACKAGE_COMMON_2A);
+        accountOid = addObjectTest(account);
+
+        user = listAccountShadowOwnerTest(accountOid);
+        AssertJUnit.assertNotNull(user);
+        AssertJUnit.assertEquals(userOid, user.getOid());
+    }
+
+    @Test
+    public void wsTest_0507_listResourceObjectShadowsTest() throws FaultMessage{
+        ResourceObjectShadowListType list =  listResourceObjectShadowsTest(resourceOid, getTypeUri(AccountShadowType.class));
+        List<ResourceObjectShadowType> objectList = list.getObject();
+        if(objectList.size() == 1)
+            LOGGER.info("wsTest_0507_listResourceObjectShadowsTest(): listResourceObjectShadow operation performed correctly.");
+        else {
+            LOGGER.error("wsTest_0507_listResourceObjectShadowsTest: listResourceObjectShadow operation failed.");
+        }
+    }
+
+    //TODO - not sure if this needs to be implemented
+    @Test(enabled = false)
+    public void wsTest_0508_importFromResourceTest() throws FaultMessage, ObjectNotFoundException{
+        importFromResourceTest(resourceOid, getTypeUri(AccountShadowType.class));
+    }
+
+    //TODO - not sure if this needs to be implemented
+    @Test
+    public void wsTest_0509_listResourceObjectsTest() throws FaultMessage{
+        listResourceObjectsTest(resourceOid, getTypeUri(ConnectorType.class));
+    }
+
+    @Test
+    public void wsTest_0510_testResourceTest() throws FaultMessage{
+        testResourceTest(resourceOid);
+        LOGGER.info("wsTest_0510_testResourceTest(): Resource test performed correctly. Connection to resource is established properly.");
+    }
+
+
+
+
+
 
     /*=============================================USER============================================================*/
 
@@ -883,7 +1000,7 @@ public class WebserviceTest extends TestFrameworkUtil{
 
     /*=============================================OBJECT==========================================================*/
 
-    //TODO - Problems with search and modify operations, other seems normal
+    //TODO - Problems with search operation, other seems normal
     @Test
     public void wsTest_1101_objectAddObject()throws JAXBException, FaultMessage{
         File file = new File(WEBSERVICE_DIR_NAME+USER_ADD_FILENAME);
@@ -899,10 +1016,9 @@ public class WebserviceTest extends TestFrameworkUtil{
         LOGGER.info("wsTest_1101_objectAddObject: Object added correctly.");
     }
 
-    //TODO - Change modification file
     @Test
     public void wsTest_1102_objectModifyObject() throws JAXBException, FaultMessage{
-        File file = new File(WEBSERVICE_DIR_NAME + USER_MODIFY_FILENAME);
+        File file = new File(WEBSERVICE_DIR_NAME + OBJECT_MODIFY_FILENAME);
         ObjectModificationType objectChange = (ObjectModificationType)unmarshallFromFile(file, PACKAGE_API_TYPES_2);
 
         modifyObjectTest(getTypeUri(ObjectType.class), objectChange);
@@ -917,7 +1033,7 @@ public class WebserviceTest extends TestFrameworkUtil{
 
     @Test
     public void wsTest_1203_objectSearchObject() throws SAXException, IOException, FaultMessage{
-        String userName = "Anakin";
+        String userName = "Anakin After Change";
         QueryType query = generateSearchQuery(userName);
 
         ObjectListType objectList = searchObjectsTest(getTypeUri(ObjectType.class), query);
@@ -1182,5 +1298,4 @@ public class WebserviceTest extends TestFrameworkUtil{
         deleteObjectTest(getTypeUri(AbstractRoleType.class), roleOid);
         LOGGER.info("wsTest_1605_abstractRoleDeleteObject: Abstract role deleted correctly.");
     }
-
 }
