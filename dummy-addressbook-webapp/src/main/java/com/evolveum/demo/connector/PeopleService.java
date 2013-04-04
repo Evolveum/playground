@@ -20,7 +20,6 @@ import com.evolveum.demo.model.People;
 public class PeopleService implements Serializable{
 	private static PeopleService peopleService;
 	private static Configuration config;
-//	private static Connection connection = connect();
 	private static Connection connection;
 	
 	private static DataSource dataSource;
@@ -30,7 +29,6 @@ public class PeopleService implements Serializable{
 		try {
 			connection= dataSource.getConnection();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -44,7 +42,6 @@ public class PeopleService implements Serializable{
 	}
 
 	public void UserService(){
-		//connection = this.connect();
 	}
 	
 	public static Connection connect() {
@@ -71,7 +68,6 @@ public class PeopleService implements Serializable{
 		}
 
 		if (connection != null) {
-			//System.out.println("You made it, take control your database now!");
 			return connection;
 			
 		} else {

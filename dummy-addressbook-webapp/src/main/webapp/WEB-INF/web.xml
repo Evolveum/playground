@@ -16,7 +16,7 @@
         <servlet-class>org.apache.wicket.protocol.http.WicketServlet</servlet-class>
         <init-param>
       		<param-name>applicationClassName</param-name>
-      		<param-value>com.evolveum.demo.hr.WicketApplication</param-value>
+      		<param-value>com.evolveum.demo.addressbook.WicketApplication</param-value>
     	</init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>

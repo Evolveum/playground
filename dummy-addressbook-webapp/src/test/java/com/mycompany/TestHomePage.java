@@ -2,8 +2,8 @@ package com.mycompany;
 
 import org.apache.wicket.util.tester.WicketTester;
 
-import com.evolveum.demo.hr.HomePage;
-import com.evolveum.demo.hr.WicketApplication;
+import com.evolveum.demo.addressbook.HomePage;
+import com.evolveum.demo.addressbook.WicketApplication;
 
 /**
  * Simple test using the WicketTester

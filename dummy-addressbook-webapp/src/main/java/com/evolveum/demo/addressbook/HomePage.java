@@ -1,10 +1,8 @@
-package com.evolveum.demo.hr;
+package com.evolveum.demo.addressbook;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.TimeZone;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.xml.stream.Location;
 
 import org.apache.commons.configuration.Configuration;
@@ -15,17 +13,12 @@ import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
-import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PageableListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
-import org.apache.wicket.protocol.http.servlet.ServletWebRequest;
-import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import com.evolveum.demo.connector.Clock;
-import com.evolveum.demo.connector.HelloWorldService;
 import com.evolveum.demo.connector.PeopleService;
 import com.evolveum.demo.errorHandling.ErrorPage;
 import com.evolveum.demo.model.People;
@@ -39,9 +32,6 @@ public class HomePage extends WebPage {
 	
 	public static transient PeopleService peopleService = PeopleService.getInstance();
 	ArrayList<People> people;
-	
-	@SpringBean
-	private HelloWorldService helloWorldService;
 	
 	public HomePage() {        
         try {
@@ -60,20 +50,10 @@ public class HomePage extends WebPage {
         initGui();
     }
 	
-	private void initGui(){
-		System.out.println(helloWorldService.sayHello());
-		
-		ExternalLink logoutLink = new ExternalLink("logoutLink", "/j_spring_security_logout");
-		logoutLink.setContextRelative(true);
-		add(logoutLink);
-
-		
+	private void initGui(){			
 		add(new BookmarkablePageLink("home", HomePage.class));
         add(new Label("footer", new StringResourceModel("footer", this, null)));
         add(new FeedbackPanel("feedbackPanel"));
-
-		Clock clock = new Clock("clock", TimeZone.getTimeZone("America/Los_Angeles"));
-        add(clock);
         
         PageableListView<People> userList = new PageableListView<People>("people", people, 10) {
         	

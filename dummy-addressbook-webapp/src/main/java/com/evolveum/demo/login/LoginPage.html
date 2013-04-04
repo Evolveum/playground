@@ -38,21 +38,21 @@
 <header class="jumbotron subhead" id="overview">
   <div class="row">
     <div class="span6">
-       <form wicket:id="loginForm">
-        <span wicket:id="usernameLabel">Username</span>:<br />
-        <input type="text" wicket:id="username" /><br />
+       <form action="j_spring_security_check"  method="POST">
+		<span wicket:id="usernameLabel">Username</span>:<br />
+        <input type="text" name="j_username"/><br />
         <br />
-        <span wicket:id="passwordLabel">Username</span>:<br />
-        <input type="password" wicket:id="password" /><br />
+		<span wicket:id="passwordLabel">Username</span>:<br />
+        <input type="password" name="j_password"/><br />
         <br />
-        <input type="submit" wicket:message="value:login.submit.label" />
- 
-        <div id="errorMessages" wicket:id="feedback"></div>
+        <input type="submit"  />
+  		
+  	<div id="errorMessages" wicket:id="feedback"></div>
+
     </form>
- 
-    <p>
-        <i>Hint: try user/user or admin/admin</i>
-    </p>
+	 <p>
+	 	<span wicket:id="reason"></span><br />
+	 </p>
     </div>
   </div>
   

@@ -1,4 +1,4 @@
-package com.evolveum.demo.hr;
+package com.evolveum.demo.addressbook;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
