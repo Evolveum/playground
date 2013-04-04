@@ -9,7 +9,7 @@
 	<http pattern="/wicket/bookmarkable/com.evolveum.demo.login.LoginPage" security="none" />
 	<http pattern="/css/**" security="none" />
 	
-	<http use-expressions="true">
+	<http use-expressions="true" disable-url-rewriting="true" auto-config="false">
 	        <intercept-url pattern="/**" access="isAuthenticated()" /> 
 	        <form-login login-page="/wicket/bookmarkable/com.evolveum.demo.login.LoginPage"/>
 	        <logout logout-success-url="/" logout-url="/j_spring_security_logout" />
