@@ -6,12 +6,21 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Type;
-
 @Entity
+@NamedQueries({
+	@NamedQuery(
+	name = "findAllUsers",
+	query = "from UserJpa u "
+	),
+	@NamedQuery(
+	name = "findUserById",
+	query = "SELECT u FROM UserJpa u WHERE u.id = :id"
+	)
+})
 @Table(name="usershr")
 public class UserJpa implements Serializable{
 

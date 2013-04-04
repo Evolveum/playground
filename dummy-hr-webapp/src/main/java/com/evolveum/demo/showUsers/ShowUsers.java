@@ -77,10 +77,8 @@ public class ShowUsers extends HomePage {
 				try {
 					CsvWriter exporter = new CsvWriter(users, config.getProperty("exportPath").toString() );
 					exportCheck.setVisible(Boolean.TRUE);
-					//System.out.println(new StringResourceModel(config.getProperty("exportPath").toString(), this, null).getString());
 				} catch (Exception e) {
 					error(e.toString());
-					//log.error(e.toString());
 				}
 			}
 		};

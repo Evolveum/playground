@@ -32,7 +32,6 @@ public class UserService implements Serializable{
 	}
 
 	public void UserService(){
-		//connection = this.connect();
 	}
 	
 	public static Connection connect() throws ClassNotFoundException, SQLException, ConfigurationException {

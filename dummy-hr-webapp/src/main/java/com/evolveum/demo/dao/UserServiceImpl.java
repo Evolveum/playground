@@ -13,8 +13,8 @@ import com.evolveum.demo.model.UserJpa;
 @Service
 public class UserServiceImpl implements UserServiceJpa {
 
-	 @Autowired
-	 private UserDao userDao;
+	@Autowired
+	private UserDao userDao;
 	 
 	@Override
 	@Transactional(readOnly = true)
@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserServiceJpa {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public UserJpa getUser(Integer id) {
 		return userDao.getUser(id);
 	}

@@ -1,7 +1,5 @@
 package com.evolveum.demo.hr;
 
-import java.sql.SQLException;
-import java.util.List;
 import java.util.TimeZone;
 
 import org.apache.commons.configuration.Configuration;
@@ -16,9 +14,7 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import com.evolveum.demo.connector.Clock;
-import com.evolveum.demo.connector.UserService;
 import com.evolveum.demo.dao.UserServiceJpa;
-import com.evolveum.demo.model.UserJpa;
 import com.evolveum.demo.registerUser.RegisterUser;
 import com.evolveum.demo.showUsers.ShowUsers;
 

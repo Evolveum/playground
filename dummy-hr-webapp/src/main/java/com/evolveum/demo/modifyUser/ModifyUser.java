@@ -1,7 +1,6 @@
 package com.evolveum.demo.modifyUser;
 
 import java.io.Serializable;
-import java.sql.SQLException;
 
 import org.apache.wicket.extensions.markup.html.form.select.Select;
 import org.apache.wicket.extensions.markup.html.form.select.SelectOption;
@@ -16,7 +15,6 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.validation.validator.StringValidator;
 
 import com.evolveum.demo.hr.HomePage;
-import com.evolveum.demo.model.User;
 import com.evolveum.demo.model.UserJpa;
 import com.evolveum.demo.showUsers.ShowUsers;
 
@@ -32,7 +30,6 @@ public class ModifyUser extends HomePage implements Serializable {
 	
 	public ModifyUser(Integer userId){
 		initGui(userId);
-	
 	}
 	
 	private void initGui(Integer userId){

@@ -223,6 +223,7 @@
 					<showDeprecation>true</showDeprecation>
 				</configuration>
 			</plugin>
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>

@@ -3,7 +3,10 @@ package com.evolveum.demo.dao;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.persistence.EntityManager;
 import javax.persistence.NamedQuery;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,35 +17,46 @@ import com.evolveum.demo.model.UserJpa;
 @Repository
 public class UserDaoImpl implements UserDao {
 
-	 @Autowired
-	 @Resource(name="sessionFactory")
-	 private SessionFactory sessionFactory;
-	 
-
+	private EntityManager entityManagerFactory;
+    
+    public EntityManager getEntityManagerFactory() {
+        return entityManagerFactory;
+    }
+    
+    @PersistenceContext
+    public void setEntityManagerFactory(EntityManager entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
+    }
+    
 	@Override
 	public List<UserJpa> listAllUsers(){
-		 List<UserJpa> users = sessionFactory.getCurrentSession().createQuery("from UserJpa").list();
+		 Query q =  (Query) entityManagerFactory.createQuery("select u from UserJpa u");
+	     List<UserJpa> users = (List<UserJpa>) q.getResultList();
+	     
 		 return users;
 	 }
 
 	@Override
 	public void modifyUser(UserJpa user){
-		sessionFactory.getCurrentSession().saveOrUpdate(user);
+		entityManagerFactory.merge(user);
 	 }
 	 
 
 	@Override
 	public void registerUser(UserJpa user){
-		 sessionFactory.getCurrentSession().save(user);
+		entityManagerFactory.persist(user);
 	 }
 	 
 	@Override
 	public void deleteUser(UserJpa user){
-		sessionFactory.getCurrentSession().delete(user);
+		UserJpa u = entityManagerFactory.merge(user);
+		entityManagerFactory.remove(u);
 	 }
 	
 	public UserJpa getUser(Integer id){
-		return (UserJpa) sessionFactory.getCurrentSession().get(UserJpa.class, id);
+		return (UserJpa) entityManagerFactory.createNamedQuery("findUserById")
+				.setParameter("id", id)
+				.getResultList().get(0);
 	}
 
 }
