@@ -1,11 +1,9 @@
 package com.evolveum.demo.hr;
 
-import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
-import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 
-import com.evolveum.demo.connector.SecureWicketAuthenticatedWebSession;
 import com.evolveum.demo.login.LoginPage;
 
 /**
@@ -13,7 +11,7 @@ import com.evolveum.demo.login.LoginPage;
  * 
  * @see com.mycompany.Start#main(String[])
  */
-public class WicketApplication extends AuthenticatedWebApplication  
+public class WicketApplication extends WebApplication  
 {    	
 	/**
 	 * @see org.apache.wicket.Application#getHomePage()
@@ -21,7 +19,7 @@ public class WicketApplication extends AuthenticatedWebApplication
 	@Override
 	public Class<? extends WebPage> getHomePage()
 	{
-		return LoginPage.class;
+		return HomePage.class;
 	}
 
 	/**
@@ -35,16 +33,6 @@ public class WicketApplication extends AuthenticatedWebApplication
         getComponentInstantiationListeners().add(new SpringComponentInjector(this));
  
 		// add your configuration here
-	}
-
-	@Override
-	public Class<? extends WebPage> getSignInPageClass() {
-		return HomePage.class;
-	}
-
-	@Override
-	protected Class<? extends AbstractAuthenticatedWebSession> getWebSessionClass() {
-		 return SecureWicketAuthenticatedWebSession.class;
 	}
 	
 }

@@ -1,6 +1,5 @@
 package com.evolveum.demo.connector;
 
-import org.apache.log4j.Logger;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.injection.Injector;
@@ -48,8 +47,8 @@ public class SecureWicketAuthenticatedWebSession extends AuthenticatedWebSession
 	
 	private void getRolesIfSignedIn(Roles roles) {
 	    if (isSignedIn()) {
-	        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	        addRolesFromAuthentication(roles, authentication);
+	        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	        //addRolesFromAuthentication(roles, authentication);
 	    }
 	}
 	
