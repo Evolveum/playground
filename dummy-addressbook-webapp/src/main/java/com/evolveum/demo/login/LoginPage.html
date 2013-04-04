@@ -34,17 +34,20 @@
 
 
 <!-- Masthead
+<form class="well form-search">
+          <input type="text" class="input-small" placeholder="Email">
+          <input type="password" class="input-small" placeholder="Password">
+          <button type="submit" class="btn">Go</button>
+        </form>
 ================================================== -->
 <header class="jumbotron subhead" id="overview">
   <div class="row">
     <div class="span6">
-       <form action="j_spring_security_check"  method="POST">
-		<span wicket:id="usernameLabel">Username</span>:<br />
-        <input type="text" name="j_username"/><br />
-        <br />
-		<span wicket:id="passwordLabel">Username</span>:<br />
-        <input type="password" name="j_password"/><br />
-        <br />
+       <form action="j_spring_security_check"  method="POST" class="well form-search">
+		<span wicket:id="usernameLabel">Username</span>:
+        <input type="text" name="j_username" class="input-small"/>
+		<span wicket:id="passwordLabel">Username</span>:
+        <input type="password" name="j_password" class="input-small"/>
         <input type="submit"  />
   		
   	<div id="errorMessages" wicket:id="feedback"></div>
