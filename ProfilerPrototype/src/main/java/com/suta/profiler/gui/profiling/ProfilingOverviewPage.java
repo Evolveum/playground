@@ -146,7 +146,7 @@ public class ProfilingOverviewPage extends ProfilingPage{
         classSeries.setData(ProfilingClassesPage.getClassData());
         threadSeries.setData(ProfilingThreadsPage.getThreadData());
 
-        System.out.println("MEMORY["+memorySeries.getData().size()+"] + CPU["+cpuSeries.getData().size()+"] + CLASS["+classSeries.getData().size()+"] + THREAD["+threadSeries.getData().size()+"]");
+        //System.out.println("MEMORY["+memorySeries.getData().size()+"] + CPU["+cpuSeries.getData().size()+"] + CLASS["+classSeries.getData().size()+"] + THREAD["+threadSeries.getData().size()+"]");
     }
 
     /**

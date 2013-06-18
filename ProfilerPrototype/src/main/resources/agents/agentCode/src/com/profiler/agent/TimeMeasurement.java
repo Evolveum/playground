@@ -12,7 +12,7 @@ import java.util.List;
 public class TimeMeasurement implements Serializable {
 
     /* Static attributes */
-    public static int runCounter = 0;
+    //public static int runCounter = 0;
 
     /* Attributes */
     String methodName;
@@ -29,8 +29,8 @@ public class TimeMeasurement implements Serializable {
 
     public void closeMethodRun(long endTime){
         actMethodRun.finishMethodRun(endTime);
-        methodRunList.add(runCounter, actMethodRun);
-        runCounter++;
+        methodRunList.add(actMethodRun);
+        //runCounter++;
     }
 
     /**

@@ -73,11 +73,11 @@ public abstract class ProfilingPage extends WebPage{
 
             @Override
             public void onClick(){
-                if(Attributes.currentProject == null || (Attributes.currentProfilingLevel != null && !Attributes.currentProfilingLevel.isMethodProfiling())){
+                if(Attributes.currentProject == null && Attributes.currentProfilingScenario != null){
                     String message = "There is no running profiling running at the moment or METHOD profiling is not selected!";
                     setResponsePage(new NoProfilingActive(parameters, message));
                 }else
-                    setResponsePage(new NoProfilingActive(parameters, "NOT IMPLEMENTED YET"));
+                    setResponsePage(new ProfilingMethodsPage(parameters));
             }
         });
         add(new Link("profilingMemory") {

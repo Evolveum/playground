@@ -129,6 +129,7 @@ public class CommunicationServer {
         List<CPUmeasurement> cpuData;
         List<ThreadMeasurement> threadData;
         List<ClassMeasurement> classData;
+        Map<String, TimeMeasurement> methodRunList;
         String message = null;
 
         do{
@@ -150,6 +151,10 @@ public class CommunicationServer {
                 classData = ProfilingPacketType.classUsageList;
                 ProfilingClassesPage.prepareData(classData);
                 //System.out.println(classData.size());
+                methodRunList = ProfilingPacketType.methodTimeList;
+                ProfilingMethodsPage.prepareData(methodRunList);
+                //printMethodRuns(methodRunList);
+
                 ProfilingOverviewPage.getProfilingData();
                 ProfilingVMSummaryPage.collectVMData();
 
@@ -224,12 +229,32 @@ public class CommunicationServer {
      * */
     public static void printInstruction(Instruction inst){
 
-        for(String s: inst.getProfilingLevelMap().keySet())
-            System.out.print(s + ": " + inst.getProfilingLevelMap().get(s) + ", ");
+        //for(String s: inst.getProfilingLevelMap().keySet())
+        //    System.out.print(s + ": " + inst.getProfilingLevelMap().get(s) + ", ");
+
+        for(Map.Entry entry: inst.getProfiledMethodList().entrySet()){
+            for(String s: (ArrayList<String>)entry.getValue()){
+                System.out.println("Class: " + entry.getKey() + ", method: " + s);
+            }
+        }
 
         System.out.println();
     }
 
+    /**
+     *  Prints out method run list
+     * */
+    public static void printMethodRuns(Map<String, TimeMeasurement> methodRunList){
+
+        for(TimeMeasurement t: methodRunList.values()){
+            System.out.println(t.getMethodName() + ":");
+
+            for(MethodRun m: t.methodRunList){
+                System.out.print(m.getEstimatedTime()/1000000 + " ");
+            }
+        }
+        System.out.println();
+    }
 
 
 

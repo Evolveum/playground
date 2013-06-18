@@ -34,7 +34,8 @@ public class AgentMain implements ClassFileTransformer {
             "com/profiler/agent/CPUmeasurement",
             "com/profiler/agent/ClassMeasurement",
             "com/profiler/agent/ProfilingThread",
-            "com/profiler/agent/MethodRun"
+            "com/profiler/agent/MethodRun",
+            "com/profiler/agent/Instruction"
     ));
 
     /* Attributes */
@@ -80,6 +81,7 @@ public class AgentMain implements ClassFileTransformer {
             modifiableClassField[i] = modifiableClassList.get(i);
 
         System.out.println("NUMBER OF CLASSES MODIFIED: " + modifiableClassField.length);
+
         try{
             System.out.println("MODIFIABLE CLASS?: " + instrumentation.isRetransformClassesSupported());
             instrumentation.retransformClasses(modifiableClassField);
@@ -95,11 +97,11 @@ public class AgentMain implements ClassFileTransformer {
      *  In this method, agent decides what to do based on arguments passed on
      *  agent load.
      * */
-    public static void premain(String agentArgs, Instrumentation inst){
+    /*public static void premain(String agentArgs, Instrumentation inst){
         System.out.println("PreMain was called!");
 
         AgentMain agent = new AgentMain(inst, false);
-    }
+    }*/
 
     /**
      *  Agent main
@@ -145,22 +147,13 @@ public class AgentMain implements ClassFileTransformer {
             }
 
             for(int i = 0; i < methods.length; i++){
-                if(methods[i].getLongName().startsWith(className.replace("/", "."))){
-                    if(methods[i].getName().equals("main")){
-                        //beforeMain(methods[i]);
-                        afterMain(methods[i]);
-                        continue;
+                if(Instrumentations.profiledMethodMap.keySet().contains(className.replace("/","."))){
+                    //System.out.println("Profiling Class: " + className.replace("/","."));
+                    if(Instrumentations.profiledMethodMap.get(className.replace("/",".")).contains(methods[i].getName())){
+                        System.out.println("Profiling method: " + className + "." + methods[i].getName());
+                        methods[i].insertBefore("com.profiler.agent.Instrumentations.insertStopwatchBefore("+"\""+methods[i].getName()+"\""+");");
+                        methods[i].insertAfter("com.profiler.agent.Instrumentations.insertStopwatchAfter("+"\""+methods[i].getName()+"\""+");");
                     }
-
-                    //if(ProfilingThread.methodProfiling){
-                            //System.out.println("METHOD PROFILING!");
-                            if(methods[i].getName().equals("memoryTest") && methods[i].getName().endsWith("doSomething")){
-                                System.out.println("Profiling method: " + className + "." + methods[i].getName());
-                                methods[i].insertBefore("com.profiler.agent.Instrumentations.insertStopwatchBefore("+"\""+methods[i].getName()+"\""+");");
-                                methods[i].insertAfter("com.profiler.agent.Instrumentations.insertStopwatchAfter("+"\""+methods[i].getName()+"\""+");");
-
-                            }
-                    //}
                 }
             }
 

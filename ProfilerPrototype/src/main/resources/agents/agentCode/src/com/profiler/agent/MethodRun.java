@@ -13,14 +13,14 @@ public class MethodRun implements Serializable {
     long startTime;
     long endTime;
     long estimatedTime;
-    int run;
+    //int run;
 
     /**
      *  Constructor
      * */
     public MethodRun(){
         this.startTime = System.nanoTime();
-        this.run = TimeMeasurement.runCounter;
+        //this.run = TimeMeasurement.runCounter;
     }
 
     /**
@@ -36,6 +36,19 @@ public class MethodRun implements Serializable {
      * */
     public void calculateEstimatedTime(){
         this.estimatedTime = this.endTime - this.startTime;
+    }
+
+    /* GETTERS AND SETTERS */
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public long getEndTime() {
+        return endTime;
+    }
+
+    public long getEstimatedTime() {
+        return estimatedTime;
     }
 
 }   //MethodRun class end

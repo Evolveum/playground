@@ -140,9 +140,10 @@ public class CommunicationClient {
             //Instruction.printInstruction(inst);
             getProfilingLevelSettings(inst);
             Instrumentations.profiledMethodMap = inst.getProfiledMethodList();
-            //TODO - add profilingScenarioAnalysis
 
-            //AgentMain.modifyClasses();
+            printProfilingMethodList();
+            ProfilingThread.methodProfiling = true;
+            AgentMain.modifyClasses();
         }
 
 

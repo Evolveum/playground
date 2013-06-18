@@ -28,21 +28,25 @@ public class Instrumentations {
      * */
     public static void insertStopwatchBefore(String methodName){
         if(!times.containsKey(methodName)){
+            //System.out.println("Measuring method: " + methodName);
             TimeMeasurement timeMeasurementUnit = new TimeMeasurement();
             timeMeasurementUnit.methodName = methodName;
             times.put(methodName, timeMeasurementUnit);
         }else{
             times.get(methodName).createNewMethodRun();
         }
+        //System.out.println(times.size());
     }
 
     /**
      *  Stop stopwatch
      * */
     public static void insertStopwatchAfter(String methodName){
-
-        times.get(methodName).closeMethodRun(System.nanoTime());
-        System.out.println("Method name: " + methodName + ", run("+times.get(methodName).actMethodRun.run+"): " + times.get(methodName).actMethodRun.estimatedTime + ", startTime: " + times.get(methodName).actMethodRun.startTime + ", endTime: " + times.get(methodName).actMethodRun.endTime);
+        if(times.containsKey(methodName)){
+            times.get(methodName).closeMethodRun(System.nanoTime());
+            System.out.println("Method name: " + methodName + " ,total: " + times.get(methodName).actMethodRun.estimatedTime + ", startTime: " + times.get(methodName).actMethodRun.startTime + ", endTime: " + times.get(methodName).actMethodRun.endTime);
+            //System.out.println("MethodRunListSize: " + times.get(methodName).methodRunList.size());
+        }
     }
 
     /**

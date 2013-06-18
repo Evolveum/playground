@@ -49,27 +49,27 @@ public class ProfilingThread implements Runnable{
 
         while (true){
 
-            System.out.println("PROFILING THREAD ROUND: " + counter);
+            //System.out.println("PROFILING THREAD ROUND: " + counter);
 
             if(memoryProfiling)
                 if(counter >= MEMORY_PROFILING_INTERVAL){
                     Instrumentations.getMemoryUsage();
-                    System.out.println("PROFILING MEMORY!");
+                    //System.out.println("PROFILING MEMORY!");
                 }
             if(threadProfiling)
                 if(counter >= THREAD_PROFILING_INTERVAL){
                     Instrumentations.getThreadInfo();
-                    System.out.println("PROFILING THREAD!");
+                    //System.out.println("PROFILING THREAD!");
                 }
             if(cpuProfiling)
                 if(counter >= CPU_PROFILING_INTERVAL){
                     Instrumentations.getCpuUsage();
-                    System.out.println("PROFILING CPU!");
+                    //System.out.println("PROFILING CPU!");
                 }
             if (classProfiling)
                 if(counter >= CLASS_PROFILING_INTERVAL){
                     Instrumentations.getClassUsage();
-                    System.out.println("PROFILING CLASS!");
+                    //System.out.println("PROFILING CLASS!");
                 }
 
             counter += MINIMUM_INTERVAL;

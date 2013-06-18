@@ -35,7 +35,7 @@ public class ProfilingPacketType implements Serializable {
      * */
     public ProfilingPacketType(){
 
-        Instrumentations.times.clear();
+        //Instrumentations.times.clear();
         methodTimeList.clear();
         memoryUsageList.clear();
         threadList.clear();
@@ -48,7 +48,7 @@ public class ProfilingPacketType implements Serializable {
         cpuUsageList.addAll(Instrumentations.cpuUsageList);
         classUsageList.addAll(Instrumentations.classUsageList);
 
-        Instrumentations.times.clear();
+        //Instrumentations.times.clear();
         Instrumentations.memoryUsageList.clear();
         Instrumentations.threadList.clear();
         Instrumentations.cpuUsageList.clear();
@@ -69,24 +69,33 @@ public class ProfilingPacketType implements Serializable {
             FileOutputStream cpuFileOut = new FileOutputStream(TEMP_FILE_PATH + "\\cpu.prof");
             FileOutputStream threadFileOut = new FileOutputStream(TEMP_FILE_PATH + "\\thread.prof");
             FileOutputStream classFileOut = new FileOutputStream(TEMP_FILE_PATH + "\\class.prof");
+            FileOutputStream methodRunFileOut = new FileOutputStream(TEMP_FILE_PATH + "\\method.prof");
 
             out = new ObjectOutputStream(memoryFileOut);
             out.writeObject(memoryUsageList);
+            out.close();
 
             out = new ObjectOutputStream(cpuFileOut);
             out.writeObject(cpuUsageList);
+            out.close();
 
             out = new ObjectOutputStream(threadFileOut);
             out.writeObject(threadList);
+            out.close();
 
             out = new ObjectOutputStream(classFileOut);
             out.writeObject(classUsageList);
+            out.close();
+
+            out = new ObjectOutputStream(methodRunFileOut);
+            out.writeObject(methodTimeList);
 
             out.close();
             memoryFileOut.close();
             cpuFileOut.close();
             threadFileOut.close();
             classFileOut.close();
+            methodRunFileOut.close();
 
         }catch (FileNotFoundException fnfe){
             //TODO
@@ -110,24 +119,33 @@ public class ProfilingPacketType implements Serializable {
             FileInputStream cpuFileIn = new FileInputStream(TEMP_FILE_PATH + "\\cpu.prof");
             FileInputStream threadFileIn = new FileInputStream(TEMP_FILE_PATH + "\\thread.prof");
             FileInputStream classFileIn = new FileInputStream(TEMP_FILE_PATH + "\\class.prof");
+            FileInputStream methodRunFileIn = new FileInputStream(TEMP_FILE_PATH + "\\method.prof");
 
             in = new ObjectInputStream(memoryFileIn);
             memoryUsageList = (ArrayList<MemoryMeasurement>)in.readObject();
+            //in.close();
 
             in = new ObjectInputStream(cpuFileIn);
             cpuUsageList = (ArrayList<CPUmeasurement>)in.readObject();
+            //in.close();
 
             in = new ObjectInputStream(threadFileIn);
             threadList = (ArrayList<ThreadMeasurement>)in.readObject();
+            //in.close();
 
             in = new ObjectInputStream(classFileIn);
             classUsageList = (ArrayList<ClassMeasurement>)in.readObject();
+            //in.close();
+
+            in = new ObjectInputStream(methodRunFileIn);
+            methodTimeList = (Map<String, TimeMeasurement>)in.readObject();
 
             in.close();
             memoryFileIn.close();
             cpuFileIn.close();
             threadFileIn.close();
             classFileIn.close();
+            methodRunFileIn.close();
 
         }catch (FileNotFoundException fnfe){
             //TODO
