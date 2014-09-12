@@ -15,15 +15,15 @@ public class UserServiceImpl implements UserServiceJpa {
 
 	@Autowired
 	private UserDao userDao;
-	 
+
 	@Override
 	@Transactional(readOnly = true)
-	 public List<UserJpa> listUsers(){
-		 return userDao.listAllUsers();
-	 }
-	
+	public List<UserJpa> listUsers() {
+		return userDao.listAllUsers();
+	}
+
 	@Transactional
-	public void registerUser(UserJpa user){
+	public void registerUser(UserJpa user) {
 		userDao.registerUser(user);
 	}
 
@@ -32,18 +32,16 @@ public class UserServiceImpl implements UserServiceJpa {
 	public UserJpa getUser(Integer id) {
 		return userDao.getUser(id);
 	}
-	
+
 	@Override
 	@Transactional
 	public void modifyUser(UserJpa user) {
 		userDao.modifyUser(user);
 	}
-	
+
 	@Override
 	@Transactional
 	public void deleteUser(UserJpa user) {
 		userDao.deleteUser(user);
 	}
-
-
 }

@@ -2,7 +2,7 @@ package com.evolveum.demo.errorHandling;
 
 import java.sql.SQLException;
 
-public class UserAlreadyExistsException extends Exception{
+public class UserAlreadyExistsException extends Exception {
 
 	public UserAlreadyExistsException() {
 		super();
@@ -19,5 +19,4 @@ public class UserAlreadyExistsException extends Exception{
 	public UserAlreadyExistsException(Throwable cause) {
 		super(cause);
 	}
-
 }

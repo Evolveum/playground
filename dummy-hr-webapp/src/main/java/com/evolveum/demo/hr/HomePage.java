@@ -20,34 +20,34 @@ import com.evolveum.demo.showUsers.ShowUsers;
 
 public class HomePage extends WebPage {
 	private static final long serialVersionUID = 1L;
-	public static transient Configuration config ;
+	public static transient Configuration config;
 	public static Logger log = Logger.getLogger(HomePage.class.getName());
-	
-	//public static transient UserService userService;
-	
+
+	// public static transient UserService userService;
+
 	@SpringBean
 	public static transient UserServiceJpa userService;
 
 	public HomePage() {
 		initGui();
-		
-        try {
+
+		try {
 			config = new PropertiesConfiguration("application.properties");
 		} catch (ConfigurationException e) {
 			e.printStackTrace();
 			log.error(e.toString());
 		}
-    }
-	
-	private void initGui(){
+	}
+
+	private void initGui() {
 		add(new BookmarkablePageLink("register", RegisterUser.class));
 		add(new BookmarkablePageLink("show", ShowUsers.class));
 		add(new BookmarkablePageLink("home", HomePage.class));
-        add(new Label("footer", new StringResourceModel("footer", this, null)));
-        add(new FeedbackPanel("feedbackPanel"));
+		add(new Label("footer", new StringResourceModel("footer", this, null)));
+		add(new FeedbackPanel("feedbackPanel"));
 
-		Clock clock = new Clock("clock", TimeZone.getTimeZone("America/Los_Angeles"));
-        add(clock);
+		Clock clock = new Clock("clock",
+				TimeZone.getTimeZone("America/Los_Angeles"));
+		add(clock);
 	}
-	
 }

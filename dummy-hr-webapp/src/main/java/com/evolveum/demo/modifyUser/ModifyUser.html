@@ -1,52 +1,86 @@
 <html>
-<head></head>
-<body>
-<wicket:extend>
-    	<div class="well">
-    		<h1><wicket:message key="message.modifyUser"/></h1>
-    	</div>
-    			 
-		<wicket:child/>		 
-			
-  
-     <form class="form-horizontal well" action="" wicket:id="addLocationForm">
-		<fieldset>
-          <legend><wicket:message key="message.modifyExistingUser"/></legend>
-          	<div class="control-group">
-          
-                <label  class="control-label" for="name" wicket:id="firstnameLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="firstname" wicket:id="firstname"/>
-                 </div><br/>
-                <label  class="control-label" for="name" wicket:id="surnameLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="surname" wicket:id="surname"/>
-                 </div><br/>
-                 <label  class="control-label" for="name" wicket:id="artnameLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="artname" wicket:id="artname"/>
-                 </div><br/>
-                <label  class="control-label" for="name" wicket:id="employeeNumberLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="employeeNumber" wicket:id="employeeNumber"/>
-                </div>
-                <br/>
-				<label  class="control-label" for="name" wicket:id="empTypeLabel"></label>
-                <div class="controls">
-	                <select wicket:id="empSelect">
-						<optgroup label="EmpType">
-							<option wicket:id="EmpType1" ><wicket:message key="message.fte"/></option>
-							<option wicket:id="EmpType2" ><wicket:message key="message.pte"/></option>
-							<option wicket:id="EmpType3" ><wicket:message key="message.contractor"/></option>
-							<option wicket:id="EmpType4" ><wicket:message key="message.retired"/></option>
-						</optgroup>
-					</select>
-                </div>
-            </div>
-             <div class="form-actions">
-             	 <input type="submit" value="Modify user" class="btn btn-primary" name="save" wicket:id="submitButton"/> | 
-             	 <input type="submit" value="Delete user" class="btn btn-primary" name="save" wicket:id="deleteButton"/>
-             </div>
-               
-        </fieldset>
-    </form>
-    
-</wicket:extend>
-
-
-
-
-</body>
+	<head></head>
+	<body>
+		<wicket:extend>
+			<div class="well">
+				<h1><wicket:message key="message.modifyUser"/></h1>
+			</div>
+						 
+			<wicket:child/>		 
+							  
+			<form class="form-horizontal well" action="" wicket:id="addLocationForm">
+				<fieldset>
+					<legend><wicket:message key="message.modifyExistingUser"/></legend>
+					<div class="control-group">
+				  
+						<label class="control-label" for="name" wicket:id="firstnameLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="firstname" wicket:id="firstname"/>
+						</div><br/>
+						<label class="control-label" for="name" wicket:id="surnameLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="surname" wicket:id="surname"/>
+						</div><br/>
+						<label class="control-label" for="name" wicket:id="artnameLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="artname" wicket:id="artname"/>
+						</div><br/>
+						<label class="control-label" for="name" wicket:id="employeeNumberLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="employeeNumber" wicket:id="employeeNumber"/>
+						</div><br/>
+						<label class="control-label" for="name" wicket:id="employeeResponsibilityLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="responsibility" wicket:id="responsibility"/>
+						</div><br/>
+						
+						
+						<label class="control-label" for="name" wicket:id="empTypeLabel"></label>
+						<div class="controls">
+							<select wicket:id="empSelect">
+								<optgroup label="EmpType">
+									<option wicket:id="EmpType1" ><wicket:message key="message.fte"/></option>
+									<option wicket:id="EmpType2" ><wicket:message key="message.pte"/></option>
+									<option wicket:id="EmpType3" ><wicket:message key="message.contractor"/></option>
+									<option wicket:id="EmpType4" ><wicket:message key="message.retired"/></option>									
+								</optgroup>
+							</select>
+						<p class="help-block"></p>
+						</div>
+						
+						<label class="control-label" for="name" wicket:id="orgPathLabel"></label>
+						<div class="controls">
+							<select wicket:id="orgPathSelect">	
+								<!--In case of using List
+								/*
+								* private static final List<String> options = Arrays.asList(new String[] {
+								* "ApprenticeArmory", "ApprenticeWeapons", "ApprenticeBuildings",
+								* "ApprenticeArtefacts", "MasterArmory", "MasterWeapons",
+								* "MasterBuildings", "MasterArtefacts", "MasterMilitary", "MasterCivil",
+								* "GrandMaster" });
+								
+								and DropDownChoice instead of Select
+								/*
+								* DropDownChoice<String> orgPathSelect = new DropDownChoice<String>(
+								* "orgPathSelect", new PropertyModel<String>(this, "orgpath"),
+								* options); addRegisterForm.add(orgPathSelect);
+								
+								you can comment optgroup in html and also orgPathSelect.add possibilities in JAVA code
+								-->
+								<optgroup label="OrgType">
+									<option wicket:id="OrgType1" ><wicket:message key="message.appArm"/></option>
+									<option wicket:id="OrgType2" ><wicket:message key="message.appWep"/></option>
+									<option wicket:id="OrgType3" ><wicket:message key="message.appBud"/></option>
+									<option wicket:id="OrgType4" ><wicket:message key="message.appArt"/></option>
+									<option wicket:id="OrgType5" ><wicket:message key="message.masArm"/></option>
+									<option wicket:id="OrgType6" ><wicket:message key="message.masWep"/></option>
+									<option wicket:id="OrgType7" ><wicket:message key="message.masBud"/></option>
+									<option wicket:id="OrgType8" ><wicket:message key="message.masArt"/></option>
+									<option wicket:id="OrgType9" ><wicket:message key="message.masMil"/></option>
+									<option wicket:id="OrgType10" ><wicket:message key="message.masCiv"/></option>
+									<option wicket:id="OrgType11" ><wicket:message key="message.graMas"/></option>
+									<option wicket:id="OrgType12" ><wicket:message key="message.noValue"/></option>
+								</optgroup>						
+							</select>
+						<p class="help-block"></p>
+						</div>
+					</div>
+					<div class="form-actions">
+						<input type="submit" value="Modify user" class="btn btn-primary" name="save" wicket:id="submitButton"/> | 
+						<input type="submit" value="Delete user" class="btn btn-primary" name="save" wicket:id="deleteButton"/>
+					</div>				   
+				</fieldset>
+			</form>		
+		</wicket:extend>
+	</body>
 </html>
