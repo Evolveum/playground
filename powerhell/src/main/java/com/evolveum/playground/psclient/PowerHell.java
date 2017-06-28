@@ -120,6 +120,8 @@ public class PowerHell {
 		client = builder.build();
 		
 		String psScript = createScript(initScriptlet);
+		System.out.println("MAIN LOOP:");
+		System.out.println(psScript);
 		LOG.trace("Executing powershell. Script: {}", psScript);
 		
 		long tsStart = System.currentTimeMillis();
@@ -162,7 +164,7 @@ public class PowerHell {
 		StringWriter writerStdErr = new StringWriter();
 		String promptMessage = null;
 		
-		String tx = outCommandLine + "\r\n";
+		String tx = outCommandLine + "\r\n" + prompt + "\r\n";
 		logData("I>", tx);
 		
 		command.send(tx);
@@ -220,7 +222,7 @@ public class PowerHell {
 	public int disconnect() {
 		LOG.trace("Disconnecting, sending exit command");
 		
-		String tx = "exit\r\n";
+		String tx = prompt + " exit\r\n";
 		logData("I>", tx);
 		
 		command.send(tx);
@@ -250,15 +252,20 @@ public class PowerHell {
 		StringBuilder sb = new StringBuilder();
 		if (initScriptlet != null) {
 			sb.append(initScriptlet);
-			sb.append(";");
+			sb.append("\n");
 		}
-		sb.append("write-host '").append(prompt).append("';"
-			+ " while($s = [Console]::In.ReadLine()) { "
-					+ "if($s -eq \"exit\") { exit } "
-					+ "Invoke-Expression -ErrorVariable e $s; "
-					+ "write-host '").append(prompt).append("'$e;"
-					+ " $e = \"\" "
-			+ "}");
+		sb.append("write-host '").append(prompt).append("'\r\n");
+		sb.append("while($true) {\r\n");
+		sb.append("  $powerhellCommand = ''\r\n");
+		sb.append("  while($powerhellLine = [Console]::In.ReadLine()) {\r\n");
+		sb.append("    if($powerhellLine -eq \"").append(prompt).append(" exit\") { exit }\r\n");
+		sb.append("    if($powerhellLine -eq \"").append(prompt).append("\") { break }\r\n");
+		sb.append("    $powerhellCommand = $powerhellCommand + $powerhellLine + \"`n\"\r\n");
+		sb.append("  }\r\n");
+		sb.append("  Invoke-Expression -ErrorVariable powerhellError $powerhellCommand\r\n");
+		sb.append("  write-host '").append(prompt).append("'$powerhellError\r\n");
+		sb.append("  $powerhellError = \"\"\r\n");
+		sb.append("}\r\n");
 		return sb.toString();
 	}
 	

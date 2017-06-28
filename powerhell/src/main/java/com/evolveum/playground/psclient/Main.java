@@ -35,6 +35,8 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.apache.cxf.BusFactory;
 import org.apache.http.client.config.AuthSchemes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import io.cloudsoft.winrm4j.client.Command;
 import io.cloudsoft.winrm4j.client.WinRmClient;
@@ -47,6 +49,7 @@ import io.cloudsoft.winrm4j.winrm.WinRmToolResponse;
 public class Main {
 	
 	public static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
+	private static final Logger LOG = LoggerFactory.getLogger(Main.class);
 
 	public static void main(String[] args) {
 		
@@ -97,6 +100,31 @@ public class Main {
     		run(powerHell, "hostname");
     		
     		run(powerHell, "write-host $foo");
+    		
+    		run(powerHell, "    write-host 'START'\n   $x = 'XXX'\n        write-host $x\nwrite-host 'END'");
+    		
+    		run(powerHell, "hostname");
+    		
+    		try {
+    			
+    			run(powerHell, "blabla\nblabol");
+    			
+    			System.out.println("ERROR: expected exception haven't happened");
+    		} catch (PowerHellExecutionException e) {
+    			System.out.println("Expected exception:\n"+e.getMessage());
+    		}
+    		
+    		run(powerHell, "hostname");
+    		
+    		run(powerHell, "write-host 'S'\n$powerhellCommand = 'SSS';$powerhellLine='LLL';$e='EEE'\n    write-host '11' + $powerhellCommand +  $powerhellLine + $e + '22'\nwrite-host 'E'");
+    		
+    		run(powerHell, "hostname");
+    		
+    		LOG.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA start");
+    		run(powerHell, "write-host 'wait...';Start-Sleep -s 10; write-host 'ideme'");
+    		LOG.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA end");
+    		
+    		run(powerHell, "hostname");
     		
         } catch (PowerHellExecutionException e) {
         	e.printStackTrace();
