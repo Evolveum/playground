@@ -38,6 +38,11 @@ import org.apache.http.client.config.AuthSchemes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.evolveum.powerhell.PowerHell;
+import com.evolveum.powerhell.PowerHellCommunicationException;
+import com.evolveum.powerhell.PowerHellExecutionException;
+import com.evolveum.powerhell.PowerHellSecurityException;
+
 import io.cloudsoft.winrm4j.client.Command;
 import io.cloudsoft.winrm4j.client.WinRmClient;
 import io.cloudsoft.winrm4j.winrm.WinRmTool;
@@ -64,17 +69,25 @@ public class Main {
 			System.exit(-1);
 		}
 		
-		String endpointUrl = "https://chimera.lab.evolveum.com:5986/wsman";
+//		String endpointUrl = "https://chimera.lab.evolveum.com:5986/wsman";
+		String endpointUrl = "https://medusa.lab.evolveum.com:5986/wsman";
 		
 		System.out.println("Endpoint: "+endpointUrl);
 		
 		PowerHell powerHell = new PowerHell();
 		powerHell.setEndpointUrl(endpointUrl);
-		powerHell.setAuthenticationScheme(AuthSchemes.CREDSSP);
-		powerHell.setDomainName("ad");
-		powerHell.setUserName("midpoint");
-		powerHell.setPassword("qwe.123");
 		powerHell.setDisableCertificateChecks(true);
+
+		powerHell.setAuthenticationScheme(AuthSchemes.CREDSSP);
+		powerHell.setDomainName("win");
+		powerHell.setUserName("idmadmin");
+		powerHell.setPassword("Secret.123");
+
+//		powerHell.setAuthenticationScheme(AuthSchemes.CREDSSP);
+//		powerHell.setDomainName("ad");
+//		powerHell.setUserName("midpoint");
+//		powerHell.setPassword("qwe.123");
+
 		
 		powerHell.setInitScriptlet("write-host INITHELLO; $foo = 'bar'");
 		
@@ -120,13 +133,19 @@ public class Main {
     		
     		run(powerHell, "hostname");
     		
+    		run(powerHell, "write-host 'wait...';Start-Sleep -s 3; write-host 'ideme'");
+    		
+    		run(powerHell, "\n\n");
+    		
+    		run(powerHell, "hostname");
+    		
     		LOG.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA start");
-    		run(powerHell, "write-host 'wait...';Start-Sleep -s 10; write-host 'ideme'");
+    		run(powerHell, "write-host 'seppuku'; exit");
     		LOG.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA end");
     		
     		run(powerHell, "hostname");
     		
-        } catch (PowerHellExecutionException e) {
+        } catch (PowerHellExecutionException | PowerHellSecurityException | PowerHellCommunicationException e) {
         	e.printStackTrace();
             
         } finally {
@@ -136,7 +155,7 @@ public class Main {
         }
 	}
 
-	private static void run(PowerHell powerHell, String command) throws PowerHellExecutionException {
+	private static void run(PowerHell powerHell, String command) throws PowerHellExecutionException, PowerHellSecurityException, PowerHellCommunicationException {
 		System.out.println("#### Running: "+command);
 		long tsStart = System.currentTimeMillis();
 		
