@@ -66,7 +66,7 @@ public class Main {
 	}
 	
 	private static PowerHell createPowerHell() {
-		return createPowerHellExecPowerShell();
+		return createPowerHellExecLocal();
 	}
 	
 	private static PowerHell createPowerHellLoop() {
@@ -86,6 +86,11 @@ public class Main {
 		PowerHellLocalExecImpl powerHell = new PowerHellLocalExecImpl();
 		return powerHell;
 	}
+	
+//	private static PowerHell createPowerHellExecLocal() {
+//		PowerHellLocalExecImpl powerHell = new PowerHellLocalExecImpl();
+//		return powerHell;
+//	}
 
 	public static void main(String[] args) {
 		
@@ -110,52 +115,9 @@ public class Main {
     		
     		System.out.println("PowerHell connected");
     		
-    		run(powerHell, "hostname");
-    		
-    		run(powerHell, "ipconfig");
-    		
-    		try {
-    			run(powerHell, "ajksfhjkfdsgh");
-    		} catch (PowerHellExecutionException e) {
-    			// expected
-    			System.out.println("ERROR(expected): "+e.getMessage());
-    		}
-    		
-    		run(powerHell, "hostname");
-    		
-    		run(powerHell, "write-host $foo");
-    		
-    		run(powerHell, "    write-host 'START'\n   $x = 'XXX'\n        write-host $x\nwrite-host 'END'");
-    		
-    		run(powerHell, "hostname");
-    		
-    		try {
-    			
-    			run(powerHell, "blabla\nblabol");
-    			
-    			System.out.println("ERROR: expected exception haven't happened");
-    		} catch (PowerHellExecutionException e) {
-    			System.out.println("Expected exception:\n"+e.getMessage());
-    		}
-    		
-    		run(powerHell, "hostname");
-    		
-    		run(powerHell, "write-host 'S'\n$powerhellCommand = 'SSS';$powerhellLine='LLL';$e='EEE'\n    write-host '11' + $powerhellCommand +  $powerhellLine + $e + '22'\nwrite-host 'E'");
-    		
-    		run(powerHell, "hostname");
-    		
-    		run(powerHell, "write-host 'wait...';Start-Sleep -s 3; write-host 'ideme'");
-    		
-    		run(powerHell, "\n\n");
-    		
-    		run(powerHell, "hostname");
-    		
-    		LOG.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA start");
-    		run(powerHell, "write-host 'seppuku'; exit");
-    		LOG.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA end");
-    		
-    		run(powerHell, "hostname");
-    		
+//    		runPowerShell(powerHell);
+    		runExec(powerHell);
+    		    		
         } catch (Throwable e) {
         	System.err.println("EXCEPTION: "+e.getClass().getSimpleName()+": "+e.getMessage());
         	e.printStackTrace();
@@ -165,6 +127,84 @@ public class Main {
             powerHell.disconnect();
 			BusFactory.getDefaultBus().shutdown(true);
         }
+	}
+
+	private static void runPowerShell(PowerHell powerHell) throws PowerHellExecutionException, PowerHellSecurityException, PowerHellCommunicationException {
+		run(powerHell, "hostname");
+		
+		run(powerHell, "ipconfig");
+		
+		try {
+			run(powerHell, "ajksfhjkfdsgh");
+		} catch (PowerHellExecutionException e) {
+			// expected
+			System.out.println("ERROR(expected): "+e.getMessage());
+		}
+		
+		run(powerHell, "hostname");
+		
+		run(powerHell, "write-host $foo");
+		
+		run(powerHell, "    write-host 'START'\n   $x = 'XXX'\n        write-host $x\nwrite-host 'END'");
+		
+		run(powerHell, "hostname");
+		
+		try {
+			
+			run(powerHell, "blabla\nblabol");
+			
+			System.out.println("ERROR: expected exception haven't happened");
+		} catch (PowerHellExecutionException e) {
+			System.out.println("Expected exception:\n"+e.getMessage());
+		}
+		
+		run(powerHell, "hostname");
+		
+		run(powerHell, "write-host 'S'\n$powerhellCommand = 'SSS';$powerhellLine='LLL';$e='EEE'\n    write-host '11' + $powerhellCommand +  $powerhellLine + $e + '22'\nwrite-host 'E'");
+		
+		run(powerHell, "hostname");
+		
+		run(powerHell, "write-host 'wait...';Start-Sleep -s 3; write-host 'ideme'");
+		
+		run(powerHell, "\n\n");
+		
+		run(powerHell, "hostname");
+		
+		LOG.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA start");
+		run(powerHell, "write-host 'seppuku'; exit");
+		LOG.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA end");
+		
+		run(powerHell, "hostname");
+	}
+
+	private static void runExec(PowerHell powerHell) throws PowerHellExecutionException, PowerHellSecurityException, PowerHellCommunicationException {
+		run(powerHell, "hostname");
+		
+		run(powerHell, "ipconfig");
+		
+		try {
+			run(powerHell, "ajksfhjkfdsgh");
+		} catch (PowerHellExecutionException e) {
+			// expected
+			System.out.println("ERROR(expected): "+e.getMessage());
+		}
+		
+		run(powerHell, "hostname");
+				
+		try {
+			
+			run(powerHell, "blabla\nblabol");
+			
+			System.out.println("ERROR: expected exception haven't happened");
+		} catch (PowerHellExecutionException e) {
+			System.out.println("Expected exception:\n"+e.getMessage());
+		}
+				
+		run(powerHell, "hostname");
+		
+		run(powerHell, "ipconfig /all");
+		
+		run(powerHell, "hostname");
 	}
 
 	private static void run(PowerHell powerHell, String command) throws PowerHellExecutionException, PowerHellSecurityException, PowerHellCommunicationException {
