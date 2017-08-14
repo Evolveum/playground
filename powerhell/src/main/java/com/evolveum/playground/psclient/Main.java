@@ -16,37 +16,24 @@
 package com.evolveum.playground.psclient;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
-import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
 import java.util.logging.LogManager;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.xml.bind.DatatypeConverter;
 
 import org.apache.cxf.BusFactory;
 import org.apache.http.client.config.AuthSchemes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.evolveum.powerhell.AbstractPowerHellWinRmImpl;
 import com.evolveum.powerhell.PowerHell;
 import com.evolveum.powerhell.PowerHellCommunicationException;
 import com.evolveum.powerhell.PowerHellExecutionException;
+import com.evolveum.powerhell.PowerHellLocalExecImpl;
 import com.evolveum.powerhell.PowerHellSecurityException;
-
-import io.cloudsoft.winrm4j.client.Command;
-import io.cloudsoft.winrm4j.client.WinRmClient;
-import io.cloudsoft.winrm4j.winrm.WinRmTool;
-import io.cloudsoft.winrm4j.winrm.WinRmToolResponse;
+import com.evolveum.powerhell.PowerHellWinRmExecPowerShellImpl;
+import com.evolveum.powerhell.PowerHellWinRmLoopImpl;
 
 // Run with:
 // mvn clean install exec:java
@@ -55,6 +42,50 @@ public class Main {
 	
 	public static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
 	private static final Logger LOG = LoggerFactory.getLogger(Main.class);
+	
+	private static void setNetConfig(AbstractPowerHellWinRmImpl powerHell) {
+		
+//		String endpointUrl = "https://chimera.lab.evolveum.com:5986/wsman";
+		String endpointUrl = "https://medusa.lab.evolveum.com:5986/wsman";
+		
+		System.out.println("Endpoint: "+endpointUrl);
+		
+		powerHell.setEndpointUrl(endpointUrl);
+		powerHell.setDisableCertificateChecks(true);
+
+		powerHell.setAuthenticationScheme(AuthSchemes.CREDSSP);
+		powerHell.setDomainName("win");
+		powerHell.setUserName("idmadmin");
+		powerHell.setPassword("Secret.123");
+
+//		powerHell.setAuthenticationScheme(AuthSchemes.CREDSSP);
+//		powerHell.setDomainName("ad");
+//		powerHell.setUserName("midpoint");
+//		powerHell.setPassword("qwe.123");
+		
+	}
+	
+	private static PowerHell createPowerHell() {
+		return createPowerHellExecPowerShell();
+	}
+	
+	private static PowerHell createPowerHellLoop() {
+		PowerHellWinRmLoopImpl powerHell = new PowerHellWinRmLoopImpl();
+		setNetConfig(powerHell);
+		powerHell.setInitScriptlet("write-host INITHELLO; $foo = 'bar'");
+		return powerHell;
+	}
+	
+	private static PowerHell createPowerHellExecPowerShell() {
+		PowerHellWinRmExecPowerShellImpl powerHell = new PowerHellWinRmExecPowerShellImpl();
+		setNetConfig(powerHell);
+		return powerHell;
+	}
+	
+	private static PowerHell createPowerHellExecLocal() {
+		PowerHellLocalExecImpl powerHell = new PowerHellLocalExecImpl();
+		return powerHell;
+	}
 
 	public static void main(String[] args) {
 		
@@ -69,31 +100,11 @@ public class Main {
 			System.exit(-1);
 		}
 		
-//		String endpointUrl = "https://chimera.lab.evolveum.com:5986/wsman";
-		String endpointUrl = "https://medusa.lab.evolveum.com:5986/wsman";
-		
-		System.out.println("Endpoint: "+endpointUrl);
-		
-		PowerHell powerHell = new PowerHell();
-		powerHell.setEndpointUrl(endpointUrl);
-		powerHell.setDisableCertificateChecks(true);
-
-		powerHell.setAuthenticationScheme(AuthSchemes.CREDSSP);
-		powerHell.setDomainName("win");
-		powerHell.setUserName("idmadmin");
-		powerHell.setPassword("Secret.123");
-
-//		powerHell.setAuthenticationScheme(AuthSchemes.CREDSSP);
-//		powerHell.setDomainName("ad");
-//		powerHell.setUserName("midpoint");
-//		powerHell.setPassword("qwe.123");
-
-		
-		powerHell.setInitScriptlet("write-host INITHELLO; $foo = 'bar'");
+		PowerHell powerHell = createPowerHell();
 		
         try {
 
-    		System.out.println("Connecting PowerHell");
+    		System.out.println("Connecting PowerHell "+powerHell.getClass().getSimpleName());
 
     		powerHell.connect();
     		
@@ -145,7 +156,8 @@ public class Main {
     		
     		run(powerHell, "hostname");
     		
-        } catch (PowerHellExecutionException | PowerHellSecurityException | PowerHellCommunicationException e) {
+        } catch (Throwable e) {
+        	System.err.println("EXCEPTION: "+e.getClass().getSimpleName()+": "+e.getMessage());
         	e.printStackTrace();
             
         } finally {
