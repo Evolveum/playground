@@ -19,6 +19,8 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.LogManager;
 
 import org.apache.cxf.BusFactory;
@@ -27,6 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.evolveum.powerhell.AbstractPowerHellWinRmImpl;
+import com.evolveum.powerhell.ArgumentStyle;
 import com.evolveum.powerhell.PowerHell;
 import com.evolveum.powerhell.PowerHellCommunicationException;
 import com.evolveum.powerhell.PowerHellExecutionException;
@@ -84,6 +87,7 @@ public class Main {
 	
 	private static PowerHell createPowerHellExecLocal() {
 		PowerHellLocalExecImpl powerHell = new PowerHellLocalExecImpl();
+//		powerHell.setArgumentStyle(ArgumentStyle.PARAMETERS_SLASH);
 		return powerHell;
 	}
 	
@@ -116,7 +120,8 @@ public class Main {
     		System.out.println("PowerHell connected");
     		
 //    		runPowerShell(powerHell);
-    		runExec(powerHell);
+//    		runExec(powerHell);
+    		runExecUnix(powerHell);
     		    		
         } catch (Throwable e) {
         	System.err.println("EXCEPTION: "+e.getClass().getSimpleName()+": "+e.getMessage());
@@ -202,21 +207,61 @@ public class Main {
 				
 		run(powerHell, "hostname");
 		
-		run(powerHell, "ipconfig /all");
+		run(powerHell, "ipconfig", "all", null);
+		
+		run(powerHell, "hostname");
+	}
+	
+	private static void runExecUnix(PowerHell powerHell) throws PowerHellExecutionException, PowerHellSecurityException, PowerHellCommunicationException {
+		run(powerHell, "hostname");
+		
+		run(powerHell, "ifconfig");
+		
+		try {
+			run(powerHell, "ajksfhjkfdsgh");
+		} catch (PowerHellExecutionException e) {
+			// expected
+			System.out.println("ERROR(expected): "+e.getMessage());
+		}
+		
+		run(powerHell, "hostname");
+				
+		try {
+			
+			run(powerHell, "blabla\nblabol");
+			
+			System.out.println("ERROR: expected exception haven't happened");
+		} catch (PowerHellExecutionException e) {
+			System.out.println("Expected exception:\n"+e.getMessage());
+		}
+				
+		run(powerHell, "hostname");
+		
+		run(powerHell, "ifconfig", "a", null);
 		
 		run(powerHell, "hostname");
 	}
 
-	private static void run(PowerHell powerHell, String command) throws PowerHellExecutionException, PowerHellSecurityException, PowerHellCommunicationException {
+	private static void run(PowerHell powerHell, String command, String... args) throws PowerHellExecutionException, PowerHellSecurityException, PowerHellCommunicationException {
 		System.out.println("#### Running: "+command);
 		long tsStart = System.currentTimeMillis();
 		
-		String out = powerHell.runCommand(command);
+		String out = powerHell.runCommand(command, argsToMap(args));
 		
 		long tsEnd = System.currentTimeMillis();
 		System.out.println("Finished: "+command+" run time: "+(tsEnd-tsStart)+"ms");
 		System.out.println("-----");
 		System.out.println(out);
 		System.out.println("-----");
+	}
+
+	private static Map<String, Object> argsToMap(String[] args) {
+		Map<String, Object> argsMap = new HashMap<>();
+		if (args != null) {
+			for (int i = 0 ; i < args.length; i += 2) {
+				argsMap.put(args[i], args[i + 1]);
+			}
+		}
+		return argsMap;
 	}
 }
