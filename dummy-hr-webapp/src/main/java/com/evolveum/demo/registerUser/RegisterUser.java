@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
+import com.evolveum.demo.model.OrgType;
 import org.apache.wicket.extensions.markup.html.form.select.Select;
 import org.apache.wicket.extensions.markup.html.form.select.SelectOption;
 import org.apache.wicket.markup.html.basic.Label;
@@ -19,7 +20,6 @@ import org.apache.wicket.validation.validator.StringValidator;
 
 import com.evolveum.demo.errorHandling.UserAlreadyExistsException;
 import com.evolveum.demo.hr.HomePage;
-import com.evolveum.demo.model.EnumOrgTypeToString.EnumOrgType;
 import com.evolveum.demo.model.UserJpa;
 import com.evolveum.demo.showUsers.ShowUsers;
 
@@ -121,27 +121,27 @@ public class RegisterUser extends HomePage {
 		addRegisterForm.add(orgPathSelect);
 
 		orgPathSelect.add(new SelectOption<String>("OrgType1",
-				new Model<String>(EnumOrgType.ApprenticeArmory.getName())));
+				new Model<String>(OrgType.ApprenticeArmory.name())));
 		orgPathSelect.add(new SelectOption<String>("OrgType2",
-				new Model<String>(EnumOrgType.ApprenticeWeapons.getName())));
+				new Model<String>(OrgType.ApprenticeWeapons.name())));
 		orgPathSelect.add(new SelectOption<String>("OrgType3",
-				new Model<String>(EnumOrgType.ApprenticeBuildings.getName())));
+				new Model<String>(OrgType.ApprenticeBuildings.name())));
 		orgPathSelect.add(new SelectOption<String>("OrgType4",
-				new Model<String>(EnumOrgType.ApprenticeArtefacts.getName())));
+				new Model<String>(OrgType.ApprenticeArtefacts.name())));
 		orgPathSelect.add(new SelectOption<String>("OrgType5",
-				new Model<String>(EnumOrgType.MasterArmory.getName())));
+				new Model<String>(OrgType.MasterArmory.name())));
 		orgPathSelect.add(new SelectOption<String>("OrgType6",
-				new Model<String>(EnumOrgType.MasterWeapons.getName())));
+				new Model<String>(OrgType.MasterWeapons.name())));
 		orgPathSelect.add(new SelectOption<String>("OrgType7",
-				new Model<String>(EnumOrgType.MasterBuildings.getName())));
+				new Model<String>(OrgType.MasterBuildings.name())));
 		orgPathSelect.add(new SelectOption<String>("OrgType8",
-				new Model<String>(EnumOrgType.MasterArtefacts.getName())));
+				new Model<String>(OrgType.MasterArtefacts.name())));
 		orgPathSelect.add(new SelectOption<String>("OrgType9",
-				new Model<String>(EnumOrgType.MasterMilitary.getName())));
+				new Model<String>(OrgType.MasterMilitary.name())));
 		orgPathSelect.add(new SelectOption<String>("OrgType10",
-				new Model<String>(EnumOrgType.MasterCivil.getName())));
+				new Model<String>(OrgType.MasterCivil.name())));
 		orgPathSelect.add(new SelectOption<String>("OrgType11",
-				new Model<String>(EnumOrgType.GrandMaster.getName())));
+				new Model<String>(OrgType.GrandMaster.name())));
 		orgPathSelect.add(new SelectOption<String>("OrgType12",
 				new Model<String>(" ")));
 

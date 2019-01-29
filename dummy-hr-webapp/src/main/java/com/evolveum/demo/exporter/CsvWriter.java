@@ -4,8 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.evolveum.demo.model.EnumOrgTypeToString;
-import com.evolveum.demo.model.EnumOrgTypeToString.EnumOrgType;
+import com.evolveum.demo.model.OrgType;
 import com.evolveum.demo.model.User;
 import com.evolveum.demo.model.UserJpa;
 
@@ -26,7 +25,7 @@ public class CsvWriter {
 			String savedOrg = c.getOrgType();
 			String fullOrg = null;
 			if (savedOrg != null) {
-				fullOrg = EnumOrgType.getFullOrg(savedOrg);
+				fullOrg = OrgType.getFullOrg(savedOrg);
 			}
 
 			String savedResp = c.getResponsibility();

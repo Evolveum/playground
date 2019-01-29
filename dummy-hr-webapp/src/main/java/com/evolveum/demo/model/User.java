@@ -2,8 +2,6 @@ package com.evolveum.demo.model;
 
 import java.io.Serializable;
 
-import com.evolveum.demo.model.EnumOrgTypeToString.EnumOrgType;
-
 public class User implements Serializable {
 
 	/* added new column 'orgpath' and 'responsibility' */
@@ -14,8 +12,8 @@ public class User implements Serializable {
 	private String surname;
 	private Integer employeeNumber;
 	private String artname;
-	private EnumEmpType emptype;
-	private EnumOrgType orgpath;
+	private EmpType emptype;
+	private OrgType orgpath;
 	private String responsibility;
 
 	public User(String firstname, String surname, Integer employeeNumber,
@@ -30,45 +28,45 @@ public class User implements Serializable {
 		this.responsibility = responsibility;
 
 		if (emptype.equals("FTE")) {
-			this.emptype = EnumEmpType.FTE;
+			this.emptype = EmpType.FTE;
 		} else if (emptype.equals("PTE")) {
-			this.emptype = EnumEmpType.PTE;
+			this.emptype = EmpType.PTE;
 		} else if (emptype.equals("CONTRACTOR")) {
-			this.emptype = EnumEmpType.CONTRACTOR;
+			this.emptype = EmpType.CONTRACTOR;
 		} else if (emptype.equals("RETIRED")) {
-			this.emptype = EnumEmpType.RETIRED;
+			this.emptype = EmpType.RETIRED;
 		} 
 
 		if (orgpath
 				.equals("Apprentice/Armory Department/Military Department/Grand Master")) {
-			this.orgpath = EnumOrgType.ApprenticeArmory;
+			this.orgpath = OrgType.ApprenticeArmory;
 		} else if (orgpath
 				.equals("Apprentice/Weapons Department/Military Department/Grand Master")) {
-			this.orgpath = EnumOrgType.ApprenticeWeapons;
+			this.orgpath = OrgType.ApprenticeWeapons;
 		} else if (orgpath
 				.equals("Apprentice/Buildings Department/Civil Department/Grand Master")) {
-			this.orgpath = EnumOrgType.ApprenticeBuildings;
+			this.orgpath = OrgType.ApprenticeBuildings;
 		} else if (orgpath
 				.equals("Apprentice/Artefacts Department/Civil Department/Grand Master")) {
-			this.orgpath = EnumOrgType.ApprenticeArtefacts;
+			this.orgpath = OrgType.ApprenticeArtefacts;
 		} else if (orgpath
 				.equals("Armory Department/Military Department/Grand Master")) {
-			this.orgpath = EnumOrgType.MasterArmory;
+			this.orgpath = OrgType.MasterArmory;
 		} else if (orgpath
 				.equals("Weapons Department/Military Department/Grand Master")) {
-			this.orgpath = EnumOrgType.MasterWeapons;
+			this.orgpath = OrgType.MasterWeapons;
 		} else if (orgpath
 				.equals("Buildings Department/Civil Department/Grand Master")) {
-			this.orgpath = EnumOrgType.MasterBuildings;
+			this.orgpath = OrgType.MasterBuildings;
 		} else if (orgpath
 				.equals("Artefacts Department/Civil Department/Grand Master")) {
-			this.orgpath = EnumOrgType.MasterArtefacts;
+			this.orgpath = OrgType.MasterArtefacts;
 		} else if (orgpath.equals("Military Department/Grand Master")) {
-			this.orgpath = EnumOrgType.MasterMilitary;
+			this.orgpath = OrgType.MasterMilitary;
 		} else if (orgpath.equals("Civil Department/Grand Master")) {
-			this.orgpath = EnumOrgType.MasterCivil;
+			this.orgpath = OrgType.MasterCivil;
 		} else if (orgpath.equals("Grand Master")) {
-			this.orgpath = EnumOrgType.GrandMaster;
+			this.orgpath = OrgType.GrandMaster;
 		}
 	}
 
@@ -84,7 +82,7 @@ public class User implements Serializable {
 		return emptype.toString();
 	}
 
-	public void setEnumEmptype(EnumEmpType emptype) {
+	public void setEnumEmptype(EmpType emptype) {
 		this.emptype = emptype;
 	}
 
@@ -92,7 +90,7 @@ public class User implements Serializable {
 		return orgpath.toString();
 	}
 
-	public void setEnumOrgType(EnumOrgType orgpath) {
+	public void setEnumOrgType(OrgType orgpath) {
 		this.orgpath = orgpath;
 	}
 
