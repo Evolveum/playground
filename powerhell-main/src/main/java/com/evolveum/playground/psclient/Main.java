@@ -48,28 +48,28 @@ public class Main {
 	
 	private static void setNetConfig(AbstractPowerHellWinRmImpl powerHell) {
 		
-//		String endpointUrl = "https://chimera.lab.evolveum.com:5986/wsman";
-		String endpointUrl = "https://medusa.lab.evolveum.com:5986/wsman";
+		String endpointUrl = "https://chimera.lab.evolveum.com:5986/wsman";		
+		powerHell.setAuthenticationScheme(AuthSchemes.CREDSSP);
+		powerHell.setDomainName("ad");
+		powerHell.setUserName("midpoint");
+		powerHell.setPassword("qwe.123");
 		
-		System.out.println("Endpoint: "+endpointUrl);
-		
+//		String endpointUrl = "https://medusa.lab.evolveum.com:5986/wsman";
+//		powerHell.setAuthenticationScheme(AuthSchemes.CREDSSP);
+//		powerHell.setDomainName("win");
+//		powerHell.setUserName("idmadmin");
+//		powerHell.setPassword("Secret.123");
+
+
+		System.out.println("Endpoint: "+endpointUrl);		
 		powerHell.setEndpointUrl(endpointUrl);
 		powerHell.setDisableCertificateChecks(true);
 
-		powerHell.setAuthenticationScheme(AuthSchemes.CREDSSP);
-		powerHell.setDomainName("win");
-		powerHell.setUserName("idmadmin");
-		powerHell.setPassword("Secret.123");
-
-//		powerHell.setAuthenticationScheme(AuthSchemes.CREDSSP);
-//		powerHell.setDomainName("ad");
-//		powerHell.setUserName("midpoint");
-//		powerHell.setPassword("qwe.123");
 		
 	}
 	
 	private static PowerHell createPowerHell() {
-		return createPowerHellExecLocal();
+		return createPowerHellExecPowerShell();
 	}
 	
 	private static PowerHell createPowerHellLoop() {
@@ -119,9 +119,9 @@ public class Main {
     		
     		System.out.println("PowerHell connected");
     		
-//    		runPowerShell(powerHell);
+    		runPowerShell(powerHell);
 //    		runExec(powerHell);
-    		runExecUnix(powerHell);
+//    		runExecUnix(powerHell);
     		    		
         } catch (Throwable e) {
         	System.err.println("EXCEPTION: "+e.getClass().getSimpleName()+": "+e.getMessage());
@@ -138,6 +138,11 @@ public class Main {
 		run(powerHell, "hostname");
 		
 		run(powerHell, "ipconfig");
+
+//		LOG.info("HHHHHHOP start");
+//		run(powerHell, "$T = Get-Date -format u; $M = $T + \" (CredSSP) MAIN `n\"; write-host $M; $block = $ExecutionContext.InvokeCommand.NewScriptBlock(\"Add-Content c:\\conn.txt `\"\"+$M+\"`\"\"); Invoke-Command -ComputerName hydra.sub.ad.evolveum.com -ScriptBlock $block; write-host 'hydra done'");
+//		LOG.info("HHHHHHOP end");
+
 		
 		try {
 			run(powerHell, "ajksfhjkfdsgh");
@@ -175,11 +180,13 @@ public class Main {
 		
 		run(powerHell, "hostname");
 		
-		LOG.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA start");
+		LOG.info("EEEEEEXIT start");
 		run(powerHell, "write-host 'seppuku'; exit");
-		LOG.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA end");
+		LOG.info("EEEEEEXIT end");
 		
 		run(powerHell, "hostname");
+		
+		
 	}
 
 	private static void runExec(PowerHell powerHell) throws PowerHellExecutionException, PowerHellSecurityException, PowerHellCommunicationException {
