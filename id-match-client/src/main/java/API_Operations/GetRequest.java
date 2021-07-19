@@ -1,0 +1,67 @@
+package API_Operations;
+
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.ProtocolException;
+
+
+public class GetRequest implements ApiRequest {
+
+
+    @Override
+    public void doRequest(HttpURLConnection httpURLConnection, String jsonString) throws IOException {
+
+        try {
+            httpURLConnection.setRequestMethod("GET");
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        }
+
+
+        int responseCode = 0;
+        try {
+            responseCode = httpURLConnection.getResponseCode();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(responseCode);
+
+        try {
+            if (httpURLConnection.getResponseCode() != 200) {
+                throw new RuntimeException("Failed : HTTP error code : " + httpURLConnection.getResponseCode());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        StringBuilder builtResponse = new StringBuilder();
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+        while (true) {
+            try {
+                assert reader != null;
+                if ((reader.readLine()) == null) break;
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+            try {
+                builtResponse.append(reader.readLine());
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        }
+
+        System.out.println(builtResponse);
+
+        httpURLConnection.disconnect();
+
+    }
+}
