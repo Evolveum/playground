@@ -1,6 +1,5 @@
 package API_Operations;
 
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,7 +11,7 @@ public class GetRequest implements ApiRequest {
 
 
     @Override
-    public void doRequest(HttpURLConnection httpURLConnection, String jsonString) throws IOException {
+    public void doRequest(HttpURLConnection httpURLConnection, String jsonString){
 
         try {
             httpURLConnection.setRequestMethod("GET");

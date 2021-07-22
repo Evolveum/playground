@@ -1,9 +1,12 @@
 import API_Operations.*;
+import com.opencsv.exceptions.CsvValidationException;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.List;
+
 import java.util.Scanner;
+
 
 public class Client {
 
@@ -17,22 +20,26 @@ public class Client {
     public static final String ADMIN_NAME = "admin";
     public static final String ADMIN_PASSWORD = "5254";
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, CsvValidationException {
 
         HttpConnect httpConnect = new HttpConnect();
         UserDataFilling userDataFilling = new UserDataFilling();
-        List<String[]> jsonList = userDataFilling.generateJsonString("src/main/resources/data.csv");
+        CsvReader csvReader = new CsvReader();
+        JsonListGenerator jsonListGenerator = new JsonListGenerator();
+
+
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println(" 1 - PUT requirements: sor label & sor id," +
-                "\n 2 - POST requirements: sor label & sor id," +
-                "\n 3 - GET requirements: sor - note: returns the sor id of all records label," +
-                "\n 4 - GET -  requirements: sor label & sor id- note: returns specific records," +
-                "\n 5 - GET - requirements: match id, " +
-                "\n 6 - GET - requirements: reference id, " +
-                "\n 7 - GET resolved match request," +
-                "\n 8 - GET pending match request " +
-                "\n 9 - DELETE - requirements: sor label & sor id");
+        System.out.println("""
+                1 - PUT    - requirements: sor label & sor id,
+                2 - POST   - requirements: sor label & sor id,
+                3 - GET    - requirements: sor - note: returns the sor id of all records label,
+                4 - GET    - requirements: sor label & sor id- note: returns specific records,
+                5 - GET    - requirements: match id,
+                6 - GET    - requirements: reference id,
+                7 - GET    - resolved match request,
+                8 - GET    - pending match request,
+                9 - DELETE - requirements: sor label & sor id.""".indent(1));
 
         Context context;
         HttpURLConnection httpURLConnection;
@@ -43,9 +50,16 @@ public class Client {
         switch (selected) {
             case 1 -> {
                 context = new Context(new PutRequest());
-                for (String[] strings : jsonList) {
-                    URL_SUFFIX = strings[0] + "/" + strings[1]; // sorLabel/sorId
-                    String JSON_STRING = strings[2];
+
+                List<String[]> csvData = csvReader.getCsvDataFromInput("src/main/resources/data.csv");
+
+                List<UserDataStructure> userDataStructureList = userDataFilling.setUserDataList(csvData);
+
+                List<JsonListStructure> jsonList = jsonListGenerator.generateJsonString(userDataStructureList);
+
+                for (JsonListStructure jsonListStructure : jsonList) {
+                    URL_SUFFIX = jsonListStructure.sorLabel + "/" + jsonListStructure.sorId; // sorLabel/sorId
+                    String JSON_STRING = jsonListStructure.objectToSend;
                     System.out.println(JSON_STRING);
                     httpURLConnection = httpConnect.connect(URL_PREFIX_PUT_POST_GET, ADMIN_NAME, ADMIN_PASSWORD, URL_SUFFIX);
                     context.executeRequest(httpURLConnection, JSON_STRING);
@@ -53,9 +67,16 @@ public class Client {
             }
             case 2 -> {
                 context = new Context(new PostRequest());
-                for (String[] strings : jsonList) {
-                    URL_SUFFIX = strings[0] + "/" + strings[1]; // sorLabel/sorId
-                    String JSON_STRING = strings[2];
+
+                List<String[]> csvData = csvReader.getCsvDataFromInput("src/main/resources/data.csv");
+
+                List<UserDataStructure> userDataStructureList = userDataFilling.setUserDataList(csvData);
+
+                List<JsonListStructure> jsonList = jsonListGenerator.generateJsonString(userDataStructureList);
+
+                for (JsonListStructure jsonListStructure : jsonList) {
+                    URL_SUFFIX = jsonListStructure.sorLabel + "/" + jsonListStructure.sorId; // sorLabel/sorId
+                    String JSON_STRING = jsonListStructure.objectToSend;
                     httpURLConnection = httpConnect.connect(URL_PREFIX_PUT_POST_GET, ADMIN_NAME, ADMIN_PASSWORD, URL_SUFFIX);
                     context.executeRequest(httpURLConnection, JSON_STRING);
                 }

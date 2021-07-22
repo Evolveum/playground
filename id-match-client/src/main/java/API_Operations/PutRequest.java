@@ -12,8 +12,10 @@ public class PutRequest implements ApiRequest {
 
     @Override
     public void doRequest(HttpURLConnection httpURLConnection, String jsonString){
+
         httpURLConnection.setDoInput(true);
         httpURLConnection.setDoOutput(true);
+
         try {
             httpURLConnection.setRequestMethod("PUT");
         } catch (ProtocolException e) {

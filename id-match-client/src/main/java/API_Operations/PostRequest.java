@@ -15,6 +15,7 @@ public class PostRequest implements ApiRequest {
 
         httpURLConnection.setDoInput(true);
         httpURLConnection.setDoOutput(true);
+
         try {
             httpURLConnection.setRequestMethod("POST");
         } catch (ProtocolException e) {

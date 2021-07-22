@@ -10,6 +10,7 @@ public class DeleteRequest implements ApiRequest{
 
     @Override
     public void doRequest(HttpURLConnection httpURLConnection, String jsonString) {
+
         try {
             httpURLConnection.setRequestMethod("DELETE");
         } catch (ProtocolException e) {

@@ -6,13 +6,14 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 public class HttpConnect {
 
 
     public HttpURLConnection connect(String URL_Prefix, String ADMIN_NAME, String ADMIN_PASSWORD, String suffix) {
-        String Url = URL_Prefix + suffix;
 
+        String Url = URL_Prefix + suffix;
 
         URL url = null;
         try {
@@ -22,7 +23,7 @@ public class HttpConnect {
         }
         HttpURLConnection connection = null;
         try {
-            connection = (HttpURLConnection) url.openConnection();
+            connection = (HttpURLConnection) Objects.requireNonNull(url).openConnection();
         } catch (IOException e) {
             System.out.println("HttpURLConnection failed.");
         }
