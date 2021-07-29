@@ -19,20 +19,16 @@ public class GetRequest implements ApiRequest {
             e.printStackTrace();
         }
 
-
-        int responseCode = 0;
         try {
-            responseCode = httpURLConnection.getResponseCode();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            int responseCode = httpURLConnection.getResponseCode();
 
-        System.out.println(responseCode);
-
-        try {
             if (httpURLConnection.getResponseCode() != 200) {
                 throw new RuntimeException("Failed : HTTP error code : " + httpURLConnection.getResponseCode());
             }
+            else{
+                System.out.println(responseCode);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }

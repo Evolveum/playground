@@ -28,9 +28,9 @@ public class UserDataFilling {
 
                 String object = csvData.get(rowPosition)[columnPosition];
 
-                if (objectName.equals("sor")) {
+                if (objectName.equalsIgnoreCase("sor")) {
                     sorLabel = object;
-                } else if (objectName.equals("sorid")) {
+                } else if (objectName.equalsIgnoreCase("sorid")) {
                     sorId = object;
                 } else {
                     singleUserData.add(new UserSpecParameter(objectGroup, objectName, objectType, object));

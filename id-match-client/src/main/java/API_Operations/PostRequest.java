@@ -23,68 +23,50 @@ public class PostRequest implements ApiRequest {
         }
 
 
-        OutputStream os = null;
         try {
-            os = httpURLConnection.getOutputStream();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
-        try {
-            if (os != null) {
-                os.write(jsonString.getBytes());
-            }
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
-        try {
-            if (os != null) {
-                os.flush();
-            }
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
+            OutputStream os = httpURLConnection.getOutputStream();
+            os.write(jsonString.getBytes());
+            os.flush();
 
-
-        System.out.println(httpURLConnection.getRequestMethod());
-        try {
+            System.out.println(httpURLConnection.getRequestMethod());
             System.out.println(httpURLConnection.getResponseCode());
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
-        try {
             System.out.println(httpURLConnection.getResponseMessage());
+
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
+
 
         StringBuilder builtResponse = new StringBuilder();
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
         } catch (IOException ioException) {
-            ioException.printStackTrace();
+            System.out.println("No match found.");
         }
-        if(reader != null) {
+        if (reader != null) {
             while (true) {
                 try {
-                    assert reader != null;
                     if ((reader.readLine()) == null) break;
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
                 try {
                     builtResponse.append(reader.readLine());
+
+
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
             }
 
-        System.out.println(builtResponse);
-        try {
-            reader.close();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
+            System.out.println(builtResponse);
+
+            try {
+                reader.close();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         }
         httpURLConnection.disconnect();
 

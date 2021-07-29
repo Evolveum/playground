@@ -47,7 +47,6 @@ public class HttpConnect {
 
         }
 
-
         return connection;
     }
 

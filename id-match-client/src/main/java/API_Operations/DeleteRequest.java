@@ -18,14 +18,14 @@ public class DeleteRequest implements ApiRequest{
         }
 
 
-        int responseCode = 0;
         try {
-            responseCode = httpURLConnection.getResponseCode();
+            int responseCode = httpURLConnection.getResponseCode();
+            System.out.println(responseCode);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        System.out.println(responseCode);
 
         try {
             if (httpURLConnection.getResponseCode() != 200) {
@@ -35,28 +35,6 @@ public class DeleteRequest implements ApiRequest{
             e.printStackTrace();
         }
 
-        StringBuilder builtResponse = new StringBuilder();
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
-        while (true) {
-            try {
-                assert reader != null;
-                if ((reader.readLine()) == null) break;
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
-            try {
-                builtResponse.append(reader.readLine());
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
-        }
-
-        System.out.println(builtResponse);
 
         httpURLConnection.disconnect();
 
