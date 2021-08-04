@@ -25,10 +25,6 @@ public class PutRequest implements ApiRequest {
             os.write(jsonString.getBytes());
             os.flush();
 
-            System.out.println(httpURLConnection.getRequestMethod());
-            System.out.println(httpURLConnection.getResponseCode());
-            System.out.println(httpURLConnection.getResponseMessage());
-
 
         } catch (IOException ioException) {
             ioException.printStackTrace();

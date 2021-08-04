@@ -9,7 +9,7 @@ import java.net.ProtocolException;
 public class DeleteRequest implements ApiRequest{
 
     @Override
-    public void doRequest(HttpURLConnection httpURLConnection, String jsonString) {
+    public void doRequest(HttpURLConnection httpURLConnection, String jsonString) throws IOException {
 
         try {
             httpURLConnection.setRequestMethod("DELETE");
@@ -18,13 +18,9 @@ public class DeleteRequest implements ApiRequest{
         }
 
 
-        try {
-            int responseCode = httpURLConnection.getResponseCode();
-            System.out.println(responseCode);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        System.out.println("Method: "+httpURLConnection.getRequestMethod());
+        System.out.println("Response code: "+httpURLConnection.getResponseCode());
+        System.out.println("Response message: "+httpURLConnection.getResponseMessage());
 
 
         try {

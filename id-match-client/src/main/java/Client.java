@@ -1,14 +1,10 @@
 import API_Operations.*;
 import Constants.Channel;
-import auth.Authentication;
-import auth.HttpBasicAuth;
 import com.opencsv.exceptions.CsvValidationException;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.List;
-
-import java.util.Map;
 import java.util.Scanner;
 
 
@@ -19,17 +15,22 @@ public class Client {
     public static final String ADMIN_PASSWORD = "5254";
 
 
+    public static void main(String[] args) throws IOException {
 
 
-    public static void main(String[] args) throws IOException, CsvValidationException {
+
+
+
+
+
+
+
 
 
         HttpConnect httpConnect = new HttpConnect();
         UserDataFilling userDataFilling = new UserDataFilling();
         CsvReader csvReader = new CsvReader();
         JsonListGenerator jsonListGenerator = new JsonListGenerator();
-
-
 
 
         Scanner scanner = new Scanner(System.in);
@@ -47,6 +48,7 @@ public class Client {
         Context context;
         HttpURLConnection httpURLConnection;
         String URL_SUFFIX;
+
 
 
         int selected = Integer.parseInt(scanner.nextLine());

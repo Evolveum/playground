@@ -1,7 +1,3 @@
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
-
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,8 +37,6 @@ public class UserDataFilling {
         }
         return dataList;
     }
-
-
 
 
 }

@@ -43,7 +43,7 @@ public class JsonListGenerator {
                     generator.writeFieldName(firstGroupObjectName);
                     generator.writeString(firstGroupObject);
 
-                    for (int secondGroupIndex = 1 + firstGroupIndex; secondGroupIndex < userDataStructure.getObject().size(); secondGroupIndex++) {
+                    for (int secondGroupIndex = firstGroupIndex + 1; secondGroupIndex < userDataStructure.getObject().size(); secondGroupIndex++) {
                         String secondGroup = userDataStructure.getObject().get(secondGroupIndex).getGroupName();
                         String secondGroupObjectName = userDataStructure.getObject().get(secondGroupIndex).getObjectName();
                         String secondGroupObject = userDataStructure.getObject().get(secondGroupIndex).getObject();
@@ -68,9 +68,9 @@ public class JsonListGenerator {
             generator.writeEndObject();
             generator.close();
 
-            jsonList.add(new JsonListStructure(SOR_LABEL,SOR_ID,String.valueOf(jsonString)));
+            jsonList.add(new JsonListStructure(SOR_LABEL, SOR_ID, String.valueOf(jsonString)));
 
-            System.out.println(jsonString);
+           // System.out.println(jsonString);
         }
         return jsonList;
     }

@@ -26,7 +26,9 @@ public class GetRequest implements ApiRequest {
                 throw new RuntimeException("Failed : HTTP error code : " + httpURLConnection.getResponseCode());
             }
             else{
-                System.out.println(responseCode);
+                System.out.println("Method: "+httpURLConnection.getRequestMethod());
+                System.out.println("Response code: "+httpURLConnection.getResponseCode());
+                System.out.println("Response message: "+httpURLConnection.getResponseMessage());
             }
 
         } catch (IOException e) {

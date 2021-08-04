@@ -28,9 +28,9 @@ public class PostRequest implements ApiRequest {
             os.write(jsonString.getBytes());
             os.flush();
 
-            System.out.println(httpURLConnection.getRequestMethod());
-            System.out.println(httpURLConnection.getResponseCode());
-            System.out.println(httpURLConnection.getResponseMessage());
+            System.out.println("Method: " + httpURLConnection.getRequestMethod());
+            System.out.println("Response code: " + httpURLConnection.getResponseCode());
+            System.out.println("Response message: " + httpURLConnection.getResponseMessage());
 
         } catch (IOException ioException) {
             ioException.printStackTrace();

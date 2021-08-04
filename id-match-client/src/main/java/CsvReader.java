@@ -1,4 +1,3 @@
-import com.opencsv.exceptions.CsvValidationException;
 import org.apache.maven.internal.commons.io.input.BOMInputStream;
 
 import java.io.BufferedReader;
@@ -12,7 +11,7 @@ import java.util.List;
 public class CsvReader {
 
 
-    public List<String[]> getCsvDataFromInput(String csvFilePath) throws IOException, CsvValidationException {
+    public List<String[]> getCsvDataFromInput(String csvFilePath) throws IOException {
         List<String[]> csvData = new ArrayList<>();
 
         BOMInputStream bis = new BOMInputStream(new FileInputStream(csvFilePath));
