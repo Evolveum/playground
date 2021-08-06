@@ -22,7 +22,7 @@ public class GetRequest implements ApiRequest {
         try {
             int responseCode = httpURLConnection.getResponseCode();
 
-            if (httpURLConnection.getResponseCode() != 200) {
+            if (responseCode != 200) {
                 throw new RuntimeException("Failed : HTTP error code : " + httpURLConnection.getResponseCode());
             }
             else{

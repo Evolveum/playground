@@ -1,6 +1,5 @@
 import API_Operations.*;
 import Constants.Channel;
-import com.opencsv.exceptions.CsvValidationException;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -13,19 +12,9 @@ public class Client {
 
     public static final String ADMIN_NAME = "admin";
     public static final String ADMIN_PASSWORD = "5254";
-
+    public static final String BASE_URL = "http://localhost:8070";
 
     public static void main(String[] args) throws IOException {
-
-
-
-
-
-
-
-
-
-
 
         HttpConnect httpConnect = new HttpConnect();
         UserDataFilling userDataFilling = new UserDataFilling();
@@ -63,7 +52,7 @@ public class Client {
 
                 List<JsonListStructure> jsonList = jsonListGenerator.generateJsonString(userDataStructureList);
 
-                String URL_PREFIX = Channel.URL_PREFIX_MAIN_OPERATIONS.getUrl();
+                String URL_PREFIX = BASE_URL + Channel.URL_PREFIX_MAIN_OPERATIONS.getUrl();
 
                 for (JsonListStructure jsonListStructure : jsonList) {
                     URL_SUFFIX = jsonListStructure.getSorLabel() + "/" + jsonListStructure.getSorId(); // sorLabel/sorId
@@ -82,7 +71,7 @@ public class Client {
 
                 List<JsonListStructure> jsonList = jsonListGenerator.generateJsonString(userDataStructureList);
 
-                String URL_PREFIX = Channel.URL_PREFIX_MAIN_OPERATIONS.getUrl();
+                String URL_PREFIX = BASE_URL + Channel.URL_PREFIX_MAIN_OPERATIONS.getUrl();
 
                 for (JsonListStructure jsonListStructure : jsonList) {
                     URL_SUFFIX = jsonListStructure.getSorLabel() + "/" + jsonListStructure.getSorId(); // sorLabel/sorId
@@ -94,7 +83,7 @@ public class Client {
             case 3 -> {
                 context = new Context(new GetRequest());
                 URL_SUFFIX = "hrms"; // sorLabel
-                String URL_PREFIX = Channel.URL_PREFIX_MAIN_OPERATIONS.getUrl();
+                String URL_PREFIX = BASE_URL + Channel.URL_PREFIX_MAIN_OPERATIONS.getUrl();
 
                 HttpURLConnection httpURLConnection3 = httpConnect.connect(URL_PREFIX, ADMIN_NAME, ADMIN_PASSWORD, URL_SUFFIX);
                 context.executeRequest(httpURLConnection3, "");
@@ -102,7 +91,7 @@ public class Client {
             case 4 -> {
                 context = new Context(new GetRequest());
                 URL_SUFFIX = "hrms/1"; // sorLabel/sorId
-                String URL_PREFIX = Channel.URL_PREFIX_MAIN_OPERATIONS.getUrl();
+                String URL_PREFIX = BASE_URL + Channel.URL_PREFIX_MAIN_OPERATIONS.getUrl();
 
                 httpURLConnection = httpConnect.connect(URL_PREFIX, ADMIN_NAME, ADMIN_PASSWORD, URL_SUFFIX);
                 context.executeRequest(httpURLConnection, "");
@@ -110,7 +99,7 @@ public class Client {
             case 5 -> {
                 context = new Context(new GetRequest());
                 URL_SUFFIX = "25"; // match id
-                String URL_PREFIX = Channel.URL_PREFIX_GET_MATCH_REQUEST_MATCH_ID.getUrl();
+                String URL_PREFIX = BASE_URL + Channel.URL_PREFIX_GET_MATCH_REQUEST_MATCH_ID.getUrl();
 
                 httpURLConnection = httpConnect.connect(URL_PREFIX, ADMIN_NAME, ADMIN_PASSWORD, URL_SUFFIX);
                 context.executeRequest(httpURLConnection, "");
@@ -118,7 +107,7 @@ public class Client {
             case 6 -> {
                 context = new Context(new GetRequest());
                 URL_SUFFIX = "74388b01-e1e7-4878-bf8e-24178c16facf"; // referenceId
-                String URL_PREFIX = Channel.URL_PREFIX_GET_MATCH_REQUEST_REFERENCE_ID.getUrl();
+                String URL_PREFIX = BASE_URL + Channel.URL_PREFIX_GET_MATCH_REQUEST_REFERENCE_ID.getUrl();
 
                 httpURLConnection = httpConnect.connect(URL_PREFIX, ADMIN_NAME, ADMIN_PASSWORD, URL_SUFFIX);
                 context.executeRequest(httpURLConnection, "");
@@ -126,7 +115,7 @@ public class Client {
             case 7 -> {
                 context = new Context(new GetRequest());
                 URL_SUFFIX = ""; // empty
-                String URL_PREFIX = Channel.URL_MATCH_REQUEST_RESOLVED.getUrl();
+                String URL_PREFIX = BASE_URL + Channel.URL_MATCH_REQUEST_RESOLVED.getUrl();
 
                 httpURLConnection = httpConnect.connect(URL_PREFIX, ADMIN_NAME, ADMIN_PASSWORD, URL_SUFFIX);
                 context.executeRequest(httpURLConnection, "");
@@ -134,7 +123,7 @@ public class Client {
             case 8 -> {
                 context = new Context(new GetRequest());
                 URL_SUFFIX = ""; // empty
-                String URL_PREFIX = Channel.URL_MATCH_REQUEST_PENDING.getUrl();
+                String URL_PREFIX = BASE_URL + Channel.URL_MATCH_REQUEST_PENDING.getUrl();
 
                 httpURLConnection = httpConnect.connect(URL_PREFIX, ADMIN_NAME, ADMIN_PASSWORD, URL_SUFFIX);
                 context.executeRequest(httpURLConnection, "");
@@ -142,7 +131,7 @@ public class Client {
             case 9 -> {
                 context = new Context(new DeleteRequest());
                 URL_SUFFIX = "hrms/1"; // sorLabel/sorId
-                String URL_PREFIX = Channel.URL_PREFIX_MAIN_OPERATIONS.getUrl();
+                String URL_PREFIX = BASE_URL + Channel.URL_PREFIX_MAIN_OPERATIONS.getUrl();
 
                 httpURLConnection = httpConnect.connect(URL_PREFIX, ADMIN_NAME, ADMIN_PASSWORD, URL_SUFFIX);
                 context.executeRequest(httpURLConnection, "");

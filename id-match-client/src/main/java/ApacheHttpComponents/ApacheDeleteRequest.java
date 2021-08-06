@@ -2,12 +2,10 @@ package ApacheHttpComponents;
 
 
 import ApacheHttpComponents.auth.AuthenticationProvider;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 
@@ -19,21 +17,14 @@ public class ApacheDeleteRequest implements ApacheApiRequest {
 
         HttpDelete request = new HttpDelete(channel + urlSuffix);
 
-        try (CloseableHttpClient httpClient = HttpClientBuilder.create()
+        CloseableHttpClient httpClient = HttpClientBuilder.create()
                 .setDefaultCredentialsProvider(authenticationProvider.provider())
                 .build();
-             CloseableHttpResponse response = httpClient.execute(request)) {
 
+        ResponseHandler<String> responseHandler = new ApacheResponseHandler();
+        String httpResponse = httpClient.execute(request, responseHandler);
+        System.out.println(httpResponse);
 
-            System.out.println("Response code: " + response.getStatusLine().getStatusCode());
-
-            HttpEntity entity = response.getEntity();
-            if (entity != null) {
-                String result = EntityUtils.toString(entity);
-                System.out.println(result);
-            }
-
-        }
 
     }
 
