@@ -1,9 +1,0 @@
-﻿name;givenName;additionalName;familyName;nickName;honorificPrefix;honorificSuffix;employeeNumber;title;organization;organizationalUnit;telephoneNumber;locality;locale;timezone;preferredLanguage;sor;sorid;emailAddress
-names;names;names;names;names;names;names;employee;employee;employee;employee;number;localityIdentifiers;localityIdentifiers;localityIdentifiers;localityIdentifiers;null;null;userEmail
-fullName;fullName;fullName;fullName;fullName;fullName;fullName;employee;employee;employee;employee;mobile;national;national;national;national;null;null;email
-tchropovic;Tadeas;S;Chrapovic;Tadeas111;BC.;idk;1;Dev;Evolveum s.r.o;Evolveum s.r.o;421738493;Slovakia;idk;eur/br;en_US;hrms;7;email@e
-ppeatres;Peter;D;Peatres;Peter111;Ing.;idk;2;Dev;Idk s.r.o;Idk s.r.o;453628903;Slovakia;idk;eur/br;sk_EUR;hrms;8;email@e
-sstevoa;Stevo;F;Stevoa;Stevo111;Bc.;idk;3;Dev;Test s.r.o;Test s.r.o;426380405;Slovakia;idk;eur/br;en_US;hrms;9;email@e
-tchropovic;Tadeas;S;Chrapovic;Tadeas111;BC.;idk;4;Dev;Evolveum s.r.o;Evolveum s.r.o;421738493;Slovakia;idk;eur/br;en_US;hrms;10;email@e
-sstevoa;Stevo;F;Stevoa;Stevo111;Bc.;idk;5;Dev;Test s.r.o;Test s.r.o;426380405;Slovakia;idk;eur/br;en_US;lsad;11;email@e
-aleVal;Alex;S;Valalso;Valalso111;;IDK;6;Dev;Los s.r.o;Los s.r.o;536748930;Slovakia;idk;eur/br;en_Us;lsad;12;email@e
