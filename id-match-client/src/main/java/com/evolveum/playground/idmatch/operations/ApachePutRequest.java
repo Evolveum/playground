@@ -28,7 +28,6 @@ public class ApachePutRequest implements ApacheApiRequest {
         String httpResponse = httpClient.execute(request, responseHandler);
         System.out.println(httpResponse);
 
-
     }
 
 }

@@ -9,10 +9,10 @@ import java.io.IOException;
 public class Client {
 
 
-    private ApacheApiRequest apachePutRequest;
-    private ApacheApiRequest apachePostRequest;
-    private ApacheApiRequest apacheGetRequest;
-    private ApacheApiRequest apacheDeleteRequest;
+    private final ApacheApiRequest apachePutRequest;
+    private final ApacheApiRequest apachePostRequest;
+    private final ApacheApiRequest apacheGetRequest;
+    private final ApacheApiRequest apacheDeleteRequest;
 
     String urlPrefix;
     String username;
@@ -84,7 +84,6 @@ public class Client {
 
         StringBuilder url = new StringBuilder(urlPrefix + Channel.URL_PREFIX_GET_MATCH_REQUEST_MATCH_ID.getUrl());
 
-
         try {
             apacheGetRequest.doRequest(authenticationProvider, url.toString(), "", id);
         } catch (IOException e) {
@@ -94,7 +93,6 @@ public class Client {
 
     public void searchMatchRequestsByReferenceId(String refId) {
         StringBuilder url = new StringBuilder(urlPrefix + Channel.URL_PREFIX_GET_MATCH_REQUEST_REFERENCE_ID.getUrl());
-
 
         try {
             apacheGetRequest.doRequest(authenticationProvider, url.toString(), "", refId);
@@ -124,10 +122,6 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void close() {
-
     }
 
 
