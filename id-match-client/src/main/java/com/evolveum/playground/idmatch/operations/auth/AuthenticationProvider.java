@@ -7,6 +7,7 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 
 public class AuthenticationProvider implements Authentication {
 
+
     private String username;
     private String password;
 

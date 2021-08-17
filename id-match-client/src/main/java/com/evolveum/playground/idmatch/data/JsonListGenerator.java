@@ -12,6 +12,7 @@ import java.util.List;
 
 public class JsonListGenerator {
 
+
     public List<JsonListStructure> generateJsonString(List<UserDataStructure> dataList) throws IOException {
 
         List<JsonListStructure> jsonList = new ArrayList<>();
@@ -74,7 +75,6 @@ public class JsonListGenerator {
 
             jsonList.add(new JsonListStructure(SOR_LABEL, SOR_ID, String.valueOf(jsonString)));
 
-           // System.out.println(jsonString);
         }
         return jsonList;
     }

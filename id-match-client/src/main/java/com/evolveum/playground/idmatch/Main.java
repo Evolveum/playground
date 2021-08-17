@@ -14,9 +14,11 @@ import java.util.Scanner;
 
 public class Main {
 
+
     public static final String username = "admin";
     public static final String password = "5254";
     public static final String urlPrefix = "http://localhost:8070";
+
 
     public static void main(String[] args) throws IOException {
 
@@ -122,8 +124,10 @@ public class Main {
 
                 client.deletePeople(sorLabel, sorId);
             }
+
         }
 
 
     }
+
 }

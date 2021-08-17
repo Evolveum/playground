@@ -4,9 +4,11 @@ import java.util.List;
 
 public class UserDataStructure {
 
+
     String sorLabel;
     String sorId;
     List<UserSpecParameter> object;
+
 
     public UserDataStructure(String sorLabel, String sorId, List<UserSpecParameter> object) {
         this.sorLabel = sorLabel;
@@ -14,9 +16,11 @@ public class UserDataStructure {
         this.object = object;
     }
 
+
     public String getSorLabel() {
         return sorLabel;
     }
+
 
     public String getSorId() {
         return sorId;
@@ -25,4 +29,5 @@ public class UserDataStructure {
     public List<UserSpecParameter> getObject() {
         return object;
     }
+
 }

@@ -16,6 +16,7 @@ public class UserSpecParameter {
         this.object = object;
     }
 
+
     public String getGroupName() {
         return groupName;
     }

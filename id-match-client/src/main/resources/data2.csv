@@ -1,7 +1,7 @@
 ﻿name;givenName;additionalName;familyName;nickName;honorificPrefix;honorificSuffix;employeeNumber;title;organization;organizationalUnit;telephoneNumber;locality;locale;timezone;preferredLanguage;sor;sorid;emailAddress
 names;names;names;names;names;names;names;employee;employee;employee;employee;number;localityIdentifiers;localityIdentifiers;localityIdentifiers;localityIdentifiers;null;null;userEmail
 fullName;fullName;fullName;fullName;fullName;fullName;fullName;employee;employee;employee;employee;mobile;national;national;national;national;null;null;email
-mjefferson;Myrtle;S;Jefferson;Jeff;BC.;;1;Dev;idm s.r.o;idm s.r.o;507-798-2339;US;1;EN_US;EN_US;hrms;1;MyrtleWJefferson@yahoo.nil
+mjeffersona;Myrtle;S;Jefferson;Jeff;BC.;;1;Dev;idm s.r.o;idm s.r.o;507-798-2339;US;1;EN_US;EN_US;hrms;1;MyrtleWJefferson@yahoo.nil
 ntorres;Novella;D;Torres;Torres111;Ing.;;1;Dev;Spont s.r.o;Spont s.r.o;913-626-2317;US;1;EN_US;EN_US;hrms;2;NovellaDTorres@gmail.nil
 mlouis;Michael;F;Louis;MLouis21;Bc.;;1;Dev;Test s.r.o;Test s.r.o;715-330-0299;US;1;EN_US;EN_US;hrms;3;MichaelLLouis@hotmail.nil
 dslouq;David;S;Louque;DavidQue;BC.;;1;Dev;IDM s.r.o;IDM s.r.o;610-443-8170;US;1;EN_US;EN_US;hrms;4;DavidRLouque@yahoo.nil

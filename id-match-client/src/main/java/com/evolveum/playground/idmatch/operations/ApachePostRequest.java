@@ -1,15 +1,20 @@
 package com.evolveum.playground.idmatch.operations;
 
+import com.evolveum.playground.idmatch.data.ListResponse;
 import com.evolveum.playground.idmatch.operations.auth.AuthenticationProvider;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
+
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ApachePostRequest implements ApacheApiRequest {
+public class ApachePostRequest extends HttpClientSuper  implements ApacheApiRequest {
+
+
+    List<ListResponse> httpResponse = new ArrayList<>();
 
 
     @Override
@@ -19,14 +24,19 @@ public class ApachePostRequest implements ApacheApiRequest {
         request.addHeader("content-type", "application/json");
         request.setEntity(new StringEntity(jsonString));
 
-        CloseableHttpClient httpClient = HttpClientBuilder.create()
-                .setDefaultCredentialsProvider(authenticationProvider.provider())
-                .build();
+        ResponseHandler<List<ListResponse>> responseHandler = new ApacheResponseHandler();
+        setHttpResponse(httpClient(authenticationProvider).execute(request, responseHandler));
+    }
 
-        ResponseHandler<String> responseHandler = new ApacheResponseHandler();
-        String httpResponse = httpClient.execute(request, responseHandler);
-        System.out.println(httpResponse);
 
+    @Override
+    public List<ListResponse> listResponse() {
+        return httpResponse;
+    }
+
+
+    public void setHttpResponse(List<ListResponse> httpResponse) {
+        this.httpResponse = httpResponse;
     }
 
 }
