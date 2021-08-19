@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ApacheDeleteRequest extends HttpClientSuper implements ApacheApiRequest {
+class ApacheDeleteRequest extends HttpClientSuper implements ApacheApiRequest {
 
 
     List<ListResponse> httpResponse = new ArrayList<>();
@@ -27,7 +27,7 @@ public class ApacheDeleteRequest extends HttpClientSuper implements ApacheApiReq
         HttpDelete request = new HttpDelete(channel + urlSuffix);
 
         ResponseHandler<List<ListResponse>> responseHandler = new ApacheResponseHandler();
-        setHttpResponse(httpClient(authenticationProvider).execute(request, responseHandler));
+        setHttpResponse(httpClient().execute(request, responseHandler));
     }
 
 

@@ -19,7 +19,7 @@ public class HttpClientSuper {
     }
 
 
-    public HttpClient httpClient(AuthenticationProvider authenticationProvider) {
+    public HttpClient httpClient() {
 
         CloseableHttpClient httpClient = HttpClientBuilder.create()
                 .setDefaultCredentialsProvider(authenticationProvider.provider())

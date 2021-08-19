@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ApachePostRequest extends HttpClientSuper  implements ApacheApiRequest {
+class ApachePostRequest extends HttpClientSuper  implements ApacheApiRequest {
 
 
     List<ListResponse> httpResponse = new ArrayList<>();
@@ -29,7 +29,7 @@ public class ApachePostRequest extends HttpClientSuper  implements ApacheApiRequ
         request.setEntity(new StringEntity(jsonString));
 
         ResponseHandler<List<ListResponse>> responseHandler = new ApacheResponseHandler();
-        setHttpResponse(httpClient(authenticationProvider).execute(request, responseHandler));
+        setHttpResponse(httpClient().execute(request, responseHandler));
     }
 
 

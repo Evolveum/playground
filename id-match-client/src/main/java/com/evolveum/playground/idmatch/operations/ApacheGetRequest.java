@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ApacheGetRequest extends HttpClientSuper implements ApacheApiRequest {
+class ApacheGetRequest extends HttpClientSuper implements ApacheApiRequest {
 
 
     List<ListResponse> httpResponse = new ArrayList<>();
@@ -26,7 +26,7 @@ public class ApacheGetRequest extends HttpClientSuper implements ApacheApiReques
         HttpGet request = new HttpGet(channel + urlSuffix);
 
         ResponseHandler<List<ListResponse>> responseHandler = new ApacheResponseHandler();
-        setHttpResponse(httpClient(authenticationProvider).execute(request, responseHandler));
+        setHttpResponse(httpClient().execute(request, responseHandler));
 
     }
 

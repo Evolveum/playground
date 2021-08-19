@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ApachePutRequest extends HttpClientSuper implements ApacheApiRequest {
+class ApachePutRequest extends HttpClientSuper implements ApacheApiRequest {
 
 
     List<ListResponse> httpResponse = new ArrayList<>();
@@ -30,7 +30,7 @@ public class ApachePutRequest extends HttpClientSuper implements ApacheApiReques
         request.setEntity(new StringEntity(jsonString));
 
         ResponseHandler<List<ListResponse>> responseHandler = new ApacheResponseHandler();
-        setHttpResponse(httpClient(authenticationProvider).execute(request, responseHandler));
+        setHttpResponse(httpClient().execute(request, responseHandler));
     }
 
 
