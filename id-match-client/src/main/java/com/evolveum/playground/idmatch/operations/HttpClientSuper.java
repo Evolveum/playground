@@ -8,28 +8,24 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import java.io.IOException;
 
 public class HttpClientSuper {
-
-
     AuthenticationProvider authenticationProvider;
     CloseableHttpClient httpClient;
-
 
     public HttpClientSuper(AuthenticationProvider authenticationProvider) {
         this.authenticationProvider = authenticationProvider;
     }
 
-
     public HttpClient httpClient() {
 
-        CloseableHttpClient httpClient = HttpClientBuilder.create()
+         httpClient = HttpClientBuilder.create()
                 .setDefaultCredentialsProvider(authenticationProvider.provider())
                 .build();
 
         return httpClient;
+
     }
 
-
-    public void clientClose() {
+    public void clientClose(){
         try {
             httpClient.close();
         } catch (IOException e) {

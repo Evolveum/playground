@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-class ApachePostRequest extends HttpClientSuper  implements ApacheApiRequest {
+public class ApachePostRequest extends HttpClientSuper implements ApacheApiRequest {
 
 
     List<ListResponse> httpResponse = new ArrayList<>();
@@ -22,11 +22,12 @@ class ApachePostRequest extends HttpClientSuper  implements ApacheApiRequest {
 
 
     @Override
-    public void doRequest(String channel, String jsonString, String urlSuffix) throws IOException {
+    public void doRequest(String urlPrefix, String urlSuffix, String jsonString) throws IOException {
 
-        HttpPost request = new HttpPost(channel + urlSuffix);
+        HttpPost request = new HttpPost(urlPrefix + urlSuffix);
         request.addHeader("content-type", "application/json");
         request.setEntity(new StringEntity(jsonString));
+
 
         ResponseHandler<List<ListResponse>> responseHandler = new ApacheResponseHandler();
         setHttpResponse(httpClient().execute(request, responseHandler));

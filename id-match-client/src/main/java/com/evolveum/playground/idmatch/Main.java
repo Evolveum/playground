@@ -55,7 +55,7 @@ public class Main {
             case 1 -> {
 
 
-                List<String[]> csvData = csvReader.getCsvDataFromInput("src/main/resources/data2.csv");
+                List<String[]> csvData = csvReader.getCsvDataFromInput("src/main/resources/data.csv");
 
                 List<UserDataStructure> userDataStructureList = userDataFilling.setUserDataList(csvData);
 

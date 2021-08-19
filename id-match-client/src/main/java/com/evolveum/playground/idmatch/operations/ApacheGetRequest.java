@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-class ApacheGetRequest extends HttpClientSuper implements ApacheApiRequest {
+public class ApacheGetRequest extends HttpClientSuper implements ApacheApiRequest {
 
 
     List<ListResponse> httpResponse = new ArrayList<>();
@@ -21,9 +21,9 @@ class ApacheGetRequest extends HttpClientSuper implements ApacheApiRequest {
 
 
     @Override
-    public void doRequest(String channel, String jsonString, String urlSuffix) throws IOException {
+    public void doRequest(String urlPrefix, String urlSuffix, String jsonString) throws IOException {
 
-        HttpGet request = new HttpGet(channel + urlSuffix);
+        HttpGet request = new HttpGet(urlPrefix + urlSuffix);
 
         ResponseHandler<List<ListResponse>> responseHandler = new ApacheResponseHandler();
         setHttpResponse(httpClient().execute(request, responseHandler));

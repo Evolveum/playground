@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-class ApachePutRequest extends HttpClientSuper implements ApacheApiRequest {
+public class ApachePutRequest extends HttpClientSuper implements ApacheApiRequest {
 
 
     List<ListResponse> httpResponse = new ArrayList<>();
@@ -23,7 +23,7 @@ class ApachePutRequest extends HttpClientSuper implements ApacheApiRequest {
 
 
     @Override
-    public void doRequest(String channel, String jsonString, String urlSuffix) throws IOException {
+    public void doRequest(String channel, String urlSuffix, String jsonString) throws IOException {
 
         HttpPut request = new HttpPut(channel + urlSuffix);
         request.addHeader("content-type", "application/json");

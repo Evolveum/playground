@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-class ApacheDeleteRequest extends HttpClientSuper implements ApacheApiRequest {
+public class ApacheDeleteRequest extends HttpClientSuper implements ApacheApiRequest {
 
 
     List<ListResponse> httpResponse = new ArrayList<>();
@@ -22,9 +22,9 @@ class ApacheDeleteRequest extends HttpClientSuper implements ApacheApiRequest {
 
 
     @Override
-    public void doRequest(String channel, String jsonString, String urlSuffix) throws IOException {
+    public void doRequest(String urlPrefix, String urlSuffix, String jsonString) throws IOException {
 
-        HttpDelete request = new HttpDelete(channel + urlSuffix);
+        HttpDelete request = new HttpDelete(urlPrefix + urlSuffix);
 
         ResponseHandler<List<ListResponse>> responseHandler = new ApacheResponseHandler();
         setHttpResponse(httpClient().execute(request, responseHandler));
