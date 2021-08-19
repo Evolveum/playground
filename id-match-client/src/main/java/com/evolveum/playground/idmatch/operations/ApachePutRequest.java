@@ -17,16 +17,20 @@ public class ApachePutRequest extends HttpClientSuper implements ApacheApiReques
 
     List<ListResponse> httpResponse = new ArrayList<>();
 
+    public ApachePutRequest(AuthenticationProvider authenticationProvider) {
+        super(authenticationProvider);
+    }
+
 
     @Override
-    public void doRequest(AuthenticationProvider authenticationProvider, String channel, String jsonString, String urlSuffix) throws IOException {
+    public void doRequest(String channel, String jsonString, String urlSuffix) throws IOException {
 
         HttpPut request = new HttpPut(channel + urlSuffix);
         request.addHeader("content-type", "application/json");
         request.setEntity(new StringEntity(jsonString));
 
         ResponseHandler<List<ListResponse>> responseHandler = new ApacheResponseHandler();
-        setHttpResponse(httpClient(authenticationProvider).execute(request, responseHandler));
+        setHttpResponse(httpClient().execute(request, responseHandler));
     }
 
 

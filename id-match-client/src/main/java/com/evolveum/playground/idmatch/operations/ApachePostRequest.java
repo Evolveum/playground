@@ -16,16 +16,20 @@ public class ApachePostRequest extends HttpClientSuper  implements ApacheApiRequ
 
     List<ListResponse> httpResponse = new ArrayList<>();
 
+    public ApachePostRequest(AuthenticationProvider authenticationProvider) {
+        super(authenticationProvider);
+    }
+
 
     @Override
-    public void doRequest(AuthenticationProvider authenticationProvider, String channel, String jsonString, String urlSuffix) throws IOException {
+    public void doRequest(String urlPrefix, String urlSuffix, String jsonString) throws IOException {
 
-        HttpPost request = new HttpPost(channel + urlSuffix);
+        HttpPost request = new HttpPost(urlPrefix + urlSuffix);
         request.addHeader("content-type", "application/json");
         request.setEntity(new StringEntity(jsonString));
 
         ResponseHandler<List<ListResponse>> responseHandler = new ApacheResponseHandler();
-        setHttpResponse(httpClient(authenticationProvider).execute(request, responseHandler));
+        setHttpResponse(httpClient().execute(request, responseHandler));
     }
 
 

@@ -15,6 +15,8 @@ public class Client {
     private final ApacheApiRequest apacheGetRequest;
     private final ApacheApiRequest apacheDeleteRequest;
 
+    private final HttpClientSuper httpClientSuper;
+
     String urlPrefix;
     String username;
     String password;
@@ -29,13 +31,13 @@ public class Client {
         this.urlPrefix = urlPrefix;
         this.username = username;
         this.password = password;
-
-        apachePutRequest = new ApachePutRequest();
-        apachePostRequest = new ApachePostRequest();
-        apacheGetRequest = new ApacheGetRequest();
-        apacheDeleteRequest = new ApacheDeleteRequest();
         this.authenticationProvider = new AuthenticationProvider(username, password);
 
+        apachePutRequest = new ApachePutRequest(this.authenticationProvider);
+        apachePostRequest = new ApachePostRequest(this.authenticationProvider);
+        apacheGetRequest = new ApacheGetRequest(this.authenticationProvider);
+        apacheDeleteRequest = new ApacheDeleteRequest(this.authenticationProvider);
+        httpClientSuper = new HttpClientSuper(this.authenticationProvider);
     }
 
 
@@ -46,7 +48,7 @@ public class Client {
 
 
         try {
-            apachePutRequest.doRequest(authenticationProvider, url.toString(), object, urlSuffix.toString());
+            apachePutRequest.doRequest(url.toString(), object, urlSuffix.toString());
             printResponses(apachePutRequest);
         } catch (IOException e) {
             e.printStackTrace();
@@ -58,7 +60,7 @@ public class Client {
 
         StringBuilder url = new StringBuilder(urlPrefix + Channel.URL_PREFIX_MAIN_OPERATIONS.getUrl());
         try {
-            apacheGetRequest.doRequest(authenticationProvider, url.toString(), "", sorLabel);
+            apacheGetRequest.doRequest(url.toString(), "", sorLabel);
             printResponses(apacheGetRequest);
         } catch (IOException e) {
             e.printStackTrace();
@@ -72,7 +74,7 @@ public class Client {
         StringBuilder urlSuffix = new StringBuilder(sorLabel + "/" + sorId);
 
         try {
-            apacheGetRequest.doRequest(authenticationProvider, url.toString(), "", urlSuffix.toString());
+            apacheGetRequest.doRequest(url.toString(), "", urlSuffix.toString());
             printResponses(apacheGetRequest);
         } catch (IOException e) {
             e.printStackTrace();
@@ -85,7 +87,7 @@ public class Client {
         StringBuilder urlSuffix = new StringBuilder(matchStatus.getUrl());
 
         try {
-            apacheGetRequest.doRequest(authenticationProvider, urlPrefix, "", urlSuffix.toString());
+            apacheGetRequest.doRequest(urlPrefix, "", urlSuffix.toString());
             printResponses(apacheGetRequest);
         } catch (IOException e) {
             e.printStackTrace();
@@ -99,7 +101,7 @@ public class Client {
         StringBuilder url = new StringBuilder(urlPrefix + Channel.URL_PREFIX_GET_MATCH_REQUEST_MATCH_ID.getUrl());
 
         try {
-            apacheGetRequest.doRequest(authenticationProvider, url.toString(), "", id);
+            apacheGetRequest.doRequest(url.toString(), "", id);
             printResponses(apacheGetRequest);
         } catch (IOException e) {
             e.printStackTrace();
@@ -111,7 +113,7 @@ public class Client {
         StringBuilder url = new StringBuilder(urlPrefix + Channel.URL_PREFIX_GET_MATCH_REQUEST_REFERENCE_ID.getUrl());
 
         try {
-            apacheGetRequest.doRequest(authenticationProvider, url.toString(), "", refId);
+            apacheGetRequest.doRequest(url.toString(), "", refId);
             printResponses(apacheGetRequest);
         } catch (IOException e) {
             e.printStackTrace();
@@ -124,7 +126,7 @@ public class Client {
         StringBuilder urlSuffix = new StringBuilder(sorLabel + "/" + sorId);
         StringBuilder url = new StringBuilder(urlPrefix + Channel.URL_PREFIX_MAIN_OPERATIONS.getUrl());
         try {
-            apachePostRequest.doRequest(authenticationProvider, url.toString(), object, urlSuffix.toString());
+            apachePostRequest.doRequest(url.toString(), object, urlSuffix.toString());
             printResponses(apachePostRequest);
         } catch (IOException e) {
             e.printStackTrace();
@@ -137,7 +139,7 @@ public class Client {
         StringBuilder urlSuffix = new StringBuilder(sorLabel + "/" + sorId);
         StringBuilder url = new StringBuilder(urlPrefix + Channel.URL_PREFIX_MAIN_OPERATIONS.getUrl());
         try {
-            apacheDeleteRequest.doRequest(authenticationProvider, url.toString(), "", urlSuffix.toString());
+            apacheDeleteRequest.doRequest(url.toString(), "", urlSuffix.toString());
             printResponses(apacheDeleteRequest);
         } catch (IOException e) {
             e.printStackTrace();
@@ -150,6 +152,12 @@ public class Client {
                 System.out.printf("%s\n %s \n %s \n %n", "Response code: " + listResponse.getResponseCode(), "Message: " + listResponse.getMessage(), "Entity: " + listResponse.getEntity());
         } else System.out.println(NO_RESPONSE_MESSAGES);
     }
+
+
+    public void close(){
+        httpClientSuper.clientClose();
+    }
+
 
 
 }

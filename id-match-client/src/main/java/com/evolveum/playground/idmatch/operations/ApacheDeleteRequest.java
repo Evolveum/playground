@@ -16,14 +16,18 @@ public class ApacheDeleteRequest extends HttpClientSuper implements ApacheApiReq
 
     List<ListResponse> httpResponse = new ArrayList<>();
 
+    public ApacheDeleteRequest(AuthenticationProvider authenticationProvider) {
+        super(authenticationProvider);
+    }
+
 
     @Override
-    public void doRequest(AuthenticationProvider authenticationProvider, String channel, String jsonString, String urlSuffix) throws IOException {
+    public void doRequest(String urlPrefix, String urlSuffix, String jsonString) throws IOException {
 
-        HttpDelete request = new HttpDelete(channel + urlSuffix);
+        HttpDelete request = new HttpDelete(urlPrefix + urlSuffix);
 
         ResponseHandler<List<ListResponse>> responseHandler = new ApacheResponseHandler();
-        setHttpResponse(httpClient(authenticationProvider).execute(request, responseHandler));
+        setHttpResponse(httpClient().execute(request, responseHandler));
     }
 
 
