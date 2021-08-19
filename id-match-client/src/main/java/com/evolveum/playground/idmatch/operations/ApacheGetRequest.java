@@ -21,12 +21,12 @@ public class ApacheGetRequest extends HttpClientSuper implements ApacheApiReques
 
 
     @Override
-    public void doRequest(String urlPrefix, String urlSuffix, String jsonString) throws IOException {
+    public void doRequest(String channel, String jsonString, String urlSuffix) throws IOException {
 
-        HttpGet request = new HttpGet(urlPrefix + urlSuffix);
+        HttpGet request = new HttpGet(channel + urlSuffix);
 
         ResponseHandler<List<ListResponse>> responseHandler = new ApacheResponseHandler();
-        setHttpResponse(httpClient().execute(request, responseHandler));
+        setHttpResponse(httpClient(authenticationProvider).execute(request, responseHandler));
 
     }
 

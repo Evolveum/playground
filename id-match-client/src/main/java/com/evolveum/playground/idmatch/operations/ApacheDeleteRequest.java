@@ -22,12 +22,12 @@ public class ApacheDeleteRequest extends HttpClientSuper implements ApacheApiReq
 
 
     @Override
-    public void doRequest(String urlPrefix, String urlSuffix, String jsonString) throws IOException {
+    public void doRequest(String channel, String jsonString, String urlSuffix) throws IOException {
 
-        HttpDelete request = new HttpDelete(urlPrefix + urlSuffix);
+        HttpDelete request = new HttpDelete(channel + urlSuffix);
 
         ResponseHandler<List<ListResponse>> responseHandler = new ApacheResponseHandler();
-        setHttpResponse(httpClient().execute(request, responseHandler));
+        setHttpResponse(httpClient(authenticationProvider).execute(request, responseHandler));
     }
 
 

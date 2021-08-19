@@ -1,13 +1,14 @@
 package com.evolveum.playground.idmatch.operations;
 
 import com.evolveum.playground.idmatch.data.ListResponse;
+import com.evolveum.playground.idmatch.operations.auth.AuthenticationProvider;
 
 import java.io.IOException;
 import java.util.List;
 
 public interface ApacheApiRequest {
 
-    void doRequest(String urlPrefix, String urlSuffix, String jsonString) throws IOException;
+    void doRequest(String urlPrefix, String jsonString, String urlSuffix) throws IOException;
 
     List<ListResponse> listResponse();
 }

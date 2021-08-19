@@ -22,14 +22,14 @@ public class ApachePostRequest extends HttpClientSuper  implements ApacheApiRequ
 
 
     @Override
-    public void doRequest(String urlPrefix, String urlSuffix, String jsonString) throws IOException {
+    public void doRequest(String channel, String jsonString, String urlSuffix) throws IOException {
 
-        HttpPost request = new HttpPost(urlPrefix + urlSuffix);
+        HttpPost request = new HttpPost(channel + urlSuffix);
         request.addHeader("content-type", "application/json");
         request.setEntity(new StringEntity(jsonString));
 
         ResponseHandler<List<ListResponse>> responseHandler = new ApacheResponseHandler();
-        setHttpResponse(httpClient().execute(request, responseHandler));
+        setHttpResponse(httpClient(authenticationProvider).execute(request, responseHandler));
     }
 
 

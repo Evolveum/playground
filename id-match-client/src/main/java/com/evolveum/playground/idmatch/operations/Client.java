@@ -31,8 +31,9 @@ public class Client {
         this.urlPrefix = urlPrefix;
         this.username = username;
         this.password = password;
-        this.authenticationProvider = new AuthenticationProvider(username, password);
 
+
+        this.authenticationProvider = new AuthenticationProvider(username, password);
         apachePutRequest = new ApachePutRequest(this.authenticationProvider);
         apachePostRequest = new ApachePostRequest(this.authenticationProvider);
         apacheGetRequest = new ApacheGetRequest(this.authenticationProvider);
@@ -149,15 +150,13 @@ public class Client {
     private void printResponses(ApacheApiRequest apacheApiRequest) {
         if (!apacheApiRequest.listResponse().isEmpty()) {
             listResponse = apacheApiRequest.listResponse().get(0);
-                System.out.printf("%s\n %s \n %s \n %n", "Response code: " + listResponse.getResponseCode(), "Message: " + listResponse.getMessage(), "Entity: " + listResponse.getEntity());
+            System.out.printf("%s\n %s \n %s \n %n", "Response code: " + listResponse.getResponseCode(), "Message: " + listResponse.getMessage(), "Entity: " + listResponse.getEntity());
         } else System.out.println(NO_RESPONSE_MESSAGES);
     }
 
-
-    public void close(){
+    public void close() {
         httpClientSuper.clientClose();
     }
-
 
 
 }

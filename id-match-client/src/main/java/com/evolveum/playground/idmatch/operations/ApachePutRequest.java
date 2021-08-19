@@ -30,7 +30,7 @@ public class ApachePutRequest extends HttpClientSuper implements ApacheApiReques
         request.setEntity(new StringEntity(jsonString));
 
         ResponseHandler<List<ListResponse>> responseHandler = new ApacheResponseHandler();
-        setHttpResponse(httpClient().execute(request, responseHandler));
+        setHttpResponse(httpClient(authenticationProvider).execute(request, responseHandler));
     }
 
 
