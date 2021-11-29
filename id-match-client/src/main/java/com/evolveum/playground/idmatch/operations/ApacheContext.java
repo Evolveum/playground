@@ -15,7 +15,7 @@ public class ApacheContext {
 
     public void executeRequest(AuthenticationProvider authenticationProvider, String urlPrefix, String jsonString, String urlSuffix){
         try {
-            apacheApiRequest.doRequest(authenticationProvider,urlPrefix,jsonString,urlSuffix);
+            apacheApiRequest.doRequest(urlPrefix,jsonString,urlSuffix);
         } catch (IOException e) {
             e.printStackTrace();
         }
