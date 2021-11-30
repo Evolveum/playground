@@ -74,7 +74,7 @@ public class Client {
         StringBuilder urlSuffix = new StringBuilder(sorLabel + "/" + sorId);
 
         try {
-            apacheGetRequest.doRequest(url.toString(), "", urlSuffix.toString());
+            apacheGetRequest.doRequest(url.toString(), urlSuffix.toString(), "");
             printResponses(apacheGetRequest);
         } catch (IOException e) {
             e.printStackTrace();
