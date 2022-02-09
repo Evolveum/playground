@@ -31,7 +31,7 @@
 	<name>Dummy HR application for midPoint demo environment</name>
 	
 	<properties>
-	     <hibernate.version>4.0.1.Final</hibernate.version>
+	     <hibernate.version>5.4.24.Final</hibernate.version>
         <spring.version>5.2.1.RELEASE</spring.version>
 		<wicket.version>6.6.0</wicket.version>
 		<jetty.version>7.6.3.v20120416</jetty.version>
