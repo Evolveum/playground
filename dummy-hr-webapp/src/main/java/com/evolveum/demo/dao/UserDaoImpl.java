@@ -2,7 +2,7 @@ package com.evolveum.demo.dao;
 
 import java.util.List;
 
-import javax.annotation.Resource;
+//import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;

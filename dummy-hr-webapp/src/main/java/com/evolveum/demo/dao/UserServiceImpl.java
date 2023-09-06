@@ -2,7 +2,7 @@ package com.evolveum.demo.dao;
 
 import java.util.List;
 
-import javax.annotation.Resource;
+//import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
