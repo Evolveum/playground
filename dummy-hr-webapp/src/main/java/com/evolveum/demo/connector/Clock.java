@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 
 public class Clock extends Label {
 
@@ -13,7 +13,7 @@ public class Clock extends Label {
 		super(id, new ClockModel(tz));
 	}
 
-	private static class ClockModel extends AbstractReadOnlyModel<String> {
+	private static class ClockModel implements IModel<String> {
 		private final DateFormat df;
 
 		public ClockModel(TimeZone tz) {

@@ -36,7 +36,7 @@ public class ShowUsers extends HomePage {
 			@Override
 			protected void populateItem(ListItem<UserJpa> item) {
 
-				Link view = new Link("view", item.getModel()) {
+				Link view = new Link<>("view", item.getModel()) {
 					public void onClick() {
 						UserJpa c = (UserJpa) getModelObject();
 						setResponsePage(new ModifyUser(c.getId()));
