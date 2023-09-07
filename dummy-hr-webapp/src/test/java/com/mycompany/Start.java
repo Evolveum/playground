@@ -6,7 +6,6 @@ import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.util.resource.PathResource;
-import org.eclipse.jetty.util.resource.PathResourceFactory;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.eclipse.jetty.webapp.WebAppContext;
@@ -41,8 +40,7 @@ public class Start {
 //        connector.setPort(8080);
         server.addConnector(http);
         Path resourcePath = Paths.get("/keystore");
-        PathResourceFactory prf = new PathResourceFactory();
-        Resource keystore = prf.newResource(resourcePath);
+        Resource keystore = new PathResource(resourcePath);
 
         if (keystore != null && keystore.exists()) {
             // if a keystore for a SSL certificate is available, start a SSL

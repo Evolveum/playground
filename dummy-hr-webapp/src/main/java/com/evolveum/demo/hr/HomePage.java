@@ -6,6 +6,7 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
+import org.apache.wicket.injection.Injector;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
@@ -20,15 +21,20 @@ import com.evolveum.demo.showUsers.ShowUsers;
 
 public class HomePage extends WebPage {
 	private static final long serialVersionUID = 1L;
-	public static transient Configuration config;
+//	TODO
+//	public static transient Configuration config;
+	public transient Configuration config;
 	public static Logger log = Logger.getLogger(HomePage.class.getName());
 
 	// public static transient UserService userService;
 
 	@SpringBean
-	public static transient UserServiceJpa userService;
+	public transient UserServiceJpa userService;
+	// TODO
+//	public static transient UserServiceJpa userService;
 
 	public HomePage() {
+		Injector.get().inject(this);
 		initGui();
 
 		try {
@@ -50,4 +56,5 @@ public class HomePage extends WebPage {
 				TimeZone.getTimeZone("America/Los_Angeles"));
 		add(clock);
 	}
+
 }
