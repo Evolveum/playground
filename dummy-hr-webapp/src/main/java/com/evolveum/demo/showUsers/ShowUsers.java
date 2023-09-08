@@ -1,6 +1,5 @@
 package com.evolveum.demo.showUsers;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
@@ -18,10 +17,8 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.protocol.http.WebApplication;
 
-import com.evolveum.demo.errorHandling.ErrorPage;
 import com.evolveum.demo.exporter.CsvWriter;
 import com.evolveum.demo.hr.HomePage;
-import com.evolveum.demo.model.User;
 import com.evolveum.demo.model.UserJpa;
 import com.evolveum.demo.modifyUser.ModifyUser;
 
@@ -45,8 +42,8 @@ public class ShowUsers extends HomePage {
 
 				item.add(view);
 
-				item.add(new Label("surname", new PropertyModel<Location>(item
-						.getModel(), new StringResourceModel("surname", this,
+				item.add(new Label("lastname", new PropertyModel<Location>(item
+						.getModel(), new StringResourceModel("lastname", this,
 						null).getString())));
 				item.add(new Label("firstname", new PropertyModel<Location>(
 						item.getModel(), new StringResourceModel("firstname",

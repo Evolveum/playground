@@ -5,7 +5,7 @@ CREATE TABLE usershr
 	id serial NOT NULL,
 	firstname character(255),
 
- 	surname character(255),
+ 	lastname character(255),
 
   	emailaddress character(255),
 
@@ -15,6 +15,9 @@ CREATE TABLE usershr
 
   	emptype emp NOT NULL
 
+  	status emp NOT NULL
+
 )
 
 CREATE TYPE emp AS ENUM('FTE', 'PTE', 'CONTRACTOR', 'RETIRED');
+CREATE TYPE status AS ENUM('In', 'Former employee', 'Long-term leave');

@@ -1,4 +1,4 @@
-<html>
+<html xmlns:wicket="http://wicket.apache.org">
 	<head></head>
 	<body>
 		<wicket:extend>
@@ -13,19 +13,19 @@
 					<legend><wicket:message key="message.modifyExistingUser"/></legend>
 					<div class="control-group">
 				  
-						<label class="control-label" for="name" wicket:id="firstnameLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="firstname" wicket:id="firstname"/>
+						<label class="control-label" for="firstname" wicket:id="firstnameLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="firstname" wicket:id="firstname"/>
 						</div><br/>
-						<label class="control-label" for="name" wicket:id="surnameLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="surname" wicket:id="surname"/>
+						<label class="control-label" for="lastname" wicket:id="lastnameLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="lastname" wicket:id="lastname"/>
 						</div><br/>
-						<label class="control-label" for="name" wicket:id="artnameLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="artname" wicket:id="artname"/>
+						<label class="control-label" for="artname" wicket:id="artnameLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="artname" wicket:id="artname"/>
 						</div><br/>
-						<label class="control-label" for="name" wicket:id="employeeNumberLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="employeeNumber" wicket:id="employeeNumber"/>
+						<label class="control-label" for="employeeNumber" wicket:id="employeeNumberLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="employeeNumber" wicket:id="employeeNumber"/>
 						</div><br/>
-						<label class="control-label" for="name" wicket:id="employeeResponsibilityLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="responsibility" wicket:id="responsibility"/>
+						<label class="control-label" for="responsibility" wicket:id="employeeResponsibilityLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="responsibility" wicket:id="responsibility"/>
 						</div><br/>
 						
 						
-						<label class="control-label" for="name" wicket:id="empTypeLabel"></label>
+						<label class="control-label" for="empTypeLabel" wicket:id="empTypeLabel" id="empTypeLabel"></label>
 						<div class="controls">
 							<select wicket:id="empSelect">
 								<optgroup label="EmpType">
@@ -38,7 +38,7 @@
 						<p class="help-block"></p>
 						</div>
 						
-						<label class="control-label" for="name" wicket:id="orgPathLabel"></label>
+						<label class="control-label" for="orgPathLabel" wicket:id="orgPathLabel" id="orgPathLabel"></label>
 						<div class="controls">
 							<select wicket:id="orgPathSelect">	
 								<!--In case of using List

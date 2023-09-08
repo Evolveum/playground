@@ -1,15 +1,11 @@
 package com.evolveum.demo.registerUser;
 
-import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.List;
-
 import com.evolveum.demo.model.OrgType;
+import com.evolveum.demo.model.Status;
 import org.apache.wicket.extensions.markup.html.form.select.Select;
 import org.apache.wicket.extensions.markup.html.form.select.SelectOption;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
-import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
@@ -18,19 +14,21 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.validation.validator.StringValidator;
 
-import com.evolveum.demo.errorHandling.UserAlreadyExistsException;
 import com.evolveum.demo.hr.HomePage;
 import com.evolveum.demo.model.UserJpa;
 import com.evolveum.demo.showUsers.ShowUsers;
 
 public class RegisterUser extends HomePage {
 	private String firstname;
-	private String surname;
+	private String lastname;
 	private Integer employeeNumber;
 	private String artname;
 	private String emptype;
 	private String orgpath;
 	private String responsibility;
+	private String status;
+	private String locality;
+	private String ou;
 
 	/*
 	 * private static final List<String> options = Arrays.asList(new String[] {
@@ -59,14 +57,14 @@ public class RegisterUser extends HomePage {
 		firstnameField.add(StringValidator.minimumLength(1)).setRequired(true);
 		addRegisterForm.add(firstnameField);
 
-		Label givenNameLabel = new Label("surnameLabel",
-				new StringResourceModel("surnameLabel", this, null));
+		Label givenNameLabel = new Label("lastnameLabel",
+				new StringResourceModel("lastnameLabel", this, null));
 		addRegisterForm.add(givenNameLabel);
 
-		TextField<String> surnameField = new TextField<String>("surname");
-		surnameField.add(StringValidator.maximumLength(100));
-		surnameField.add(StringValidator.minimumLength(1)).setRequired(true);
-		addRegisterForm.add(surnameField);
+		TextField<String> lastnameField = new TextField<String>("lastname");
+		lastnameField.add(StringValidator.maximumLength(100));
+		lastnameField.add(StringValidator.minimumLength(1)).setRequired(true);
+		addRegisterForm.add(lastnameField);
 
 		Label artNameLabel = new Label("artnameLabel", new StringResourceModel(
 				"artnameLabel", this, null));
@@ -85,10 +83,22 @@ public class RegisterUser extends HomePage {
 				"employeeNumber");
 		employeeNumberField.setRequired(true);
 		addRegisterForm.add(employeeNumberField);
-		
+
 		Label employeeResponsibilityLabel = new Label("employeeResponsibilityLabel",
 				new StringResourceModel("employeeResponsibilityLabel", this, null));
 		addRegisterForm.add(employeeResponsibilityLabel);
+
+        //TODO
+        TextField<String> localityField = new TextField<String>("locality");
+        localityField.add(StringValidator.maximumLength(100));
+        localityField.add(StringValidator.minimumLength(1)).setRequired(true);
+        addRegisterForm.add(localityField);
+
+        //TODO
+        TextField<String> ouField = new TextField<String>("ou");
+        ouField.add(StringValidator.maximumLength(100));
+        ouField.add(StringValidator.minimumLength(1)).setRequired(true);
+        addRegisterForm.add(ouField);
 
 		TextField<String> employeeResponsibilityField = new TextField<String>("responsibility");
 		employeeResponsibilityField.add(StringValidator.maximumLength(100));
@@ -111,6 +121,23 @@ public class RegisterUser extends HomePage {
 				"CONTRACTOR")));
 		empSelect.add(new SelectOption<String>("EmpType4", new Model<String>(
 				"RETIRED")));
+
+		//TODO
+
+        Label statusLabel = new Label("statusLabel", new StringResourceModel(
+                "statusLabel", this, null));
+        addRegisterForm.add(statusLabel);
+
+		Select statusSelect = new Select("statusSelect", new PropertyModel<String>(
+				this, "status"));
+		addRegisterForm.add(statusSelect);
+
+		Integer statusNo = 1;
+		for(Status s : Status.values()){
+
+			statusSelect.add(new SelectOption<String>("Status"+statusNo, new Model<String>(
+					s.label)));
+		}
 
 		Label orgPathLabel = new Label("orgPathLabel", new StringResourceModel(
 				"orgPathLabel", this, null));
@@ -154,8 +181,8 @@ public class RegisterUser extends HomePage {
 		Button submitButton = new Button("submitButton") {
 			@Override
 			public void onSubmit() {
-				userService.registerUser(new UserJpa(firstname, surname,
-						employeeNumber, artname, emptype, orgpath, responsibility));
+				userService.registerUser(new UserJpa(firstname, lastname,
+						employeeNumber, artname, emptype, orgpath, responsibility, status, locality, ou));
 				setResponsePage(ShowUsers.class);
 			}
 		};

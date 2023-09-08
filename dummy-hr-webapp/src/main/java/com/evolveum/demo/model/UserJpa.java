@@ -24,26 +24,33 @@ public class UserJpa implements Serializable {
 	private Integer id;
 
 	private String firstname;
-	private String surname;
+	private String lastname;
 	private Integer employeeNumber;
 	private String artname;
 	private String emailAddress;
 	private String emptype;
 	private String orgpath;
 	private String responsibility;
+	private String status;
+	private String locality;
+	private String ou;
 	
 	public UserJpa() {
 	}
 
-	public UserJpa(String firstname, String surname, Integer employeeNumber,
-			String artname, String emptype, /*String EnumOrgTypeString,*/ String orgpath, String responsibility) {
+	public UserJpa(String firstname, String lastname, Integer employeeNumber,
+				   String artname, String emptype, /*String EnumOrgTypeString,*/ String orgpath, String responsibility,
+				   String status, String locality, String ou) {
 		this.firstname = firstname;
-		this.surname = surname;
+		this.lastname = lastname;
 		this.employeeNumber = employeeNumber;
 		this.artname = artname;
 		this.emptype = emptype;
 		this.orgpath = orgpath;
 		this.responsibility = responsibility;
+		this.status = status;
+		this.locality = locality;
+		this.ou = ou;
 	}
 
 	public String getEmailAddress() {
@@ -70,12 +77,12 @@ public class UserJpa implements Serializable {
 		this.firstname = firstname;
 	}
 
-	public String getSurname() {
-		return surname;
+	public String getLastname() {
+		return lastname;
 	}
 
-	public void setSurname(String surname) {
-		this.surname = surname;
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 
 	public Integer getEmployeeNumber() {
@@ -116,5 +123,29 @@ public class UserJpa implements Serializable {
 
 	public void setResponsibility(String responsibility) {
 		this.responsibility = responsibility;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getLocality() {
+		return locality;
+	}
+
+	public void setLocality(String locality) {
+		this.locality = locality;
+	}
+
+	public String getOu() {
+		return ou;
+	}
+
+	public void setOu(String ou) {
+		this.ou = ou;
 	}
 }

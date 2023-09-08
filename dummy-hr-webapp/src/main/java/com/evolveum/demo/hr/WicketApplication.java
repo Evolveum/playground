@@ -26,6 +26,9 @@ public class WicketApplication extends WebApplication {
 	@Override
 	public void init() {
 		super.init();
+
+		// TODO disabled csp blocking, bootstrap was limited because of this
+		getCspSettings().blocking().disabled();
 		getComponentInstantiationListeners().add(
 				new SpringComponentInjector(this));
 

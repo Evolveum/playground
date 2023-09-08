@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.evolveum.demo.model.OrgType;
-import com.evolveum.demo.model.User;
 import com.evolveum.demo.model.UserJpa;
 
 /*added new column 'orgpath' and 'responsibility'*/
@@ -17,7 +16,7 @@ public class CsvWriter {
 		final FileWriter fw = new FileWriter(path);
 		//String csvStr;
 
-		fw.write("\"empnum\",\"firstname\",\"lastname\",\"artname\",\"emptype\",\"orgpath\",\"responsibility\""
+		fw.write("\"empnum\",\"firstname\",\"lastname\",\"artname\",\"emptype\",\"orgpath\",\"responsibility\",\"status\",\"locality\",\"ou\""
 				+ "\n");
 
 		for (UserJpa c : users) {
@@ -38,7 +37,7 @@ public class CsvWriter {
 			sb.append('"').append(c.getEmployeeNumber().toString().trim())
 					.append('"').append(",").append('"')
 					.append(c.getFirstname().trim()).append('"').append(",")
-					.append('"').append(c.getSurname().trim()).append('"')
+					.append('"').append(c.getLastname().trim()).append('"')
 					.append(",").append('"').append(c.getArtname().trim())
 					.append('"').append(",").append('"')
 					.append(c.getEmptype().trim()).append('"').append(",");					
@@ -51,11 +50,17 @@ public class CsvWriter {
 			if (fullOrg != null) {
 				   sb.append('"').append(fullResp).append('"');
 				}
-			
+			sb.append(",");
+			sb.append('"').append(c.getLocality()).append('"');
+			sb.append(",");
+			sb.append('"').append(c.getOu()).append('"');
+			sb.append(",");
+			sb.append('"').append(c.getStatus()).append('"');
+
 			/*
 			 * csvStr = '"' + c.getEmployeeNumber().toString().trim() + '"' +
 			 * "," + '"' + c.getFirstname().trim() + '"' + "," + '"' +
-			 * c.getSurname().trim() + '"' + "," + '"' + c.getArtname().trim() +
+			 * c.getLastname().trim() + '"' + "," + '"' + c.getArtname().trim() +
 			 * '"' + "," + '"' + c.getEmptype().trim() + '"' + "," + '"' +
 			 * fullOrg + '"' + "," + '"' + fullResp + '"';
 			 */
@@ -65,23 +70,3 @@ public class CsvWriter {
 		fw.close();
 	}
 }
-
-/* old variant without new column 'orgpath' */
-// //////////////////////////////////////////////////////////////////////////////////////
-/*
- * public class CsvWriter {
- * 
- * public CsvWriter(ArrayList<UserJpa> users, String path) throws IOException {
- * final FileWriter fw = new FileWriter(path); String csvStr;
- * 
- * fw.write("\"empnum\",\"firstname\",\"lastname\",\"artname\",\"emptype\"" +
- * "\n");
- * 
- * for (UserJpa c : users) { csvStr = '"' +
- * c.getEmployeeNumber().toString().trim() + '"' + "," + '"' +
- * c.getFirstname().trim() + '"' + "," + '"' + c.getSurname().trim() + '"' + ","
- * + '"' + c.getArtname().trim() + '"' + "," + '"' + c.getEmptype().trim() +
- * '"'; fw.write(csvStr + "\n"); }
- * 
- * fw.close(); } }
- */

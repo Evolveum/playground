@@ -21,7 +21,7 @@ import com.evolveum.demo.showUsers.ShowUsers;
 
 public class ModifyUser extends HomePage implements Serializable {
 	private String firstname;
-	private String surname;
+	private String lastname;
 	private Integer employeeNumber;
 	private Integer id;
 	private String artname;
@@ -39,7 +39,7 @@ public class ModifyUser extends HomePage implements Serializable {
 
 		user = userService.getUser(userId);
 		firstname = user.getFirstname();
-		surname = user.getSurname();
+		lastname = user.getLastname();
 		employeeNumber = user.getEmployeeNumber();
 		id = user.getId();
 		artname = user.getArtname();
@@ -63,12 +63,12 @@ public class ModifyUser extends HomePage implements Serializable {
 		nameField.setConvertEmptyInputStringToNull(false);
 		addRegisterForm.add(nameField);
 
-		Label givenNameLabel = new Label("surnameLabel",
-				new StringResourceModel("surnameLabel", this, null));
+		Label givenNameLabel = new Label("lastnameLabel",
+				new StringResourceModel("lastnameLabel", this, null));
 		addRegisterForm.add(givenNameLabel);
 
-		TextField<String> givenNameField = new TextField<String>("surname",
-				new PropertyModel(this, "surname"));
+		TextField<String> givenNameField = new TextField<String>("lastname",
+				new PropertyModel(this, "lastname"));
 		givenNameField.add(StringValidator.maximumLength(100));
 		givenNameField.add(StringValidator.minimumLength(1)).setRequired(true);
 		;
@@ -158,7 +158,7 @@ public class ModifyUser extends HomePage implements Serializable {
 			@Override
 			public void onSubmit() {
 				user.setFirstname(firstname);
-				user.setSurname(surname);
+				user.setLastname(lastname);
 				user.setEmptype(emptype);
 				user.setEmployeeNumber(employeeNumber);
 				user.setArtname(artname);
