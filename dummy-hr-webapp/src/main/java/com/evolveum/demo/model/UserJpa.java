@@ -24,7 +24,7 @@ public class UserJpa implements Serializable {
 	private Integer id;
 
 	private String firstname;
-	private String lastname;
+	private String surname;
 	private Integer employeeNumber;
 	private String artname;
 	private String emailAddress;
@@ -34,15 +34,16 @@ public class UserJpa implements Serializable {
 	private String status;
 	private String locality;
 	private String ou;
+	private String job;
 	
 	public UserJpa() {
 	}
 
-	public UserJpa(String firstname, String lastname, Integer employeeNumber,
+	public UserJpa(String firstname, String surname, Integer employeeNumber,
 				   String artname, String emptype, /*String EnumOrgTypeString,*/ String orgpath, String responsibility,
-				   String status, String locality, String ou) {
+				   String status, String locality, String ou, String job) {
 		this.firstname = firstname;
-		this.lastname = lastname;
+		this.surname = surname;
 		this.employeeNumber = employeeNumber;
 		this.artname = artname;
 		this.emptype = emptype;
@@ -51,6 +52,7 @@ public class UserJpa implements Serializable {
 		this.status = status;
 		this.locality = locality;
 		this.ou = ou;
+		this.job = job;
 	}
 
 	public String getEmailAddress() {
@@ -77,12 +79,12 @@ public class UserJpa implements Serializable {
 		this.firstname = firstname;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public String getSurname() {
+		return surname;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 
 	public Integer getEmployeeNumber() {
@@ -147,5 +149,13 @@ public class UserJpa implements Serializable {
 
 	public void setOu(String ou) {
 		this.ou = ou;
+	}
+
+	public String getJob() {
+		return job;
+	}
+
+	public void setJob(String job) {
+		this.job = job;
 	}
 }

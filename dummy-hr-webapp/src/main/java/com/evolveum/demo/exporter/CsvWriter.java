@@ -16,7 +16,7 @@ public class CsvWriter {
 		final FileWriter fw = new FileWriter(path);
 		//String csvStr;
 
-		fw.write("\"empnum\",\"firstname\",\"lastname\",\"artname\",\"emptype\",\"orgpath\",\"responsibility\",\"status\",\"locality\",\"ou\""
+		fw.write("\"empnum\",\"firstname\",\"surname\",\"artname\",\"emptype\",\"orgpath\",\"responsibility\",\"job\",\"status\",\"locality\",\"ou\""
 				+ "\n");
 
 		for (UserJpa c : users) {
@@ -37,7 +37,7 @@ public class CsvWriter {
 			sb.append('"').append(c.getEmployeeNumber().toString().trim())
 					.append('"').append(",").append('"')
 					.append(c.getFirstname().trim()).append('"').append(",")
-					.append('"').append(c.getLastname().trim()).append('"')
+					.append('"').append(c.getSurname().trim()).append('"')
 					.append(",").append('"').append(c.getArtname().trim())
 					.append('"').append(",").append('"')
 					.append(c.getEmptype().trim()).append('"').append(",");					
@@ -51,16 +51,19 @@ public class CsvWriter {
 				   sb.append('"').append(fullResp).append('"');
 				}
 			sb.append(",");
+			sb.append('"').append(c.getJob()).append('"');
+			sb.append(",");
+			sb.append('"').append(c.getStatus()).append('"');
+			sb.append(",");
 			sb.append('"').append(c.getLocality()).append('"');
 			sb.append(",");
 			sb.append('"').append(c.getOu()).append('"');
-			sb.append(",");
-			sb.append('"').append(c.getStatus()).append('"');
+
 
 			/*
 			 * csvStr = '"' + c.getEmployeeNumber().toString().trim() + '"' +
 			 * "," + '"' + c.getFirstname().trim() + '"' + "," + '"' +
-			 * c.getLastname().trim() + '"' + "," + '"' + c.getArtname().trim() +
+			 * c.getSurname().trim() + '"' + "," + '"' + c.getArtname().trim() +
 			 * '"' + "," + '"' + c.getEmptype().trim() + '"' + "," + '"' +
 			 * fullOrg + '"' + "," + '"' + fullResp + '"';
 			 */

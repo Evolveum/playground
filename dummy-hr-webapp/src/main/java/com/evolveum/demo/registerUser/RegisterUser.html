@@ -17,17 +17,24 @@
           
                 <label  class="control-label" for="firstName" wicket:id="firstnameLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="firstname" wicket:id="firstname"/>
                 <p class="help-block"></p> </div>
-                <label  class="control-label" for="name" wicket:id=lastnameLabel></label> <div class="controls"><input class="input-xlarge" type="text" id="lastname" wicket:id="lastname"/>
+                <label  class="control-label" for="surname" wicket:id=surnameLabel></label> <div class="controls"><input class="input-xlarge" type="text" id="surname" wicket:id="surname"/>
                 <p class="help-block"></p> </div>
-                 <label  class="control-label" for="name" wicket:id=artnameLabel></label> <div class="controls"><input class="input-xlarge" type="text" id="artname" wicket:id="artname"/>
+                 <label  class="control-label" for="artname" wicket:id=artnameLabel></label> <div class="controls"><input class="input-xlarge" type="text" id="artname" wicket:id="artname"/>
                 <p class="help-block"></p> </div>
-                <label  class="control-label" for="name" wicket:id="employeeNumberLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="employeeNumber" wicket:id="employeeNumber"/>
+                <label  class="control-label" for="employeeNumber" wicket:id="employeeNumberLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="employeeNumber" wicket:id="employeeNumber"/>
                 <p class="help-block"></p> </div>
-				<label  class="control-label" for="name" wicket:id="employeeResponsibilityLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="responsibility" wicket:id="responsibility"/>
+				<label  class="control-label" for="responsibility" wicket:id="employeeResponsibilityLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="responsibility" wicket:id="responsibility"/>
                 <p class="help-block"></p> </div>
                 <br/>
+				<label  class="control-label" for="locality" wicket:id="localityLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="locality" wicket:id="locality"/>
+				<p class="help-block"></p> </div>
+				<label  class="control-label" for="ou" wicket:id="ouLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="ou" wicket:id="ou"/>
+				<p class="help-block"></p> </div>
+				<label  class="control-label" for="job" wicket:id="jobLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="job" wicket:id="job"/>
+				<p class="help-block"></p> </div>
+				<br/>
                 
-				<label  class="control-label" for="name" wicket:id="empTypeLabel"></label>
+				<label  class="control-label" for="empTypeLabel" wicket:id="empTypeLabel" id="empTypeLabel"></label>
                 <div class="controls">
 	                <select wicket:id="empSelect">
 						<optgroup label="EmpType">
@@ -42,7 +49,7 @@
 				
 				<!--<div class="controls"><p class="help-block"><wicket:message key="message.empType"/></p></div>-->			                               
 				
-				<label class="control-label" for="name" wicket:id="orgPathLabel"></label>
+				<label class="control-label" for="orgPathLabel" wicket:id="orgPathLabel" id="orgPathLabel"></label>
 				<div class="controls">
 					<select wicket:id="orgPathSelect">	
 						<!--In case of using List
@@ -78,6 +85,19 @@
 					</select>
 				</div>
 				<!--<div class="controls"><p class="help-block"><wicket:message key="message.orgPath"/></p></div>-->
+
+				<label  class="control-label" for="statusLabel" wicket:id="statusLabel" id="statusLabel"></label>
+				<div class="controls">
+					<select wicket:id="statusSelect">
+						<optgroup label="EmpType">
+							<option wicket:id="Status1" ><wicket:message key="message.in"/></option>
+							<option wicket:id="Status2" ><wicket:message key="message.fe"/></option>
+							<option wicket:id="Status3" ><wicket:message key="message.ltl"/></option>
+						</optgroup>
+					</select>
+					<p class="help-block"></p>
+				</div>
+
 				<br/>
 				
 				 <div class="form-actions">

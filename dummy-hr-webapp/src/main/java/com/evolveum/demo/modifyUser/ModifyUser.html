@@ -15,7 +15,7 @@
 				  
 						<label class="control-label" for="firstname" wicket:id="firstnameLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="firstname" wicket:id="firstname"/>
 						</div><br/>
-						<label class="control-label" for="lastname" wicket:id="lastnameLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="lastname" wicket:id="lastname"/>
+						<label class="control-label" for="surname" wicket:id="surnameLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="surname" wicket:id="surname"/>
 						</div><br/>
 						<label class="control-label" for="artname" wicket:id="artnameLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="artname" wicket:id="artname"/>
 						</div><br/>
@@ -23,6 +23,12 @@
 						</div><br/>
 						<label class="control-label" for="responsibility" wicket:id="employeeResponsibilityLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="responsibility" wicket:id="responsibility"/>
 						</div><br/>
+						<label class="control-label" for="locality" wicket:id="localityLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="locality" wicket:id="locality"/>
+						</div><br/>
+						<label class="control-label" for="ou" wicket:id="ouLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="ou" wicket:id="ou"/>
+						</div><br/>
+						<label class="control-label" for="job" wicket:id="jobLabel"></label> <div class="controls"><input class="input-xlarge" type="text" id="job" wicket:id="job"/>
+					</div><br/>
 						
 						
 						<label class="control-label" for="empTypeLabel" wicket:id="empTypeLabel" id="empTypeLabel"></label>
@@ -74,6 +80,19 @@
 							</select>
 						<p class="help-block"></p>
 						</div>
+
+						<label  class="control-label" for="statusLabel" wicket:id="statusLabel" id="statusLabel"></label>
+						<div class="controls">
+							<select wicket:id="statusSelect">
+								<optgroup label="Status">
+									<option wicket:id="Status1" ><wicket:message key="message.in"/></option>
+									<option wicket:id="Status2" ><wicket:message key="message.fe"/></option>
+									<option wicket:id="Status3" ><wicket:message key="message.ltl"/></option>
+								</optgroup>
+							</select>
+							<p class="help-block"></p>
+						</div>
+
 					</div>
 					<div class="form-actions">
 						<input type="submit" value="Modify user" class="btn btn-primary" name="save" wicket:id="submitButton"/> | 

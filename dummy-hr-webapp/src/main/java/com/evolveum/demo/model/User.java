@@ -10,7 +10,7 @@ public class User implements Serializable {
 
 	private Integer id;
 	private String firstname;
-	private String lastname;
+	private String surname;
 	private Integer employeeNumber;
 	private String artname;
 	private EmpType emptype;
@@ -19,29 +19,37 @@ public class User implements Serializable {
 	private Status status;
 	private String locality;
 	private String ou;
+	private String job;
 
-	public User(String firstname, String lastname, Integer employeeNumber,
+	public User(String firstname, String surname, Integer employeeNumber,
 				Integer id, String artname, String emptype, String status, String locality, String ou, String orgpath,
-				String responsibility) {
+				String responsibility, String job) {
 
 		this.firstname = firstname;
-		this.lastname = lastname;
+		this.surname = surname;
 		this.employeeNumber = employeeNumber;
 		this.id = id;
 		this.artname = artname;
 		this.responsibility = responsibility;
 		this.locality = locality;
 		this.ou = ou;
+		this.job = job;
 
-		if (emptype.equals("FTE")) {
-			this.emptype = EmpType.FTE;
-		} else if (emptype.equals("PTE")) {
-			this.emptype = EmpType.PTE;
-		} else if (emptype.equals("CONTRACTOR")) {
-			this.emptype = EmpType.CONTRACTOR;
-		} else if (emptype.equals("RETIRED")) {
-			this.emptype = EmpType.RETIRED;
+		for(EmpType e : EmpType.values()){
+			if(e.label.equalsIgnoreCase(emptype)){
+				this.emptype = e;
+			}
 		}
+
+//		if (emptype.equals("FTE")) {
+//			this.emptype = EmpType.FTE;
+//		} else if (emptype.equals("PTE")) {
+//			this.emptype = EmpType.PTE;
+//		} else if (emptype.equals("CONTRACTOR")) {
+//			this.emptype = EmpType.CONTRACTOR;
+//		} else if (emptype.equals("RETIRED")) {
+//			this.emptype = EmpType.RETIRED;
+//		}
 
 		for(Status s : Status.values()){
 			if(s.label.equalsIgnoreCase(status)){
@@ -49,37 +57,44 @@ public class User implements Serializable {
 			}
 		}
 
-		if (orgpath
-				.equals("Apprentice/Armory Department/Military Department/Grand Master")) {
-			this.orgpath = OrgType.ApprenticeArmory;
-		} else if (orgpath
-				.equals("Apprentice/Weapons Department/Military Department/Grand Master")) {
-			this.orgpath = OrgType.ApprenticeWeapons;
-		} else if (orgpath
-				.equals("Apprentice/Buildings Department/Civil Department/Grand Master")) {
-			this.orgpath = OrgType.ApprenticeBuildings;
-		} else if (orgpath
-				.equals("Apprentice/Artefacts Department/Civil Department/Grand Master")) {
-			this.orgpath = OrgType.ApprenticeArtefacts;
-		} else if (orgpath
-				.equals("Armory Department/Military Department/Grand Master")) {
-			this.orgpath = OrgType.MasterArmory;
-		} else if (orgpath
-				.equals("Weapons Department/Military Department/Grand Master")) {
-			this.orgpath = OrgType.MasterWeapons;
-		} else if (orgpath
-				.equals("Buildings Department/Civil Department/Grand Master")) {
-			this.orgpath = OrgType.MasterBuildings;
-		} else if (orgpath
-				.equals("Artefacts Department/Civil Department/Grand Master")) {
-			this.orgpath = OrgType.MasterArtefacts;
-		} else if (orgpath.equals("Military Department/Grand Master")) {
-			this.orgpath = OrgType.MasterMilitary;
-		} else if (orgpath.equals("Civil Department/Grand Master")) {
-			this.orgpath = OrgType.MasterCivil;
-		} else if (orgpath.equals("Grand Master")) {
-			this.orgpath = OrgType.GrandMaster;
+		for(OrgType o : OrgType.values()){
+			if(o.label.equalsIgnoreCase(orgpath)){
+				this.orgpath = o;
+			}
 		}
+
+//		if (orgpath
+//				.equals("Apprentice/Armory Department/Military Department/Grand Master")) {
+//			this.orgpath = OrgType.ApprenticeArmory;
+//		} else if (orgpath
+//				.equals("Apprentice/Weapons Department/Military Department/Grand Master")) {
+//			this.orgpath = OrgType.ApprenticeWeapons;
+//		} else if (orgpath
+//				.equals("Apprentice/Buildings Department/Civil Department/Grand Master")) {
+//			this.orgpath = OrgType.ApprenticeBuildings;
+//		} else if (orgpath
+//				.equals("Apprentice/Artefacts Department/Civil Department/Grand Master")) {
+//			this.orgpath = OrgType.ApprenticeArtefacts;
+//		} else if (orgpath
+//				.equals("Armory Department/Military Department/Grand Master")) {
+//			this.orgpath = OrgType.MasterArmory;
+//		} else if (orgpath
+//				.equals("Weapons Department/Military Department/Grand Master")) {
+//			this.orgpath = OrgType.MasterWeapons;
+//		} else if (orgpath
+//				.equals("Buildings Department/Civil Department/Grand Master")) {
+//			this.orgpath = OrgType.MasterBuildings;
+//		} else if (orgpath
+//				.equals("Artefacts Department/Civil Department/Grand Master")) {
+//			this.orgpath = OrgType.MasterArtefacts;
+//		} else if (orgpath.equals("Military Department/Grand Master")) {
+//			this.orgpath = OrgType.MasterMilitary;
+//		} else if (orgpath.equals("Civil Department/Grand Master")) {
+//			this.orgpath = OrgType.MasterCivil;
+//		} else if (orgpath.equals("Grand Master")) {
+//			this.orgpath = OrgType.GrandMaster;
+//		}
+
 	}
 
 	public String getArtname() {
@@ -130,12 +145,12 @@ public class User implements Serializable {
 		this.firstname = firstname;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public String getSurname() {
+		return surname;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 
 	public Integer getEmployeeNumber() {
@@ -168,5 +183,13 @@ public class User implements Serializable {
 
 	public void setOu(String ou) {
 		this.ou = ou;
+	}
+
+	public String getJob() {
+		return job;
+	}
+
+	public void setJob(String job) {
+		this.job = job;
 	}
 }

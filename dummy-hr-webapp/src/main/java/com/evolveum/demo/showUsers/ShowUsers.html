@@ -11,13 +11,17 @@
 					<tr>
 						<th>#<wicket:message key="message.id"/></th>
 						<th><wicket:message key="message.firstname"/></th>
-						<th><wicket:message key="message.lastname"/></th>
+						<th><wicket:message key="message.surname"/></th>
 						<th><wicket:message key="message.artname"/></th>
 						<th><wicket:message key="message.emptype"/></th>
 						<th><wicket:message key="message.orgpath"/></th>
 						<th><wicket:message key="message.responsibility"/></th>
+						<th><wicket:message key="message.job"/></th>
 						<th><wicket:message key="message.employeeNumber"/></th>
-						<th><wicket:message key="message.modifyDelete"/></th>
+<!--						<th><wicket:message key="message.modifyDelete"/></th>-->
+						<th><wicket:message key="message.locality"/></th>
+						<th><wicket:message key="message.ou"/></th>
+						<th><wicket:message key="message.status"/></th>
 					</tr>
 				</thead>			
 				<tbody>
@@ -25,12 +29,16 @@
 						<tr>
 							<td><span wicket:id="id"/> </td>
 							<td><span wicket:id="firstname"></span></td>
-							<td><span wicket:id="lastname"></span></td>
+							<td><span wicket:id="surname"></span></td>
 							<td><span wicket:id="artname"></span></td>
 							<td><span wicket:id="emptype"></span></td>
 							<td><span wicket:id="orgpath"></span></td>
 							<td><span wicket:id="responsibility"></span></td>
+							<td><span wicket:id="job"/></td>
 							<td><span wicket:id="employeeNumber"/></td>
+							<td><span wicket:id="locality"></span></td>
+							<td><span wicket:id="ou"></span></td>
+							<td><span wicket:id="status"/></td>
 							<td>      
 								<a wicket:id="view">
 									<img src="img/tool.png" width="25px" height="25px"> Modify

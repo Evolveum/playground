@@ -59,10 +59,10 @@ public class UserService implements Serializable {
 	/* added new column 'orgpath' and 'responsibility' */
 	// //////////////////////////////////////////////////////////////////////////////////////
 
-	public void registerUser(String firstname, String lastname, Integer number,
+	public void registerUser(String firstname, String surname, Integer number,
 							 String status, String locality, String ou,
 							 String artname, String emptype, String orgpath,
-							 String responsibility) throws SQLException, UserAlreadyExistsException {
+							 String responsibility, String job) throws SQLException, UserAlreadyExistsException {
 		Statement st = null;
 		ResultSet rs = null;
 
@@ -70,23 +70,24 @@ public class UserService implements Serializable {
 		int id = generator.nextInt(300);
 
 		if (connection != null) {
-			if (checkIfUserExists(firstname, lastname)) {
+			if (checkIfUserExists(firstname, surname)) {
 				PreparedStatement ps = connection
-						.prepareStatement("INSERT INTO usershr(id, firstname, lastname, emailAddress," +
-								" employeeNumber, artname, emptype, orgpath, responsibility, status, locality, ou)" +
+						.prepareStatement("INSERT INTO usershr(id, firstname, surname, emailAddress," +
+								" employeeNumber, artname, emptype, orgpath, responsibility, job, status, locality, ou)" +
 								" VALUES (?, ?, ?, ?, ? ,?, ?, ?, ?);");
 				ps.setInt(1, id);
 				ps.setString(2, firstname.trim());
-				ps.setString(3, lastname.trim());
+				ps.setString(3, surname.trim());
 				ps.setString(4, ""); // ps.setString(4, emailAddress);
 				ps.setInt(5, number); // ps.setString(5, employeeNumber);
 				ps.setString(6, artname.trim());
 				ps.setString(7, emptype);
 				ps.setString(8, orgpath);
 				ps.setString(9, responsibility);
-				ps.setString(10, status);
-				ps.setString(11, locality);
-				ps.setString(12, ou);
+				ps.setString(10, job);
+				ps.setString(11, status);
+				ps.setString(12, locality);
+				ps.setString(13, ou);
 
 				Integer i = ps.executeUpdate();
 				System.out.println(i.toString());
@@ -96,29 +97,31 @@ public class UserService implements Serializable {
 		}
 	}
 
-	public void modifyUser(String firstname, String lastname, Integer number,
+	public void modifyUser(String firstname, String surname, Integer number,
 						   String status, String locality, String ou,
 						   Integer id, String artname, String emptype,
-						   String orgpath, String responsibility) throws SQLException {
+						   String orgpath, String responsibility, String job) throws SQLException {
 		ResultSet rs = null;
 
 		PreparedStatement ps = connection
-				.prepareStatement("UPDATE usershr SET firstname=?, lastname=?, emailaddress=?, employeenumber=?," +
-						" artname=?, emptype= CAST(? AS emp), orgpath= CAST(? AS org), responsibility= CAST(? AS resp)," +
-						" status= CAST(? AS sus), locality=?, ou=?  WHERE id = ? ");
+				.prepareStatement("UPDATE usershr SET firstname=?, surname=?, emailaddress=?, employeenumber=?," +
+						" artname=?, emptype= CAST(? AS emp), orgpath= CAST(? AS org)," +
+						" responsibility= CAST(? AS resp), job=?, status= CAST(? AS sus), locality=?," +
+						" ou=?  WHERE id = ? ");
 
 		ps.setString(1, firstname);
-		ps.setString(2, lastname);
+		ps.setString(2, surname);
 		ps.setString(3, ""); // ps.setString(3, emailAddress);
 		ps.setInt(4, number); // ps.setString(4, employeeNumber);
 		ps.setString(5, artname);
 		ps.setString(6, emptype.toString());
 		ps.setString(7, orgpath.toString());
 		ps.setString(8, responsibility.toString());
-		ps.setString(9, status);
-		ps.setString(10, locality);
-		ps.setString(11, ou);
-		ps.setInt(12, id);
+		ps.setString(9, job);
+		ps.setString(10, status);
+		ps.setString(11, locality);
+		ps.setString(12, ou);
+		ps.setInt(13, id);
 
 		ps.executeUpdate();
 	}
@@ -147,11 +150,12 @@ public class UserService implements Serializable {
 
 		while (rs.next()) {
 			User u = new User(rs.getString("firstname"),
-					rs.getString("lastname"), rs.getInt("employeeNumber"),
+					rs.getString("surname"), rs.getInt("employeeNumber"),
 					rs.getInt("id"), rs.getString("artname"),
 					rs.getString("emptype"),rs.getString("status"),
 					rs.getString("locality"),rs.getString("ou"),
-					rs.getString("orgpath"),rs.getString("responsibility"));
+					rs.getString("orgpath"),rs.getString("responsibility")
+					,rs.getString("job"));
 			users.add(u);
 		}
 		return users;
@@ -170,11 +174,12 @@ public class UserService implements Serializable {
 
 			while (rs.next()) {
 				user = new User(rs.getString("firstname").trim(), rs.getString(
-						"lastname").trim(), rs.getInt("employeeNumber"),
+						"surname").trim(), rs.getInt("employeeNumber"),
 						rs.getInt("id"), rs.getString("artname").trim(),
 						rs.getString("emptype"),rs.getString("status"),
 						rs.getString("locality") ,rs.getString("ou"),
-						rs.getString("orgpath"),rs.getString("responsibility"));
+						rs.getString("orgpath"),rs.getString("responsibility")
+						,rs.getString("job"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -182,14 +187,14 @@ public class UserService implements Serializable {
 		return user;
 	}
 
-	public boolean checkIfUserExists(String firstname, String lastname) {
+	public boolean checkIfUserExists(String firstname, String surname) {
 		ResultSet rs = null;
 
 		try {
 			PreparedStatement ps = connection
-					.prepareStatement("SELECT * FROM usershr WHERE firstname = ? AND lastname = ?");
+					.prepareStatement("SELECT * FROM usershr WHERE firstname = ? AND surname = ?");
 			ps.setString(1, firstname);
-			ps.setString(2, lastname);
+			ps.setString(2, surname);
 
 			rs = ps.executeQuery();
 

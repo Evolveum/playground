@@ -20,7 +20,7 @@ import com.evolveum.demo.showUsers.ShowUsers;
 
 public class RegisterUser extends HomePage {
 	private String firstname;
-	private String lastname;
+	private String surname;
 	private Integer employeeNumber;
 	private String artname;
 	private String emptype;
@@ -29,6 +29,7 @@ public class RegisterUser extends HomePage {
 	private String status;
 	private String locality;
 	private String ou;
+	private String job;
 
 	/*
 	 * private static final List<String> options = Arrays.asList(new String[] {
@@ -57,14 +58,14 @@ public class RegisterUser extends HomePage {
 		firstnameField.add(StringValidator.minimumLength(1)).setRequired(true);
 		addRegisterForm.add(firstnameField);
 
-		Label givenNameLabel = new Label("lastnameLabel",
-				new StringResourceModel("lastnameLabel", this, null));
+		Label givenNameLabel = new Label("surnameLabel",
+				new StringResourceModel("surnameLabel", this, null));
 		addRegisterForm.add(givenNameLabel);
 
-		TextField<String> lastnameField = new TextField<String>("lastname");
-		lastnameField.add(StringValidator.maximumLength(100));
-		lastnameField.add(StringValidator.minimumLength(1)).setRequired(true);
-		addRegisterForm.add(lastnameField);
+		TextField<String> surnameField = new TextField<String>("surname");
+		surnameField.add(StringValidator.maximumLength(100));
+		surnameField.add(StringValidator.minimumLength(1)).setRequired(true);
+		addRegisterForm.add(surnameField);
 
 		Label artNameLabel = new Label("artnameLabel", new StringResourceModel(
 				"artnameLabel", this, null));
@@ -84,26 +85,46 @@ public class RegisterUser extends HomePage {
 		employeeNumberField.setRequired(true);
 		addRegisterForm.add(employeeNumberField);
 
-		Label employeeResponsibilityLabel = new Label("employeeResponsibilityLabel",
-				new StringResourceModel("employeeResponsibilityLabel", this, null));
-		addRegisterForm.add(employeeResponsibilityLabel);
-
         //TODO
+
+		Label localityLabel = new Label("localityLabel", new StringResourceModel(
+				"localityLabel", this, null));
+		addRegisterForm.add(localityLabel);
+
         TextField<String> localityField = new TextField<String>("locality");
         localityField.add(StringValidator.maximumLength(100));
         localityField.add(StringValidator.minimumLength(1)).setRequired(true);
         addRegisterForm.add(localityField);
 
         //TODO
+
+		Label ouLabel = new Label("ouLabel", new StringResourceModel(
+				"ouLabel", this, null));
+		addRegisterForm.add(ouLabel);
+
         TextField<String> ouField = new TextField<String>("ou");
         ouField.add(StringValidator.maximumLength(100));
         ouField.add(StringValidator.minimumLength(1)).setRequired(true);
         addRegisterForm.add(ouField);
 
+		Label employeeResponsibilityLabel = new Label("employeeResponsibilityLabel",
+				new StringResourceModel("employeeResponsibilityLabel", this, null));
+		addRegisterForm.add(employeeResponsibilityLabel);
+
 		TextField<String> employeeResponsibilityField = new TextField<String>("responsibility");
 		employeeResponsibilityField.add(StringValidator.maximumLength(100));
 		employeeResponsibilityField.add(StringValidator.minimumLength(1)).setRequired(false);
 		addRegisterForm.add(employeeResponsibilityField);
+
+		//TODO
+		Label jobLabel = new Label("jobLabel",
+				new StringResourceModel("jobLabel", this, null));
+		addRegisterForm.add(jobLabel);
+
+		TextField<String> jobField = new TextField<String>("job");
+		jobField.add(StringValidator.maximumLength(100));
+		jobField.add(StringValidator.minimumLength(1)).setRequired(false);
+		addRegisterForm.add(jobField);
 
 		Label empTypeLabel = new Label("empTypeLabel", new StringResourceModel(
 				"empTypeLabel", this, null));
@@ -137,6 +158,7 @@ public class RegisterUser extends HomePage {
 
 			statusSelect.add(new SelectOption<String>("Status"+statusNo, new Model<String>(
 					s.label)));
+			statusNo++;
 		}
 
 		Label orgPathLabel = new Label("orgPathLabel", new StringResourceModel(
@@ -181,8 +203,8 @@ public class RegisterUser extends HomePage {
 		Button submitButton = new Button("submitButton") {
 			@Override
 			public void onSubmit() {
-				userService.registerUser(new UserJpa(firstname, lastname,
-						employeeNumber, artname, emptype, orgpath, responsibility, status, locality, ou));
+				userService.registerUser(new UserJpa(firstname, surname,
+						employeeNumber, artname, emptype, orgpath, responsibility, status, locality, ou, job));
 				setResponsePage(ShowUsers.class);
 			}
 		};

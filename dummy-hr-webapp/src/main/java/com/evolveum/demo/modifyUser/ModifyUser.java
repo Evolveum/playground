@@ -3,6 +3,7 @@ package com.evolveum.demo.modifyUser;
 import java.io.Serializable;
 
 import com.evolveum.demo.model.OrgType;
+import com.evolveum.demo.model.Status;
 import org.apache.wicket.extensions.markup.html.form.select.Select;
 import org.apache.wicket.extensions.markup.html.form.select.SelectOption;
 import org.apache.wicket.markup.html.basic.Label;
@@ -21,13 +22,17 @@ import com.evolveum.demo.showUsers.ShowUsers;
 
 public class ModifyUser extends HomePage implements Serializable {
 	private String firstname;
-	private String lastname;
+	private String surname;
 	private Integer employeeNumber;
 	private Integer id;
 	private String artname;
 	private String emptype;
 	private String orgpath;
 	private String responsibility;
+	private String status;
+	private String locality;
+	private String ou;
+	private String job;
 
 	UserJpa user;
 
@@ -39,13 +44,17 @@ public class ModifyUser extends HomePage implements Serializable {
 
 		user = userService.getUser(userId);
 		firstname = user.getFirstname();
-		lastname = user.getLastname();
+		surname = user.getSurname();
 		employeeNumber = user.getEmployeeNumber();
 		id = user.getId();
 		artname = user.getArtname();
 		emptype = user.getEmptype();
 		orgpath = user.getOrgType();
 		responsibility = user.getResponsibility();
+		status = user.getStatus();
+		locality = user.getLocality();
+		ou = user.getOu();
+		job = user.getJob();
 
 		Form<ModifyUser> addRegisterForm = new Form<ModifyUser>(
 				"addLocationForm", new CompoundPropertyModel<ModifyUser>(this));
@@ -63,12 +72,12 @@ public class ModifyUser extends HomePage implements Serializable {
 		nameField.setConvertEmptyInputStringToNull(false);
 		addRegisterForm.add(nameField);
 
-		Label givenNameLabel = new Label("lastnameLabel",
-				new StringResourceModel("lastnameLabel", this, null));
+		Label givenNameLabel = new Label("surnameLabel",
+				new StringResourceModel("surnameLabel", this, null));
 		addRegisterForm.add(givenNameLabel);
 
-		TextField<String> givenNameField = new TextField<String>("lastname",
-				new PropertyModel(this, "lastname"));
+		TextField<String> givenNameField = new TextField<String>("surname",
+				new PropertyModel(this, "surname"));
 		givenNameField.add(StringValidator.maximumLength(100));
 		givenNameField.add(StringValidator.minimumLength(1)).setRequired(true);
 		;
@@ -103,6 +112,15 @@ public class ModifyUser extends HomePage implements Serializable {
 		employeeResponsibilityField.add(StringValidator.minimumLength(1)).setRequired(false);
 		addRegisterForm.add(employeeResponsibilityField);
 
+		Label jobLabel = new Label("jobLabel",
+				new StringResourceModel("jobLabel", this, null));
+		addRegisterForm.add(jobLabel);
+
+		TextField<String> jobField = new TextField<String>("job");
+		jobField.add(StringValidator.maximumLength(100));
+		jobField.add(StringValidator.minimumLength(1)).setRequired(false);
+		addRegisterForm.add(jobField);
+
 		Label empTypeLabel = new Label("empTypeLabel", new StringResourceModel(
 				"empTypeLabel", this, null));
 		addRegisterForm.add(empTypeLabel);
@@ -119,6 +137,45 @@ public class ModifyUser extends HomePage implements Serializable {
 				"CONTRACTOR")));
 		empSelect.add(new SelectOption<String>("EmpType4", new Model<String>(
 				"RETIRED")));
+
+
+		//TODO
+		Label localityLabel = new Label("localityLabel", new StringResourceModel(
+				"localityLabel", this, null));
+		addRegisterForm.add(localityLabel);
+
+		TextField<String> localityField = new TextField<String>("locality");
+		localityField.add(StringValidator.maximumLength(100));
+		localityField.add(StringValidator.minimumLength(1)).setRequired(true);
+		addRegisterForm.add(localityField);
+
+		//TODO
+		Label ouLabel = new Label("ouLabel", new StringResourceModel(
+				"ouLabel", this, null));
+		addRegisterForm.add(ouLabel);
+
+		TextField<String> ouField = new TextField<String>("ou");
+		ouField.add(StringValidator.maximumLength(100));
+		ouField.add(StringValidator.minimumLength(1)).setRequired(true);
+		addRegisterForm.add(ouField);
+
+		//TODO
+
+		Label statusLabel = new Label("statusLabel", new StringResourceModel(
+				"statusLabel", this, null));
+		addRegisterForm.add(statusLabel);
+
+		Select statusSelect = new Select("statusSelect", new PropertyModel<String>(
+				this, "status"));
+		addRegisterForm.add(statusSelect);
+
+		Integer statusNo = 1;
+		for(Status s : Status.values()){
+
+			statusSelect.add(new SelectOption<String>("Status"+statusNo, new Model<String>(
+					s.label)));
+			statusNo++;
+		}
 
 		Label orgPathLabel = new Label("orgPathLabel", new StringResourceModel(
 				"orgPathLabel", this, null));
@@ -158,12 +215,15 @@ public class ModifyUser extends HomePage implements Serializable {
 			@Override
 			public void onSubmit() {
 				user.setFirstname(firstname);
-				user.setLastname(lastname);
+				user.setSurname(surname);
 				user.setEmptype(emptype);
 				user.setEmployeeNumber(employeeNumber);
 				user.setArtname(artname);
 				user.setOrgType(orgpath);
 				user.setResponsibility(responsibility);
+				user.setStatus(status);
+				user.setOu(ou);
+				user.setLocality(locality);
 
 				userService.modifyUser(user);
 				setResponsePage(ShowUsers.class);

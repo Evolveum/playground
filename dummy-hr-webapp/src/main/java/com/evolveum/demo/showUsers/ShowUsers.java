@@ -42,8 +42,8 @@ public class ShowUsers extends HomePage {
 
 				item.add(view);
 
-				item.add(new Label("lastname", new PropertyModel<Location>(item
-						.getModel(), new StringResourceModel("lastname", this,
+				item.add(new Label("surname", new PropertyModel<Location>(item
+						.getModel(), new StringResourceModel("surname", this,
 						null).getString())));
 				item.add(new Label("firstname", new PropertyModel<Location>(
 						item.getModel(), new StringResourceModel("firstname",
@@ -62,11 +62,23 @@ public class ShowUsers extends HomePage {
 						new PropertyModel<Location>(item.getModel(),
 								new StringResourceModel("responsibility", this,
 										null).getString())));
+				item.add(new Label("job", new PropertyModel<Location>(item
+						.getModel(), new StringResourceModel("job", this,
+						null).getString())));
 				item.add(new Label("emptype", new PropertyModel<Location>(item
 						.getModel(), new StringResourceModel("emptype", this,
 						null).getString())));
 				item.add(new Label("orgpath", new PropertyModel<Location>(item
 						.getModel(), new StringResourceModel("orgpath", this,
+						null).getString())));
+				item.add(new Label("locality", new PropertyModel<Location>(item
+						.getModel(), new StringResourceModel("locality", this,
+						null).getString())));
+				item.add(new Label("ou", new PropertyModel<Location>(item
+						.getModel(), new StringResourceModel("ou", this,
+						null).getString())));
+				item.add(new Label("status", new PropertyModel<Location>(item
+						.getModel(), new StringResourceModel("status", this,
 						null).getString())));
 			}
 		};
