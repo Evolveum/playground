@@ -27,40 +27,28 @@ public class UserJpa implements Serializable {
 	private String surname;
 	private Integer employeeNumber;
 	private String artname;
-	private String emailAddress;
 	private String emptype;
-	private String orgpath;
-	private String responsibility;
 	private String status;
 	private String locality;
-	private String ou;
+//	private String ou;
+	private String country;
 	private String job;
 	
 	public UserJpa() {
 	}
 
 	public UserJpa(String firstname, String surname, Integer employeeNumber,
-				   String artname, String emptype, /*String EnumOrgTypeString,*/ String orgpath, String responsibility,
-				   String status, String locality, String ou, String job) {
+				   String artname, String emptype, String status, String locality,
+					/*String ou,*/String country, String job) {
 		this.firstname = firstname;
 		this.surname = surname;
 		this.employeeNumber = employeeNumber;
 		this.artname = artname;
 		this.emptype = emptype;
-		this.orgpath = orgpath;
-		this.responsibility = responsibility;
 		this.status = status;
 		this.locality = locality;
-		this.ou = ou;
+		this.country = country;
 		this.job = job;
-	}
-
-	public String getEmailAddress() {
-		return emailAddress;
-	}
-
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
 	}
 
 	public Integer getId() {
@@ -110,22 +98,6 @@ public class UserJpa implements Serializable {
 	public void setEmptype(String emptype) {
 		this.emptype = emptype;
 	}
-	
-	public String getOrgType() {
-		return orgpath;
-	}
-
-	public void setOrgType(String orgpath) {
-		this.orgpath = orgpath;
-	}
-	
-	public String getResponsibility() {
-		return responsibility;
-	}
-
-	public void setResponsibility(String responsibility) {
-		this.responsibility = responsibility;
-	}
 
 	public String getStatus() {
 		return status;
@@ -143,12 +115,20 @@ public class UserJpa implements Serializable {
 		this.locality = locality;
 	}
 
-	public String getOu() {
-		return ou;
+//	public String getOu() {
+//		return ou;
+//	}
+//
+//	public void setOu(String ou) {
+//		this.ou = ou;
+//	}
+
+	public String getCountry() {
+		return country;
 	}
 
-	public void setOu(String ou) {
-		this.ou = ou;
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
 	public String getJob() {

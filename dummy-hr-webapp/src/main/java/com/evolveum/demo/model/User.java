@@ -4,35 +4,29 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
-
-	/* added new column 'orgpath' and 'responsibility' */
-	// //////////////////////////////////////////////////////////////////////////////////////
-
 	private Integer id;
 	private String firstname;
 	private String surname;
 	private Integer employeeNumber;
 	private String artname;
 	private EmpType emptype;
-	private OrgType orgpath;
-	private String responsibility;
 	private Status status;
 	private String locality;
-	private String ou;
+	/*private String ou;*/
+	private String country;
 	private String job;
 
 	public User(String firstname, String surname, Integer employeeNumber,
-				Integer id, String artname, String emptype, String status, String locality, String ou, String orgpath,
-				String responsibility, String job) {
+				Integer id, String artname, String emptype, String status, String locality, /*String ou,*/
+				String country, String job) {
 
 		this.firstname = firstname;
 		this.surname = surname;
 		this.employeeNumber = employeeNumber;
 		this.id = id;
 		this.artname = artname;
-		this.responsibility = responsibility;
 		this.locality = locality;
-		this.ou = ou;
+		this.country = country;
 		this.job = job;
 
 		for(EmpType e : EmpType.values()){
@@ -41,59 +35,11 @@ public class User implements Serializable {
 			}
 		}
 
-//		if (emptype.equals("FTE")) {
-//			this.emptype = EmpType.FTE;
-//		} else if (emptype.equals("PTE")) {
-//			this.emptype = EmpType.PTE;
-//		} else if (emptype.equals("CONTRACTOR")) {
-//			this.emptype = EmpType.CONTRACTOR;
-//		} else if (emptype.equals("RETIRED")) {
-//			this.emptype = EmpType.RETIRED;
-//		}
-
 		for(Status s : Status.values()){
 			if(s.label.equalsIgnoreCase(status)){
 				this.status = s;
 			}
 		}
-
-		for(OrgType o : OrgType.values()){
-			if(o.label.equalsIgnoreCase(orgpath)){
-				this.orgpath = o;
-			}
-		}
-
-//		if (orgpath
-//				.equals("Apprentice/Armory Department/Military Department/Grand Master")) {
-//			this.orgpath = OrgType.ApprenticeArmory;
-//		} else if (orgpath
-//				.equals("Apprentice/Weapons Department/Military Department/Grand Master")) {
-//			this.orgpath = OrgType.ApprenticeWeapons;
-//		} else if (orgpath
-//				.equals("Apprentice/Buildings Department/Civil Department/Grand Master")) {
-//			this.orgpath = OrgType.ApprenticeBuildings;
-//		} else if (orgpath
-//				.equals("Apprentice/Artefacts Department/Civil Department/Grand Master")) {
-//			this.orgpath = OrgType.ApprenticeArtefacts;
-//		} else if (orgpath
-//				.equals("Armory Department/Military Department/Grand Master")) {
-//			this.orgpath = OrgType.MasterArmory;
-//		} else if (orgpath
-//				.equals("Weapons Department/Military Department/Grand Master")) {
-//			this.orgpath = OrgType.MasterWeapons;
-//		} else if (orgpath
-//				.equals("Buildings Department/Civil Department/Grand Master")) {
-//			this.orgpath = OrgType.MasterBuildings;
-//		} else if (orgpath
-//				.equals("Artefacts Department/Civil Department/Grand Master")) {
-//			this.orgpath = OrgType.MasterArtefacts;
-//		} else if (orgpath.equals("Military Department/Grand Master")) {
-//			this.orgpath = OrgType.MasterMilitary;
-//		} else if (orgpath.equals("Civil Department/Grand Master")) {
-//			this.orgpath = OrgType.MasterCivil;
-//		} else if (orgpath.equals("Grand Master")) {
-//			this.orgpath = OrgType.GrandMaster;
-//		}
 
 	}
 
@@ -111,22 +57,6 @@ public class User implements Serializable {
 
 	public void setEnumEmptype(EmpType emptype) {
 		this.emptype = emptype;
-	}
-
-	public String getEnumOrgType() {
-		return orgpath.toString();
-	}
-
-	public void setEnumOrgType(OrgType orgpath) {
-		this.orgpath = orgpath;
-	}
-
-	public String getResponsibility() {
-		return responsibility.toString();
-	}
-
-	public void setResponsibilities(String responsibility) {
-		this.responsibility = responsibility;
 	}
 
 	public Integer getId() {
@@ -177,12 +107,20 @@ public class User implements Serializable {
 		this.locality = locality;
 	}
 
-	public String getOu() {
+/*	public String getOu() {
 		return ou;
 	}
 
 	public void setOu(String ou) {
 		this.ou = ou;
+	}*/
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
 	public String getJob() {

@@ -17,6 +17,8 @@ CREATE TABLE usershr
 
     ou character(255),
 
+    country character(255),
+
   	emptype emp NOT NULL,
 
   	status sta NOT NULL

@@ -1,6 +1,5 @@
 package com.evolveum.demo.registerUser;
 
-import com.evolveum.demo.model.OrgType;
 import com.evolveum.demo.model.Status;
 import org.apache.wicket.extensions.markup.html.form.select.Select;
 import org.apache.wicket.extensions.markup.html.form.select.SelectOption;
@@ -24,20 +23,11 @@ public class RegisterUser extends HomePage {
 	private Integer employeeNumber;
 	private String artname;
 	private String emptype;
-	private String orgpath;
-	private String responsibility;
 	private String status;
 	private String locality;
-	private String ou;
+//	private String ou;
+	private String country;
 	private String job;
-
-	/*
-	 * private static final List<String> options = Arrays.asList(new String[] {
-	 * "ApprenticeArmory", "ApprenticeWeapons", "ApprenticeBuildings",
-	 * "ApprenticeArtefacts", "MasterArmory", "MasterWeapons",
-	 * "MasterBuildings", "MasterArtefacts", "MasterMilitary", "MasterCivil",
-	 * "GrandMaster" });
-	 */
 
 	public RegisterUser() {
 		initGui();
@@ -85,8 +75,6 @@ public class RegisterUser extends HomePage {
 		employeeNumberField.setRequired(true);
 		addRegisterForm.add(employeeNumberField);
 
-        //TODO
-
 		Label localityLabel = new Label("localityLabel", new StringResourceModel(
 				"localityLabel", this, null));
 		addRegisterForm.add(localityLabel);
@@ -96,27 +84,23 @@ public class RegisterUser extends HomePage {
         localityField.add(StringValidator.minimumLength(1)).setRequired(true);
         addRegisterForm.add(localityField);
 
-        //TODO
+//		Label ouLabel = new Label("ouLabel", new StringResourceModel(
+//				"ouLabel", this, null));
+//		addRegisterForm.add(ouLabel);
+//
+//        TextField<String> ouField = new TextField<String>("ou");
+//        ouField.add(StringValidator.maximumLength(100));
+//        ouField.add(StringValidator.minimumLength(1)).setRequired(true);
+//        addRegisterForm.add(ouField);
+		Label countryLabel = new Label("countryLabel", new StringResourceModel(
+				"countryLabel", this, null));
+		addRegisterForm.add(countryLabel);
 
-		Label ouLabel = new Label("ouLabel", new StringResourceModel(
-				"ouLabel", this, null));
-		addRegisterForm.add(ouLabel);
+		TextField<String> countryField = new TextField<String>("country");
+		countryField.add(StringValidator.maximumLength(100));
+		countryField.add(StringValidator.minimumLength(1)).setRequired(true);
+		addRegisterForm.add(countryField);
 
-        TextField<String> ouField = new TextField<String>("ou");
-        ouField.add(StringValidator.maximumLength(100));
-        ouField.add(StringValidator.minimumLength(1)).setRequired(true);
-        addRegisterForm.add(ouField);
-
-		Label employeeResponsibilityLabel = new Label("employeeResponsibilityLabel",
-				new StringResourceModel("employeeResponsibilityLabel", this, null));
-		addRegisterForm.add(employeeResponsibilityLabel);
-
-		TextField<String> employeeResponsibilityField = new TextField<String>("responsibility");
-		employeeResponsibilityField.add(StringValidator.maximumLength(100));
-		employeeResponsibilityField.add(StringValidator.minimumLength(1)).setRequired(false);
-		addRegisterForm.add(employeeResponsibilityField);
-
-		//TODO
 		Label jobLabel = new Label("jobLabel",
 				new StringResourceModel("jobLabel", this, null));
 		addRegisterForm.add(jobLabel);
@@ -143,8 +127,6 @@ public class RegisterUser extends HomePage {
 		empSelect.add(new SelectOption<String>("EmpType4", new Model<String>(
 				"RETIRED")));
 
-		//TODO
-
         Label statusLabel = new Label("statusLabel", new StringResourceModel(
                 "statusLabel", this, null));
         addRegisterForm.add(statusLabel);
@@ -161,50 +143,12 @@ public class RegisterUser extends HomePage {
 			statusNo++;
 		}
 
-		Label orgPathLabel = new Label("orgPathLabel", new StringResourceModel(
-				"orgPathLabel", this, null));
-		addRegisterForm.add(orgPathLabel);
-
-		Select orgPathSelect = new Select("orgPathSelect",
-				new PropertyModel<String>(this, "orgpath"));
-		addRegisterForm.add(orgPathSelect);
-
-		orgPathSelect.add(new SelectOption<String>("OrgType1",
-				new Model<String>(OrgType.ApprenticeArmory.name())));
-		orgPathSelect.add(new SelectOption<String>("OrgType2",
-				new Model<String>(OrgType.ApprenticeWeapons.name())));
-		orgPathSelect.add(new SelectOption<String>("OrgType3",
-				new Model<String>(OrgType.ApprenticeBuildings.name())));
-		orgPathSelect.add(new SelectOption<String>("OrgType4",
-				new Model<String>(OrgType.ApprenticeArtefacts.name())));
-		orgPathSelect.add(new SelectOption<String>("OrgType5",
-				new Model<String>(OrgType.MasterArmory.name())));
-		orgPathSelect.add(new SelectOption<String>("OrgType6",
-				new Model<String>(OrgType.MasterWeapons.name())));
-		orgPathSelect.add(new SelectOption<String>("OrgType7",
-				new Model<String>(OrgType.MasterBuildings.name())));
-		orgPathSelect.add(new SelectOption<String>("OrgType8",
-				new Model<String>(OrgType.MasterArtefacts.name())));
-		orgPathSelect.add(new SelectOption<String>("OrgType9",
-				new Model<String>(OrgType.MasterMilitary.name())));
-		orgPathSelect.add(new SelectOption<String>("OrgType10",
-				new Model<String>(OrgType.MasterCivil.name())));
-		orgPathSelect.add(new SelectOption<String>("OrgType11",
-				new Model<String>(OrgType.GrandMaster.name())));
-		orgPathSelect.add(new SelectOption<String>("OrgType12",
-				new Model<String>(" ")));
-
-		/*
-		 * DropDownChoice<String> orgPathSelect = new DropDownChoice<String>(
-		 * "orgPathSelect", new PropertyModel<String>(this, "orgpath"),
-		 * options); addRegisterForm.add(orgPathSelect);
-		 */
 
 		Button submitButton = new Button("submitButton") {
 			@Override
 			public void onSubmit() {
 				userService.registerUser(new UserJpa(firstname, surname,
-						employeeNumber, artname, emptype, orgpath, responsibility, status, locality, ou, job));
+						employeeNumber, artname, emptype, status, locality, /*ou,*/country, job));
 				setResponsePage(ShowUsers.class);
 			}
 		};

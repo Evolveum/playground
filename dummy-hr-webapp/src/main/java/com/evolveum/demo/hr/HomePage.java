@@ -4,6 +4,7 @@ import java.util.TimeZone;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.EnvironmentConfiguration;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
 import org.apache.wicket.injection.Injector;
@@ -20,41 +21,44 @@ import com.evolveum.demo.registerUser.RegisterUser;
 import com.evolveum.demo.showUsers.ShowUsers;
 
 public class HomePage extends WebPage {
-	private static final long serialVersionUID = 1L;
-//	TODO
-//	public static transient Configuration config;
-	public transient Configuration config;
-	public static Logger log = Logger.getLogger(HomePage.class.getName());
+    private static final long serialVersionUID = 1L;
+    public transient Configuration config;
+    public static Logger log = Logger.getLogger(HomePage.class.getName());
 
-	// public static transient UserService userService;
 
-	@SpringBean
-	public transient UserServiceJpa userService;
-	// TODO
-//	public static transient UserServiceJpa userService;
+    @SpringBean
+    public transient UserServiceJpa userService;
 
-	public HomePage() {
-		Injector.get().inject(this);
-		initGui();
+    public HomePage() {
+        Injector.get().inject(this);
+        initGui();
 
-		try {
-			config = new PropertiesConfiguration("application.properties");
-		} catch (ConfigurationException e) {
-			e.printStackTrace();
-			log.error(e.toString());
-		}
-	}
+        try {
+			String hrExpPath = System.getenv("HR_EXPORT_FILE");
+            if (hrExpPath != null && !hrExpPath.isEmpty()) {
 
-	private void initGui() {
-		add(new BookmarkablePageLink("register", RegisterUser.class));
-		add(new BookmarkablePageLink("show", ShowUsers.class));
-		add(new BookmarkablePageLink("home", HomePage.class));
-		add(new Label("footer", new StringResourceModel("footer", this, null)));
-		add(new FeedbackPanel("feedbackPanel"));
+				config = new EnvironmentConfiguration();
+            } else {
 
-		Clock clock = new Clock("clock",
-				TimeZone.getTimeZone("America/Los_Angeles"));
-		add(clock);
-	}
+				config = new PropertiesConfiguration("application.properties");
+			}
+
+        } catch (ConfigurationException e) {
+            e.printStackTrace();
+            log.error(e.toString());
+        }
+    }
+
+    private void initGui() {
+        add(new BookmarkablePageLink("register", RegisterUser.class));
+        add(new BookmarkablePageLink("show", ShowUsers.class));
+        add(new BookmarkablePageLink("home", HomePage.class));
+        add(new Label("footer", new StringResourceModel("footer", this, null)));
+        add(new FeedbackPanel("feedbackPanel"));
+
+        Clock clock = new Clock("clock",
+                TimeZone.getTimeZone("America/Los_Angeles"));
+        add(clock);
+    }
 
 }

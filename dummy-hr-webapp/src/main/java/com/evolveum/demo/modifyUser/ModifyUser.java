@@ -2,7 +2,6 @@ package com.evolveum.demo.modifyUser;
 
 import java.io.Serializable;
 
-import com.evolveum.demo.model.OrgType;
 import com.evolveum.demo.model.Status;
 import org.apache.wicket.extensions.markup.html.form.select.Select;
 import org.apache.wicket.extensions.markup.html.form.select.SelectOption;
@@ -27,11 +26,10 @@ public class ModifyUser extends HomePage implements Serializable {
 	private Integer id;
 	private String artname;
 	private String emptype;
-	private String orgpath;
-	private String responsibility;
 	private String status;
 	private String locality;
-	private String ou;
+//	private String ou;
+	private String country;
 	private String job;
 
 	UserJpa user;
@@ -49,11 +47,9 @@ public class ModifyUser extends HomePage implements Serializable {
 		id = user.getId();
 		artname = user.getArtname();
 		emptype = user.getEmptype();
-		orgpath = user.getOrgType();
-		responsibility = user.getResponsibility();
 		status = user.getStatus();
 		locality = user.getLocality();
-		ou = user.getOu();
+		country = user.getCountry();
 		job = user.getJob();
 
 		Form<ModifyUser> addRegisterForm = new Form<ModifyUser>(
@@ -103,15 +99,6 @@ public class ModifyUser extends HomePage implements Serializable {
 		employeeNumberField.setRequired(true);
 		addRegisterForm.add(employeeNumberField);
 
-		Label employeeResponsibilityLabel = new Label("employeeResponsibilityLabel",
-				new StringResourceModel("employeeResponsibilityLabel", this, null));
-		addRegisterForm.add(employeeResponsibilityLabel);
-
-		TextField<String> employeeResponsibilityField = new TextField<String>("responsibility");
-		employeeResponsibilityField.add(StringValidator.maximumLength(100));
-		employeeResponsibilityField.add(StringValidator.minimumLength(1)).setRequired(false);
-		addRegisterForm.add(employeeResponsibilityField);
-
 		Label jobLabel = new Label("jobLabel",
 				new StringResourceModel("jobLabel", this, null));
 		addRegisterForm.add(jobLabel);
@@ -138,8 +125,6 @@ public class ModifyUser extends HomePage implements Serializable {
 		empSelect.add(new SelectOption<String>("EmpType4", new Model<String>(
 				"RETIRED")));
 
-
-		//TODO
 		Label localityLabel = new Label("localityLabel", new StringResourceModel(
 				"localityLabel", this, null));
 		addRegisterForm.add(localityLabel);
@@ -149,17 +134,23 @@ public class ModifyUser extends HomePage implements Serializable {
 		localityField.add(StringValidator.minimumLength(1)).setRequired(true);
 		addRegisterForm.add(localityField);
 
-		//TODO
-		Label ouLabel = new Label("ouLabel", new StringResourceModel(
-				"ouLabel", this, null));
-		addRegisterForm.add(ouLabel);
+//		Label ouLabel = new Label("ouLabel", new StringResourceModel(
+//				"ouLabel", this, null));
+//		addRegisterForm.add(ouLabel);
+//
+//		TextField<String> ouField = new TextField<String>("ou");
+//		ouField.add(StringValidator.maximumLength(100));
+//		ouField.add(StringValidator.minimumLength(1)).setRequired(true);
+//		addRegisterForm.add(ouField);
 
-		TextField<String> ouField = new TextField<String>("ou");
+		Label countryLabel = new Label("countryLabel", new StringResourceModel(
+				"countryLabel", this, null));
+		addRegisterForm.add(countryLabel);
+
+		TextField<String> ouField = new TextField<String>("country");
 		ouField.add(StringValidator.maximumLength(100));
 		ouField.add(StringValidator.minimumLength(1)).setRequired(true);
 		addRegisterForm.add(ouField);
-
-		//TODO
 
 		Label statusLabel = new Label("statusLabel", new StringResourceModel(
 				"statusLabel", this, null));
@@ -177,40 +168,6 @@ public class ModifyUser extends HomePage implements Serializable {
 			statusNo++;
 		}
 
-		Label orgPathLabel = new Label("orgPathLabel", new StringResourceModel(
-				"orgPathLabel", this, null));
-		addRegisterForm.add(orgPathLabel);
-
-		Select orgPathSelect = new Select("orgPathSelect",
-				new PropertyModel<String>(this, "orgpath"));
-		addRegisterForm.add(orgPathSelect);
-
-		orgPathSelect.add(new SelectOption<String>("OrgType1",
-				//new Model<String>(OrgType.ApprenticeArmory.toString())));
-				new Model<String>(OrgType.ApprenticeArmory.name())));
-		orgPathSelect.add(new SelectOption<String>("OrgType2",
-				new Model<String>(OrgType.ApprenticeWeapons.name())));
-		orgPathSelect.add(new SelectOption<String>("OrgType3",
-				new Model<String>(OrgType.ApprenticeBuildings.name())));
-		orgPathSelect.add(new SelectOption<String>("OrgType4",
-				new Model<String>(OrgType.ApprenticeArtefacts.name())));
-		orgPathSelect.add(new SelectOption<String>("OrgType5",
-				new Model<String>(OrgType.MasterArmory.name())));
-		orgPathSelect.add(new SelectOption<String>("OrgType6",
-				new Model<String>(OrgType.MasterWeapons.name())));
-		orgPathSelect.add(new SelectOption<String>("OrgType7",
-				new Model<String>(OrgType.MasterBuildings.name())));
-		orgPathSelect.add(new SelectOption<String>("OrgType8",
-				new Model<String>(OrgType.MasterArtefacts.name())));
-		orgPathSelect.add(new SelectOption<String>("OrgType9",
-				new Model<String>(OrgType.MasterMilitary.name())));
-		orgPathSelect.add(new SelectOption<String>("OrgType10",
-				new Model<String>(OrgType.MasterCivil.name())));
-		orgPathSelect.add(new SelectOption<String>("OrgType11",
-				new Model<String>(OrgType.GrandMaster.name())));
-		orgPathSelect.add(new SelectOption<String>("OrgType12",
-				new Model<String>(" ")));
-
 		Button submitButton = new Button("submitButton") {
 			@Override
 			public void onSubmit() {
@@ -219,10 +176,8 @@ public class ModifyUser extends HomePage implements Serializable {
 				user.setEmptype(emptype);
 				user.setEmployeeNumber(employeeNumber);
 				user.setArtname(artname);
-				user.setOrgType(orgpath);
-				user.setResponsibility(responsibility);
 				user.setStatus(status);
-				user.setOu(ou);
+				user.setCountry(country);
 				user.setLocality(locality);
 
 				userService.modifyUser(user);

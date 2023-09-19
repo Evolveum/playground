@@ -58,24 +58,21 @@ public class ShowUsers extends HomePage {
 				item.add(new Label("id", new PropertyModel<Location>(item
 						.getModel(), new StringResourceModel("id", this, null)
 						.getString())));
-				item.add(new Label("responsibility",
-						new PropertyModel<Location>(item.getModel(),
-								new StringResourceModel("responsibility", this,
-										null).getString())));
 				item.add(new Label("job", new PropertyModel<Location>(item
 						.getModel(), new StringResourceModel("job", this,
 						null).getString())));
 				item.add(new Label("emptype", new PropertyModel<Location>(item
 						.getModel(), new StringResourceModel("emptype", this,
 						null).getString())));
-				item.add(new Label("orgpath", new PropertyModel<Location>(item
-						.getModel(), new StringResourceModel("orgpath", this,
-						null).getString())));
 				item.add(new Label("locality", new PropertyModel<Location>(item
 						.getModel(), new StringResourceModel("locality", this,
 						null).getString())));
-				item.add(new Label("ou", new PropertyModel<Location>(item
-						.getModel(), new StringResourceModel("ou", this,
+				//TODO organizational unit for future trainings
+//				item.add(new Label("ou", new PropertyModel<Location>(item
+//						.getModel(), new StringResourceModel("ou", this,
+//						null).getString())));
+				item.add(new Label("country", new PropertyModel<Location>(item
+						.getModel(), new StringResourceModel("country", this,
 						null).getString())));
 				item.add(new Label("status", new PropertyModel<Location>(item
 						.getModel(), new StringResourceModel("status", this,
@@ -89,12 +86,12 @@ public class ShowUsers extends HomePage {
 		add(new AjaxPagingNavigator("navigator", userList));
 
 		final Label exportCheck = new Label("exportCheck",
-				"Sucessfully exported");
+				"Successfully exported");
 		exportCheck.setVisible(Boolean.FALSE);
 		add(exportCheck);
 
 		add(new Label("totalUsersCount", String.valueOf(users.size())));
-		add(new Label("exportPath", config.getProperty("exportPath").toString()));
+		add(new Label("exportPath", config.getProperty("HR_EXPORT_FILE").toString()));
 
 		Form<ShowUsers> form = new Form<ShowUsers>("form",
 				new CompoundPropertyModel<ShowUsers>(this));
@@ -108,7 +105,7 @@ public class ShowUsers extends HomePage {
 
 				try {
 					CsvWriter exporter = new CsvWriter(users, config
-							.getProperty("exportPath").toString());
+							.getProperty("HR_EXPORT_FILE").toString());
 					exportCheck.setVisible(Boolean.TRUE);
 				} catch (Exception e) {
 					error(e.toString());
