@@ -25,7 +25,6 @@ public class HomePage extends WebPage {
     public transient Configuration config;
     public static Logger log = Logger.getLogger(HomePage.class.getName());
 
-
     @SpringBean
     public transient UserServiceJpa userService;
 
@@ -34,14 +33,14 @@ public class HomePage extends WebPage {
         initGui();
 
         try {
-			String hrExpPath = System.getenv("HR_EXPORT_FILE");
+            String hrExpPath = System.getenv("HR_EXPORT_FILE");
             if (hrExpPath != null && !hrExpPath.isEmpty()) {
 
-				config = new EnvironmentConfiguration();
+                config = new EnvironmentConfiguration();
             } else {
 
-				config = new PropertiesConfiguration("application.properties");
-			}
+                config = new PropertiesConfiguration("application.properties");
+            }
 
         } catch (ConfigurationException e) {
             e.printStackTrace();
@@ -59,6 +58,11 @@ public class HomePage extends WebPage {
         Clock clock = new Clock("clock",
                 TimeZone.getTimeZone("America/Los_Angeles"));
         add(clock);
+    }
+
+    protected boolean isStringTrue(String property){
+
+       return "true".equalsIgnoreCase(property);
     }
 
 }

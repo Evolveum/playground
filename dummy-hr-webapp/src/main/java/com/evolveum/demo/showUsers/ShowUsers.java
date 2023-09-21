@@ -1,10 +1,12 @@
 package com.evolveum.demo.showUsers;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import javax.servlet.ServletContext;
 import javax.xml.stream.Location;
-
+import org.apache.log4j.Logger;
 import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
@@ -24,6 +26,8 @@ import com.evolveum.demo.modifyUser.ModifyUser;
 
 public class ShowUsers extends HomePage {
 	public ArrayList<UserJpa> users;
+
+	public static Logger LOG = Logger.getLogger(ShowUsers.class.getName());
 
 	public ShowUsers() {
 		users = (ArrayList<UserJpa>) userService.listUsers();
@@ -103,12 +107,36 @@ public class ShowUsers extends HomePage {
 						.getServletContext();
 				String contextPath = servletContext.getContextPath();
 
-				try {
-					CsvWriter exporter = new CsvWriter(users, config
-							.getProperty("HR_EXPORT_FILE").toString());
-					exportCheck.setVisible(Boolean.TRUE);
-				} catch (Exception e) {
-					error(e.toString());
+
+				Object eFile = config.getProperty("HR_EXPORT_FILE");
+
+				if(eFile !=null){
+					LOG.info("Export file property is not null");
+
+						if(!eFile.toString().isEmpty()){
+							LOG.info("Export file property is not empty");
+					try {
+						LOG.info("Exporting data to export file");
+
+						CsvWriter exporter = new CsvWriter(users, config
+								.getProperty("HR_EXPORT_FILE").toString());
+						exportCheck.setVisible(Boolean.TRUE);
+					} catch (Exception e) {
+						error(e.toString());
+						throw new IllegalStateException("Exception while exporting HR data into '.csv' file: "
+								+ e.getLocalizedMessage());
+					}
+						} else {
+
+							throw new InvalidParameterException("The Export file path 'HR_EXPORT_FILE' is missing, please " +
+									"append this parameter to the application property file or add this value as an environment " +
+									"variable value");
+						}
+				} else {
+
+				throw new InvalidParameterException("The Export file path 'HR_EXPORT_FILE' is missing, please " +
+						"append this parameter to the application property file or add this value as an environment " +
+						"variable value");
 				}
 			}
 		};
