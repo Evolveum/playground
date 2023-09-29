@@ -14,5 +14,7 @@ public interface UserDao {
 
 	public abstract UserJpa getUser(Integer id);
 
+	public abstract List<UserJpa> getWithEmployeeNumber(Integer id);
+
 	public abstract void modifyUser(UserJpa user);
 }

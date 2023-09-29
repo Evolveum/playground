@@ -1,8 +1,10 @@
 package com.evolveum.demo.modifyUser;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.evolveum.demo.model.Status;
+import org.apache.log4j.Logger;
 import org.apache.wicket.extensions.markup.html.form.select.Select;
 import org.apache.wicket.extensions.markup.html.form.select.SelectOption;
 import org.apache.wicket.markup.html.basic.Label;
@@ -32,6 +34,7 @@ public class ModifyUser extends HomePage implements Serializable {
 	private String country;
 	private String job;
 
+	public static Logger LOG = Logger.getLogger(ModifyUser.class.getName());
 	UserJpa user;
 
 	public ModifyUser(Integer userId) {
@@ -39,6 +42,27 @@ public class ModifyUser extends HomePage implements Serializable {
 	}
 
 	private void initGui(Integer userId) {
+
+		boolean isTraining;
+
+		if (config.getProperty("IS_TRAINING_ENV") != null) {
+
+			if (!config.getProperty("IS_TRAINING_ENV").toString().isEmpty()) {
+
+				LOG.info("Initializing app in TRAINING mode");
+				isTraining = isStringTrue(config.getProperty("IS_TRAINING_ENV").toString());
+			} else {
+
+				LOG.info("The property IS_TRAINING_ENV is empty, initializing app in DEMO mode");
+				isTraining=false;
+			}
+		} else {
+
+			LOG.info("The property IS_TRAINING_ENV is null, initializing app in DEMO mode");
+			isTraining=false;
+		}
+
+
 
 		user = userService.getUser(userId);
 		firstname = user.getFirstname();
@@ -83,13 +107,23 @@ public class ModifyUser extends HomePage implements Serializable {
 				"artnameLabel", this, null));
 		addRegisterForm.add(artNameLabel);
 
-		TextField<String> artNameField = new TextField<String>("artname",
-				new PropertyModel(this, "artname"));
-		artNameField.add(StringValidator.maximumLength(100));
-		artNameField.add(StringValidator.minimumLength(1)).setRequired(true);
-		;
-		addRegisterForm.add(artNameField);
+		if (!isTraining) {
 
+			TextField<String> artNameField = new TextField<String>("artname",
+					new PropertyModel(this, "artname"));
+			artNameField.add(StringValidator.maximumLength(100));
+			artNameField.add(StringValidator.minimumLength(1)).setRequired(true);
+			;
+			addRegisterForm.add(artNameField);
+		} else{
+
+			TextField<String> artNameField = new TextField<String>("artname",
+					new PropertyModel(this, "artname"));
+			artNameField.add(StringValidator.maximumLength(100));
+			artNameField.add(StringValidator.minimumLength(1)).setRequired(false);
+			;
+			addRegisterForm.add(artNameField);
+		}
 		Label employeeNumberLabel = new Label("employeeNumberLabel",
 				new StringResourceModel("employeeNumberLabel", this, null));
 		addRegisterForm.add(employeeNumberLabel);
@@ -147,11 +181,19 @@ public class ModifyUser extends HomePage implements Serializable {
 				"countryLabel", this, null));
 		addRegisterForm.add(countryLabel);
 
-		TextField<String> ouField = new TextField<String>("country");
-		ouField.add(StringValidator.maximumLength(100));
-		ouField.add(StringValidator.minimumLength(1)).setRequired(true);
-		addRegisterForm.add(ouField);
+		if (!isTraining) {
 
+			TextField<String> ouField = new TextField<String>("country");
+			ouField.add(StringValidator.maximumLength(100));
+			ouField.add(StringValidator.minimumLength(1)).setRequired(true);
+			addRegisterForm.add(ouField);
+		} else {
+
+			TextField<String> ouField = new TextField<String>("country");
+			ouField.add(StringValidator.maximumLength(100));
+			ouField.add(StringValidator.minimumLength(1)).setRequired(false);
+			addRegisterForm.add(ouField);
+		}
 		Label statusLabel = new Label("statusLabel", new StringResourceModel(
 				"statusLabel", this, null));
 		addRegisterForm.add(statusLabel);
@@ -171,17 +213,53 @@ public class ModifyUser extends HomePage implements Serializable {
 		Button submitButton = new Button("submitButton") {
 			@Override
 			public void onSubmit() {
-				user.setFirstname(firstname);
-				user.setSurname(surname);
-				user.setEmptype(emptype);
-				user.setEmployeeNumber(employeeNumber);
-				user.setArtname(artname);
-				user.setStatus(status);
-				user.setCountry(country);
-				user.setLocality(locality);
+// TODO there can be one but not two -->
+				LOG.info("Submit button action initialization");
+				List<UserJpa> users = null;
+				Integer userID = user.getId();
 
-				userService.modifyUser(user);
-				setResponsePage(ShowUsers.class);
+				if (user.getEmployeeNumber() != employeeNumber){
+					users = userService.getWithEmployeeNumber(employeeNumber);
+
+					if(users.size() ==1){
+						UserJpa existingUser = users.get(0);
+
+						if (existingUser.getId() == userID){
+
+							users = null;
+						}
+					}
+				}
+
+				if(users!=null){
+
+					LOG.error("Found existing object with the same employee number, returning error message on presentation layer");
+					error("Object already exists, an object with the same employee number already exists in the application database");
+				} else {
+					LOG.info("About to modify user with the following parameters: " + _LINE_SEPARATOR +
+							"Firstname: " + firstname + " " + _LINE_SEPARATOR +
+							"Surname: " + surname + " " + _LINE_SEPARATOR +
+							"Employee number: " + employeeNumber + " " + _LINE_SEPARATOR +
+							"Art name: " + artname + " " + _LINE_SEPARATOR +
+							"Employee type: " + emptype + " " + _LINE_SEPARATOR +
+							"Status: " + status + " " + _LINE_SEPARATOR +
+							"Locality: " + locality + " " + _LINE_SEPARATOR +
+							"Country: " + country + " " + _LINE_SEPARATOR +
+							"job: " + job + " " + _LINE_SEPARATOR);
+
+					user.setFirstname(firstname);
+					user.setSurname(surname);
+					user.setEmptype(emptype);
+					user.setEmployeeNumber(employeeNumber);
+					user.setArtname(artname);
+					user.setStatus(status);
+					user.setCountry(country);
+					user.setLocality(locality);
+
+					userService.modifyUser(user);
+					setResponsePage(ShowUsers.class);
+
+				}
 			}
 		};
 		addRegisterForm.add(submitButton);

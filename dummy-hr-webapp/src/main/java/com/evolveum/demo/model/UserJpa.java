@@ -14,7 +14,8 @@ import javax.persistence.Table;
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "findAllUsers", query = "from UserJpa u "),
-		@NamedQuery(name = "findUserById", query = "SELECT u FROM UserJpa u WHERE u.id = :id") })
+		@NamedQuery(name = "findUserById", query = "SELECT u FROM UserJpa u WHERE u.id = :id"),
+		@NamedQuery(name = "findUserByEmployeeNo", query = "SELECT u FROM UserJpa u WHERE u.employeeNumber = :employeeNumber")})
 @Table(name = "usershr")
 public class UserJpa implements Serializable {
 

@@ -1,5 +1,6 @@
 package com.evolveum.demo.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //import javax.annotation.Resource;
@@ -31,7 +32,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<UserJpa> listAllUsers() {
 		Query q = (Query) entityManagerFactory
-				.createQuery("select u from UserJpa u");
+				.createQuery("select u from UserJpa u order by u.id");
 		List<UserJpa> users = (List<UserJpa>) q.getResultList();
 
 		return users;
@@ -56,5 +57,19 @@ public class UserDaoImpl implements UserDao {
 	public UserJpa getUser(Integer id) {
 		return (UserJpa) entityManagerFactory.createNamedQuery("findUserById")
 				.setParameter("id", id).getResultList().get(0);
+	}
+
+	public List<UserJpa> getWithEmployeeNumber(Integer employeeNumber) {
+
+		ArrayList<UserJpa> l = (ArrayList<UserJpa>) entityManagerFactory.createNamedQuery("findUserByEmployeeNo")
+				.setParameter("employeeNumber", employeeNumber).getResultList();
+
+		if(l !=null && !l.isEmpty()){
+
+			return l;
+		} else {
+
+            return null;
+		}
 	}
 }

@@ -18,6 +18,8 @@ import com.evolveum.demo.hr.HomePage;
 import com.evolveum.demo.model.UserJpa;
 import com.evolveum.demo.showUsers.ShowUsers;
 
+import java.util.List;
+
 public class RegisterUser extends HomePage {
     private String firstname;
     private String surname;
@@ -54,7 +56,6 @@ public class RegisterUser extends HomePage {
             LOG.info("The property IS_TRAINING_ENV is null, initializing app in DEMO mode");
             isTraining=false;
         }
-
 
         Form<RegisterUser> addRegisterForm = new Form<RegisterUser>(
                 "addRegisterForm",
@@ -189,9 +190,28 @@ public class RegisterUser extends HomePage {
         Button submitButton = new Button("submitButton") {
             @Override
             public void onSubmit() {
-                userService.registerUser(new UserJpa(firstname, surname,
-                        employeeNumber, artname, emptype, status, locality, /*ou,*/country, job));
-                setResponsePage(ShowUsers.class);
+                LOG.info("Submit button action initialization");
+                List<UserJpa> users = userService.getWithEmployeeNumber(employeeNumber);
+
+                if(users!=null){
+                    LOG.error("Found existing object with the same employee number, returning error message on presentation layer");
+                    error("Object already exists, an object with the same employee number already exists in the application database");
+                } else {
+                    LOG.info("About to register user with the following parameters: "+_LINE_SEPARATOR+
+                            "Firstname: "+firstname +" "+ _LINE_SEPARATOR+
+                            "Surname: "+surname +" "+ _LINE_SEPARATOR+
+                            "Employee number: "+employeeNumber +" "+ _LINE_SEPARATOR+
+                            "Art name: "+artname +" "+ _LINE_SEPARATOR+
+                            "Employee type: "+emptype +" "+ _LINE_SEPARATOR+
+                            "Status: "+status +" "+ _LINE_SEPARATOR+
+                            "Locality: "+locality +" "+ _LINE_SEPARATOR+
+                            "Country: "+country +" "+ _LINE_SEPARATOR+
+                            "job: "+job +" "+ _LINE_SEPARATOR);
+
+                    userService.registerUser(new UserJpa(firstname, surname,
+                            employeeNumber, artname, emptype, status, locality, /*ou,*/country, job));
+                    setResponsePage(ShowUsers.class);
+                }
             }
         };
         addRegisterForm.add(submitButton);

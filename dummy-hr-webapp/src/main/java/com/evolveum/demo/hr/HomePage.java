@@ -24,6 +24,7 @@ public class HomePage extends WebPage {
     private static final long serialVersionUID = 1L;
     public transient Configuration config;
     public static Logger log = Logger.getLogger(HomePage.class.getName());
+    protected static String _LINE_SEPARATOR = System.getProperty("line.separator");
 
     @SpringBean
     public transient UserServiceJpa userService;

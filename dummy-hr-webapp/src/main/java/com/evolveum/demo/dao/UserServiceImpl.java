@@ -34,6 +34,12 @@ public class UserServiceImpl implements UserServiceJpa {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
+	public List<UserJpa> getWithEmployeeNumber(Integer employeeNumber) {
+		return userDao.getWithEmployeeNumber(employeeNumber);
+	}
+
+	@Override
 	@Transactional
 	public void modifyUser(UserJpa user) {
 		userDao.modifyUser(user);

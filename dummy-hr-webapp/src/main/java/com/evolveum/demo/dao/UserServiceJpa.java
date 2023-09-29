@@ -16,6 +16,8 @@ public interface UserServiceJpa {
 
 	public abstract UserJpa getUser(Integer id);
 
+	public abstract List<UserJpa> getWithEmployeeNumber(Integer id);
+
 	@Transactional
 	public abstract void modifyUser(UserJpa user);
 
