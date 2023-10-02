@@ -26,6 +26,7 @@ public class HomePage extends WebPage {
     public static Logger log = Logger.getLogger(HomePage.class.getName());
     protected static String _LINE_SEPARATOR = System.getProperty("line.separator");
 
+    protected static Boolean IS_TRAINING = false;
     @SpringBean
     public transient UserServiceJpa userService;
 
@@ -47,6 +48,24 @@ public class HomePage extends WebPage {
             e.printStackTrace();
             log.error(e.toString());
         }
+
+        if (config.getProperty("IS_TRAINING_ENV") != null) {
+
+            if (!config.getProperty("IS_TRAINING_ENV").toString().isEmpty()) {
+
+                log.info("Initializing app in TRAINING mode");
+                IS_TRAINING = isStringTrue(config.getProperty("IS_TRAINING_ENV").toString());
+            } else {
+
+                log.info("The property IS_TRAINING_ENV is empty, initializing app in DEMO mode");
+                IS_TRAINING=false;
+            }
+        } else {
+
+            log.info("The property IS_TRAINING_ENV is null, initializing app in DEMO mode");
+            IS_TRAINING=false;
+        }
+
     }
 
     private void initGui() {

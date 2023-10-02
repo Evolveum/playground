@@ -31,9 +31,13 @@ public class ShowUsers extends HomePage {
 
 	public ShowUsers() {
 		users = (ArrayList<UserJpa>) userService.listUsers();
+		Integer itemsPerPage = 10;
 
+		if(IS_TRAINING){
+			itemsPerPage = 50;
+		}
 		PageableListView<UserJpa> userList = new PageableListView<UserJpa>(
-				"users", users, 10) {
+				"users", users, itemsPerPage) {
 			@Override
 			protected void populateItem(ListItem<UserJpa> item) {
 

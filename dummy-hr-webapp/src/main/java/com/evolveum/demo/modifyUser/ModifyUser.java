@@ -42,28 +42,6 @@ public class ModifyUser extends HomePage implements Serializable {
 	}
 
 	private void initGui(Integer userId) {
-
-		boolean isTraining;
-
-		if (config.getProperty("IS_TRAINING_ENV") != null) {
-
-			if (!config.getProperty("IS_TRAINING_ENV").toString().isEmpty()) {
-
-				LOG.info("Initializing app in TRAINING mode");
-				isTraining = isStringTrue(config.getProperty("IS_TRAINING_ENV").toString());
-			} else {
-
-				LOG.info("The property IS_TRAINING_ENV is empty, initializing app in DEMO mode");
-				isTraining=false;
-			}
-		} else {
-
-			LOG.info("The property IS_TRAINING_ENV is null, initializing app in DEMO mode");
-			isTraining=false;
-		}
-
-
-
 		user = userService.getUser(userId);
 		firstname = user.getFirstname();
 		surname = user.getSurname();
@@ -107,7 +85,7 @@ public class ModifyUser extends HomePage implements Serializable {
 				"artnameLabel", this, null));
 		addRegisterForm.add(artNameLabel);
 
-		if (!isTraining) {
+		if (!IS_TRAINING) {
 
 			TextField<String> artNameField = new TextField<String>("artname",
 					new PropertyModel(this, "artname"));
@@ -181,7 +159,7 @@ public class ModifyUser extends HomePage implements Serializable {
 				"countryLabel", this, null));
 		addRegisterForm.add(countryLabel);
 
-		if (!isTraining) {
+		if (!IS_TRAINING) {
 
 			TextField<String> ouField = new TextField<String>("country");
 			ouField.add(StringValidator.maximumLength(100));

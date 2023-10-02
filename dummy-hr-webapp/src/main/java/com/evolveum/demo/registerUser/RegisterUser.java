@@ -38,25 +38,6 @@ public class RegisterUser extends HomePage {
 
     private void initGui() {
 
-        boolean isTraining;
-
-        if (config.getProperty("IS_TRAINING_ENV") != null) {
-
-            if (!config.getProperty("IS_TRAINING_ENV").toString().isEmpty()) {
-
-                LOG.info("Initializing app in TRAINING mode");
-                isTraining = isStringTrue(config.getProperty("IS_TRAINING_ENV").toString());
-            } else {
-
-                LOG.info("The property IS_TRAINING_ENV is empty, initializing app in DEMO mode");
-                isTraining=false;
-            }
-        } else {
-
-            LOG.info("The property IS_TRAINING_ENV is null, initializing app in DEMO mode");
-            isTraining=false;
-        }
-
         Form<RegisterUser> addRegisterForm = new Form<RegisterUser>(
                 "addRegisterForm",
                 new CompoundPropertyModel<RegisterUser>(this));
@@ -84,7 +65,7 @@ public class RegisterUser extends HomePage {
                 "artnameLabel", this, null));
         addRegisterForm.add(artNameLabel);
 
-        if (!isTraining) {
+        if (!IS_TRAINING) {
 
             TextField<String> artNameField = new TextField<String>("artname");
             artNameField.add(StringValidator.maximumLength(100));
@@ -130,7 +111,7 @@ public class RegisterUser extends HomePage {
         addRegisterForm.add(countryLabel);
 
 
-        if (!isTraining) {
+        if (!IS_TRAINING) {
 
             TextField<String> countryField = new TextField<String>("country");
             countryField.add(StringValidator.maximumLength(100));
