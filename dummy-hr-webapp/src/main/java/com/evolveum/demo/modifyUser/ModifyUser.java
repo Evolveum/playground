@@ -227,14 +227,17 @@ public class ModifyUser extends HomePage implements Serializable {
 
 					user.setFirstname(firstname);
 					user.setSurname(surname);
-					user.setEmptype(emptype);
 					user.setEmployeeNumber(employeeNumber);
 					user.setArtname(artname);
+					user.setEmptype(emptype);
 					user.setStatus(status);
-					user.setCountry(country);
 					user.setLocality(locality);
+					user.setCountry(country);
+					user.setJob(job);
 
 					userService.modifyUser(user);
+
+					LOG.info("User modified, the current user parameters: "+user.toString());
 					setResponsePage(ShowUsers.class);
 
 				}

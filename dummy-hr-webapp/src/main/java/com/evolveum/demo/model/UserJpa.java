@@ -139,4 +139,19 @@ public class UserJpa implements Serializable {
 	public void setJob(String job) {
 		this.job = job;
 	}
+
+	@Override
+	public String toString(){
+
+		return "User object: "+"Id:"+ id+ "; firstname:"+ firstname +
+		"; surname:"+ surname +
+		"; employeeNumber:"+ employeeNumber +
+		"; artname:"+ artname +
+		"; emptype:"+ emptype +
+		"; status:"+ status +
+		"; locality:"+ locality +
+		"; country:"+ country +
+		"; job:"+ job;
+
+	}
 }
