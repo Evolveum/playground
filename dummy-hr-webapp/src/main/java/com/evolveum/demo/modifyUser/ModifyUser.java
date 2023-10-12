@@ -180,12 +180,13 @@ public class ModifyUser extends HomePage implements Serializable {
 				this, "status"));
 		addRegisterForm.add(statusSelect);
 
-		Integer statusNo = 1;
 		for(Status s : Status.values()){
 
-			statusSelect.add(new SelectOption<String>("Status"+statusNo, new Model<String>(
+			LOG.info("Generating STATUS label information in MODIFY OP" +
+					", Label id. : "+"Status"+s.order+ " ,label value: "+ s.label);
+
+			statusSelect.add(new SelectOption<String>("Status"+s.order, new Model<String>(
 					s.label)));
-			statusNo++;
 		}
 
 		Button submitButton = new Button("submitButton") {

@@ -159,12 +159,12 @@ public class RegisterUser extends HomePage {
                 this, "status"));
         addRegisterForm.add(statusSelect);
 
-        Integer statusNo = 1;
         for (Status s : Status.values()) {
+            LOG.info("Generating STATUS label information in REGISTER OP," +
+                    " Label id. : "+"Status"+s.order+ " ,label value: "+ s.label);
 
-            statusSelect.add(new SelectOption<String>("Status" + statusNo, new Model<String>(
+            statusSelect.add(new SelectOption<String>("Status" + s.order, new Model<String>(
                     s.label)));
-            statusNo++;
         }
 
 
